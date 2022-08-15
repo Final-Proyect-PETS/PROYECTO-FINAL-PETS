@@ -1,4 +1,4 @@
-Recuerden que vamos a usar COMILLAS SIMPLES, para evitar 
+Recuerden que vamos a usar COMILLAS DOBLES, para evitar 
 posibles conflictos al unir las ramas a master
 
 Para trabajar mas ordenados cree dos 'branches', una para front y otra para back.
