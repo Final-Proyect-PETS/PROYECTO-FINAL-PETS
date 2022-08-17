@@ -1,12 +1,12 @@
-import { POST_DOG } from "./Actions/actions";
-import * as actions from "./Actions/index";
+import * as actions from "./Actions/actionTypes";
 
 const initialState = {
   pets: [],
-  users:[]
+  users: [],
+  userDetail: [],//detail route
 };
 
-export default function rootReducer(state = initialState, {type,payload}) {
+export default function rootReducer(state = initialState, { type, payload }) {
   switch (type) {
     case actions.GET_ALL_PETS:
       return {
@@ -20,15 +20,27 @@ export default function rootReducer(state = initialState, {type,payload}) {
         pets: payload,
       };
 
-    case actions.POST_DOG:
+    case actions.GET_USER_DETAIL:
+      return {
+        ...state,
+        userDetail: payload,
+      };
+    case actions.POST_PET:
       return {
         ...state,
       };
+
+    case actions.POST_USER:
+      return {
+        ...state,
+      };
+
     case actions.CLEAR_STATE:
       return {
         ...state,
-        //ejemplo pets = {} seteas a 0 el estado de nuevo
-      };
+        userDetail : {} //seteas a 0 el estado de nuevo para una nueva peticion
+      }; 
+
     default:
       return state;
   }
