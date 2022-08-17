@@ -78,7 +78,7 @@ router.post("/pets/:id", async (req, res, next) => {
 
     try {
         const foundUser = await User.findById(id);
-        const date = new Date();
+        const date = new Date().toISOString().slice(0, 10);
 
         const newPet = new Pets({
             name,
