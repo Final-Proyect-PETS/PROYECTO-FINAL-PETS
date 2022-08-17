@@ -7,7 +7,7 @@ const Pets = require("../models/pets");
 const User = require("../models/users");
 const router = Router();
 
-router.get("/", async (req, res, next) => {
+router.get("/pets", async (req, res, next) => {
     try {
         connection()
         console.log("conectado");
