@@ -98,15 +98,15 @@ router.post("/pets/:id", async (req, res, next) => {
         vaccination,
         castrated,
         place,
-
     } = req.body;
 
     try {
         connection();
         console.log("conectado a users");
-    } catch (err) {
-        next(err);
+    } catch (error) {
+        next(error);
     }
+
 
     try {
         const foundUser = await User.findById(id);
@@ -130,8 +130,66 @@ router.post("/pets/:id", async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-})
+});
 
+router.get("/filterBySize", async (req, res) => {
+    try {
+        let { size } = req.query;
+        if (size === "big") {
+            connection();
+            const pet = await Pets.find({ size: "big" });
+            res.send(pet);
+        }
+        if (size === "medium") {
+            connection();
+            const pet2 = await Pets.find({ size: "medium" });
+            res.send(pet2);
+        }
+        if (size === "small") {
+            connection();
+            const pet3 = await Pets.find({ size: "small" });
+            res.send(pet3);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+router.get("/filterByType", async (req, res) => {
+    let { type } = req.body;
+    if (type === "dog") connection();
+    const dog = await Pets.find({ type: "dog" });
+    res.send(dog);
+    if (type === "cat") connection();
+    const cat = await Pets.find({ type: "cat" });
+    res.send(cat);
+});
+
+router.get("/bySortAge", async (req, res) => {
+    connection();
+    const asc = await Pets.find().sort({ age: 1 });
+    res.send(asc);
+});
+
+router.get("/bySortAge2", async (req, res) => {
+    connection();
+    const desc = await Pets.find().sort({ age: -1 });
+    res.send(desc);
+});
+
+/* router.get("/bySortCreated", async (req, res) => {
+    connection()
+    const asc = await Pets.find().sort({timestamps: 1})
+    res.send(asc)
+ })                                                                         <---- SE NESECITA CAMBIOS
+ 
+ router.get("/bySortCreated2", async (req, res) =>{
+    connection()
+    const desc = await Pets.find().sort({timestamps: -1})
+    res.send(desc)
+ }) */
 
 
 module.exports = router;
+/* fa6ed9174372874b8ad5d5c9e243064dbde44624 jeje */
+
