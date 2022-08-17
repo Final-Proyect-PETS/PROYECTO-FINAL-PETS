@@ -9,14 +9,14 @@ const petsSchema = new Schema({
     description: String,
     size: String,
     age: Number,
+    available: Boolean,
     vaccination: String,
     castrated: Boolean,
     place: String,
     user: { type: mongoose.Schema.ObjectId, ref: "User" }
 }, {
     timestamps: true
-}
-);
+});
 
 const Pet = mongoose.model("Pet", petsSchema);
 
