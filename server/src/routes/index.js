@@ -7,7 +7,7 @@ const Pets = require("../models/pets");
 const User = require("../models/users");
 const router = Router();
 
-router.get("/", async (req, res, next) => {
+router.get("/pets", async (req, res, next) => {
     try {
         connection();
         console.log("conectado");
@@ -29,8 +29,8 @@ router.get("/users", async (req, res, next) => {
         console.error(err);
     }
     try {
-        const arrayUsers = await User.find();
-        res.send(arrayUsers);
+        const arrayUsers = await User.find().populate("pets")
+        res.send(arrayUsers)
     } catch (error) {
         next(error);
     }
@@ -46,13 +46,16 @@ router.post("/users", (req, res) => {
             image: req.body.image,
             telephone: req.body.telephone,
             about: req.body.about,
+
             pets: req.body.pets,
         });
         post.save().then((per) => res.json(per));
+
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 })
+
 router.post("/pets/:id", async (req, res, next) => {
     const { id } = req.params;
     console.log(id);
@@ -99,4 +102,8 @@ router.post("/pets/:id", async (req, res, next) => {
         next(error);
     }
 })
+
+
+
 module.exports = router;
+
