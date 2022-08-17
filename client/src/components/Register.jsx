@@ -1,9 +1,11 @@
 import React from "react";
 import { useState } from "react";
-import { useEffect } from "react";
+import { useDispatch } from "react-redux"
+import postUser from "../redux/Actions/index"
 
 export default function Register () {
 
+    const dispatch = useDispatch()
 
     const [errors, setErrors] = useState({})
 
@@ -13,7 +15,10 @@ export default function Register () {
         username: "",
         image: "",
         email: "",
-        password: ""
+        password: "",
+        about: "",
+        telephone: "",
+        place: ""
     })
 
     console.log(input)
@@ -33,7 +38,7 @@ export default function Register () {
     function validate (input) {
 
         let errors = {}
-        
+
         if (input.first_name) {
             if (!/^[a-zA-Z]+$/.test(input.first_name)) {
                 errors.first_name = "El nombre solo puede tener letras!"
@@ -88,6 +93,7 @@ export default function Register () {
     }
 
 
+
     const have = () => {
         if (errors.first_name !== "" || errors.last_name !== "" || errors.username !== "" || errors.email !== "" || errors.password !== "") {
             return true
@@ -103,7 +109,7 @@ export default function Register () {
     function handleSubmit (e) {
         e.preventDefault()
         if (have() === false) {
-            alert("Created!")
+            dispatch(postUser())
 
             setInput({
                 first_name: "",
@@ -111,7 +117,10 @@ export default function Register () {
                 username: "",
                 image: "",
                 email: "",
-                password: ""
+                password: "",
+                about: "",
+                telephone: "",
+                place: ""
             })
         }
         else if (have() === "e") {
@@ -119,10 +128,6 @@ export default function Register () {
         }
         else (alert("Por favor, llena todo correctamente!"))
     }
-
-
-
-
 
 
 
@@ -147,7 +152,7 @@ export default function Register () {
                </div>
                <div>
                     <label>Imagen de Perfil</label>
-                    <input name="image" value={input.image} onChange={(e) => handleChange(e)} placeholder="Imagen de perfil" className="rounded-lg border-transparent flex-1 appearance-none border border-red-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"></input>
+                    <input type="file" name="image" value={input.image} onChange={(e) => handleChange(e)} placeholder="Imagen de perfil" ></input>
                </div>
                <div>
                     <label>Correo</label>
@@ -158,6 +163,18 @@ export default function Register () {
                     <label>Contraseña</label>
                     <input name="password" value={input.password} onChange={(e) => handleChange(e)} placeholder="Contraseña" className="rounded-lg border-transparent flex-1 appearance-none border border-red-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"></input>
                     {errors.password && (<p>{errors.password}</p>)}
+               </div>
+               <div>
+                    <label>Sobre mí</label>
+                    <textarea name="about" value={input.about} placeholder="Descripción"></textarea>
+               </div>
+               <div>
+                    <label>Telefono</label>
+                    <input name="telephone" value={input.telephone} onChange={(e) => handleChange(e)} placeholder="Telefono"></input>
+               </div>
+               <div>
+                    <label>Ubicación</label>
+                    <input name="place" value={input.place} placeholder="Ubicación"></input>
                </div>
                <div>
                     <button type="submit">Crear</button>
