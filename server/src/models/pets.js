@@ -8,7 +8,7 @@ const petsSchema = new Schema({
     type: String,
     description: String,
     size: String,
-    age: Integer,
+    age: Number,
     vaccination: String,
     castrated: Boolean,
     place: String,
