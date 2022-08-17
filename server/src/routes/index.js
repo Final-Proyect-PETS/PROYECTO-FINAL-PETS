@@ -55,6 +55,35 @@ router.post("/users", (req, res, next) => {
         next(error);
     }
 })
+router.get("/users/:id", async (req, res, next) => {
+    try {
+        connection();
+        console.log("conectado a users id");
+    } catch (err) {
+        next(err);
+    }
+    try {
+        const arrayUsers = await User.findById(req.params.id).populate("pets")
+        res.send(arrayUsers)
+    } catch (error) {
+        next(error);
+    }
+})
+router.get("/pets/:id", async (req, res, next) => {
+    try {
+        connection();
+        console.log("conectado a pets id");
+    } catch (err) {
+        next(err);
+    }
+    try {
+        const arrayPets = await Pets.findById(req.params.id).populate("user");
+        res.send(arrayPets);
+    } catch (error) {
+        next(error);
+    }
+})
+
 
 router.post("/pets/:id", async (req, res, next) => {
     const { id } = req.params;
