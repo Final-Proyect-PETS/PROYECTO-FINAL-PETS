@@ -1,10 +1,17 @@
 import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { postUser } from "../redux/Actions/index.js";
+import { useDispatch, useSelector } from "react-redux";
+import { postUser, getAllUsers } from "../redux/Actions/index.js";
+import { useEffect } from "react";
 
-export default function Register() {
+
+export default function Register () {
+
   const dispatch = useDispatch();
+
+  const users = useSelector((state) => state.users)
+
+  console.log(users)
 
   const [errors, setErrors] = useState({});
 
@@ -20,7 +27,9 @@ export default function Register() {
     place: "",
   });
 
-  console.log(input);
+  useEffect(() => {
+    dispatch(getAllUsers())
+  }, [dispatch])
 
   const handleChange = function (e) {
     setInput({
@@ -58,14 +67,18 @@ export default function Register() {
       if (!/^[A-Za-z0-9\s]+$/g.test(input.username)) {
         errors.username = "El nombre de usuario debe tener letras y números!";
       } else if (input.username.length > 20) {
-        errors.username =
-          "El nombre de usuario no puede tener más de 20 caracteres!";
+        errors.username = "El nombre de usuario no puede tener más de 20 caracteres!";
+      } else if (users.find(u => u.username === input.username.toLowerCase())) {
+        errors.username = "El usuario ya existe!"
       } else errors.username = "";
     } else errors.username = "El nombre de usuario es requerido!";
 
     if (input.email) {
       if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.email)) {
         errors.email = "El email debe ser valido!";
+      }
+      else if (users.find(u => u.email === input.email.toLowerCase())) {
+        errors.email = "El email ya esta registrado!"
       } else errors.email = "";
     } else errors.email = "El email es necesario!";
 
