@@ -1,9 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux"
-import postUser from "../redux/Actions/index"
+import { postUser } from "../redux/Actions/index"
 
-export default function Register () {
+export default function Register() {
 
     const dispatch = useDispatch()
 
@@ -35,7 +35,7 @@ export default function Register () {
         }))
     }
 
-    function validate (input) {
+    function validate(input) {
 
         let errors = {}
 
@@ -106,7 +106,7 @@ export default function Register () {
         }
     }
 
-    function handleSubmit (e) {
+    function handleSubmit(e) {
         e.preventDefault()
         if (have() === false) {
             dispatch(postUser())
@@ -144,41 +144,41 @@ export default function Register () {
                     <label>Apellido</label>
                     <input name="last_name" value={input.last_name} onChange={(e) => handleChange(e)} placeholder="Apellido" className="rounded-lg border-transparent flex-1 appearance-none border border-red-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"></input>
                     {errors.last_name && (<p>{errors.last_name}</p>)}
-               </div>
-               <div>
+                </div>
+                <div>
                     <label>Nombre de usuario</label>
                     <input name="username" value={input.username} onChange={(e) => handleChange(e)} placeholder="Nombre de usuario" className="rounded-lg border-transparent flex-1 appearance-none border border-red-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"></input>
                     {errors.username && (<p>{errors.username}</p>)}
-               </div>
-               <div>
+                </div>
+                <div>
                     <label>Imagen de Perfil</label>
                     <input type="file" name="image" value={input.image} onChange={(e) => handleChange(e)} placeholder="Imagen de perfil" ></input>
-               </div>
-               <div>
+                </div>
+                <div>
                     <label>Correo</label>
                     <input name="email" value={input.email} onChange={(e) => handleChange(e)} placeholder="Email" className="rounded-lg border-transparent flex-1 appearance-none border border-red-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"></input>
                     {errors.email && (<p>{errors.email}</p>)}
-               </div>
-               <div>
+                </div>
+                <div>
                     <label>Contraseña</label>
                     <input name="password" value={input.password} onChange={(e) => handleChange(e)} placeholder="Contraseña" className="rounded-lg border-transparent flex-1 appearance-none border border-red-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"></input>
                     {errors.password && (<p>{errors.password}</p>)}
-               </div>
-               <div>
+                </div>
+                <div>
                     <label>Sobre mí</label>
                     <textarea name="about" value={input.about} placeholder="Descripción"></textarea>
-               </div>
-               <div>
+                </div>
+                <div>
                     <label>Telefono</label>
                     <input name="telephone" value={input.telephone} onChange={(e) => handleChange(e)} placeholder="Telefono"></input>
-               </div>
-               <div>
+                </div>
+                <div>
                     <label>Ubicación</label>
                     <input name="place" value={input.place} placeholder="Ubicación"></input>
-               </div>
-               <div>
+                </div>
+                <div>
                     <button type="submit">Crear</button>
-               </div>
+                </div>
             </form>
         </div>
     )
