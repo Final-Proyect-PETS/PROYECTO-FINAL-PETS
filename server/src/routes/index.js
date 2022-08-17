@@ -15,7 +15,7 @@ router.get("/pets", async (req, res, next) => {
         console.error(err);
     }
     try {
-        const arrayPets = await Pets.find();
+        const arrayPets = await Pets.find().populate("user");
         res.send(arrayPets);
     } catch (error) {
         next(error);
@@ -35,7 +35,7 @@ router.get("/users", async (req, res, next) => {
         next(error);
     }
 })
-router.post("/users", (req, res) => {
+router.post("/users", (req, res, next) => {
     try {
         const post = new User({
             first_name: req.body.first_name,
@@ -76,7 +76,7 @@ router.post("/pets/:id", async (req, res, next) => {
         connection();
         console.log("conectado a users");
     } catch (err) {
-        console.error(err);
+        next(err);
     }
 
     try {
@@ -106,4 +106,3 @@ router.post("/pets/:id", async (req, res, next) => {
 
 
 module.exports = router;
-
