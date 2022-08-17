@@ -105,59 +105,21 @@ router.post("/pets/:id", async (req, res, next) => {
 
 
 
-/*     router.get("/filterBySize", async (req, res) => { */
-         /* const array = [{
-        name: "pepe",
-        image: "www",
-        type: "dog",
-        description: "dkfsal",
-        size: "grande",
-        age: 10,
-        vaccination: "rabia",
-        castrated: true,
-        place: "argentina",
-            
-        },
-        {
-        name: "pepe2",
-        image: "www",
-        type: "dog",
-        description: "dkfsal",
-        size: "pequeño",
-        age: 10,
-        vaccination: "rabia",
-        castrated: true,
-        place: "argentina",
-        }]
-          */
-        /* try{
-            const filter = []
-            for (let i = 0; i < array.length; i++){
-                if(array.size) filter.push(i)
-            } console.log(filter)
-            res.send(filter)
-            /* const filter = array.map(param => param.size)            
-            console.log(filter.size)
-            res.send( filter.size) 
-        }catch(error){
-            console.log(array)
-        } */
-   /*      try{
-            let { size } = req.body */
-            /* let { size } = req.query
-            if (size === "medium") */
- /*            if (size === "big")
+     router.get("/filterBySize", async (req, res) => { 
+         try{
+             let { size } = req.query
+            if (size === "big"){
             connection()
             const pet = await Pets.find({size: "big"})
-            res.send(pet)
-            if (size === "medium")
+            res.send(pet)}
+            if (size === "medium"){
             connection()
             const pet2 = await Pets.find({size: "medium"})
-            res.send(pet2)
-            if(size === "small")
+            res.send(pet2)}
+            if(size === "small"){
             connection()
             const pet3 = await Pets.find({size: "small"})
-            res.send(pet3)
+            res.send(pet3)}
         }
         catch(error){
             console.log(error)
@@ -186,7 +148,7 @@ router.post("/pets/:id", async (req, res, next) => {
     connection()
     const desc = await Pets.find().sort({age:-1})
     res.send(desc)
- }) */
+ }) 
 
  /* router.get("/bySortCreated", async (req, res) => {
     connection()
