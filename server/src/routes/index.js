@@ -54,4 +54,37 @@ router.get("/users", async (req, res, next) => {
         }
     }),
 
+    router.get("/filterBySize", (req, res) => {
+        const perro = [{
+        name: "pepe",
+        image: "www",
+        type: "dog",
+        description: "dkfsal",
+        size: "grande",
+        age: 10,
+        vaccination: "rabia",
+        castrated: true,
+        place: "argentina",
+            
+        },
+        {
+        name: "pepe2",
+        image: "www",
+        type: "dog",
+        description: "dkfsal",
+        size: "pequeño",
+        age: 10,
+        vaccination: "rabia",
+        castrated: true,
+        place: "argentina",
+        }]
+    /*     const pets = [Pets] */
+        try{
+            const filter = perro.filter(value => value === perro.size)
+            res.send(perro)
+        } catch(error){
+            console.log(error)
+        }
+    })
+
     module.exports = router;
