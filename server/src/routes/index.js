@@ -54,7 +54,7 @@ router.get("/users", async (req, res, next) => {
         }
     }),
 
-    router.get("/filterBySize", async (req, res) => {
+/*     router.get("/filterBySize", async (req, res) => { */
          /* const array = [{
         name: "pepe",
         image: "www",
@@ -91,11 +91,11 @@ router.get("/users", async (req, res, next) => {
         }catch(error){
             console.log(array)
         } */
-        try{
-            let { size } = req.body
+   /*      try{
+            let { size } = req.body */
             /* let { size } = req.query
             if (size === "medium") */
-            if (size === "big")
+ /*            if (size === "big")
             connection()
             const pet = await Pets.find({size: "big"})
             res.send(pet)
@@ -135,7 +135,7 @@ router.get("/users", async (req, res, next) => {
     connection()
     const desc = await Pets.find().sort({age:-1})
     res.send(desc)
- })
+ }) */
 
  /* router.get("/bySortCreated", async (req, res) => {
     connection()
