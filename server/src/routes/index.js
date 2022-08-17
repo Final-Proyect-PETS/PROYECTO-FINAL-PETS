@@ -76,7 +76,7 @@ router.get("/users", async (req, res, next) => {
     }
 
     try {
-      const foundUser = await User.findById(id);
+      const foundUser = await User.findById(id); //valido que el id que me pasan del front por params exista en mi db
 
       const newPet = new Pets({
         name,
@@ -90,7 +90,9 @@ router.get("/users", async (req, res, next) => {
         place,
         user: foundUser._id,
       });
-      await newPet.save();
+      const savedPet = await newPet.save();
+      foundUser.pets = foundUser.pets.concat(savedPet._id);
+      await foundUser.save();
       res.status(201).json(newPet);
     } catch (error) {
       next(error);
