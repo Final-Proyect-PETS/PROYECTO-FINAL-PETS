@@ -16,7 +16,7 @@ router.get("/pets", async (req, res, next) => {
         console.error(err);
     }
     try {
-        const arrayPets = await Pets.find();
+        const arrayPets = await Pets.find().populate("user");
         res.send(arrayPets);
     } catch (error) {
         next(error);
@@ -86,7 +86,8 @@ router.post("/pets/:id", async (req, res, next) => {
 
     try {
         const foundUser = await User.findById(id);
-        const date = new Date().toISOString().slice(0, 10);
+        const date = new Date().toISOString();
+        date.slice(0, 10)
 
         const newPet = new Pets({
             name,
