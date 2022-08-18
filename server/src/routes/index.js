@@ -22,6 +22,7 @@ router.get("/pets", async (req, res, next) => {
   }
 });
 router.get("/users", async (req, res, next) => {
+  const name = req.query.name;
   try {
     connection();
     console.log("conectado a users");
@@ -30,7 +31,30 @@ router.get("/users", async (req, res, next) => {
   }
   try {
     const arrayUsers = await User.find().populate("pets");
-    res.send(arrayUsers);
+    if (name) {
+      let userFound = arrayUsers.filter(
+        (u) => u.username.toLowerCase() === name.toLowerCase()
+      );
+      if (userFound.length) res.send(userFound);
+      else {
+        userFound = arrayUsers.filter((u) => u.email === name);
+        if (userFound.length) res.send(userFound);
+        else {
+          userFound = arrayUsers.filter(
+            (u) => u.first_name.toLowerCase() === name.toLowerCase()
+          );
+          if (userFound.length) res.send(userFound);
+          else {
+            userFound = arrayUsers.filter(
+              (u) => u.last_name.toLowerCase() === name.toLowerCase()
+            );
+            if (userFound.length) res.send(userFound);
+          }
+        }
+      }
+    } else {
+      res.send(arrayUsers);
+    }
   } catch (error) {
     next(error);
   }
