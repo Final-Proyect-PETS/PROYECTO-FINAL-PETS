@@ -15,7 +15,9 @@ router.get("/pets", async (req, res, next) => {
         console.error(err);
     }
     try {
-        const arrayPets = await Pets.find().pupulate();
+
+        const arrayPets = await Pets.find().populate("user");
+
         if (name) {
             let petFound = arrayPets.filter(
                 (p) => p.name.toLowerCase() === name.toLowerCase()
@@ -191,7 +193,7 @@ router.get("/filterBySize", async (req, res, next) => {
         next(error);
 
     }
-    
+
 });
 
 router.get("/filterByType", async (req, res, next) => {
