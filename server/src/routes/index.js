@@ -8,33 +8,69 @@ const User = require("../models/users");
 const router = Router();
 
 router.get("/pets", async (req, res, next) => {
-    try {
-        connection();
-        console.log("conectado");
-    } catch (err) {
-        console.error(err);
+
+  const name = req.query.name;
+  try {
+    connection();
+    console.log("conectado");
+  } catch (err) {
+    console.error(err);
+  }
+  try {
+    const arrayPets = await Pets.find();
+    if (name) {
+      let petFound = arrayPets.filter(
+        (p) => p.name.toLowerCase() === name.toLowerCase()
+      );
+      if (petFound.length) res.send(petFound);
+      else res.send(["Pet not found"]);
+    } else {
+      res.send(arrayPets);
     }
-    try {
-        const arrayPets = await Pets.find().populate("user");
-        res.send(arrayPets);
-    } catch (error) {
-        next(error);
-    }
+  } catch (error) {
+    next(error);
+  }
 });
 router.get("/users", async (req, res, next) => {
-    try {
-        connection();
-        console.log("conectado a users");
-    } catch (err) {
-        console.error(err);
+  const name = req.query.name;
+  try {
+    connection();
+    console.log("conectado a users");
+  } catch (err) {
+    console.error(err);
+  }
+  try {
+    const arrayUsers = await User.find().populate("pets");
+    if (name) {
+      let userFound = arrayUsers.filter(
+        (u) => u.username.toLowerCase() === name.toLowerCase()
+      );
+      if (userFound.length) res.send(userFound);
+      else {
+        userFound = arrayUsers.filter((u) => u.email === name);
+        if (userFound.length) res.send(userFound);
+        else {
+          userFound = arrayUsers.filter(
+            (u) => u.first_name.toLowerCase() === name.toLowerCase()
+          );
+          if (userFound.length) res.send(userFound);
+          else {
+            userFound = arrayUsers.filter(
+              (u) => u.last_name.toLowerCase() === name.toLowerCase()
+            );
+            if (userFound.length) res.send(userFound);
+            else res.send(["User not found"]);
+          }
+        }
+      }
+    } else {
+      res.send(arrayUsers);
     }
-    try {
-        const arrayUsers = await User.find().populate("pets")
-        res.send(arrayUsers)
-    } catch (error) {
-        next(error);
-    }
-})
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post("/users", (req, res, next) => {
     try {
         const post = new User({
