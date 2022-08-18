@@ -8,6 +8,7 @@ const User = require("../models/users");
 const router = Router();
 
 router.get("/pets", async (req, res, next) => {
+  const name = req.query.name;
   try {
     connection();
     console.log("conectado");
@@ -16,7 +17,15 @@ router.get("/pets", async (req, res, next) => {
   }
   try {
     const arrayPets = await Pets.find();
-    res.send(arrayPets);
+    if (name) {
+      let petFound = arrayPets.filter(
+        (p) => p.name.toLowerCase() === name.toLowerCase()
+      );
+      if (petFound.length) res.send(petFound);
+      else res.send(["Pet not found"]);
+    } else {
+      res.send(arrayPets);
+    }
   } catch (error) {
     next(error);
   }
@@ -49,6 +58,7 @@ router.get("/users", async (req, res, next) => {
               (u) => u.last_name.toLowerCase() === name.toLowerCase()
             );
             if (userFound.length) res.send(userFound);
+            else res.send(["User not found"]);
           }
         }
       }
