@@ -246,19 +246,6 @@ router.get("/bySortDate2", async (req, res, next) => {
 })
 
 
-/* router.get("/bySortCreated", async (req, res) => {
-    connection()
-    const asc = await Pets.find().sort({timestamps: 1})
-    res.send(asc)
- })                                                                         <---- SE NESECITA CAMBIOS
- 
- router.get("/bySortCreated2", async (req, res) =>{
-    connection()
-    const desc = await Pets.find().sort({timestamps: -1})
-    res.send(desc)
- }) */
-
-
 router.patch("/users", async (req, res, next) => {
     const { first_name, last_name, username, email, password, image, telephone, about } = req.body
     try {
@@ -305,7 +292,74 @@ router.patch("/pets", async (req, res) => {
     }
 })
 
+router.get("/filterByVaccination", async (req, res, next) => {
+    let { vaccination } = req.body;
+    try {
+        if (vaccination === "yes") connection();
+        const yes = await Pets.find({ vaccination: "yes" });
+        res.send(yes);
+        if (vaccination === "no") connection();
+        const no = await Pets.find({ vaccination: "no" });
+        res.send(no);
+        if (vaccination === "unknown") connection();
+        const unknown = await Pets.find({ vaccination: "unknown" });
+        res.send(unknown);
+    } catch (error) {
+        next(error);
+    }
+})
 
-module.exports = router;
+router.get("/filterByCastrated", async (req, res, next) => {
+    let { castrated } = req.body;
+    try {
+        if (castrated === true) connection();
+        const yes = await Pets.find({ castrated: true });
+        res.send(yes);
+        if (castrated === false) connection();
+        const no = await Pets.find({ castrated: false });
+        res.send(no);
+    } catch (error) {
+        next(error);
+    }
+})
+
+
+router.get("/filterByPlace", async (req, res, next) => {
+    let { place } = req.body;
+    try {
+        connection();
+        const pet = await Pets.find({ place: place });
+        res.send(pet);
+    } catch (error) {
+        next(error);
+    }
+})
+
+
+router.get("/filterByAge", async (req, res, next) => {
+    let { age } = req.query;
+    try {
+        let pet;
+        connection();
+        if (age === "young") {
+            pet = await Pets.find({ age: { $lt: 6 } });
+            res.send(pet);
+        }
+        if (age === "adult") {
+            pet = await Pets.find({ age: { $gt: 5, $lt: 10 } });
+            res.send(pet);
+        }
+        if (age === "old") {
+            pet = await Pets.find({ age: { $gt: 9 } });
+            res.send(pet);
+        }
+    } catch (error) {
+        next(error);
+    }
+}),
+
+
+
+    module.exports = router;
 
 

@@ -5,11 +5,11 @@ const Schema = mongoose.Schema;
 const petsSchema = new Schema({
     name: String,
     image: String,
-    type: String,
+    type: { type: String, enum: ["dog", "cat", "other"], lowercase: true },
     description: String,
-    size: String,
+    size: { type: String, enum: ["small", "medium", "big"], lowercase: true },
     age: Number,
-    vaccination: String,
+    vaccination: { type: String, enum: ["yes", "no", "unknown"], lowercase: true },
     castrated: Boolean,
     place: String,
     user: { type: mongoose.Schema.ObjectId, ref: "User" }
