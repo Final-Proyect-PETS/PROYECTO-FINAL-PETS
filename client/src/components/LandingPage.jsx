@@ -1,8 +1,36 @@
 import React from "react";
-// import { useState } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 // import { useDispatch } from "react-redux"
 
+function validate(input) {
+    let errors = {}
+    if (!input.email) {
+        errors.email = "El email es necesario"
+    } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.email)) {
+        errors.email = "Ingrese un email válido"
+    } else errors.email = ""
+
+    // else errors.email = "El email es necesario"
+
+    if (!input.password) {
+        errors.password = "La contraseña es necesaria"
+    } else if (!/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(input.password)) {
+        errors.password = "Ingrese una contraseña válida"
+    } else errors.password = ""
+
+    // else errors.password = "La contraseña es necesaria!"
+
+    return errors
+}
+
 export default function LandingPage() {
+
+    const [errors, setError] = useState({})
+    const [input, setInput] = useState({
+        email: "",
+        password: ""
+    })
 
     return (
         <div class="flex flex-col-6 m-5 mx-9 mt-8 items-center">
@@ -30,7 +58,8 @@ export default function LandingPage() {
                                         </path>
                                     </svg>
                                 </span>
-                                <input type="text" id="sign-in-email" class=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent" placeholder="Complete su email" />
+                                <input type="text" value={input.email} id="sign-in-email" class=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent" placeholder="Complete su email" />
+                                {errors.email && (<p>{errors.email}</p>)}
                             </div>
                         </div>
                         <div class="flex flex-col mb-6">
@@ -41,7 +70,8 @@ export default function LandingPage() {
                                         </path>
                                     </svg>
                                 </span>
-                                <input type="password" id="sign-in-email" class=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent" placeholder="Complete su contraseña" />
+                                <input type="password" id="sign-in-email" value={input.password} class=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent" placeholder="Complete su contraseña" />
+                                {errors.password && (<p>{errors.password}</p>)}
                             </div>
                         </div>
                         <div class="flex items-center mb-6 -mt-4">
@@ -52,9 +82,11 @@ export default function LandingPage() {
                             </div>
                         </div>
                         <div class="flex w-full">
-                            <button type="submit" class="py-2 px-4  bg-yellow-800 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                                Ingresar
-                            </button>
+                            <Link to="/home" class="py-2 px-4  bg-yellow-800 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg">
+                                <button type="submit" >
+                                    Ingresar
+                                </button>
+                            </Link>
                         </div>
 
                     </form>
