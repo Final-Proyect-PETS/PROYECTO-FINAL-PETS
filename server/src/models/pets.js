@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
+ 
 const petsSchema = new Schema({
     name: String,
     image: String,
@@ -12,7 +12,7 @@ const petsSchema = new Schema({
     vaccination: String,
     castrated: Boolean,
     place: String,
-    dateAdded: { type: Date, default: Date.now },
+    dateAdded: Date,
     user: { type: mongoose.Schema.ObjectId, ref: "User" }
 }, {
     timestamps: true
