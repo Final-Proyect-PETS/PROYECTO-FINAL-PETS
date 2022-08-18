@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postUser, getAllUsers } from "../redux/Actions/index.js";
 import { useEffect } from "react";
 
-
-export default function Register () {
+export default function Register() {
 
   const dispatch = useDispatch();
 
