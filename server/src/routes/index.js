@@ -294,16 +294,20 @@ router.patch("/pets", async (req, res) => {
 
 router.get("/filterByVaccination", async (req, res, next) => {
     let { vaccination } = req.body;
+    connection()
     try {
-        if (vaccination === "yes") connection();
-        const yes = await Pets.find({ vaccination: "yes" });
-        res.send(yes);
-        if (vaccination === "no") connection();
-        const no = await Pets.find({ vaccination: "no" });
-        res.send(no);
-        if (vaccination === "unknown") connection();
-        const unknown = await Pets.find({ vaccination: "unknown" });
-        res.send(unknown);
+        if (vaccination === "yes") {
+            const yes = await Pets.find({ vaccination: "yes" });
+            res.send(yes);
+        }
+        if (vaccination === "no") {
+            const no = await Pets.find({ vaccination: "no" });
+            res.send(no)
+        }
+        if (vaccination === "unknown") {
+            const unknown = await Pets.find({ vaccination: "unknown" });
+            res.send(unknown);
+        }
     } catch (error) {
         next(error);
     }
@@ -311,13 +315,16 @@ router.get("/filterByVaccination", async (req, res, next) => {
 
 router.get("/filterByCastrated", async (req, res, next) => {
     let { castrated } = req.body;
+    connection()
     try {
-        if (castrated === true) connection();
-        const yes = await Pets.find({ castrated: true });
-        res.send(yes);
-        if (castrated === false) connection();
-        const no = await Pets.find({ castrated: false });
-        res.send(no);
+        if (castrated === true) {
+            const yes = await Pets.find({ castrated: true });
+            res.send(yes);
+        }
+        if (castrated === false) {
+            const no = await Pets.find({ castrated: false });
+            res.send(no);
+        }
     } catch (error) {
         next(error);
     }
@@ -356,10 +363,10 @@ router.get("/filterByAge", async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}),
+})
 
 
 
-    module.exports = router;
+module.exports = router;
 
 
