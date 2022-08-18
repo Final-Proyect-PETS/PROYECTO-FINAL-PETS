@@ -14,6 +14,6 @@ const uri = `mongodb+srv://${usuario}:${password}@cluster0.zcau31k.mongodb.net/?
 module.exports = () => {
   mongoose
     .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log("conectado a mongodb"))
+    .then(() => console.log("conectado a mongodb uwu"))
     .catch((e) => console.log("error de conexión", e));
 };
