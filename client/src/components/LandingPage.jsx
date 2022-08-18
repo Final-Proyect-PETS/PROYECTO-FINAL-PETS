@@ -25,7 +25,7 @@ export default function LandingPage() {
                                         </path>
                                     </svg>
                                 </span>
-                                <input type="text" id="sign-in-email" class=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent" placeholder="Your email" />
+                                <input type="text" id="sign-in-email" class=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent" placeholder="Completa con tu email" />
                             </div>
                         </div>
                         <div class="flex flex-col mb-6">
@@ -36,7 +36,7 @@ export default function LandingPage() {
                                         </path>
                                     </svg>
                                 </span>
-                                <input type="password" id="sign-in-email" class=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent" placeholder="Your password" />
+                                <input type="password" id="sign-in-email" class=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent" placeholder="Completa tu contraseña" />
                             </div>
                         </div>
                         <div class="flex items-center mb-6 -mt-4">
