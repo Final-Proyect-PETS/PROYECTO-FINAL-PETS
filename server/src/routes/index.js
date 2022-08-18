@@ -49,8 +49,8 @@ router.post("/users", (req, res, next) => {
 
             pets: req.body.pets,
         });
-        post.save().then((per) => res.json(per));
 
+        post.save().then((per) => res.json(per));
     } catch (error) {
         next(error);
     }
@@ -155,26 +155,38 @@ router.get("/filterBySize", async (req, res) => {
     }
 });
 
-router.get("/filterByType", async (req, res) => {
+router.get("/filterByType", async (req, res, next) => {
     let { type } = req.body;
-    if (type === "dog") connection();
-    const dog = await Pets.find({ type: "dog" });
-    res.send(dog);
-    if (type === "cat") connection();
-    const cat = await Pets.find({ type: "cat" });
-    res.send(cat);
+    try {
+        if (type === "dog") connection();
+        const dog = await Pets.find({ type: "dog" });
+        res.send(dog);
+        if (type === "cat") connection();
+        const cat = await Pets.find({ type: "cat" });
+        res.send(cat);
+    } catch (error) {
+        next(error);
+    }
 });
 
-router.get("/bySortAge", async (req, res) => {
-    connection();
-    const asc = await Pets.find().sort({ age: 1 });
-    res.send(asc);
+router.get("/bySortAge", async (req, res, next) => {
+    try {
+        connection();
+        const asc = await Pets.find().sort({ age: 1 });
+        res.send(asc);
+    } catch (error) {
+        next(error);
+    }
 });
 
-router.get("/bySortAge2", async (req, res) => {
-    connection();
-    const desc = await Pets.find().sort({ age: -1 });
-    res.send(desc);
+router.get("/bySortAge2", async (req, res, next) => {
+    try {
+        connection();
+        const desc = await Pets.find().sort({ age: -1 });
+        res.send(desc);
+    } catch (error) {
+        next(error);
+    }
 });
 
 /* router.get("/bySortCreated", async (req, res) => {
