@@ -145,12 +145,6 @@ router.post("/pets/:id", async (req, res, next) => {
 
     try {
         const foundUser = await User.findById(id);
-        // const date = new Date().toISOString().slice(0, 10);
-        // const date = new Date();
-        // const now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(),
-        //     date.getUTCDate())
-        //  const dateAdded = new Date(now_utc).toISOString().slice(0, 10);
-
 
         const newPet = new Pets({
             name,
@@ -259,7 +253,7 @@ router.patch("/users", async (req, res, next) => {
     const { first_name, last_name, username, email, password, image, telephone, about } = req.body
     try {
         const oneUser = await User.findOne({
-            _id: req.body._id
+            _id: req.params.id
         })
 
         await oneUser.update({
@@ -278,11 +272,11 @@ router.patch("/users", async (req, res, next) => {
     }
 })
 
-router.patch("/pets", async (req, res) => {
+router.patch("/pets/:id", async (req, res) => {
     const { name, image, type, description, size, age, vaccination, castrated, place } = req.body
     try {
         const onePet = await Pets.findOne({
-            _id: req.body._id
+            _id: req.params.id
         })
         await onePet.update({
             name,
