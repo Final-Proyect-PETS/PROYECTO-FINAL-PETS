@@ -110,7 +110,12 @@ router.post("/pets/:id", async (req, res, next) => {
 
     try {
         const foundUser = await User.findById(id);
-        const date = new Date().toISOString().slice(0, 10);
+        // const date = new Date().toISOString().slice(0, 10);
+        // const date = new Date();
+        // const now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(),
+        //     date.getUTCDate())
+        //  const dateAdded = new Date(now_utc).toISOString().slice(0, 10);
+
 
         const newPet = new Pets({
             name,
@@ -122,7 +127,6 @@ router.post("/pets/:id", async (req, res, next) => {
             vaccination,
             castrated,
             place,
-            dateAdded: date,
             user: foundUser._id,
         });
         await newPet.save();
@@ -187,7 +191,26 @@ router.get("/bySortAge2", async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-});
+})
+router.get("/bySortDate", async (req, res, next) => {
+    try {
+        connection();
+        const date = await Pets.find().sort({ createdAt: -1 });
+        res.send(date);
+    } catch (error) {
+        next(error);
+    }
+})
+router.get("/bySortDate2", async (req, res, next) => {
+    try {
+        connection();
+        const date2 = await Pets.find().sort({ createdAt: 1 });
+        res.send(date2);
+    } catch (error) {
+        next(error);
+    }
+})
+
 
 /* router.get("/bySortCreated", async (req, res) => {
     connection()
