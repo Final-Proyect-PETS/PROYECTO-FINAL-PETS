@@ -1,5 +1,4 @@
 const connection = require("../db");
-
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 const { Router } = require("express");
@@ -8,67 +7,66 @@ const User = require("../models/users");
 const router = Router();
 
 router.get("/pets", async (req, res, next) => {
-
-  const name = req.query.name;
-  try {
-    connection();
-    console.log("conectado");
-  } catch (err) {
-    console.error(err);
-  }
-  try {
-    const arrayPets = await Pets.find();
-    if (name) {
-      let petFound = arrayPets.filter(
-        (p) => p.name.toLowerCase() === name.toLowerCase()
-      );
-      if (petFound.length) res.send(petFound);
-      else res.send(["Pet not found"]);
-    } else {
-      res.send(arrayPets);
+    const name = req.query.name;
+    try {
+        connection();
+        console.log("conectado");
+    } catch (err) {
+        console.error(err);
     }
-  } catch (error) {
-    next(error);
-  }
+    try {
+        const arrayPets = await Pets.find();
+        if (name) {
+            let petFound = arrayPets.filter(
+                (p) => p.name.toLowerCase() === name.toLowerCase()
+            );
+            if (petFound.length) res.send(petFound);
+            else res.send(["Pet not found"]);
+        } else {
+            res.send(arrayPets);
+        }
+    } catch (error) {
+        next(error);
+    }
 });
 router.get("/users", async (req, res, next) => {
-  const name = req.query.name;
-  try {
-    connection();
-    console.log("conectado a users");
-  } catch (err) {
-    console.error(err);
-  }
-  try {
-    const arrayUsers = await User.find().populate("pets");
-    if (name) {
-      let userFound = arrayUsers.filter(
-        (u) => u.username.toLowerCase() === name.toLowerCase()
-      );
-      if (userFound.length) res.send(userFound);
-      else {
-        userFound = arrayUsers.filter((u) => u.email === name);
-        if (userFound.length) res.send(userFound);
-        else {
-          userFound = arrayUsers.filter(
-            (u) => u.first_name.toLowerCase() === name.toLowerCase()
-          );
-          if (userFound.length) res.send(userFound);
-          else {
-            userFound = arrayUsers.filter(
-              (u) => u.last_name.toLowerCase() === name.toLowerCase()
+    const name = req.query.name;
+    try {
+        connection();
+        console.log("conectado a users");
+    } catch (err) {
+        console.error(err);
+    }
+    try {
+        const arrayUsers = await User.find().populate("pets");
+        if (name) {
+            let userFound = arrayUsers.filter(
+                (u) => u.username.toLowerCase() === name.toLowerCase()
             );
             if (userFound.length) res.send(userFound);
-            else res.send(["User not found"]);
-          }
+            else {
+                userFound = arrayUsers.filter((u) => u.email === name);
+                if (userFound.length) res.send(userFound);
+                else {
+                    userFound = arrayUsers.filter(
+                        (u) => u.first_name.toLowerCase() === name.toLowerCase()
+                    );
+                    if (userFound.length) res.send(userFound);
+                    else {
+                        userFound = arrayUsers.filter(
+                            (u) => u.last_name.toLowerCase() === name.toLowerCase()
+                        );
+                        if (userFound.length) res.send(userFound);
+                        else res.send(["User not found"]);
+                    }
+                }
+            }
+        } else {
+            res.send(arrayUsers);
         }
-      }
-    } else {
-      res.send(arrayUsers);
+    } catch (error) {
+        next(error);
     }
-  } catch (error) {
-    next(error);
-  }
 });
 
 router.post("/users", (req, res, next) => {
@@ -108,7 +106,7 @@ router.get("/users/:id", async (req, res, next) => {
 router.get("/pets/:id", async (req, res, next) => {
     try {
         connection();
-        console.log("conectado a pets id");
+        next("conectado a pets id");
     } catch (err) {
         next(err);
     }
@@ -146,7 +144,12 @@ router.post("/pets/:id", async (req, res, next) => {
 
     try {
         const foundUser = await User.findById(id);
-        const date = new Date().toISOString().slice(0, 10);
+        // const date = new Date().toISOString().slice(0, 10);
+        // const date = new Date();
+        // const now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(),
+        //     date.getUTCDate())
+        //  const dateAdded = new Date(now_utc).toISOString().slice(0, 10);
+
 
         const newPet = new Pets({
             name,
@@ -158,7 +161,6 @@ router.post("/pets/:id", async (req, res, next) => {
             vaccination,
             castrated,
             place,
-            dateAdded: date,
             user: foundUser._id,
         });
         await newPet.save();
@@ -168,7 +170,7 @@ router.post("/pets/:id", async (req, res, next) => {
     }
 });
 
-router.get("/filterBySize", async (req, res) => {
+router.get("/filterBySize", async (req, res, next) => {
     try {
         let { size } = req.query;
         if (size === "big") {
@@ -187,7 +189,7 @@ router.get("/filterBySize", async (req, res) => {
             res.send(pet3);
         }
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 });
 
@@ -223,68 +225,141 @@ router.get("/bySortAge2", async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-});
-
-/* router.get("/bySortCreated", async (req, res) => {
-    connection()
-    const asc = await Pets.find().sort({timestamps: 1})
-    res.send(asc)
- })                                                                         <---- SE NESECITA CAMBIOS
- 
- router.get("/bySortCreated2", async (req, res) =>{
-    connection()
-    const desc = await Pets.find().sort({timestamps: -1})
-    res.send(desc)
- }) */
-
-
- router.patch("/users",async (req, res, next)=>{
-  const {first_name, last_name, username,email,password,image,telephone,about}= req.body
-  try {
-      const oneUser = await User.findOne({
-        _id: req.body._id
-      })  
-
-      await oneUser.update({
-          first_name,
-          last_name,
-          username,
-          email,
-          password,
-          image,
-          telephone,
-          about,
-      })
-      res.status(200).json("Datos Actualizados Exitosamente 👌")
-  } catch (error) {
-      next(error);
-  }
 })
-
-router.patch("/pets", async (req,res)=>{
-  const{name,image,type,description,size,age,vaccination,castrated,place}=req.body
-  try {
-    const onePet = await Pets.findOne({
-      _id: req.body._id
-    }) 
-    await onePet.update({
-      name,
-      image,
-      type,
-      description,
-      size,
-      age,
-      vaccination,
-      castrated,
-      place
-    })
-    res.status(200).json("Los Datos de Tu Mascota se actualizaron exitosamente 🐶 ")
-  } catch (error) {
-    next(error)
-  }
+router.get("/bySortDate", async (req, res, next) => {
+    try {
+        connection();
+        const date = await Pets.find().sort({ createdAt: -1 });
+        res.send(date);
+    } catch (error) {
+        next(error);
+    }
+})
+router.get("/bySortDate2", async (req, res, next) => {
+    try {
+        connection();
+        const date2 = await Pets.find().sort({ createdAt: 1 });
+        res.send(date2);
+    } catch (error) {
+        next(error);
+    }
 })
 
 
-module.exports = router;
+router.patch("/users", async (req, res, next) => {
+    const { first_name, last_name, username, email, password, image, telephone, about } = req.body
+    try {
+        const oneUser = await User.findOne({
+            _id: req.body._id
+        })
+
+        await oneUser.update({
+            first_name,
+            last_name,
+            username,
+            email,
+            password,
+            image,
+            telephone,
+            about,
+        })
+        res.status(200).json("Datos Actualizados Exitosamente 👌")
+    } catch (error) {
+        next(error);
+    }
+})
+
+router.patch("/pets", async (req, res) => {
+    const { name, image, type, description, size, age, vaccination, castrated, place } = req.body
+    try {
+        const onePet = await Pets.findOne({
+            _id: req.body._id
+        })
+        await onePet.update({
+            name,
+            image,
+            type,
+            description,
+            size,
+            age,
+            vaccination,
+            castrated,
+            place
+        })
+        res.status(200).json("Los Datos de Tu Mascota se actualizaron exitosamente 🐶 ")
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.get("/filterByVaccination", async (req, res, next) => {
+    let { vaccination } = req.body;
+    try {
+        if (vaccination === "yes") connection();
+        const yes = await Pets.find({ vaccination: "yes" });
+        res.send(yes);
+        if (vaccination === "no") connection();
+        const no = await Pets.find({ vaccination: "no" });
+        res.send(no);
+        if (vaccination === "unknown") connection();
+        const unknown = await Pets.find({ vaccination: "unknown" });
+        res.send(unknown);
+    } catch (error) {
+        next(error);
+    }
+})
+
+router.get("/filterByCastrated", async (req, res, next) => {
+    let { castrated } = req.body;
+    try {
+        if (castrated === true) connection();
+        const yes = await Pets.find({ castrated: true });
+        res.send(yes);
+        if (castrated === false) connection();
+        const no = await Pets.find({ castrated: false });
+        res.send(no);
+    } catch (error) {
+        next(error);
+    }
+})
+
+
+router.get("/filterByPlace", async (req, res, next) => {
+    let { place } = req.body;
+    try {
+        connection();
+        const pet = await Pets.find({ place: place });
+        res.send(pet);
+    } catch (error) {
+        next(error);
+    }
+})
+
+
+router.get("/filterByAge", async (req, res, next) => {
+    let { age } = req.query;
+    try {
+        let pet;
+        connection();
+        if (age === "young") {
+            pet = await Pets.find({ age: { $lt: 6 } });
+            res.send(pet);
+        }
+        if (age === "adult") {
+            pet = await Pets.find({ age: { $gt: 5, $lt: 10 } });
+            res.send(pet);
+        }
+        if (age === "old") {
+            pet = await Pets.find({ age: { $gt: 9 } });
+            res.send(pet);
+        }
+    } catch (error) {
+        next(error);
+    }
+}),
+
+
+
+    module.exports = router;
 
 
