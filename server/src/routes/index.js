@@ -15,7 +15,7 @@ router.get("/pets", async (req, res, next) => {
         console.error(err);
     }
     try {
-        const arrayPets = await Pets.find();
+        const arrayPets = await Pets.find().populate("user");
         if (name) {
             let petFound = arrayPets.filter(
                 (p) => p.name.toLowerCase() === name.toLowerCase()
@@ -143,11 +143,6 @@ router.post("/pets/:id", async (req, res, next) => {
 
     try {
         const foundUser = await User.findById(id);
-        // const date = new Date().toISOString().slice(0, 10);
-        // const date = new Date();
-        // const now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(),
-        //     date.getUTCDate())
-        //  const dateAdded = new Date(now_utc).toISOString().slice(0, 10);
 
 
         const newPet = new Pets({
@@ -193,7 +188,7 @@ router.get("/filterBySize", async (req, res, next) => {
 });
 
 router.get("/filterByType", async (req, res, next) => {
-    let { type } = req.body;
+    let { type } = req.query;
     try {
         if (type === "dog") connection();
         const dog = await Pets.find({ type: "dog" });
@@ -246,11 +241,11 @@ router.get("/bySortDate2", async (req, res, next) => {
 })
 
 
-router.patch("/users", async (req, res, next) => {
+router.patch("/users/:id", async (req, res, next) => {
     const { first_name, last_name, username, email, password, image, telephone, about } = req.body
     try {
         const oneUser = await User.findOne({
-            _id: req.body._id
+            _id: req.params.id
         })
 
         await oneUser.update({
@@ -269,11 +264,11 @@ router.patch("/users", async (req, res, next) => {
     }
 })
 
-router.patch("/pets", async (req, res) => {
+router.patch("/pets/:id", async (req, res, next) => {
     const { name, image, type, description, size, age, vaccination, castrated, place } = req.body
     try {
         const onePet = await Pets.findOne({
-            _id: req.body._id
+            _id: req.params.id
         })
         await onePet.update({
             name,
@@ -293,7 +288,7 @@ router.patch("/pets", async (req, res) => {
 })
 
 router.get("/filterByVaccination", async (req, res, next) => {
-    let { vaccination } = req.body;
+    let { vaccination } = req.query;
     connection()
     try {
         if (vaccination === "yes") {
@@ -313,8 +308,8 @@ router.get("/filterByVaccination", async (req, res, next) => {
     }
 })
 
-router.get("/filterByCastrated", async (req, res, next) => {
-    let { castrated } = req.body;
+router.get("/filters", async (req, res, next) => {
+    let { castrated } = req.query;
     connection()
     try {
         if (castrated === true) {
@@ -332,7 +327,7 @@ router.get("/filterByCastrated", async (req, res, next) => {
 
 
 router.get("/filterByPlace", async (req, res, next) => {
-    let { place } = req.body;
+    let { place } = req.query;
     try {
         connection();
         const pet = await Pets.find({ place: place });
@@ -364,6 +359,7 @@ router.get("/filterByAge", async (req, res, next) => {
         next(error);
     }
 })
+
 
 
 module.exports = router;
