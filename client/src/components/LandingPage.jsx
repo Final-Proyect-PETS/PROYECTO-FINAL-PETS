@@ -4,15 +4,6 @@ import React from "react";
 
 export default function LandingPage() {
 
-    // function validate(input){
-    //     let errors ={}
-    //     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.email)) {
-    //         errors.email = "Ingrese un email válido"
-    //     }
-    // }
-    const responseGoogle = (response) => {
-        console.log(response);
-    }
     return (
         <div class="flex flex-col-6 m-5 mx-9 mt-8 items-center">
             <div class="text-gray-800 m-14 p-14">
@@ -39,7 +30,7 @@ export default function LandingPage() {
                                         </path>
                                     </svg>
                                 </span>
-                                <input type="text" id="sign-in-email" class=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent" placeholder="Completa su email" />
+                                <input type="text" id="sign-in-email" class=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent" placeholder="Complete su email" />
                             </div>
                         </div>
                         <div class="flex flex-col mb-6">
@@ -50,7 +41,7 @@ export default function LandingPage() {
                                         </path>
                                     </svg>
                                 </span>
-                                <input type="password" id="sign-in-email" class=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent" placeholder="Completa su contraseña" />
+                                <input type="password" id="sign-in-email" class=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent" placeholder="Complete su contraseña" />
                             </div>
                         </div>
                         <div class="flex items-center mb-6 -mt-4">
