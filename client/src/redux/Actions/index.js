@@ -75,10 +75,10 @@ export function getPetByName(name) {
   };
 }
 ////POST ACTIONS//---------------------------------------------------------------------------
-export function postPet(payload) {
+export function postPet(payload, id) {
   return async function (dispatch) {
     try {
-      let json = await axios.post(`http://localhost:3001/pets`, payload);
+      let json = await axios.post(`http://localhost:3001/pets/${id}`, payload);
       return dispatch({
         type: actions.POST_PET,
         payload: json.data,
@@ -109,4 +109,104 @@ export function clearState(payload) {
     type: actions.CLEAR_STATE,
     payload,
   };
+}
+//FILTROS//------------------
+export function sortAscAge(payload){
+  return async function (dispatch) {
+    let json = await axios.get(`http://localhost:3001/bySortAge`);
+      return dispatch({
+        type: actions.SORT_ASC_AGE,
+        payload: json.data
+    })
+  }
+}
+
+export function sortDescAge(payload){
+  return async function (dispatch) {
+    let json = await axios.get(`http://localhost:3001/bySortAge2`);
+      return dispatch({
+        type: actions.SORT_DESC_AGE,
+        payload: json.data
+    })
+  }
+}
+
+export function sortDescCreated(payload){
+  return async function (dispatch) {
+    let json = await axios.get(`http://localhost:3001/bySortDate2`);
+      return dispatch({
+        type: actions.SORT_DESC_CREATED,
+        payload: json.data
+    })
+  }
+}
+
+export function sortAscCreated(payload){
+  return async function (dispatch) {
+    let json = await axios.get(`http://localhost:3001/bySortDate`);
+      return dispatch({
+        type: actions.SORT_ASC_CREATED,
+        payload: json.data
+    })
+  }
+}
+
+export function filterByVaccination(payload){
+  return async function (dispatch) {
+    let json = await axios.get(`http://localhost:3001/filterByVaccination?vaccination=${payload}`);
+      return dispatch({
+        type: actions.FILTER_BY_VACCINATION,
+        payload: json.data
+    })
+  }
+}
+
+export function filterByType(payload){
+  return async function (dispatch) {
+    let json = await axios.get(`http://localhost:3001/filterByType?type=${payload}`);
+      return dispatch({
+        type: actions.FILTER_BY_TYPE,
+        payload: json.data
+    })
+  }
+}
+
+export function filterBySize(payload){
+  return async function (dispatch) {
+    let json = await axios.get(`http://localhost:3001/filterBySize?size=${payload}`);
+      return dispatch({
+        type: actions.FILTER_BY_SIZE,
+        payload: json.data
+    })
+  }
+}
+
+export function filterByCastrated(payload){
+  return async function (dispatch) {
+    let json = await axios.get(`http://localhost:3001/filterByCastrated?castrated=${payload}`);
+      return dispatch({
+        type: actions.FILTER_BY_CASTRAED,
+        payload: json.data
+    })
+  }
+}
+
+export function filterByPlace(payload){
+  return async function (dispatch) {
+    let json = await axios.get(`http://localhost:3001/filterByPlace?place=${payload}`);
+      return dispatch({
+        type: actions.FILTER_BY_PLACE,
+        payload: json.data
+    })
+  }
+}
+
+export function filterByAge(payload){
+  return async function (dispatch) {
+    let json = await axios.get(`http://localhost:3001/filterByAge?age=${payload}`);
+      return dispatch({
+        type: actions.FILTER_BY_AGE,
+        payload: json.data
+    })
+  }
 }

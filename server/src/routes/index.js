@@ -15,7 +15,9 @@ router.get("/pets", async (req, res, next) => {
         console.error(err);
     }
     try {
+
         const arrayPets = await Pets.find().populate("user");
+
         if (name) {
             let petFound = arrayPets.filter(
                 (p) => p.name.toLowerCase() === name.toLowerCase()
@@ -143,12 +145,6 @@ router.post("/pets/:id", async (req, res, next) => {
 
     try {
         const foundUser = await User.findById(id);
-        // const date = new Date().toISOString().slice(0, 10);
-        // const date = new Date();
-        // const now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(),
-        //     date.getUTCDate())
-        //  const dateAdded = new Date(now_utc).toISOString().slice(0, 10);
-
 
         const newPet = new Pets({
             name,
@@ -191,17 +187,23 @@ router.get("/filterBySize", async (req, res, next) => {
         next(error);
 
     }
+
 });
 
 router.get("/filterByType", async (req, res, next) => {
-  let { type } = req.body;
-  try {
-    if (type === "dog") connection();
-    const dog = await Pets.find({ type: "dog" });
-    res.send(dog);
-    if (type === "cat") connection();
-    const cat = await Pets.find({ type: "cat" });
-    res.send(cat);
+    try {
+    let { type } = req.query;
+    if (type === "dog"){
+        connection();
+        const dog = await Pets.find({ type: "dog" });
+        res.send(dog);
+    }
+
+    if (type === "cat") {
+        connection();
+        const cat = await Pets.find({ type: "cat" });
+        res.send(cat);
+    }
   } catch (error) {
     next(error);
   }
@@ -251,7 +253,7 @@ router.patch("/users", async (req, res, next) => {
     const { first_name, last_name, username, email, password, image, telephone, about } = req.body
     try {
         const oneUser = await User.findOne({
-            _id: req.body._id
+            _id: req.params.id
         })
 
         await oneUser.update({
@@ -270,11 +272,11 @@ router.patch("/users", async (req, res, next) => {
     }
 })
 
-router.patch("/pets", async (req, res) => {
+router.patch("/pets/:id", async (req, res) => {
     const { name, image, type, description, size, age, vaccination, castrated, place } = req.body
     try {
         const onePet = await Pets.findOne({
-            _id: req.body._id
+            _id: req.params.id
         })
         await onePet.update({
             name,
@@ -294,31 +296,41 @@ router.patch("/pets", async (req, res) => {
 })
 
 router.get("/filterByVaccination", async (req, res, next) => {
-    let { vaccination } = req.body;
     try {
-        if (vaccination === "yes") connection();
-        const yes = await Pets.find({ vaccination: "yes" });
-        res.send(yes);
-        if (vaccination === "no") connection();
-        const no = await Pets.find({ vaccination: "no" });
-        res.send(no);
-        if (vaccination === "unknown") connection();
-        const unknown = await Pets.find({ vaccination: "unknown" });
-        res.send(unknown);
+        let { vaccination } = req.query;
+        if (vaccination === "yes") {
+            connection();
+            const yes = await Pets.find({ vaccination: "yes" });
+            res.send(yes);
+        }
+        if (vaccination === "no") {
+            connection();
+            const no = await Pets.find({ vaccination: "no" });
+            res.send(no);
+        }
+        if (vaccination === "unknown") {
+            connection();
+            const unknown = await Pets.find({ vaccination: "unknown" });
+            res.send(unknown);
+        }
     } catch (error) {
         next(error);
     }
 })
 
 router.get("/filterByCastrated", async (req, res, next) => {
-    let { castrated } = req.body;
     try {
-        if (castrated === true) connection();
-        const yes = await Pets.find({ castrated: true });
-        res.send(yes);
-        if (castrated === false) connection();
-        const no = await Pets.find({ castrated: false });
-        res.send(no);
+        let { castrated } = req.query;
+        if (castrated === "true"){
+             connection();
+            const yes = await Pets.find({ castrated: true });
+            res.send(yes);
+        }
+        if (castrated === "false") {
+            connection();
+            const no = await Pets.find({ castrated: false });
+            res.send(no);
+        }
     } catch (error) {
         next(error);
     }
