@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as actions from "./actionTypes";
 
-//GET ACTIONS//------------------------------------------------------------------
+//GET ALL ACTIONS//------------------------------------------------------------------
 export function getAllUsers () {
   return async (dispatch) => {
     return await axios
@@ -12,7 +12,17 @@ export function getAllUsers () {
       .catch((error) => console.log(error));
   };
 }
-
+export function getAllPets () {
+  return async (dispatch) => {
+    return await axios
+      .get("http://localhost:3001/pets")
+      .then((json) =>
+        dispatch({ type: actions.GET_ALL_PETS, payload: json.data })
+      )
+      .catch((error) => console.log(error));
+  };
+}
+//GET DETAIL ACTION//-----------------------------------------------------
 export function getUserDetail(id) {
   return async (dispatch) => {
     return await axios
@@ -23,7 +33,17 @@ export function getUserDetail(id) {
       .catch((error) => console.log(error));
   };
 }
-
+export function getPetDetail(id) {
+  return async (dispatch) => {
+    return await axios
+      .get(`http://localhost:3001/pets/${id}`)
+      .then((json) =>
+        dispatch({ type: actions.GET_PET_DETAIL, payload: json.data })
+      )
+      .catch((error) => console.log(error));
+  };
+}
+//GET BY NAME ACTIONS//----------------------------------
 export function getUserByName(name) {
   return async function (dispatch) {
     try {
@@ -31,16 +51,30 @@ export function getUserByName(name) {
         "http://localhost:3001/users?name=" + name
       );
       return dispatch({
-        type: actions.GET_BY_NAME,
+        type: actions.GET_USER_BY_NAME,
         payload: json.data,
       });
     } catch (error) {
-      console.log(error, "error en getBYname");
+      console.log(error, "error en getUSERBYname");
+    }
+  };
+}
+export function getPetByName(name) {
+  return async function (dispatch) {
+    try {
+      var json = await axios.get(
+        "http://localhost:3001/pets?name=" + name
+      );
+      return dispatch({
+        type: actions.GET_PET_BY_NAME,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error, "error en getPETBYname");
     }
   };
 }
 ////POST ACTIONS//---------------------------------------------------------------------------
-
 export function postPet(payload) {
   return async function (dispatch) {
     try {
@@ -54,7 +88,6 @@ export function postPet(payload) {
     }
   };
 }
-
 export function postUser(payload) {
   console.log(payload,"payload arriba del dispatch")
   return async function (dispatch) {
@@ -70,8 +103,7 @@ export function postUser(payload) {
     }
   };
 }
-
-
+//CLEAR//-------------------------------------------------------------------------------------------------------------------
 export function clearState(payload) {
   return {
     type: actions.CLEAR_STATE,
