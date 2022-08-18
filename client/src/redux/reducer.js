@@ -14,6 +14,12 @@ export default function rootReducer(state = initialState, { type, payload }) {
         pets: payload,
       };
 
+    case actions.GET_ALL_USERS:
+      return {
+        ...state,
+        users: payload,
+      };
+
     case actions.GET_BY_NAME:
       return {
         ...state,
