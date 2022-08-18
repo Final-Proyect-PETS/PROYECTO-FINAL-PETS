@@ -88,7 +88,7 @@ router.post("/users", (req, res, next) => {
     } catch (error) {
         next(error);
     }
-})
+});
 router.get("/users/:id", async (req, res, next) => {
     try {
         connection();
@@ -97,12 +97,12 @@ router.get("/users/:id", async (req, res, next) => {
         next(err);
     }
     try {
-        const arrayUsers = await User.findById(req.params.id).populate("pets")
-        res.send(arrayUsers)
+        const arrayUsers = await User.findById(req.params.id).populate("pets");
+        res.send(arrayUsers);
     } catch (error) {
         next(error);
     }
-})
+});
 router.get("/pets/:id", async (req, res, next) => {
     try {
         connection();
@@ -140,7 +140,6 @@ router.post("/pets/:id", async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-
 
     try {
         const foundUser = await User.findById(id);
@@ -218,6 +217,7 @@ router.get("/bySortAge", async (req, res, next) => {
 });
 
 router.get("/bySortAge2", async (req, res, next) => {
+
     try {
         connection();
         const desc = await Pets.find().sort({ age: -1 });
@@ -366,7 +366,7 @@ router.get("/filterByAge", async (req, res, next) => {
 })
 
 
-
 module.exports = router;
+
 
 
