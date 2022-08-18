@@ -75,10 +75,10 @@ export function getPetByName(name) {
   };
 }
 ////POST ACTIONS//---------------------------------------------------------------------------
-export function postPet(payload) {
+export function postPet(payload, id) {
   return async function (dispatch) {
     try {
-      let json = await axios.post(`http://localhost:3001/pets`, payload);
+      let json = await axios.post(`http://localhost:3001/pets/${id}`, payload);
       return dispatch({
         type: actions.POST_PET,
         payload: json.data,
