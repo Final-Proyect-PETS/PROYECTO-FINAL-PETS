@@ -157,5 +157,51 @@ router.get("/bySortAge2", async (req, res) => {
     res.send(desc)
  }) */
 
+ router.patch("/users",async (req, res, next)=>{
+  const {first_name, last_name, username,email,password,image,telephone,about}= req.body
+  try {
+      const oneUser = await User.findOne({
+        _id: req.body._id
+      })  
+
+      await oneUser.update({
+          first_name,
+          last_name,
+          username,
+          email,
+          password,
+          image,
+          telephone,
+          about,
+      })
+      res.status(200).json("Datos Actualizados Exitosamente 👌")
+  } catch (error) {
+      next(error);
+  }
+})
+
+router.patch("/pets", async (req,res)=>{
+  const{name,image,type,description,size,age,vaccination,castrated,place}=req.body
+  try {
+    const onePet = await Pets.findOne({
+      _id: req.body._id
+    }) 
+    await onePet.update({
+      name,
+      image,
+      type,
+      description,
+      size,
+      age,
+      vaccination,
+      castrated,
+      place
+    })
+    res.status(200).json("Los Datos de Tu Mascota se actualizaron exitosamente 🐶 ")
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = router;
 /* fa6ed9174372874b8ad5d5c9e243064dbde44624 jeje */
