@@ -12,12 +12,10 @@ const petsSchema = new Schema({
     vaccination: String,
     castrated: Boolean,
     place: String,
-    dateAdded: String,
     user: { type: mongoose.Schema.ObjectId, ref: "User" }
 }, {
     timestamps: true
-}
-);
+});
 
 const Pet = mongoose.model("Pet", petsSchema);
 

@@ -1,5 +1,4 @@
 const connection = require("../db");
-
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 const { Router } = require("express");
@@ -12,7 +11,7 @@ router.get("/pets", async (req, res, next) => {
         connection();
         console.log("conectado");
     } catch (err) {
-        console.error(err);
+        next(err);
     }
     try {
         const arrayPets = await Pets.find().populate("user");
@@ -26,7 +25,7 @@ router.get("/users", async (req, res, next) => {
         connection();
         console.log("conectado a users");
     } catch (err) {
-        console.error(err);
+        next(err);
     }
     try {
         const arrayUsers = await User.find().populate("pets")
@@ -72,7 +71,7 @@ router.get("/users/:id", async (req, res, next) => {
 router.get("/pets/:id", async (req, res, next) => {
     try {
         connection();
-        console.log("conectado a pets id");
+        next("conectado a pets id");
     } catch (err) {
         next(err);
     }
@@ -136,7 +135,7 @@ router.post("/pets/:id", async (req, res, next) => {
     }
 });
 
-router.get("/filterBySize", async (req, res) => {
+router.get("/filterBySize", async (req, res, next) => {
     try {
         let { size } = req.query;
         if (size === "big") {
@@ -155,7 +154,7 @@ router.get("/filterBySize", async (req, res) => {
             res.send(pet3);
         }
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 });
 
