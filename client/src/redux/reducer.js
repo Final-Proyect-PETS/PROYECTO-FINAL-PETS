@@ -60,7 +60,47 @@ export default function rootReducer(state = initialState, { type, payload }) {
         ...state,
         userDetail: {}, //seteas a 0 el estado de nuevo para una nueva peticion
       };
-
+      //FILTROS
+      case actions.SORT_ASC_AGE:
+        return {
+          ...state,
+          pets: payload
+        }
+      case actions.SORT_DESC_AGE:
+        return {
+          ...state,
+          pets: payload
+        }
+        case actions.SORT_ASC_CREATED:
+          return {
+            ...state,
+            pets: payload
+          }
+        case actions.SORT_DESC_CREATED:
+          return {
+            ...state,
+            pets: payload
+          }
+        case actions.FILTER_BY_PLACE:
+        return {
+          ...state,
+          pets: payload
+        }
+        case actions.FILTER_BY_TYPE:
+          return {
+            ...state,
+            pets: payload
+          }
+        case actions.FILTER_BY_CASTRAED:
+        return {
+          ...state,
+          pets: payload
+        }
+        case actions.FILTER_BY_VACCINATION:
+          return {
+            ...state,
+            pets: payload
+          }
     default:
       return state;
   }
