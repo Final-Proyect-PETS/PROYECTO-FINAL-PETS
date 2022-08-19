@@ -72,9 +72,9 @@ export function getPetByName(name) {
 }
 ////POST ACTIONS//---------------------------------------------------------------------------
 
-//export function postPet(id, payload) {
+//Ferri dice: anda asi: export function postPet(id, payload) {
 
-export function postPet(payload, id) {
+export function postPet(id, payload) {
   return async function (dispatch) {
     try {
       let json = await axios.post(`http://localhost:3001/pets/${id}`, payload);
