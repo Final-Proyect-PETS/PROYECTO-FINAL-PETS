@@ -80,7 +80,6 @@ router.post("/users", (req, res, next) => {
             image: req.body.image,
             telephone: req.body.telephone,
             about: req.body.about,
-
             pets: req.body.pets,
         });
 
@@ -143,7 +142,6 @@ router.post("/pets/:id", async (req, res, next) => {
 
     try {
         const foundUser = await User.findById(id);
-
 
         const newPet = new Pets({
             name,
