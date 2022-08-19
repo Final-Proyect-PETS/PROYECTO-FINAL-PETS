@@ -64,68 +64,11 @@ export default function rootReducer(state = initialState, { type, payload }) {
         };
         
     //FILTROS
-    case actions.SORT_ASC_AGE:
+    case actions.FILTER_BY_QUERY:
       return {
         ...state,
         pets: payload
       }
-    case actions.SORT_DESC_AGE:
-      return {
-        ...state,
-        pets: payload
-      }
-      case actions.SORT_ASC_CREATED:
-        return {
-          ...state,
-          pets: payload
-        }
-      case actions.SORT_DESC_CREATED:
-        return {
-          ...state,
-          pets: payload
-        }
-        case actions.FILTER_BY_PLACE:
-          return {
-            ...state,
-            pets: payload 
-        }
-      case actions.FILTER_BY_TYPE:
-          return {
-            ...state,
-            pets: payload
-          }
-      case actions.FILTER_BY_CASTRAED:
-          console.log(payload)
-          return {
-            ...state,
-            filtros: payload
-          }
-
-      case actions.FILTER_BY_VACCINATION:
-        /* const allPets = state.pets;
-        const filtros = state.filtros
-        const filter = filtros.length > 0 ? filtros.filter((pet) =>{
-            return pet.hasOwnProperty(payload)
-          }) : allPets.filter((pet) =>{
-            return pet.hasOwnProperty(payload)
-          }); */
-          console.log(payload)
-        return {
-          ...state,
-          pets: payload
-        }
-
-      case actions.FILTER_BY_SIZE:
-        return {
-          ...state,
-          pets: payload
-        }
-
-      case actions.FILTER_BY_AGE:
-        return {
-          ...state,
-          pets: payload
-        }
        default:
       return state
     }
