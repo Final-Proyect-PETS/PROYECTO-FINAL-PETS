@@ -6,6 +6,7 @@ import LandingPage from "./components/LandingPage";
 import UserDetail from "./components/UserDetail/UserDetail";
 import Register from "./components/Register";
 import PetRegister from "./components/PetRegister";
+import PetDetail from "./components/Details/PetDetail";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path={"/"} element={<LandingPage />} />
         <Route path={"/home"} element={<Home />} />
         <Route path={"/users/:id"} element={<UserDetail />} />
+        <Route path={"/pet/:id"} element={<PetDetail />}/>
         <Route path={"/about"} element={<About />} />
         <Route path={"/register"} element={<Register />} />
         <Route path={"/petregister"} element={<PetRegister />} />
