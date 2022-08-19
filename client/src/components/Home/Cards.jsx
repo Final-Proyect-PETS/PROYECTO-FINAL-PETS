@@ -39,18 +39,16 @@ export default function Cards() {
     setCardsPerPage(CardsPerPage + 6);
   };
   //-------------------------------------------------------------------------------------------------
-  // var switched = "mascota";
+
   function handleToogle(e) {
     console.log("switch en movimiento....");
 
     if (input === "mascota") {
       setInput("usuario");
       console.log(input, "DBusuario");
-      // switched = "usuario";
     } else {
       setInput("mascota");
       console.log(input, "DBmascota");
-      // switched = "mascota";
     }
   }
 

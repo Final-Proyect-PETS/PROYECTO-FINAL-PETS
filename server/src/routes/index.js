@@ -45,7 +45,7 @@ router.get("/users", async (req, res, next) => {
   try {
     const arrayUsers = await User.find().populate("pets");
     if (name) {
-      //LOGICA CAMBIADO CON .INCLUDES Y || PARA MAS PLACER
+      //LOGICA CAMBIADO CON .INCLUDES Y || PARA MAS PLACERR
       let userFound = arrayUsers.filter(
         (u) =>
           u.username.toLowerCase().includes(name.toLowerCase()) ||
