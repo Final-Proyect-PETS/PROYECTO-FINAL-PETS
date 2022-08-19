@@ -117,7 +117,6 @@ router.get("/users/:id", async (req, res, next) => {
 router.get("/pets/:id", async (req, res, next) => {
   try {
     connection();
-    next("conectado a pets id");
   } catch (err) {
     next(err);
   }
@@ -473,18 +472,18 @@ router.get("/filters", async (req, res, next) => {
     if (vaccinated === "unknown") {
       all = all.filter((ev) => ev.vaccination === "unknown");
     }
-    if (pet_age === "asc") {
-      all = all.sort((a, b) => a.age - b.age);
-    }
-    if (pet_age === "desc") {
-      all = all.sort((a, b) => b.age - a.age);
-    }
-    if (creation_date === "asc") {
-      all = all.sort((a, b) => a.createdAt - b.createdAt);
-    }
-    if (creation_date === "desc") {
-      all = all.sort((a, b) => b.createdAt - a.createdAt);
-    }
+    /* if (pet_age === "asc") {
+            all = all.sort((a, b) => a.age - b.age)
+        }
+        if (pet_age === "desc") {
+            all = all.sort((a, b) => b.age - a.age)
+        }
+        if (creation_date === "asc") {
+            all = all.sort((a, b) => a.createdAt - b.createdAt)
+        }
+        if (creation_date === "desc") {
+            all = all.sort((a, b) => b.createdAt - a.createdAt)
+        } */
 
     res.send(all);
   } catch (error) {

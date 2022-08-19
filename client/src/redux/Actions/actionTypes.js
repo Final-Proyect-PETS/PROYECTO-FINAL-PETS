@@ -13,3 +13,5 @@ export const POST_PET = "POST_PET";
 export const POST_USER = "POST_USER";
 // FILTERS -----------------
 export const FILTER_BY_QUERY = "FILTER_BY_QUERY"
+/* export const SORT_BY_DATE = "SORT_BY_DATE"
+export const SORT_BY_AGE = "SORT_BY_AGE" */
