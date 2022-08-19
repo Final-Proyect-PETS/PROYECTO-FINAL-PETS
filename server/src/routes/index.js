@@ -34,6 +34,7 @@ router.get("/pets", async (req, res, next) => {
     next(error);
   }
 });
+
 router.get("/users", async (req, res, next) => {
   const name = req.query.name;
   try {
@@ -45,12 +46,14 @@ router.get("/users", async (req, res, next) => {
   try {
     const arrayUsers = await User.find().populate("pets");
     if (name) {
+
       //LOGICA CAMBIADO CON .INCLUDES Y || PARA MAS PLACERR
       let userFound = arrayUsers.filter(
         (u) =>
           u.username.toLowerCase().includes(name.toLowerCase()) ||
           u.first_name.toLowerCase().includes(name.toLowerCase()) ||
           u.last_name.toLowerCase().includes(name.toLowerCase())
+
       );
       if (userFound.length) res.send(userFound);
       else {
@@ -149,8 +152,10 @@ router.post("/pets/:id", async (req, res, next) => {
     next(error);
   }
 
+
   try {
     const foundUser = await User.findById(id);
+
 
     const newPet = new Pets({
       name,
@@ -178,6 +183,7 @@ router.get("/filterBySize", async (req, res, next) => {
       connection();
       const pet = await Pets.find({ size: "big" });
       res.send(pet);
+
     }
     if (size === "medium") {
       connection();
@@ -192,6 +198,7 @@ router.get("/filterBySize", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+
 });
 
 router.get("/filterByType", async (req, res, next) => {
@@ -229,54 +236,54 @@ router.get("/bySortAge2", async (req, res, next) => {
     const desc = await Pets.find().sort({ age: -1 });
     res.send(desc);
   } catch (error) {
-    console.error(error);
+
+    next(error);
   }
-}),
-  router.post("/pets/:id", async (req, res, next) => {
-    const { id } = req.params;
-    console.log(id);
-    const {
-      name,
+});
+router.get("/bySortDate", async (req, res, next) => {
+  try {
+    connection();
+    const date = await Pets.find().sort({ createdAt: -1 });
+    res.send(date);
+  } catch (error) {
+    next(error);
+  }
+});
+router.get("/bySortDate2", async (req, res, next) => {
+  try {
+    connection();
+    const date2 = await Pets.find().sort({ createdAt: 1 });
+    res.send(date2);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.patch("/users", async (req, res, next) => {
+
+    const { first_name, last_name, username, email, password, image, telephone, about } = req.body
+    try {
+        const oneUser = await User.findOne({
+            _id: req.params.id
+        })
+
+    await oneUser.update({
+      first_name,
+      last_name,
+      username,
+      email,
+      password,
       image,
-      type,
-      description,
-      size,
-      age,
-      vaccination,
-      castrated,
-      place,
-    } = req.body;
+      telephone,
+      about,
+    });
+    res.status(200).json("Datos Actualizados Exitosamente 👌");
+  } catch (error) {
+    next(error);
+  }
+});
 
-    try {
-      connection();
-      console.log("conectado a users");
-    } catch (err) {
-      console.error(err);
-    }
 
-    try {
-      const foundUser = await User.findById(id); //valido que el id que me pasan del front por params exista en mi db
-
-      const newPet = new Pets({
-        name,
-        image,
-        type,
-        description,
-        size,
-        age,
-        vaccination,
-        castrated,
-        place,
-        user: foundUser._id,
-      });
-      const savedPet = await newPet.save();
-      foundUser.pets = foundUser.pets.concat(savedPet._id);
-      await foundUser.save();
-      res.status(201).json(newPet);
-    } catch (error) {
-      next(error);
-    }
-  });
 
 router.patch("/pets/:id", async (req, res) => {
   const {
@@ -344,6 +351,7 @@ router.get("/filterByCastrated", async (req, res, next) => {
       const yes = await Pets.find({ castrated: true });
       res.send(yes);
     }
+
     if (castrated === "false") {
       connection();
       const no = await Pets.find({ castrated: false });
@@ -353,6 +361,7 @@ router.get("/filterByCastrated", async (req, res, next) => {
     next(error);
   }
 });
+
 
 router.get("/filterByPlace", async (req, res, next) => {
   let { place } = req.body;
