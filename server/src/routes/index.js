@@ -117,7 +117,6 @@ router.get("/users/:id", async (req, res, next) => {
 router.get("/pets/:id", async (req, res, next) => {
   try {
     connection();
-    
   } catch (err) {
     next(err);
   }
@@ -135,6 +134,7 @@ router.post("/pets/:id", async (req, res, next) => {
   const {
     name,
     image,
+    imagePool,
     type,
     description,
     size,
@@ -157,6 +157,7 @@ router.post("/pets/:id", async (req, res, next) => {
     const newPet = new Pets({
       name,
       image,
+      imagePool,
       type,
       description,
       size,
@@ -398,71 +399,80 @@ router.get("/filterByAge", async (req, res, next) => {
 });
 
 router.get("/bySortDate", async (req, res, next) => {
-    try{
-        connection()
-        const desc = await Pets.find().sort({ createdAt: -1 })
-        res.send(desc)
-    } catch(error){
-        next(error)
-    }
-})
+  try {
+    connection();
+    const desc = await Pets.find().sort({ createdAt: -1 });
+    res.send(desc);
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.get("/bySortDate2", async (req, res, next) => {
-    try{
-        connection()
-        const asc = await Pets.find().sort({ createdAt: 1 })
-        res.send(asc)
-    } catch(error){
-        next(error)
-    }
-})
+  try {
+    connection();
+    const asc = await Pets.find().sort({ createdAt: 1 });
+    res.send(asc);
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.get("/filters", async (req, res, next) => {
-    try {
-        connection()
-        let { age, creation_date, vaccinated, castrated, location, pet_type, pet_size, pet_age } = req.query 
-        let all = await Pets.find().populate("user")
-        
-        if (age === "young") {
-            all = all.filter(ev => ev.age < 6)
-        }
-        if (age === "adult") {
-            all = all.filter(ev => ev.age > 5 && ev.age < 10)
-        }
-        if (age === "old") {
-            all = all.filter(ev => ev.age > 9)
-        }
-        if (castrated === "true") {
-            all = all.filter(ev => ev.castrated === true)
-        } 
-         if (castrated === "false") {
-            all = all.filter(ev => ev.castrated === false)
-        } 
-        if (pet_size === "big") {
-            all = all.filter(ev => ev.size === "big")
-        }
-        if (pet_size === "medium") {
-            all = all.filter(ev => ev.size === "medium")
-        } 
-        if (pet_size === "small") {
-            all = all.filter(ev => ev.size === "small")
-        }  
-        if (pet_type === "cat") {
-            all = all.filter(ev => ev.type === "cat")
-        }
-        if (pet_type === "dog") {
-            all = all.filter(ev => ev.type === "dog")
-        }
-        if (vaccinated === "yes") {
-            all = all.filter(ev => ev.vaccination === "yes")
-        }
-        if (vaccinated === "no") {
-            all = all.filter(ev => ev.vaccination === "no")
-        }
-        if (vaccinated === "unknown") {
-            all = all.filter(ev => ev.vaccination === "unknown")
-        }
-        /* if (pet_age === "asc") {
+  try {
+    connection();
+    let {
+      age,
+      creation_date,
+      vaccinated,
+      castrated,
+      location,
+      pet_type,
+      pet_size,
+      pet_age,
+    } = req.query;
+    let all = await Pets.find().populate("user");
+
+    if (age === "young") {
+      all = all.filter((ev) => ev.age < 6);
+    }
+    if (age === "adult") {
+      all = all.filter((ev) => ev.age > 5 && ev.age < 10);
+    }
+    if (age === "old") {
+      all = all.filter((ev) => ev.age > 9);
+    }
+    if (castrated === "true") {
+      all = all.filter((ev) => ev.castrated === true);
+    }
+    if (castrated === "false") {
+      all = all.filter((ev) => ev.castrated === false);
+    }
+    if (pet_size === "big") {
+      all = all.filter((ev) => ev.size === "big");
+    }
+    if (pet_size === "medium") {
+      all = all.filter((ev) => ev.size === "medium");
+    }
+    if (pet_size === "small") {
+      all = all.filter((ev) => ev.size === "small");
+    }
+    if (pet_type === "cat") {
+      all = all.filter((ev) => ev.type === "cat");
+    }
+    if (pet_type === "dog") {
+      all = all.filter((ev) => ev.type === "dog");
+    }
+    if (vaccinated === "yes") {
+      all = all.filter((ev) => ev.vaccination === "yes");
+    }
+    if (vaccinated === "no") {
+      all = all.filter((ev) => ev.vaccination === "no");
+    }
+    if (vaccinated === "unknown") {
+      all = all.filter((ev) => ev.vaccination === "unknown");
+    }
+    /* if (pet_age === "asc") {
             all = all.sort((a, b) => a.age - b.age)
         }
         if (pet_age === "desc") {
@@ -474,11 +484,10 @@ router.get("/filters", async (req, res, next) => {
         if (creation_date === "desc") {
             all = all.sort((a, b) => b.createdAt - a.createdAt)
         } */
-        
-        res.send(all)
 
-    }catch(error){
-        next(error)
-    }
-})
+    res.send(all);
+  } catch (error) {
+    next(error);
+  }
+});
 module.exports = router;

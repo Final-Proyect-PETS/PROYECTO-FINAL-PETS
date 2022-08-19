@@ -16,6 +16,7 @@ export default function RegisterPet() {
     id: "",
     name: "",
     image: "",
+    imagePool: [],
     type: "",
     description: "",
     size: "",
@@ -38,6 +39,19 @@ export default function RegisterPet() {
     );
   }
 
+  function handleImagePool(e) {
+    setInput({
+      ...input,
+      imagePool: [...input.imagePool, e.target.value],
+    });
+    setErrors(
+      validate({
+        ...input,
+        imagePool: [...input.imagePool, e.target.value],
+      })
+    );
+  }
+
   function validate(input) {
     let errors = {};
 
@@ -52,6 +66,9 @@ export default function RegisterPet() {
     } else errors.name = "El nombre es requerido!";
 
     if (!input.image) errors.image = "La imagen es requerida!";
+
+    if (!input.imagePool.length)
+      errors.imagePool = "Por lo menos una imagen extra requerida!";
 
     if (!input.type) errors.type = "El tipo de mascota es requerido!";
 
@@ -91,6 +108,7 @@ export default function RegisterPet() {
       errors.id ||
       errors.name ||
       errors.image ||
+      errors.imagePool ||
       errors.type ||
       errors.description ||
       errors.size ||
@@ -104,6 +122,7 @@ export default function RegisterPet() {
       input.id &&
       input.name &&
       input.image &&
+      input.imagePool &&
       input.type &&
       input.description &&
       input.size &&
@@ -121,26 +140,44 @@ export default function RegisterPet() {
   function handleSubmit(e) {
     e.preventDefault();
     if (have() === false) {
-      let id = input.id;
-      delete input.id;
+      if (window.confirm("¿Está seguro de que desea crear esta mascota?")) {
+        let id = input.id;
+        delete input.id;
 
-      dispatch(postPet(id, input));
+        dispatch(postPet(id, input)).then(
+          alert("Mascota creada correctamente")
+        );
 
-      setInput({
-        id: "",
-        name: "",
-        image: "",
-        type: "",
-        description: "",
-        size: "",
-        age: 0,
-        vaccination: "",
-        castrated: false,
-        place: "",
-      });
+        setInput({
+          id: "",
+          name: "",
+          image: "",
+          imagePool: [],
+          type: "",
+          description: "",
+          size: "",
+          age: 0,
+          vaccination: "",
+          castrated: false,
+          place: "",
+        });
+      }
     } else if (have() === "e") {
       alert("Faltan datos!");
     } else alert("Por favor, llena todo correctamente!");
+  }
+
+  function handleDelete(event) {
+    setInput({
+      ...input,
+      imagePool: input.imagePool.filter((e) => e !== event),
+    });
+    setErrors(
+      validate({
+        ...input,
+        imagePool: input.imagePool.filter((e) => e !== event),
+      })
+    );
   }
 
   let key = 0;
@@ -191,19 +228,40 @@ export default function RegisterPet() {
           {errors.name && <p>{errors.name}</p>}
         </div>
         <div>
-          <label>Imagen de perfil</label>{" "}
-          {/* Agregar que pueda agregar mas imagenes */}
+          <label>Imagen de perfil</label>
           <input
             type="file"
             name="image"
             value={input.image}
             onChange={(e) => handleChange(e)}
-            placeholder="Imagen de perfil"
           />
           {errors.image && <p>{errors.image}</p>}
         </div>
         <div>
-          <label>Tipo de animal</label>
+          <label>Más imágenes</label>
+          <input
+            type="file"
+            name="images"
+            onChange={(e) => handleImagePool(e)}
+          />
+          <div>
+            {input.imagePool.map((el) => (
+              <div key={addKey()}>
+                <p>{el}</p>
+                <button
+                  key={el.id}
+                  type="button"
+                  onClick={() => handleDelete(el)}
+                >
+                  X
+                </button>
+              </div>
+            ))}
+          </div>
+          {errors.imagePool && <p>{errors.imagePool}</p>}
+        </div>
+        <div>
+          <label>Tipo de mascota</label>
           <select name="type" onChange={(e) => handleChange(e)}>
             <option value="typeSelect" defaultValue hidden>
               Seleccione tipo
