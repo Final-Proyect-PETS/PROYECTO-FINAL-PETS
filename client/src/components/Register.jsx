@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postUser, getAllUsers } from "../redux/Actions/index.js";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function Register() {
 
@@ -140,6 +141,9 @@ export default function Register() {
         onSubmit={handleSubmit}
         className="bg-gray-700 rounded-lg shadow sm:max-w-md sm:w-full sm:mx-auto sm:overflow-hidden"
       >
+        <Link to="/">
+        <button>    <h1>Regresar!</h1></button>
+        </Link>
         <div className="flex">
           <h1>Registrate!</h1>
         </div>

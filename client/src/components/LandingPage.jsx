@@ -91,6 +91,7 @@ export default function LandingPage() {
 
                     </form>
                 </div>
+                <Link to="/register">
                 <div class="flex items-center justify-center mt-6">
                     <a href="#" target="_blank" class="inline-flex items-center text-s font-thin text-center text-gray-500 hover:text-gray-700 dark:text-gray-100 dark:hover:text-yellow-900">
                         <span class="ml-2">
@@ -98,6 +99,7 @@ export default function LandingPage() {
                         </span>
                     </a>
                 </div>
+                </Link>
             </div>
 
         </div>

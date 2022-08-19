@@ -12,7 +12,53 @@ export default function UserDetail() {
   return (
     <>
       <NavBar />
-      <div class="rounded overflow-hidden border w-60 bg-white mx-3 md:mx-0 lg:mx-0">
+      <>
+        <div
+          // id={idUser}
+          class="rounded overflow-hidden border border-[#B99782] w-full bg-white my-12 md:mx-0 lg:mx-0"
+        >
+          <div class="w-full flex justify-between p-3 border-b items-center bg-[#B99782]">
+            <div class="flex items-center">
+              <div class="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
+                <img src={userDetail.image} alt="profilepic" />
+              </div>
+              <span class="text-2xl font-bold">Name:</span>
+              <span class="text-2xl font-bold">
+                {" "}
+                {userDetail.first_name + " " + userDetail.last_name}
+              </span>
+            </div>
+            <div class="flex items-center">
+              <div class="text-sm flex">
+                {/* <img src={ubicacion} alt="ubicacion" width="16px" /> */}
+                <span class="text-2xl font-bold">
+                  Email: {userDetail.email} -
+                </span>
+              </div>
+              <div class="text-sm flex">
+                <span class="text-2xl font-bold">
+                  Tel:{userDetail.telephone}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="py-3 flex">
+            {/* <img class="w-96 bg-cover rounded" src={imagePet} alt="imagepet" /> */}
+            <div class="bg-gray-200 flex w-52 flex-col content-around gap-9 justify-center items-center">
+              <div class="flex">
+                <span class="text-2xl font-bold"> About:</span>
+              </div>
+              <div class="text-sm flex">
+                <span class="font-bold text-lg text-gray-700">
+                  {userDetail.about}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+      ;
+      {/* <div class="rounded overflow-hidden border w-60 bg-white mx-3 md:mx-0 lg:mx-0">
         <div class="w-full flex justify-between p-3">
           <span class="px-2 hover:bg-gray-300 cursor-pointer rounded">
             <i class="fas fa-ellipsis-h pt-2 text-lg"></i>
@@ -41,7 +87,7 @@ export default function UserDetail() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
