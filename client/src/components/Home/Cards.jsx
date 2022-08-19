@@ -41,8 +41,6 @@ export default function Cards() {
   //-------------------------------------------------------------------------------------------------
 
   function handleToogle(e) {
-    console.log("switch en movimiento....");
-
     if (input === "mascota") {
       setInput("usuario");
       console.log(input, "DBusuario");
