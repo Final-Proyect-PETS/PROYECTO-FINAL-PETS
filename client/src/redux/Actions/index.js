@@ -120,3 +120,17 @@ export function filterByQuery(filterParams) {
     });
   };
 }
+/*  export function sortDate(payload){
+    return{
+      type: actions.SORT_BY_DATE,
+      payload
+    }
+}
+
+export function sortAge(payload){
+  return {
+    type: actions.SORT_BY_AGE,
+    payload
+  }
+} 
+ */

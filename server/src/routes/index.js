@@ -462,7 +462,7 @@ router.get("/filters", async (req, res, next) => {
         if (vaccinated === "unknown") {
             all = all.filter(ev => ev.vaccination === "unknown")
         }
-        if (pet_age === "asc") {
+        /* if (pet_age === "asc") {
             all = all.sort((a, b) => a.age - b.age)
         }
         if (pet_age === "desc") {
@@ -473,7 +473,7 @@ router.get("/filters", async (req, res, next) => {
         }
         if (creation_date === "desc") {
             all = all.sort((a, b) => b.createdAt - a.createdAt)
-        }
+        } */
         
         res.send(all)
 
