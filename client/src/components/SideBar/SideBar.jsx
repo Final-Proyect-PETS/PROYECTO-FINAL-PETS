@@ -160,19 +160,19 @@ export default function SideBar() {
   }
   return (
 
-    <div className="flex bg-gray-200 flex-col w-3/4 h-screen items-center gap-7 shadow-2xl">
+    <div className="flex bg-yellow-800 flex-col w-3/4 h-screen items-center gap-7 shadow-2xl">
 
-      <div className="bg-gray-300 border border-b-black text-white text-2xl w-full flex justify-center items-center h-12">
+      <div className="bg-yellow-800 border border-b-black text-white text-2xl w-full flex justify-center items-center h-12">
         <h1 className="font-bold">DESCUBRIR</h1>
       </div>
 
       <SearchBar />
 
-      {/* <div className="bg-red-200 w-3/4 flex justify-center flex-col">
+
+
+      {/* <div className="bg-gray-300 w-3/4 flex justify-center flex-col">
 
       <div className="bg-red-200 w-3/4 flex justify-center flex-col">
-
-
         <div className="flex justify-center">
           <h3 className="font-bold">Ordenar mascotas por edad</h3>
         </div>
@@ -198,9 +198,9 @@ export default function SideBar() {
       </div>
 
 
-      <div className="bg-red-200 w-3/4 flex justify-center flex-col">
+      <div className="bg-gray-300 w-3/4 flex justify-center flex-col">
         <select
-          className="bg-red-200 font-bold"
+          className="bg-gray-300 font-bold"
           onChange={(ev) => handlerFilterVacciantion(ev)}
         >
 
@@ -212,9 +212,9 @@ export default function SideBar() {
         <p />
       </div>
 
-      <div className="bg-red-200 w-3/4 flex justify-center flex-col">
+      <div className="bg-gray-300 w-3/4 flex justify-center flex-col">
         <select
-          className="bg-red-200 font-bold"
+          className="bg-gray-300 font-bold"
           onChange={(ev) => handlerFilterCastraed(ev)}
         >
 
@@ -234,9 +234,9 @@ export default function SideBar() {
         </div>
       </div>
 
-      <div className="bg-red-200 w-3/4 flex justify-center flex-col">
+      <div className="bg-gray-300 w-3/4 flex justify-center flex-col">
         <select
-          className="bg-red-200 font-bold"
+          className="bg-gray-300 font-bold"
           onChange={(ev) => handlerFilterTypePet(ev)}
         >
 
@@ -247,9 +247,9 @@ export default function SideBar() {
         <p />
       </div>
 
-      <div className="bg-red-200 w-3/4 flex justify-center flex-col">
+      <div className="bg-gray-300 w-3/4 flex justify-center flex-col">
         <select
-          className="bg-red-200 font-bold"
+          className="bg-gray-300 font-bold"
           onChange={(ev) => handlerFilterBySize(ev)}
         >
 
@@ -262,9 +262,9 @@ export default function SideBar() {
       </div>
 
 
-      <div className="bg-red-200 w-3/4 flex justify-center flex-col">
+      <div className="bg-gray-300 w-3/4 flex justify-center flex-col">
         <select
-          className="bg-red-200 font-bold"
+          className="bg-gray-300 font-bold"
           onChange={(ev) => handlerFilterByAge(ev)}
         >
 
