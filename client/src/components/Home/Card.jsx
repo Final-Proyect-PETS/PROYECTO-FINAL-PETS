@@ -1,9 +1,11 @@
+import React from "react";
 import ubicacion from "../../assets/images/ubicacion.png";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useEffect, React } from "react";
-import { getUserDetail, getPetDetail } from "../../redux/Actions/index";
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4113f05dc743551f570efb8886e941efe5445c3e
 export default function Card({
   idUser,
   first_name,
@@ -15,15 +17,19 @@ export default function Card({
   place,
   size,
 }) {
+<<<<<<< HEAD
   const dispatch = useDispatch();
 
   useEffect(() => {
+=======
+  /*   useEffect(() => {
+>>>>>>> 4113f05dc743551f570efb8886e941efe5445c3e
     dispatch(getUserDetail(idUser));
   }, [dispatch, idUser]);
 
   useEffect(() => {
     dispatch(getPetDetail(idPet));
-  }, [dispatch, idPet]);
+  }, [dispatch, idPet]); */
 
   return (
     <>
