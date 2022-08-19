@@ -117,7 +117,7 @@ router.get("/users/:id", async (req, res, next) => {
 router.get("/pets/:id", async (req, res, next) => {
   try {
     connection();
-    next("conectado a pets id");
+    
   } catch (err) {
     next(err);
   }
