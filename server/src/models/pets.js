@@ -12,6 +12,8 @@ const petsSchema = new Schema({
     vaccination: { type: String, enum: ["yes", "no", "unknown"], lowercase: true },
     castrated: Boolean,
     place: String,
+    imagePool: [String],
+    deleted: { type: Boolean, default: false },
     user: { type: mongoose.Schema.ObjectId, ref: "User" }
 }, {
     timestamps: true

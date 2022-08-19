@@ -8,6 +8,11 @@ import Register from "./components/Register";
 import PetRegister from "./components/PetRegister";
 import UpdateUser from "./components/Update/UpdateDataUsers"
 
+import Error404 from "./components/Error404/Error404";
+
+import PetDetail from "./components/Details/PetDetail";
+
+
 function App() {
   return (
     <BrowserRouter>
@@ -15,10 +20,13 @@ function App() {
         <Route path={"/"} element={<LandingPage />} />
         <Route path={"/home"} element={<Home />} />
         <Route path={"/users/:id"} element={<UserDetail />} />
+        <Route path={"/pet/:id"} element={<PetDetail />}/>
         <Route path={"/about"} element={<About />} />
         <Route path={"/register"} element={<Register />} />
         <Route path={"/petregister"} element={<PetRegister />} />
         <Route path={"/UpDataUser"} element={<UpdateUser/>}/>
+        <Route path={"*"} element={<Error404 />} />
+
       </Routes>
     </BrowserRouter>
   );

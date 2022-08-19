@@ -20,10 +20,10 @@ router.get("/pets", async (req, res, next) => {
     if (name) {
       let petFound = arrayPets.filter(
         (p) =>
-          p.name.toLowerCase().includes(name.toLowerCase()) ||
-          p.place.toLowerCase().includes(name.toLowerCase()) ||
-          p.type.toLowerCase().includes(name.toLowerCase()) ||
-          p.age.toString().includes(name)
+          p.name?.toLowerCase().includes(name.toLowerCase()) ||
+          p.place?.toLowerCase().includes(name.toLowerCase()) ||
+          p.type?.toLowerCase().includes(name.toLowerCase()) ||
+          p.age?.toString().includes(name)
       );
       if (petFound.length) res.send(petFound);
       else res.send(arrayPets);
@@ -46,14 +46,13 @@ router.get("/users", async (req, res, next) => {
   try {
     const arrayUsers = await User.find().populate("pets");
     if (name) {
-
       //LOGICA CAMBIADO CON .INCLUDES Y || PARA MAS PLACERR
       let userFound = arrayUsers.filter(
         (u) =>
-          u.username.toLowerCase().includes(name.toLowerCase()) ||
-          u.first_name.toLowerCase().includes(name.toLowerCase()) ||
-          u.last_name.toLowerCase().includes(name.toLowerCase())
-
+          u.username?.toLowerCase().includes(name.toLowerCase()) ||
+          u.first_name?.toLowerCase().includes(name.toLowerCase()) ||
+          u.last_name?.toLowerCase().includes(name.toLowerCase()) ||
+          u.email?.toLowerCase().includes(name.toLowerCase())
       );
       if (userFound.length) res.send(userFound);
       else {
@@ -118,7 +117,6 @@ router.get("/users/:id", async (req, res, next) => {
 router.get("/pets/:id", async (req, res, next) => {
   try {
     connection();
-    next("conectado a pets id");
   } catch (err) {
     next(err);
   }
@@ -136,6 +134,7 @@ router.post("/pets/:id", async (req, res, next) => {
   const {
     name,
     image,
+    imagePool,
     type,
     description,
     size,
@@ -152,14 +151,13 @@ router.post("/pets/:id", async (req, res, next) => {
     next(error);
   }
 
-
   try {
     const foundUser = await User.findById(id);
-
 
     const newPet = new Pets({
       name,
       image,
+      imagePool,
       type,
       description,
       size,
@@ -170,6 +168,8 @@ router.post("/pets/:id", async (req, res, next) => {
       user: foundUser._id,
     });
     await newPet.save();
+    foundUser.pets.push(newPet._id);
+    await foundUser.save();
     res.status(201).json(newPet);
   } catch (error) {
     next(error);
@@ -183,7 +183,6 @@ router.get("/filterBySize", async (req, res, next) => {
       connection();
       const pet = await Pets.find({ size: "big" });
       res.send(pet);
-
     }
     if (size === "medium") {
       connection();
@@ -198,7 +197,6 @@ router.get("/filterBySize", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-
 });
 
 router.get("/filterByType", async (req, res, next) => {
@@ -236,7 +234,6 @@ router.get("/bySortAge2", async (req, res, next) => {
     const desc = await Pets.find().sort({ age: -1 });
     res.send(desc);
   } catch (error) {
-
     next(error);
   }
 });
@@ -260,13 +257,11 @@ router.get("/bySortDate2", async (req, res, next) => {
 });
 
 router.patch("/users", async (req, res, next) => {
-
     const { first_name, last_name, username, email, password, image, telephone, about } = req.body
     try {
         const oneUser = await User.findOne({
             id: req.params.id
         })
-
     await oneUser.update({
       first_name,
       last_name,
@@ -282,8 +277,6 @@ router.patch("/users", async (req, res, next) => {
     next(error);
   }
 });
-
-
 
 router.patch("/pets", async (req, res, next) => {
   const {
@@ -362,7 +355,6 @@ router.get("/filterByCastrated", async (req, res, next) => {
   }
 });
 
-
 router.get("/filterByPlace", async (req, res, next) => {
   let { place } = req.body;
   try {
@@ -396,4 +388,96 @@ router.get("/filterByAge", async (req, res, next) => {
   }
 });
 
+router.get("/bySortDate", async (req, res, next) => {
+  try {
+    connection();
+    const desc = await Pets.find().sort({ createdAt: -1 });
+    res.send(desc);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/bySortDate2", async (req, res, next) => {
+  try {
+    connection();
+    const asc = await Pets.find().sort({ createdAt: 1 });
+    res.send(asc);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/filters", async (req, res, next) => {
+  try {
+    connection();
+    let {
+      age,
+      creation_date,
+      vaccinated,
+      castrated,
+      location,
+      pet_type,
+      pet_size,
+      pet_age,
+    } = req.query;
+    let all = await Pets.find().populate("user");
+
+    if (age === "young") {
+      all = all.filter((ev) => ev.age < 6);
+    }
+    if (age === "adult") {
+      all = all.filter((ev) => ev.age > 5 && ev.age < 10);
+    }
+    if (age === "old") {
+      all = all.filter((ev) => ev.age > 9);
+    }
+    if (castrated === "true") {
+      all = all.filter((ev) => ev.castrated === true);
+    }
+    if (castrated === "false") {
+      all = all.filter((ev) => ev.castrated === false);
+    }
+    if (pet_size === "big") {
+      all = all.filter((ev) => ev.size === "big");
+    }
+    if (pet_size === "medium") {
+      all = all.filter((ev) => ev.size === "medium");
+    }
+    if (pet_size === "small") {
+      all = all.filter((ev) => ev.size === "small");
+    }
+    if (pet_type === "cat") {
+      all = all.filter((ev) => ev.type === "cat");
+    }
+    if (pet_type === "dog") {
+      all = all.filter((ev) => ev.type === "dog");
+    }
+    if (vaccinated === "yes") {
+      all = all.filter((ev) => ev.vaccination === "yes");
+    }
+    if (vaccinated === "no") {
+      all = all.filter((ev) => ev.vaccination === "no");
+    }
+    if (vaccinated === "unknown") {
+      all = all.filter((ev) => ev.vaccination === "unknown");
+    }
+    /* if (pet_age === "asc") {
+            all = all.sort((a, b) => a.age - b.age)
+        }
+        if (pet_age === "desc") {
+            all = all.sort((a, b) => b.age - a.age)
+        }
+        if (creation_date === "asc") {
+            all = all.sort((a, b) => a.createdAt - b.createdAt)
+        }
+        if (creation_date === "desc") {
+            all = all.sort((a, b) => b.createdAt - a.createdAt)
+        } */
+
+    res.send(all);
+  } catch (error) {
+    next(error);
+  }
+});
 module.exports = router;

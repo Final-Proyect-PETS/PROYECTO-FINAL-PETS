@@ -1,15 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, React } from "react";
-import { Link } from "react-router-dom";
-import { clearState, getUserDetail } from "../../redux/Actions/index";
+import React from "react";
+import { useSelector } from "react-redux";
 import NavBar from "../NavBar/NavBar";
-import styles from "./userDetailStyle.css";
+import "./userDetailStyle.css";
 
 export default function UserDetail() {
-  const dispatch = useDispatch();
+
   const userDetail = useSelector((state) => state.userDetail);
-  console.log(userDetail, "proproporpropro");
-  console.log(userDetail.first_name, "FIRST NAME");
 
   return (
     <>
@@ -17,13 +13,13 @@ export default function UserDetail() {
       <>
         <div
           // id={idUser}
-          class="rounded overflow-hidden border border-[#B99782] w-full bg-white my-12 md:mx-0 lg:mx-0"
+          className="rounded overflow-hidden border border-[#B99782] w-full bg-white my-12 md:mx-0 lg:mx-0"
         >
           {" "}
-          <div class="w-full flex justify-between p-3 border-b items-center bg-[#B99782]">
-            <div class="flex items-center">
-              <div class="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
-                <img src={userDetail.image} />
+          <div className="w-full flex justify-between p-3 border-b items-center bg-[#B99782]">
+            <div className="flex items-center">
+              <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
+                <img src={userDetail.image} alt="imageuser"/>
               </div>
               <div>
                 <Link  to="/UpDataUser">
@@ -31,45 +27,45 @@ export default function UserDetail() {
                 </Link>
               </div>
               {/* <span class="text-2xl font-bold"></span> */}
-              <span class="text-2xl font-bold">
+              <span className="text-2xl font-bold">
                 {" "}
                 {userDetail.first_name + " " + userDetail.last_name}
               </span>
             </div>
-            <div class="flex items-center">
-              <div class="text-sm flex">
-                <span class="text-2xl font-bold">About Me:</span>
-                <span class="font-medium text-xs mx-3">{userDetail.about}</span>
+            <div className="flex items-center">
+              <div className="text-sm flex">
+                <span className="text-2xl font-bold">About Me:</span>
+                <span className="font-medium text-xs mx-3">{userDetail.about}</span>
               </div>
             </div>
           </div>
-          <div class="w-full flex justify-between p-3 border-b items-center bg-[#B99782]">
-            <div class="flex items-center">
-              <div class="text-sm flex">
-                <span class="text-2xl font-bold">
+          <div className="w-full flex justify-between p-3 border-b items-center bg-[#B99782]">
+            <div className="flex items-center">
+              <div className="text-sm flex">
+                <span className="text-2xl font-bold">
                   Email: {userDetail.email} -
                 </span>
               </div>
-              <div class="text-sm flex">
-                <span class="text-2xl font-bold">
+              <div className="text-sm flex">
+                <span className="text-2xl font-bold">
                   Tel:{userDetail.telephone}
                 </span>
               </div>
             </div>
           </div>
-          <div class="py-3 flex">
+          <div className="py-3 flex">
             {/* <img class="w-96 bg-cover rounded" src={imagePet} alt="imagepet" /> */}
-            <div class="bg-gray-200 flex w-52 flex-col content-around gap-9 justify-center items-center">
-              <div class="flex">
-                <span class="text-2xl font-bold"> PET 1</span>
+            <div className="bg-gray-200 flex w-52 flex-col content-around gap-9 justify-center items-center">
+              <div className="flex">
+                <span className="text-2xl font-bold"> PET 1</span>
               </div>
-              <div class="text-sm flex">
-                <span class="font-bold text-lg text-gray-700">
+              <div className="text-sm flex">
+                <span className="font-bold text-lg text-gray-700">
                   ←AQUI IRA MI PROXIMA MASCOTA→
                 </span>
               </div>
-              <div class="text-sm flex">
-                <span class="font-bold text-lg text-gray-700">ADOPTAR</span>
+              <div className="text-sm flex">
+                <span className="font-bold text-lg text-gray-700">ADOPTAR</span>
               </div>
             </div>
           </div>

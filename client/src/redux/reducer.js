@@ -5,7 +5,7 @@ const initialState = {
   users: [],
   userDetail: [], //detail route
   petDetail: [], //detail route
-  filtros: [],
+
 };
 
 export default function rootReducer(state = initialState, { type, payload }) {
@@ -69,68 +69,86 @@ export default function rootReducer(state = initialState, { type, payload }) {
          userDetail:payload
       }
     //FILTROS
-    case actions.SORT_ASC_AGE:
+    case actions.FILTER_BY_QUERY:
       return {
         ...state,
         pets: payload
       }
-    case actions.SORT_DESC_AGE:
-      return {
-        ...state,
-        pets: payload
-      }
-      case actions.SORT_ASC_CREATED:
-        return {
-          ...state,
-          pets: payload
-        }
-      case actions.SORT_DESC_CREATED:
-        return {
-          ...state,
-          pets: payload
-        }
-        case actions.FILTER_BY_PLACE:
-          return {
-            ...state,
-            pets: payload 
-        }
-      case actions.FILTER_BY_TYPE:
-          return {
-            ...state,
-            pets: payload
+      /* case actions.SORT_BY_DATE:
+        const date = payload === "asc" ? state.pets.sort(function(a, b) {
+          if (a.createdAt > b.createdAt){
+            return 0
           }
-      case actions.FILTER_BY_CASTRAED:
-          console.log(payload)
-          return {
-            ...state,
-            filtros: payload
+          if(b.createdAt > a.createdAt){
+            return -1
           }
-
-      case actions.FILTER_BY_VACCINATION:
-        /* const allPets = state.pets;
-        const filtros = state.filtros
-        const filter = filtros.length > 0 ? filtros.filter((pet) =>{
-            return pet.hasOwnProperty(payload)
-          }) : allPets.filter((pet) =>{
-            return pet.hasOwnProperty(payload)
-          }); */
-          console.log(payload)
+          return 0
+        }) : state.pets.sort(function (a,b){
+          if (a.createdAt > b.createdAt){
+            return -1
+          }
+          return 0
+        })
         return {
           ...state,
-          pets: payload
+          pets: date
         }
-
-      case actions.FILTER_BY_SIZE:
+        case actions.SORT_BY_AGE:
+          /* if(payload === "desc"){
+               const data = state.pets.sort((a, b) => b.age - a.age)
+               return {
+                ...state,
+                pets: data
+               }
+              }
+            if(payload === "asc"){
+              const data = state.pets.sort((a, b) => a.age - b.age)
+              return {
+                ...state,
+                pets: data
+              }
+            } */
+            /* const age = payload === "asc" ? state.pets.sort(function(a, b) {
+              if (a.age > b.age){
+                return 1
+              }
+              if(b.age > a.age){
+                return -1
+              }
+              return 0
+            }) : state.pets.sort(function (a,b){
+              if (a.age > b.age){
+                return -1
+              }
+              return 0
+            })
+            return {
+              ...state,
+              pets: age,
+            } 
+            const sortAge = payload === 'asc' ?
+            state.pets.sort(function (a, b) {
+                if (a.age > b.age) {
+                    return 1
+                }
+                if (b.age > a.age) {
+                    return -1
+                }
+                return 0
+            }) :
+            state.pets.sort(function (a, b) {
+                if (a.age > b.age) {
+                    return -1
+                }
+                if (b.age > a.age) {
+                    return 1
+                }
+                return 0
+            })
         return {
-          ...state,
-          pets: payload
-        }
-
-      case actions.FILTER_BY_AGE:
-        return {
-          ...state,
-          pets: payload
-        }
+            ...state,
+            pets: sortAge
+        } */
        default:
       return state
     }
