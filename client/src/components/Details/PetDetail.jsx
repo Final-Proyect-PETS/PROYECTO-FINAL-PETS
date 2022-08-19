@@ -15,7 +15,7 @@ export default function PetDetail() {
                 <h3>{petDetail.name}</h3>
                 <h3>{petDetail.image}</h3>
                 {/* <h3></h3> */}
-
+<h1>hola </h1>
             </div>
 
         </div>
