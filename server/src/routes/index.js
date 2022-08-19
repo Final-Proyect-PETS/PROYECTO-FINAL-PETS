@@ -226,47 +226,52 @@ router.get("/bySortAge2", async (req, res, next) => {
         const desc = await Pets.find().sort({ age: -1 });
         res.send(desc);
     } catch (error) {
-        next(error);
-    }
-})
-router.get("/bySortDate", async (req, res, next) => {
-    try {
-        connection();
-        const date = await Pets.find().sort({ createdAt: -1 });
-        res.send(date);
-    } catch (error) {
-        next(error);
-    }
-})
-router.get("/bySortDate2", async (req, res, next) => {
-    try {
-        connection();
-        const date2 = await Pets.find().sort({ createdAt: 1 });
-        res.send(date2);
-    } catch (error) {
-        next(error);
-    }
-})
 
+      console.error(error);
+    }
+  }),
+  router.post("/pets/:id", async (req, res, next) => {
+    const { id } = req.params;
+    console.log(id);
+    const {
+      name,
+      image,
+      type,
+      description,
+      size,
+      age,
+      vaccination,
+      castrated,
+      place,
+    } = req.body;
 
-router.patch("/users", async (req, res, next) => {
-    const { first_name, last_name, username, email, password, image, telephone, about } = req.body
     try {
-        const oneUser = await User.findOne({
-            _id: req.params.id
-        })
+      connection();
+      console.log("conectado a users");
+    } catch (err) {
+      console.error(err);
+    }
 
-        await oneUser.update({
-            first_name,
-            last_name,
-            username,
-            email,
-            password,
-            image,
-            telephone,
-            about,
-        })
-        res.status(200).json("Datos Actualizados Exitosamente 👌")
+    try {
+      const foundUser = await User.findById(id); //valido que el id que me pasan del front por params exista en mi db
+
+      const newPet = new Pets({
+        name,
+        image,
+        type,
+        description,
+        size,
+        age,
+        vaccination,
+        castrated,
+        place,
+        user: foundUser._id,
+      });
+      const savedPet = await newPet.save();
+      foundUser.pets = foundUser.pets.concat(savedPet._id);
+      await foundUser.save();
+      res.status(201).json(newPet);
+
     } catch (error) {
         next(error);
     }
