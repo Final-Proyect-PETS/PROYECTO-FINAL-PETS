@@ -1,11 +1,28 @@
-import React from 'react'
-import NavBar from '../NavBar/NavBar'
+import React from "react";
+import NavBar from "../NavBar/NavBar";
+import Cards from "./Cards";
+import SideBar from "../SideBar/SideBar";
 
 export default function Home() {
   return (
     <>
-    <NavBar/>
-    <div></div>
+      <div className="flex flex-col">
+        <section>
+          <NavBar />
+        </section>
+
+        <div className="flex flex-row bg-gray-200 w-screen">
+          
+          <section className="flex w-1/2">
+            <SideBar />
+          </section>
+
+          <section className="flex w-full justify-center">
+            <Cards />
+          </section>
+
+        </div>
+      </div>
     </>
-  )
+  );
 }
