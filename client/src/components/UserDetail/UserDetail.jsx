@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, React } from "react";
 import { clearState, getUserDetail } from "../../redux/Actions/index";
 import NavBar from "../NavBar/NavBar";
+import styles from "./userDetailStyle.css";
 
 export default function UserDetail() {
   const dispatch = useDispatch();
@@ -17,12 +18,13 @@ export default function UserDetail() {
           // id={idUser}
           class="rounded overflow-hidden border border-[#B99782] w-full bg-white my-12 md:mx-0 lg:mx-0"
         >
+          {" "}
           <div class="w-full flex justify-between p-3 border-b items-center bg-[#B99782]">
             <div class="flex items-center">
               <div class="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
-                <img src={userDetail.image} alt="profilepic" />
+                <img src={userDetail.image} />
               </div>
-              <span class="text-2xl font-bold">Name:</span>
+              {/* <span class="text-2xl font-bold"></span> */}
               <span class="text-2xl font-bold">
                 {" "}
                 {userDetail.first_name + " " + userDetail.last_name}
@@ -30,7 +32,14 @@ export default function UserDetail() {
             </div>
             <div class="flex items-center">
               <div class="text-sm flex">
-                {/* <img src={ubicacion} alt="ubicacion" width="16px" /> */}
+                <span class="text-2xl font-bold">About Me:</span>
+                <span class="font-medium text-xs mx-3">{userDetail.about}</span>
+              </div>
+            </div>
+          </div>
+          <div class="w-full flex justify-between p-3 border-b items-center bg-[#B99782]">
+            <div class="flex items-center">
+              <div class="text-sm flex">
                 <span class="text-2xl font-bold">
                   Email: {userDetail.email} -
                 </span>
@@ -46,12 +55,15 @@ export default function UserDetail() {
             {/* <img class="w-96 bg-cover rounded" src={imagePet} alt="imagepet" /> */}
             <div class="bg-gray-200 flex w-52 flex-col content-around gap-9 justify-center items-center">
               <div class="flex">
-                <span class="text-2xl font-bold"> About:</span>
+                <span class="text-2xl font-bold"> PET 1</span>
               </div>
               <div class="text-sm flex">
                 <span class="font-bold text-lg text-gray-700">
-                  {userDetail.about}
+                  ←AQUI IRA MI PROXIMA MASCOTA→
                 </span>
+              </div>
+              <div class="text-sm flex">
+                <span class="font-bold text-lg text-gray-700">ADOPTAR</span>
               </div>
             </div>
           </div>
