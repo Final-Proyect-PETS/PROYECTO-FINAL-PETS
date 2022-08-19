@@ -46,7 +46,7 @@ export default function LandingPage() {
 
             <div class="flex flex-col w-full max-w-md m-14 mr-24 py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
                 <div class="self-center mb-6 text-xl font-light text-gray-600 sm:text-2xl dark:text-white">
-                    Ingrese su cuenta
+                    Ingrese a su cuenta
                 </div>
                 <div class="mt-8">
                     <form action="#" autoComplete="off">

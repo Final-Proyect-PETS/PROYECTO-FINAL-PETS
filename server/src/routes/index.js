@@ -7,23 +7,29 @@ const User = require("../models/users");
 const router = Router();
 
 router.get("/pets", async (req, res, next) => {
-  const name = req.query.name;
-  try {
-    connection();
-    console.log("conectado");
-  } catch (err) {
-    console.error(err);
-  }
-  try {
-    const arrayPets = await Pets.find();
-    if (name) {
-      let petFound = arrayPets.filter(
-        (p) => p.name.toLowerCase() === name.toLowerCase()
-      );
-      if (petFound.length) res.send(petFound);
-      else res.send(["Pet not found"]);
-    } else {
-      res.send(arrayPets);
+
+    const name = req.query.name;
+    try {
+        connection();
+        console.log("conectado");
+    } catch (err) {
+        console.error(err);
+    }
+    try {
+
+        const arrayPets = await Pets.find().populate("user");
+
+        if (name) {
+            let petFound = arrayPets.filter(
+                (p) => p.name.toLowerCase() === name.toLowerCase()
+            );
+            if (petFound.length) res.send(petFound);
+            else res.send(["Pet not found"]);
+        } else {
+            res.send(arrayPets);
+        }
+    } catch (error) {
+        next(error);
     }
   } catch (error) {
     next(error);
@@ -140,6 +146,7 @@ router.post("/pets/:id", async (req, res, next) => {
     next(error);
   }
 
+
   try {
     const foundUser = await User.findById(id);
     // const date = new Date().toISOString().slice(0, 10);
@@ -188,17 +195,23 @@ router.get("/filterBySize", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+
 });
 
 router.get("/filterByType", async (req, res, next) => {
-  let { type } = req.body;
-  try {
-    if (type === "dog") connection();
-    const dog = await Pets.find({ type: "dog" });
-    res.send(dog);
-    if (type === "cat") connection();
-    const cat = await Pets.find({ type: "cat" });
-    res.send(cat);
+    try {
+    let { type } = req.query;
+    if (type === "dog"){
+        connection();
+        const dog = await Pets.find({ type: "dog" });
+        res.send(dog);
+    }
+
+    if (type === "cat") {
+        connection();
+        const cat = await Pets.find({ type: "cat" });
+        res.send(cat);
+    }
   } catch (error) {
     next(error);
   }
@@ -243,20 +256,12 @@ router.get("/bySortDate2", async (req, res, next) => {
 });
 
 router.patch("/users", async (req, res, next) => {
-  const {
-    first_name,
-    last_name,
-    username,
-    email,
-    password,
-    image,
-    telephone,
-    about,
-  } = req.body;
-  try {
-    const oneUser = await User.findOne({
-      _id: req.body._id,
-    });
+
+    const { first_name, last_name, username, email, password, image, telephone, about } = req.body
+    try {
+        const oneUser = await User.findOne({
+            _id: req.params.id
+        })
 
     await oneUser.update({
       first_name,
@@ -274,71 +279,70 @@ router.patch("/users", async (req, res, next) => {
   }
 });
 
-router.patch("/pets", async (req, res) => {
-  const {
-    name,
-    image,
-    type,
-    description,
-    size,
-    age,
-    vaccination,
-    castrated,
-    place,
-  } = req.body;
-  try {
-    const onePet = await Pets.findOne({
-      _id: req.body._id,
-    });
-    await onePet.update({
-      name,
-      image,
-      type,
-      description,
-      size,
-      age,
-      vaccination,
-      castrated,
-      place,
-    });
-    res
-      .status(200)
-      .json("Los Datos de Tu Mascota se actualizaron exitosamente 🐶 ");
-  } catch (error) {
-    next(error);
-  }
-});
+
+router.patch("/pets/:id", async (req, res) => {
+    const { name, image, type, description, size, age, vaccination, castrated, place } = req.body
+    try {
+        const onePet = await Pets.findOne({
+            _id: req.params.id
+        })
+        await onePet.update({
+            name,
+            image,
+            type,
+            description,
+            size,
+            age,
+            vaccination,
+            castrated,
+            place
+        })
+        res.status(200).json("Los Datos de Tu Mascota se actualizaron exitosamente 🐶 ")
+    } catch (error) {
+        next(error)
+    }
+})
 
 router.get("/filterByVaccination", async (req, res, next) => {
-  let { vaccination } = req.body;
-  try {
-    if (vaccination === "yes") connection();
-    const yes = await Pets.find({ vaccination: "yes" });
-    res.send(yes);
-    if (vaccination === "no") connection();
-    const no = await Pets.find({ vaccination: "no" });
-    res.send(no);
-    if (vaccination === "unknown") connection();
-    const unknown = await Pets.find({ vaccination: "unknown" });
-    res.send(unknown);
-  } catch (error) {
-    next(error);
-  }
-});
+    try {
+        let { vaccination } = req.query;
+        if (vaccination === "yes") {
+            connection();
+            const yes = await Pets.find({ vaccination: "yes" });
+            res.send(yes);
+        }
+        if (vaccination === "no") {
+            connection();
+            const no = await Pets.find({ vaccination: "no" });
+            res.send(no);
+        }
+        if (vaccination === "unknown") {
+            connection();
+            const unknown = await Pets.find({ vaccination: "unknown" });
+            res.send(unknown);
+        }
+    } catch (error) {
+        next(error);
+    }
+})
 
 router.get("/filterByCastrated", async (req, res, next) => {
-  let { castrated } = req.body;
-  try {
-    if (castrated === true) connection();
-    const yes = await Pets.find({ castrated: true });
-    res.send(yes);
-    if (castrated === false) connection();
-    const no = await Pets.find({ castrated: false });
-    res.send(no);
-  } catch (error) {
-    next(error);
-  }
-});
+    try {
+        let { castrated } = req.query;
+        if (castrated === "true"){
+             connection();
+            const yes = await Pets.find({ castrated: true });
+            res.send(yes);
+        }
+        if (castrated === "false") {
+            connection();
+            const no = await Pets.find({ castrated: false });
+            res.send(no);
+        }
+    } catch (error) {
+        next(error);
+    }
+})
 
 router.get("/filterByPlace", async (req, res, next) => {
   let { place } = req.body;
