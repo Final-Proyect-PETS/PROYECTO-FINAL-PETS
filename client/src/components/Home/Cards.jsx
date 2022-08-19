@@ -42,7 +42,6 @@ export default function Cards() {
 
 
   return (
-    
       <InfiniteScroll
         dataLength={CurrentPages.length} //This is important field to render the next data
         next={fetchMoreData}
