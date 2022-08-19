@@ -7,13 +7,13 @@ export default function Home() {
   return (
     <>
       <div className="flex flex-col">
-        <section>
+        <section className="fixed">
           <NavBar />
         </section>
 
         <div className="flex flex-row bg-gray-200 w-screen">
           
-          <section className="flex w-1/2">
+          <section className="flex w-1/3 fixed mt-14">
             <SideBar />
           </section>
 

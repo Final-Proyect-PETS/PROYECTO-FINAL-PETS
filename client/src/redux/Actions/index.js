@@ -109,113 +109,13 @@ export function clearState(payload) {
   };
 }
 //FILTROS//------------------
-export function sortAscAge(payload) {
-  return async function (dispatch) {
-    let json = await axios.get(`http://localhost:3001/bySortAge`);
-    return dispatch({
-      type: actions.SORT_ASC_AGE,
-      payload: json.data,
-    });
-  };
-}
-
-export function sortDescAge(payload) {
-  return async function (dispatch) {
-    let json = await axios.get(`http://localhost:3001/bySortAge2`);
-    return dispatch({
-      type: actions.SORT_DESC_AGE,
-      payload: json.data,
-    });
-  };
-}
-
-export function sortDescCreated(payload) {
-  return async function (dispatch) {
-    let json = await axios.get(`http://localhost:3001/bySortDate2`);
-    return dispatch({
-      type: actions.SORT_DESC_CREATED,
-      payload: json.data,
-    });
-  };
-}
-
-export function sortAscCreated(payload) {
-  return async function (dispatch) {
-    let json = await axios.get(`http://localhost:3001/bySortDate`);
-    return dispatch({
-      type: actions.SORT_ASC_CREATED,
-      payload: json.data,
-    });
-  };
-}
-
-export function filterByVaccination(payload) {
+export function filterByQuery(filterParams) {
   return async function (dispatch) {
     let json = await axios.get(
-      `http://localhost:3001/filterByVaccination?vaccination=${payload}`
+      `http://localhost:3001/filters?age=${filterParams.age}&creation_date=${filterParams.creation_date}&vaccinated=${filterParams.vaccinated}&castrated=${filterParams.castrated}&location=${filterParams.location}&pet_type=${filterParams.pet_type}&pet_size=${filterParams.pet_size}&pet_age=${filterParams.pet_age}`
     );
     return dispatch({
-      type: actions.FILTER_BY_VACCINATION,
-      payload: json.data,
-    });
-  };
-}
-
-export function filterByType(payload) {
-  return async function (dispatch) {
-    let json = await axios.get(
-      `http://localhost:3001/filterByType?type=${payload}`
-    );
-    return dispatch({
-      type: actions.FILTER_BY_TYPE,
-      payload: json.data,
-    });
-  };
-}
-
-export function filterBySize(payload) {
-  return async function (dispatch) {
-    let json = await axios.get(
-      `http://localhost:3001/filterBySize?size=${payload}`
-    );
-    return dispatch({
-      type: actions.FILTER_BY_SIZE,
-      payload: json.data,
-    });
-  };
-}
-
-export function filterByCastrated(payload) {
-  return async function (dispatch) {
-    let json = await axios.get(
-      `http://localhost:3001/filterByCastrated?castrated=${payload}`
-    );
-    return dispatch({
-      type: actions.FILTER_BY_CASTRAED,
-      payload: json.data,
-    });
-  };
-}
-
-export function filterByPlace(payload) {
-  return async function (dispatch) {
-    let json = await axios.get(
-      `http://localhost:3001/filterByPlace?place=${payload}`
-    );
-    return dispatch({
-      type: actions.FILTER_BY_PLACE,
-      payload: json.data,
-    });
-  };
-}
-
-export function filterByAge(payload) {
-  return async function (dispatch) {
-    let json = await axios.get(
-      `http://localhost:3001/filterByAge?age=${payload}`
-    );
-    return dispatch({
-      type: actions.FILTER_BY_AGE,
+      type: actions.FILTER_BY_QUERY,
       payload: json.data,
     });
   };
