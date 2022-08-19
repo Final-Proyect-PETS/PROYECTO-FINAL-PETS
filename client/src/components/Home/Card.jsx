@@ -11,6 +11,7 @@ export default function Card({ idUser, first_name, last_name, imageUser, idPet, 
   useEffect(() => {
     dispatch(getUserDetail(idUser));
   }, [dispatch, idUser]);
+  
 
   useEffect(() => {
     dispatch(getPetDetail(idPet));

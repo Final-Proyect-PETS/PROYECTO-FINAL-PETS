@@ -1,7 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { filterByQuery } from "../../redux/Actions";
+
+/* import { useSelector } from "react-redux"; */
+/* import { filters } from "../../redux/reducer" */
+import {
+  filterByQuery
+} from "../../redux/Actions/index";
+
 import SearchBar from "../SearchBar/SearchBar";
 
 export default function SideBar() {

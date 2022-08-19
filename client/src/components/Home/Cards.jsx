@@ -91,6 +91,7 @@ export default function Cards() {
 
       {getPets.length > 0 ? (input === "mascota"
         ? CurrentPages.map((pets) => (
+
           <Card
             idUser={pets.user["_id"]}
             first_name={pets.user["first_name"]}
@@ -109,6 +110,7 @@ export default function Cards() {
             castrated={pets.castrated}
           />
         ))
+
         : getUsers.map((user) => (
           <UserCard
             _id={user._id}
