@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, React } from "react";
+import { Link } from "react-router-dom";
 import { clearState, getUserDetail } from "../../redux/Actions/index";
 import NavBar from "../NavBar/NavBar";
 import styles from "./userDetailStyle.css";
@@ -23,6 +24,11 @@ export default function UserDetail() {
             <div class="flex items-center">
               <div class="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
                 <img src={userDetail.image} />
+              </div>
+              <div>
+                <Link  to="/UpDataUser">
+                  <button>🖍</button>
+                </Link>
               </div>
               {/* <span class="text-2xl font-bold"></span> */}
               <span class="text-2xl font-bold">
