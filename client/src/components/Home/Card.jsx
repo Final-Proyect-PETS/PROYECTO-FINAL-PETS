@@ -2,6 +2,7 @@ import React from "react";
 import ubicacion from "../../assets/images/ubicacion.png";
 import { Link } from "react-router-dom";
 
+
 export default function Card({
   idUser,
   first_name,
