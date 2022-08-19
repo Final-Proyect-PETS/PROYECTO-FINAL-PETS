@@ -2,7 +2,7 @@ import axios from "axios";
 import * as actions from "./actionTypes";
 
 //GET ALL ACTIONS//------------------------------------------------------------------
-export function getAllUsers () {
+export function getAllUsers() {
   return async (dispatch) => {
     return await axios
       .get("http://localhost:3001/users")
@@ -12,7 +12,7 @@ export function getAllUsers () {
       .catch((error) => console.log(error));
   };
 }
-export function getAllPets () {
+export function getAllPets() {
   return async (dispatch) => {
     return await axios
       .get("http://localhost:3001/pets")
@@ -48,9 +48,7 @@ export function getPetDetail(id) {
 export function getUserByName(name) {
   return async function (dispatch) {
     try {
-      var json = await axios.get(
-        "http://localhost:3001/users?name=" + name
-      );
+      var json = await axios.get("http://localhost:3001/users?name=" + name);
       return dispatch({
         type: actions.GET_USER_BY_NAME,
         payload: json.data,
@@ -63,9 +61,7 @@ export function getUserByName(name) {
 export function getPetByName(name) {
   return async function (dispatch) {
     try {
-      var json = await axios.get(
-        "http://localhost:3001/pets?name=" + name
-      );
+      var json = await axios.get("http://localhost:3001/pets?name=" + name);
       return dispatch({
         type: actions.GET_PET_BY_NAME,
         payload: json.data,
@@ -76,6 +72,9 @@ export function getPetByName(name) {
   };
 }
 ////POST ACTIONS//---------------------------------------------------------------------------
+
+//export function postPet(id, payload) {
+
 export function postPet(payload, id) {
   return async function (dispatch) {
     try {
@@ -90,10 +89,9 @@ export function postPet(payload, id) {
   };
 }
 export function postUser(payload) {
-  console.log(payload,"payload arriba del dispatch")
+  console.log(payload, "payload arriba del dispatch");
   return async function (dispatch) {
     try {
-    
       let json = await axios.post(`http://localhost:3001/users`, payload);
       return dispatch({
         type: actions.POST_USER,
