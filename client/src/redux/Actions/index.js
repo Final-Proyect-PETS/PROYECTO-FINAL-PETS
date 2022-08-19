@@ -24,6 +24,7 @@ export function getAllPets () {
 }
 //GET DETAIL ACTION//-----------------------------------------------------
 export function getUserDetail(id) {
+  console.log(id,"ID LLEGADO A ACTION")
   return async (dispatch) => {
     return await axios
       .get(`http://localhost:3001/users/${id}`)

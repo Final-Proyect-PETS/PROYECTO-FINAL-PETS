@@ -15,6 +15,7 @@ import {
   filterByVaccination,
   filterByType,
 } from "../../redux/Actions";
+import SearchBar from "../SearchBar/SearchBar";
 
 export default function SideBar() {
   const dispatch = useDispatch();
@@ -61,9 +62,13 @@ export default function SideBar() {
   }
   return (
     <div className="flex bg-gray-200 flex-col w-3/4 h-screen items-center gap-7 shadow-2xl">
+     
       <div className="bg-gray-300 border border-b-black text-white text-2xl w-full flex justify-center items-center h-12">
-        <h1 className="font-bold">FILTROS</h1>
+ 
+        
+        <h1 className="font-bold">DESCUBRIR</h1>
       </div>
+      <SearchBar/>
       <div className="bg-red-200 w-3/4 flex justify-center flex-col">
         <div className="flex justify-center">
           <h3 className="font-bold">Filtrar por edad</h3>

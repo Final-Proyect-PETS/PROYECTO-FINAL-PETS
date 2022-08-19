@@ -10,13 +10,17 @@ export default function Home() {
         <section>
           <NavBar />
         </section>
-        <div className="flex flex-row bg-gray-200 w-screen"> 
+
+        <div className="flex flex-row bg-gray-200 w-screen">
+          
           <section className="flex w-1/2">
             <SideBar />
           </section>
+
           <section className="flex w-full justify-center">
             <Cards />
           </section>
+
         </div>
       </div>
     </>
