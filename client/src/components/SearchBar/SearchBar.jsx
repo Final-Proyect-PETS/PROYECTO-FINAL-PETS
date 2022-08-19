@@ -43,7 +43,7 @@ export default function SearchBar() {
           onChange={(e) => handleInputChange(e)}
         ></input>
         <button className="bg-white rounded-lg border-transparent appearance-none border border-gray-300">
-          Buscar
+          Resetear Filtros
         </button>
       </form>
     </div>

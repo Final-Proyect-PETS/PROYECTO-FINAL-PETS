@@ -13,8 +13,8 @@ export default function NavBar() {
           <Link to={"/home"}>
             <h2 className="text-black text-2xl font-semibold">Home</h2>
           </Link>
-          <Link to={"/algo"}>
-            <h2 className="text-black text-2xl font-semibold">Algo</h2>
+          <Link to={"/pasarela"}>
+            <h2 className="text-black text-2xl font-semibold">$$$</h2>
           </Link>
           <Link to={"/about"}>
             <h2 className="text-black text-2xl font-semibold">About</h2>
