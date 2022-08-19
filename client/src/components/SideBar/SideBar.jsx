@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { filterByQuery } from "../../redux/Actions";
+import { filterByQuery, sortAge, sortDate } from "../../redux/Actions";
 import SearchBar from "../SearchBar/SearchBar";
 
 export default function SideBar() {
@@ -17,7 +17,7 @@ export default function SideBar() {
     pet_age: "all",
   });
 
-  function handlerSortAscAge(ev) {
+  /* function handlerSortAscAge(ev) {
     ev.preventDefault();
     dispatch(
       filterByQuery({
@@ -68,7 +68,8 @@ export default function SideBar() {
       ...filterParams,
       creation_date: "desc",
     });
-  }
+  } */
+
   function handlerFilterVacciantion(ev) {
     ev.preventDefault();
     dispatch(
@@ -153,13 +154,13 @@ export default function SideBar() {
         <h1 className="font-bold">DESCUBRIR</h1>
       </div>
       <SearchBar />
-      <div className="bg-red-200 w-3/4 flex justify-center flex-col">
+      {/* <div className="bg-red-200 w-3/4 flex justify-center flex-col">
         <div className="flex justify-center">
           <h3 className="font-bold">Ordenar mascotas por edad</h3>
         </div>
         <div className="flex justify-center gap-1">
-          <button onClick={(ev) => handlerSortAscAge(ev)}>Ascendente</button> <p />
-          <button onClick={(ev) => handlerSortDescAge(ev)}>Descendente</button>
+          <button name = "asc" value = "asc" onClick={(ev) => handlerSortAge(ev)}>Ascendente</button> <p />
+          <button name = "desc" value = "desc" onClick={(ev) => handlerSortAge(ev)}>Descendente</button>
           <p />
         </div>
       </div>
@@ -168,12 +169,12 @@ export default function SideBar() {
           <h3 className="font-bold">Antiguedad de publicaciones</h3>
         </div>
         <div className="flex justify-center gap-1">
-          <button onClick={(ev) => handlerSortCreatedAsc(ev)}>Mas antigua</button>
+          <button name = "desc" value = "desc" onClick={(ev) => handlerSortDate(ev)}>Mas antigua</button>
           <p />
-          <button onClick={(ev) => handlerSortCreateDesc(ev)}>Mas reciente</button>
+          <button name = "asc" value = "asc" onClick={(ev) => handlerSortDate(ev)}>Mas reciente</button>
           <p />
         </div>
-      </div>
+      </div> */}
       <div className="bg-red-200 w-3/4 flex justify-center flex-col">
         <select
           className="bg-red-200 font-bold"
