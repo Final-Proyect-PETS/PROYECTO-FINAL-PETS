@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { getAllPets } from "../../redux/Actions/index";
+import { getAllPets, getAllUsers } from "../../redux/Actions/index";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -9,8 +9,19 @@ import Card from "./Card";
 export default function Cards() {
   const dispatch = useDispatch();
 
+  
+  useEffect(() => {
+    dispatch(getAllPets());
+  }, [dispatch]);
   const getPets = useSelector((state) => state.pets);
 
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch]);
+  const getUsers = useSelector((state) => state.users);
+
+
+ 
   const [CurrentPag, setCurrentPag] = useState(1);
 
   const [CardsPerPage, setCardsPerPage] = useState(6);
@@ -23,11 +34,6 @@ export default function Cards() {
 
   const CurrentPages = getPets.slice(IndexFirstCard, IndexLastCard);
 
-  useEffect(() => {
-    dispatch(getAllPets());
-  }, [dispatch]);
-
-  console.log(getPets);
 
   const fetchMoreData = async () => {
     
@@ -48,6 +54,7 @@ export default function Cards() {
           </p>
         }>
         {CurrentPages.map((pets) => (
+          
           <Card
             idUser={pets.user["_id"]}
             first_name={pets.user["first_name"]}

@@ -4,6 +4,7 @@ import Cards from "./Cards";
 import SideBar from "../SideBar/SideBar";
 
 export default function Home() {
+  
   return (
     <>
       <NavBar />
