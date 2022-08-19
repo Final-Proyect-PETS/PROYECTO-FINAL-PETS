@@ -4,17 +4,8 @@ import { useDispatch } from "react-redux";
 /* import { useSelector } from "react-redux"; */
 /* import { filters } from "../../redux/reducer" */
 import {
-  filterByAge,
-  sortAscAge,
-  sortDescAge,
-  sortAscCreated,
-  sortDescCreated,
-  filterByCastrated,
-  filterBySize,
-  filterByPlace,
-  filterByVaccination,
-  filterByType,
-} from "../../redux/Actions";
+  filterByQuery
+} from "../../redux/Actions/index";
 import SearchBar from "../SearchBar/SearchBar";
 
 export default function SideBar() {

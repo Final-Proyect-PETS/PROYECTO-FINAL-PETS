@@ -82,6 +82,7 @@ export default function Cards() {
       {input === "mascota"
         ? CurrentPages.map((pets) => (
             <Card
+          
               idUser={pets.user["_id"]}
               first_name={pets.user["first_name"]}
               last_name={pets.user["last_name"]}

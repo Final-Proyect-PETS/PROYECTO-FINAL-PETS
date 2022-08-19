@@ -20,6 +20,7 @@ export default function Card({
     dispatch(getUserDetail(idUser));
     //  return () => dispatch(clearState()); 
   }, [dispatch, idUser]);
+  
 
   return (
     <>
