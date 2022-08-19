@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'landing': "./src/assets/images/Landing.png",
+        
       },
     },
   },
