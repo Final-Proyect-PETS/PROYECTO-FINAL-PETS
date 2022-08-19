@@ -3,35 +3,37 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { getPetByName, getAllUsers } from "../../redux/Actions";
+import { getPetByName, getAllUsers, getUserByName } from "../../redux/Actions";
 
 export default function SearchBar() {
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
+  const [namePet, setNamePet] = useState("");
+  const [nameUser, setNameUser] = useState("");
   const pets = useSelector((state) => state.pets);
-  const getPetNow = async () => dispatch(getPetByName(name));
+  const users = useSelector((state) => state.users);
+  const getPetNow = async () => dispatch(getPetByName(namePet));
+  const getUserNow = async () => dispatch(getUserByName(nameUser));
 
   function handleInputChange(e) {
     e.preventDefault();
-    setName(e.target.value);
-    getPetNow(name);
-
-    // dispatch(clearPage());
-    // console.log(name);
+    setNamePet(e.target.value);
+    setNameUser(e.target.value);
+    getPetNow(namePet);
+    getUserNow(nameUser);
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    getPetNow(name);
-    if (dispatch(getPetByName(!name))) {
-      setName("");
-      dispatch(getAllUsers());
-      //clearPage();
-      alert("alerta de prueba");
-    } else {
-      dispatch(getPetByName(name));
-    }
-  }
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   getPetNow(namePet);
+  //   if (dispatch(getPetByName(!namePet))) {
+  //     setNamePet("");
+  //     dispatch(getAllUsers());
+  //     //clearPage();
+  //     alert("alerta de prueba");
+  //   } else {
+  //     dispatch(getPetByName(namePet));
+  //   }
+  // }
   return (
     <div className="flex">
       <form>

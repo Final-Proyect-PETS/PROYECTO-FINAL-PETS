@@ -16,10 +16,14 @@ router.get("/pets", async (req, res, next) => {
   }
   try {
     const arrayPets = await Pets.find().populate("user");
-    ///CAMBIE LOGICA,EN VEZ DE === USE .INCLUDES(LAUTARO DID IT)
+    ///CAMBIE LOGICA,EN VEZ DE === USE .INCLUDES y || para mas placer
     if (name) {
-      let petFound = arrayPets.filter((p) =>
-        p.name.toLowerCase().includes(name.toLowerCase())
+      let petFound = arrayPets.filter(
+        (p) =>
+          p.name.toLowerCase().includes(name.toLowerCase()) ||
+          p.place.toLowerCase().includes(name.toLowerCase()) ||
+          p.type.toLowerCase().includes(name.toLowerCase()) ||
+          p.age.toString().includes(name)
       );
       if (petFound.length) res.send(petFound);
       else res.send(arrayPets);
@@ -41,8 +45,12 @@ router.get("/users", async (req, res, next) => {
   try {
     const arrayUsers = await User.find().populate("pets");
     if (name) {
+      //LOGICA CAMBIADO CON .INCLUDES Y || PARA MAS PLACER
       let userFound = arrayUsers.filter(
-        (u) => u.username.toLowerCase() === name.toLowerCase()
+        (u) =>
+          u.username.toLowerCase().includes(name.toLowerCase()) ||
+          u.first_name.toLowerCase().includes(name.toLowerCase()) ||
+          u.last_name.toLowerCase().includes(name.toLowerCase())
       );
       if (userFound.length) res.send(userFound);
       else {

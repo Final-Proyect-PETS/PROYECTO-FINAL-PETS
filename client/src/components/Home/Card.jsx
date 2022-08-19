@@ -18,7 +18,7 @@ export default function Card({
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserDetail(idUser));
-    /*  return () => dispatch(clearState()); */
+    //  return () => dispatch(clearState()); 
   }, [dispatch, idUser]);
 
   return (

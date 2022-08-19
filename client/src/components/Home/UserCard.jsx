@@ -19,7 +19,7 @@ export default function UserCard({
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserDetail(_id));
-    /*  return () => dispatch(clearState()); */
+    // return () => dispatch(clearState());
   }, [dispatch, _id]);
 
   return (
