@@ -5,7 +5,7 @@ const initialState = {
   users: [],
   userDetail: [], //detail route
   petDetail: [], //detail route
-  filtros: [],
+
 };
 
 export default function rootReducer(state = initialState, { type, payload }) {
@@ -69,6 +69,81 @@ export default function rootReducer(state = initialState, { type, payload }) {
         ...state,
         pets: payload
       }
+      /* case actions.SORT_BY_DATE:
+        const date = payload === "asc" ? state.pets.sort(function(a, b) {
+          if (a.createdAt > b.createdAt){
+            return 0
+          }
+          if(b.createdAt > a.createdAt){
+            return -1
+          }
+          return 0
+        }) : state.pets.sort(function (a,b){
+          if (a.createdAt > b.createdAt){
+            return -1
+          }
+          return 0
+        })
+        return {
+          ...state,
+          pets: date
+        }
+        case actions.SORT_BY_AGE:
+          /* if(payload === "desc"){
+               const data = state.pets.sort((a, b) => b.age - a.age)
+               return {
+                ...state,
+                pets: data
+               }
+              }
+            if(payload === "asc"){
+              const data = state.pets.sort((a, b) => a.age - b.age)
+              return {
+                ...state,
+                pets: data
+              }
+            } */
+            /* const age = payload === "asc" ? state.pets.sort(function(a, b) {
+              if (a.age > b.age){
+                return 1
+              }
+              if(b.age > a.age){
+                return -1
+              }
+              return 0
+            }) : state.pets.sort(function (a,b){
+              if (a.age > b.age){
+                return -1
+              }
+              return 0
+            })
+            return {
+              ...state,
+              pets: age,
+            } 
+            const sortAge = payload === 'asc' ?
+            state.pets.sort(function (a, b) {
+                if (a.age > b.age) {
+                    return 1
+                }
+                if (b.age > a.age) {
+                    return -1
+                }
+                return 0
+            }) :
+            state.pets.sort(function (a, b) {
+                if (a.age > b.age) {
+                    return -1
+                }
+                if (b.age > a.age) {
+                    return 1
+                }
+                return 0
+            })
+        return {
+            ...state,
+            pets: sortAge
+        } */
        default:
       return state
     }
