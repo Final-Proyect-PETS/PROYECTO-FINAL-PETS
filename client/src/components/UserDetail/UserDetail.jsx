@@ -21,6 +21,11 @@ export default function UserDetail() {
               <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
                 <img src={userDetail.image} alt="imageuser"/>
               </div>
+              <div>
+                <Link  to="/UpDataUser">
+                  <button>🖍</button>
+                </Link>
+              </div>
               {/* <span class="text-2xl font-bold"></span> */}
               <span className="text-2xl font-bold">
                 {" "}
