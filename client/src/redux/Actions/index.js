@@ -85,12 +85,14 @@ export function postPet(id, payload) {
   return async function (dispatch) {
     try {
       let json = await axios.post(`http://localhost:3001/pets/${id}`, payload);
-      return dispatch({
+      dispatch({
         type: actions.POST_PET,
         payload: json.data,
       });
+      return "Mascota creada correctamente";
     } catch (error) {
       console.log(error);
+      return "Error de server, no se pudo crear la mascota, intente más tarde";
     }
   };
 }

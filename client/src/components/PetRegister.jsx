@@ -2,15 +2,22 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postPet, getAllPets } from "../redux/Actions/index.js";
-import { useEffect } from "react";
+//import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { notificationSwal } from "../utils/notificationSwal.jsx";
 
 export default function RegisterPet() {
   const dispatch = useDispatch();
 
-  const pets = useSelector((state) => state.pets);
+  // const pets = useSelector((state) => state.pets);
 
   const [errors, setErrors] = useState({});
+  const [image, setImage] = useState("");
+  const [imagePool, setImagePool] = useState([]);
+  const [loadingImage, setLoadingImage] = useState(false);
+  const [loadingImagePool, setLoadingImagePool] = useState(false);
 
   const [input, setInput] = useState({
     id: "",
@@ -23,6 +30,7 @@ export default function RegisterPet() {
     age: "",
     vaccination: "",
     castrated: false,
+    gender: "",
     place: "",
   });
 
@@ -39,17 +47,54 @@ export default function RegisterPet() {
     );
   }
 
-  function handleImagePool(e) {
+  async function handleImage(e) {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "pretty");
+    data.append("folder", "Images");
+    setLoadingImage(true);
+    const res = await axios.post(
+      "https://api.cloudinary.com/v1_1/ferrifullstack/image/upload",
+      data
+    );
+    setImage(res.data.secure_url);
     setInput({
       ...input,
-      imagePool: [...input.imagePool, e.target.value],
+      image: res.data.secure_url,
     });
     setErrors(
       validate({
         ...input,
-        imagePool: [...input.imagePool, e.target.value],
+        image: res.data.secure_url,
       })
     );
+    setLoadingImage(false);
+  }
+
+  async function handleImagePool(e) {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "pretty");
+    data.append("folder", "Images");
+    setLoadingImagePool(true);
+    const res = await axios.post(
+      "https://api.cloudinary.com/v1_1/ferrifullstack/image/upload",
+      data
+    );
+    setImagePool(res.data.secure_url);
+    setInput({
+      ...input,
+      imagePool: [...input.imagePool, res.data.secure_url],
+    });
+    setErrors(
+      validate({
+        ...input,
+        imagePool: [...input.imagePool, res.data.secure_url],
+      })
+    );
+    setLoadingImagePool(false);
   }
 
   function validate(input) {
@@ -58,7 +103,7 @@ export default function RegisterPet() {
     if (!input.id) errors.id = "El id es requerido!";
 
     if (input.name) {
-      if (!/^[a-zA-Z]+$/.test(input.name)) {
+      if (!/^[a-zA-Z\s]+$/.test(input.name)) {
         errors.name = "El nombre sólo puede tener letras!";
       } else if (input.name.length > 20) {
         errors.name = "El nombre no puede tener más de 20 caracteres!";
@@ -91,14 +136,17 @@ export default function RegisterPet() {
     if (!input.castrated)
       errors.castrated = "La información sobre castración es requerida!";
 
+    if (!input.gender)
+      errors.gender = "La información sobre castración es requerida!";
+
     if (input.place) {
-      if (!/^[a-zA-Z]+$/.test(input.place)) {
-        errors.place = "La ubicación sólo puede tener letras!";
+      if (!/^[a-zA-Z0-9\s]+$/.test(input.place)) {
+        errors.place = "La ubicación sólo puede tener letras y/o números!";
       } else if (input.place.length > 30) {
         errors.place = "La ubicación no puede tener más de 30 caracteres!";
       }
     } else errors.place = "La ubicación es requerida!";
-    console.log(input);
+    //console.log(input);
 
     return errors;
   }
@@ -115,6 +163,7 @@ export default function RegisterPet() {
       errors.age ||
       errors.vaccination ||
       errors.castrated ||
+      errors.gender ||
       errors.place
     ) {
       return true;
@@ -129,6 +178,7 @@ export default function RegisterPet() {
       input.age &&
       input.vaccination &&
       input.castrated &&
+      input.gender &&
       input.place
     ) {
       return false;
@@ -140,31 +190,73 @@ export default function RegisterPet() {
   function handleSubmit(e) {
     e.preventDefault();
     if (have() === false) {
-      if (window.confirm("¿Está seguro de que desea crear esta mascota?")) {
-        let id = input.id;
-        delete input.id;
+      Swal.fire({
+        title: "¿Está seguro de que desea crear esta mascota?",
+        text: "Esta mascota se publicará en adopción",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonText: "No",
+        confirmButtonText: "Sí",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let id = input.id;
+          delete input.id;
+          dispatch(postPet(id, input)).then((e) => {
+            if (e === "Mascota creada correctamente") {
+              notificationSwal(
+                "¡Enhorabuena!",
+                "Mascota creada con éxito",
+                "success",
+                "Ok"
+              );
+            } else {
+              notificationSwal(
+                "¡Ooops!",
+                "No se pudo crear la mascota, intente mas tarde",
+                "error",
+                "Cancel"
+              );
+            }
+          });
+        } else {
+          notificationSwal(
+            "Operación cancelada",
+            "Mascota no creada",
+            "error",
+            "Cancel"
+          );
+        }
+      });
 
-        dispatch(postPet(id, input)).then(
-          alert("Mascota creada correctamente")
-        );
-
-        setInput({
-          id: "",
-          name: "",
-          image: "",
-          imagePool: [],
-          type: "",
-          description: "",
-          size: "",
-          age: 0,
-          vaccination: "",
-          castrated: false,
-          place: "",
-        });
-      }
+      setInput({
+        id: "",
+        name: "",
+        image: "",
+        imagePool: [],
+        type: "",
+        description: "",
+        size: "",
+        age: 0,
+        vaccination: "",
+        castrated: false,
+        gender: "",
+        place: "",
+      });
+      setImage("");
     } else if (have() === "e") {
-      alert("Faltan datos!");
-    } else alert("Por favor, llena todo correctamente!");
+      notificationSwal(
+        "¡Faltan datos!",
+        "Complete todos los campos obligatorios",
+        "error",
+        "Cancel"
+      );
+    } else
+      notificationSwal(
+        "¡Hay errores!",
+        "Corríjalos por favor",
+        "error",
+        "Cancel"
+      );
   }
 
   function handleDelete(event) {
@@ -185,9 +277,9 @@ export default function RegisterPet() {
     return key++;
   }
 
-  useEffect(() => {
-    dispatch(getAllPets());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getAllPets());
+  // }, [dispatch]);
 
   return (
     <div className="bg-gray-300">
@@ -229,34 +321,38 @@ export default function RegisterPet() {
         </div>
         <div>
           <label>Imagen de perfil</label>
-          <input
-            type="file"
-            name="image"
-            value={input.image}
-            onChange={(e) => handleChange(e)}
-          />
+          <input type="file" name="image" onChange={(e) => handleImage(e)} />
+          {loadingImage ? (
+            <h3>Cargando imagen...</h3>
+          ) : (
+            <img src={image} alt="" width="300px" />
+          )}
           {errors.image && <p>{errors.image}</p>}
         </div>
         <div>
           <label>Más imágenes</label>
           <input
             type="file"
-            name="images"
+            name="imagePool"
             onChange={(e) => handleImagePool(e)}
           />
           <div>
-            {input.imagePool.map((el) => (
-              <div key={addKey()}>
-                <p>{el}</p>
-                <button
-                  key={el.id}
-                  type="button"
-                  onClick={() => handleDelete(el)}
-                >
-                  X
-                </button>
-              </div>
-            ))}
+            {loadingImagePool ? (
+              <h3>Cargando imagen...</h3>
+            ) : (
+              input.imagePool.map((el) => (
+                <div key={addKey()}>
+                  <img src={el} alt="" width="300px" />
+                  <button
+                    key={el.id}
+                    type="button"
+                    onClick={() => handleDelete(el)}
+                  >
+                    X
+                  </button>
+                </div>
+              ))
+            )}
           </div>
           {errors.imagePool && <p>{errors.imagePool}</p>}
         </div>
@@ -340,8 +436,7 @@ export default function RegisterPet() {
           <fieldset onChange={(e) => handleChange(e)}>
             <legend>¿Castrado?</legend>
             <div>
-              <input type="radio" name="castrated" value={true} />{" "}
-              {/*ver si soporta value={true} */}
+              <input type="radio" name="castrated" value={true} />
               <label>Sí</label>
             </div>
             <div>
@@ -349,19 +444,21 @@ export default function RegisterPet() {
               <label>No</label>
             </div>
           </fieldset>
-          {/* <label>Castrado</label>
-          <select name="castrated" onChange={(e) => handleChange(e)}>
-            <option value="castratedSelect" defaultValue hidden>
-              Seleccione opción
-            </option>
-            <option value={true} key={addKey()}>
-              Sí
-            </option>
-            <option value={false} key={addKey()}>
-              No
-            </option>
-          </select> */}
           {errors.castrated && <p>{errors.castrated}</p>}
+        </div>
+        <div>
+          <fieldset onChange={(e) => handleChange(e)}>
+            <legend>Genero</legend>
+            <div>
+              <input type="radio" name="gender" value="female" />
+              <label>Hembra</label>
+            </div>
+            <div>
+              <input type="radio" name="gender" value="male" />
+              <label>Macho</label>
+            </div>
+          </fieldset>
+          {errors.gender && <p>{errors.gender}</p>}
         </div>
         <div>
           <label>Ubicación</label>
