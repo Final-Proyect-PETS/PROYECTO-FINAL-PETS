@@ -15,7 +15,7 @@ export default function Card({
   size,
 }) {
 
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
 
 

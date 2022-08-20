@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 import "./userDetailStyle.css";
-import { Link } from "react-router-dom";
+
 
 export default function UserDetail() {
 
