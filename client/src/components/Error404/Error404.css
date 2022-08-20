@@ -1,5 +1,5 @@
-#landing {
-    background-image: url("../../public/images/Landingpage.png");
+#errorcomponent{
+    background-image: url("../../../public/images/404.png");
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
