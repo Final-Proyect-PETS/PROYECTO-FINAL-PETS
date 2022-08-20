@@ -112,6 +112,7 @@ export default function Cards() {
               age={pets.age}
               vaccination={pets.vaccination}
               castrated={pets.castrated}
+              gender={pets.gender}
             />
           ))
         ) : (

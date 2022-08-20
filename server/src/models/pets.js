@@ -9,6 +9,7 @@ const petsSchema = new Schema({
     description: String,
     size: { type: String, enum: ["small", "medium", "big"], lowercase: true },
     age: Number,
+    gender: { type: String, enum: ["female", "male"], lowercase: true },
     vaccination: { type: String, enum: ["yes", "no", "unknown"], lowercase: true },
     castrated: Boolean,
     place: String,
