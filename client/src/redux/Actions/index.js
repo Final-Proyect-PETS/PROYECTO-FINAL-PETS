@@ -78,12 +78,14 @@ export function postPet(id, payload) {
   return async function (dispatch) {
     try {
       let json = await axios.post(`http://localhost:3001/pets/${id}`, payload);
-      return dispatch({
+      dispatch({
         type: actions.POST_PET,
         payload: json.data,
       });
+      return "Mascota creada correctamente";
     } catch (error) {
       console.log(error);
+      return "Error de server, no se pudo crear la mascota, intente más tarde";
     }
   };
 }
@@ -109,32 +111,32 @@ export function clearState(payload) {
   };
 }
 //UpDate//------------------------------------------------------------------------------------------------------------------
-export function patchUsuer(payload){
-  return async function(dispatch){
+export function patchUsuer(payload) {
+  return async function (dispatch) {
     try {
-      let json= await axios.patch(`http://localhost:3001/users`, payload);
+      let json = await axios.patch(`http://localhost:3001/users`, payload);
       return dispatch({
         type: actions.PATCH_USER,
         payload: json.data,
-      })
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 }
 
-export function patchPet(payload){
-  return async function(dispatch){
+export function patchPet(payload) {
+  return async function (dispatch) {
     try {
-      let json= await axios.patch(`http://localhost:3001/pets`, payload);
+      let json = await axios.patch(`http://localhost:3001/pets`, payload);
       return dispatch({
         type: actions.PATCH_PET,
         payload: json.data,
-      })
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 }
 //FILTROS//------------------
 export function filterByQuery(filterParams) {

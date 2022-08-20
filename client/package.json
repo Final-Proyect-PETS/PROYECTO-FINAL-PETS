@@ -18,6 +18,7 @@
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
     "redux-toolkit": "^1.1.2",
+    "sweetalert2": "^11.4.28",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
