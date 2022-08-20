@@ -22,8 +22,11 @@ export default function Cards() {
 
   const getUsers = useSelector((state) => state.users);
 
+  const switchRender = useSelector((state) => state.switchRender);
+
+
   //Estado Local//-----------
-  const [input, setInput] = useState("mascota");
+  // const [input, setInput] = useState("mascota");//lleve
 
   //PAGINADO-----------------------------------------------------------------------
   const [CurrentPag, setCurrentPag] = useState(1);
@@ -43,15 +46,15 @@ export default function Cards() {
   };
   //-------------------------------------------------------------------------------------------------
 
-  function handleToogle(e) {
-    if (input === "mascota") {
-      setInput("usuario");
-      console.log(input, "DBusuario");
-    } else {
-      setInput("mascota");
-      console.log(input, "DBmascota");
-    }
-  }
+  // function handleToogle(e) {
+  //   if (input === "mascota") {
+  //     setInput("usuario");
+  //     console.log(input, "DBusuario");
+  //   } else {
+  //     setInput("mascota");
+  //     console.log(input, "DBmascota");
+  //   }
+  // }//lleve
 
   return (
     <InfiniteScroll
@@ -73,7 +76,7 @@ export default function Cards() {
         </p>
       }
     >
-      <label
+      {/* <label
         htmlFor="default-toggle"
         className="inline-flex relative items-center cursor-pointer"
       >
@@ -88,10 +91,10 @@ export default function Cards() {
         <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
           Mostrar Mascotas/Usuarios
         </span>
-      </label>
+      </label> */}
 
       {getPets.length > 0 ? (
-        input === "mascota" ? (
+        switchRender === "mascota" ? (
           CurrentPages.map((pets) => (
             <Card
               key={pets._id}
