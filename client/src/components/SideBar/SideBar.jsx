@@ -17,59 +17,6 @@ export default function SideBar() {
     pet_age: "all",
   });
 
-  /* function handlerSortAscAge(ev) {
-    ev.preventDefault();
-    dispatch(
-      filterByQuery({
-        ...filterParams,
-        pet_age: "asc",
-      })
-    );
-    setFilterParams({
-      ...filterParams,
-      pet_age: "asc",
-    });
-  }
-  function handlerSortDescAge(ev) {
-    ev.preventDefault();
-    dispatch(
-      filterByQuery({
-        ...filterParams,
-        pet_age: "desc",
-      })
-    );
-    setFilterParams({
-      ...filterParams,
-      pet_age: "desc",
-    });
-  }
-  function handlerSortCreatedAsc(ev) {
-    ev.preventDefault();
-    dispatch(
-      filterByQuery({
-        ...filterParams,
-        creation_date: "asc",
-      })
-    );
-    setFilterParams({
-      ...filterParams,
-      creation_date: "asc",
-    });
-  }
-  function handlerSortCreateDesc(ev) {
-    ev.preventDefault();
-    dispatch(
-      filterByQuery({
-        ...filterParams,
-        creation_date: "desc",
-      })
-    );
-    setFilterParams({
-      ...filterParams,
-      creation_date: "desc",
-    });
-  } */
-
   function handlerFilterVacciantion(ev) {
     ev.preventDefault();
     dispatch(

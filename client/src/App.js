@@ -6,10 +6,8 @@ import LandingPage from "./components/LandingPage";
 import UserDetail from "./components/UserDetail/UserDetail";
 import Register from "./components/Register";
 import PetRegister from "./components/PetRegister";
-import UpdateUser from "./components/Update/UpdateDataUsers"
-
+import UpdateUser from "./components/Update/UpdateDataUsers";
 import Error404 from "./components/Error404/Error404";
-
 import PetDetail from "./components/Details/PetDetail";
 
 
@@ -24,7 +22,7 @@ function App() {
         <Route path={"/about"} element={<About />} />
         <Route path={"/register"} element={<Register />} />
         <Route path={"/petregister"} element={<PetRegister />} />
-        <Route path={"/UpDataUser"} element={<UpdateUser/>}/>
+        <Route path={"/updateuser"} element={<UpdateUser/>}/>
         <Route path={"*"} element={<Error404 />} />
 
       </Routes>
