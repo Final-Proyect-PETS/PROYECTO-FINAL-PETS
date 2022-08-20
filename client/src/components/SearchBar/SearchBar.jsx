@@ -22,14 +22,11 @@ export default function SearchBar() {
   function handleToogle(e) {
     if (input === "mascota") {
       setInput("usuario");
-      console.log(input, "VALUEusuario");
     } else {
       setInput("mascota");
-      console.log(input, "VALUEmascota");
     }
-    console.log(input, "estadoGLOBAL");
     dispatch(switchRenderAction(input));
-  } //traiga
+  }
 
   function handleInputChange(e) {
     e.preventDefault();
