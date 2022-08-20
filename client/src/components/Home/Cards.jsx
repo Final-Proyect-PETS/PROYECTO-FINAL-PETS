@@ -66,6 +66,7 @@ export default function Cards() {
           </svg>
           <span className="sr-only">Loading...</span>
       </div>} */
+
       endMessage={
         <p style={{ textAlign: "center" }}>
           <b>Yay! You have seen it all</b>

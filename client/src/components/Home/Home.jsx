@@ -12,7 +12,6 @@ export default function Home() {
         </section>
 
         <div className="flex flex-row bg-gray-200 w-screen">
-          
           <section className="flex w-1/3 fixed mt-14">
             <SideBar />
           </section>
@@ -20,7 +19,6 @@ export default function Home() {
           <section className="flex w-full justify-center">
             <Cards />
           </section>
-
         </div>
       </div>
     </>

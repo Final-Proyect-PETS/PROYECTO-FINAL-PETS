@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 import "./userDetailStyle.css";
 
+
 export default function UserDetail() {
 
   const userDetail = useSelector((state) => state.userDetail);

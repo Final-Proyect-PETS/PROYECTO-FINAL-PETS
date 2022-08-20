@@ -14,10 +14,15 @@ export default function Card({
   place,
   size,
 }) {
+
+  //const dispatch = useDispatch();
+
+
+
   /*   useEffect(() => {
+
     dispatch(getUserDetail(idUser));
   }, [dispatch, idUser]);
-  
 
   useEffect(() => {
     dispatch(getPetDetail(idPet));
