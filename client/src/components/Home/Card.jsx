@@ -2,7 +2,6 @@ import React from "react";
 import ubicacion from "../../assets/images/ubicacion.png";
 import { Link } from "react-router-dom";
 
-
 export default function Card({
   idUser,
   first_name,
@@ -14,19 +13,6 @@ export default function Card({
   place,
   size,
 }) {
-
-  //const dispatch = useDispatch();
-
-
-
-  /*   useEffect(() => {
-
-    dispatch(getUserDetail(idUser));
-  }, [dispatch, idUser]);
-
-  useEffect(() => {
-    dispatch(getPetDetail(idPet));
-  }, [dispatch, idPet]); */
 
   return (
     <>

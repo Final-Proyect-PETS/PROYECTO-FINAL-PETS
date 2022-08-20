@@ -1,23 +1,34 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../NavBar/NavBar";
+import { useParams } from "react-router-dom";
+import { getPetDetail } from "../../redux/Actions";
 
 export default function PetDetail() {
 
+    let { id } = useParams()
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getPetDetail(id));
+    }, [ dispatch, id ]);
+
     const petDetail = useSelector((state) => state.petDetail);
-    console.log(petDetail)
 
     return (
         <div>
             <NavBar />
-            <h1>componente detail</h1>
+            <h1>Detalles 🐶</h1>
             <div>
-                <h3>{petDetail.name}</h3>
-                <h3>{petDetail.image}</h3>
-                {/* <h3></h3> */}
-<h1>hola </h1>
+                <h2>{petDetail.name}</h2>
+                {/* faltaria agregar el pool de images q viene como array */}
+                <img src={petDetail.image} alt="imagen mascota" />
+                <h3>Descripcion: {petDetail.description}</h3>
+                <h3>Lugar donde se encuntra: {petDetail.place}</h3>
+                <h3>Medida aproximada: {petDetail.size}</h3>
+                <h3>Vaccination: {petDetail.vaccination}</h3>
             </div>
-
         </div>
     )
 }
