@@ -1,3 +1,5 @@
+//SWITCH RENDER---------------
+export const SWITCH_RENDER = "SWITCH_RENDER"//OK
 //GET ALL------------------
 export const GET_ALL_PETS = "GET_ALL_PETS"; //ok
 export const GET_ALL_USERS = "GET_ALL_USERS"; //ok

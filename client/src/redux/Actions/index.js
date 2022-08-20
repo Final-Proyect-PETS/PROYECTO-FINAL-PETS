@@ -1,6 +1,13 @@
 import axios from "axios";
 import * as actions from "./actionTypes";
-
+//SWITCH RENDER//---------------------------------------------------
+export function switchRenderAction(input) {
+  console.log(input, "SWITCHRENDERACTION");
+  return async (dispatch) => {
+    console.log("llegaste???????????");
+    return await dispatch({ type: actions.SWITCH_RENDER, payload: input });
+  };
+}
 //GET ALL ACTIONS//------------------------------------------------------------------
 export function getAllUsers() {
   return async (dispatch) => {

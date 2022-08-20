@@ -27,7 +27,7 @@ export default function PetDetail() {
                 <h3>Descripcion: {petDetail.description}</h3>
                 <h3>Lugar donde se encuntra: {petDetail.place}</h3>
                 <h3>Medida aproximada: {petDetail.size}</h3>
-                <h3>Vaccination: {petDetail.vaccination}</h3>
+                <h3>¿Está vacunado?: {petDetail.vaccination}</h3>
             </div>
         </div>
     )
