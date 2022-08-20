@@ -1,6 +1,13 @@
 import axios from "axios";
 import * as actions from "./actionTypes";
-
+//SWITCH RENDER//---------------------------------------------------
+export function switchRenderAction(input) {
+  console.log(input, "SWITCHRENDERACTION");
+  return async (dispatch) => {
+    console.log("llegaste???????????");
+    return await dispatch({ type: actions.SWITCH_RENDER, payload: input });
+  };
+}
 //GET ALL ACTIONS//------------------------------------------------------------------
 export function getAllUsers() {
   return async (dispatch) => {
@@ -109,32 +116,32 @@ export function clearState(payload) {
   };
 }
 //UpDate//------------------------------------------------------------------------------------------------------------------
-export function patchUsuer(payload){
-  return async function(dispatch){
+export function patchUsuer(payload) {
+  return async function (dispatch) {
     try {
-      let json= await axios.patch(`http://localhost:3001/users`, payload);
+      let json = await axios.patch(`http://localhost:3001/users`, payload);
       return dispatch({
         type: actions.PATCH_USER,
         payload: json.data,
-      })
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 }
 
-export function patchPet(payload){
-  return async function(dispatch){
+export function patchPet(payload) {
+  return async function (dispatch) {
     try {
-      let json= await axios.patch(`http://localhost:3001/pets`, payload);
+      let json = await axios.patch(`http://localhost:3001/pets`, payload);
       return dispatch({
         type: actions.PATCH_PET,
         payload: json.data,
-      })
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 }
 //FILTROS//------------------
 export function filterByQuery(filterParams) {
