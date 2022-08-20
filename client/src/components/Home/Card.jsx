@@ -12,6 +12,7 @@ export default function Card({
   imagePet,
   place,
   size,
+  gender,
 }) {
 
   return (
@@ -54,6 +55,9 @@ export default function Card({
                   Size: {size}
                 </span>
               </div>
+              <div>
+                    <span className="text-2xl font-bold">{gender}</span>
+                </div>
             </div>
           </div>
         </Link>

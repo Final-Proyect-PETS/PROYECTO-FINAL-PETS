@@ -142,6 +142,7 @@ router.post("/pets/:id", async (req, res, next) => {
     vaccination,
     castrated,
     place,
+    gender,
   } = req.body;
 
   try {
@@ -165,6 +166,7 @@ router.post("/pets/:id", async (req, res, next) => {
       vaccination,
       castrated,
       place,
+      gender,
       user: foundUser._id,
     });
     await newPet.save();
@@ -218,6 +220,7 @@ router.patch("/pets", async (req, res, next) => {
     vaccination,
     castrated,
     place,
+    gender,
   } = req.body;
   try {
     const onePet = await Pets.findOne({
@@ -233,6 +236,7 @@ router.patch("/pets", async (req, res, next) => {
       vaccination,
       castrated,
       place,
+      gender,
     });
     res
       .status(200)
@@ -254,6 +258,7 @@ router.get("/filters", async (req, res, next) => {
       pet_type,
       pet_size,
       pet_age,
+      gender,
     } = req.query;
     let all = await Pets.find().populate("user");
 
@@ -295,6 +300,12 @@ router.get("/filters", async (req, res, next) => {
     }
     if (vaccinated === "unknown") {
       all = all.filter((ev) => ev.vaccination === "unknown");
+    }
+    if (gender === "female"){
+      all = all.filter((ev => ev.gender === "female"))
+    }
+    if (gender === "male"){
+      all = all.filter((ev => ev.gender === "male"))
     }
     res.send(all);
   } catch (error) {
