@@ -3,12 +3,13 @@ import "./App.css";
 import About from "./components/About/About";
 import Home from "./components/Home/Home";
 import LandingPage from "./components/LandingPage";
-import UserDetail from "./components/UserDetail/UserDetail";
+import UserDetail from "./components/Details/UserDetail";
+import PetDetail from "./components/Details/PetDetail";
 import Register from "./components/Register";
 import PetRegister from "./components/PetRegister";
 import UpdateUser from "./components/Update/UpdateDataUsers";
 import Error404 from "./components/Error404/Error404";
-import PetDetail from "./components/Details/PetDetail";
+
 
 
 function App() {

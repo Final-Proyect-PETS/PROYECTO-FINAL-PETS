@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import "./LandingPage.css"
 // import { useDispatch } from "react-redux"
 
 function validate(input) {
@@ -33,7 +34,8 @@ export default function LandingPage() {
     })
 
     return (
-        <div className="flex flex-col-6 m-5 mx-9 mt-8 items-center">
+        <div id="landing" className="flex w-screen">
+        <div className="flex flex-col-6 m-5 mx-9 mt-8 w-screen items-center">
             <div className="text-gray-800 m-14 p-14">
                 <h1 className="text-6xl font-semibold">Bienvenidos a </h1>
                 <p className="text-6xl font-normal italic">'Happy Tails'</p>
@@ -92,18 +94,19 @@ export default function LandingPage() {
                     </form>
                 </div>
 
-                <div class="flex items-center justify-center mt-6">
-                    <a href="#" target="_blank" class="inline-flex items-center text-s font-thin text-center text-gray-500 hover:text-gray-700 dark:text-gray-100 dark:hover:text-yellow-900">
-                <Link to="/register">
-                        <span class="ml-2">
+                <div className="flex items-center justify-center mt-6">
+                    
+                <Link to="/register" className="inline-flex items-center text-s font-thin text-center text-gray-500 hover:text-gray-700 dark:text-gray-100 dark:hover:text-yellow-900">
+                        <span className="ml-2">
                             ¿No tiene una cuenta? Ingrese aquí.
                         </span>
                 </Link>
-                    </a>
+    
                 </div>
 
             </div>
 
+        </div>
         </div>
     )
 

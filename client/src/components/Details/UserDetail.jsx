@@ -1,11 +1,18 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { getUserDetail } from "../../redux/Actions";
 import NavBar from "../NavBar/NavBar";
 import "./userDetailStyle.css";
 
-
 export default function UserDetail() {
+
+  let { id } = useParams()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getUserDetail(id));
+  }, [dispatch, id]);
 
   const userDetail = useSelector((state) => state.userDetail);
 
@@ -21,10 +28,10 @@ export default function UserDetail() {
           <div className="w-full flex justify-between p-3 border-b items-center bg-[#B99782]">
             <div className="flex items-center">
               <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
-                <img src={userDetail.image} alt="imageuser"/>
+                <img src={userDetail.image} alt="imageuser" />
               </div>
               <div>
-                <Link  to="/UpDataUser">
+                <Link to="/UpDataUser">
                   <button>🖍</button>
                 </Link>
               </div>
