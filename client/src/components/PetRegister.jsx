@@ -30,6 +30,7 @@ export default function RegisterPet() {
     age: "",
     vaccination: "",
     castrated: false,
+    gender: "",
     place: "",
   });
 
@@ -135,6 +136,9 @@ export default function RegisterPet() {
     if (!input.castrated)
       errors.castrated = "La información sobre castración es requerida!";
 
+    if (!input.gender)
+      errors.gender = "La información sobre castración es requerida!";
+
     if (input.place) {
       if (!/^[a-zA-Z0-9\s]+$/.test(input.place)) {
         errors.place = "La ubicación sólo puede tener letras y/o números!";
@@ -159,6 +163,7 @@ export default function RegisterPet() {
       errors.age ||
       errors.vaccination ||
       errors.castrated ||
+      errors.gender ||
       errors.place
     ) {
       return true;
@@ -173,6 +178,7 @@ export default function RegisterPet() {
       input.age &&
       input.vaccination &&
       input.castrated &&
+      input.gender &&
       input.place
     ) {
       return false;
@@ -233,6 +239,7 @@ export default function RegisterPet() {
         age: 0,
         vaccination: "",
         castrated: false,
+        gender: "",
         place: "",
       });
       setImage("");
@@ -429,8 +436,7 @@ export default function RegisterPet() {
           <fieldset onChange={(e) => handleChange(e)}>
             <legend>¿Castrado?</legend>
             <div>
-              <input type="radio" name="castrated" value={true} />{" "}
-              {/*ver si soporta value={true} */}
+              <input type="radio" name="castrated" value={true} />
               <label>Sí</label>
             </div>
             <div>
@@ -438,19 +444,21 @@ export default function RegisterPet() {
               <label>No</label>
             </div>
           </fieldset>
-          {/* <label>Castrado</label>
-          <select name="castrated" onChange={(e) => handleChange(e)}>
-            <option value="castratedSelect" defaultValue hidden>
-              Seleccione opción
-            </option>
-            <option value={true} key={addKey()}>
-              Sí
-            </option>
-            <option value={false} key={addKey()}>
-              No
-            </option>
-          </select> */}
           {errors.castrated && <p>{errors.castrated}</p>}
+        </div>
+        <div>
+          <fieldset onChange={(e) => handleChange(e)}>
+            <legend>Genero</legend>
+            <div>
+              <input type="radio" name="gender" value="female" />
+              <label>Hembra</label>
+            </div>
+            <div>
+              <input type="radio" name="gender" value="male" />
+              <label>Macho</label>
+            </div>
+          </fieldset>
+          {errors.gender && <p>{errors.gender}</p>}
         </div>
         <div>
           <label>Ubicación</label>
