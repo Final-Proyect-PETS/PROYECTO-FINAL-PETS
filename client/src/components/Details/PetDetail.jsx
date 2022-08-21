@@ -7,6 +7,7 @@ import { getPetDetail } from "../../redux/Actions";
 
 export default function PetDetail() {
 
+
     let { id } = useParams()
     const dispatch = useDispatch()
 

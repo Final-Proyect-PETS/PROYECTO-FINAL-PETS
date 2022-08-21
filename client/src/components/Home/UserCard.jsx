@@ -1,10 +1,11 @@
 import ubicacion from "../../assets/images/ubicacion.png";
 
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useEffect, React } from "react";
-import { getUserDetail } from "../../redux/Actions/index";
-
+import { getUserDetail, clearState } from "../../redux/Actions/index";
+import OwnedPet from "../Details/OwnedPet";
 export default function UserCard({
   _id,
   first_name,
@@ -19,45 +20,55 @@ export default function UserCard({
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserDetail(_id));
-    // return () => dispatch(clearState());
+    return () => dispatch(clearState());
   }, [dispatch, _id]);
+  //   const userDetail = useSelector((state) => state.userDetail);
+  // console.log(userDetail)
+
+  const pettit = pets;
+  console.log(pettit, "petppeptepe");
 
   return (
     <div
       id={_id}
-      class="rounded overflow-hidden border border-[#B99782] w-full bg-white my-12 md:mx-0 lg:mx-0"
+      className="rounded overflow-hidden border border-[#B99782] w-full bg-white my-12 md:mx-0 lg:mx-0"
     >
-      <div class="w-full flex justify-between p-3 border-b items-center bg-[#B99782]">
-        <div class="flex items-center">
-          <Link to={"/users/" + _id}>
-            <div class="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
+      <Link to={"/users/" + _id}>
+        <div className="w-full flex justify-between p-3 border-b items-center bg-[#B99782]">
+          <div className="flex items-center">
+            <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
               <img src={image} alt="profilepic" />
             </div>
-            <span class="ml-2 font-bold text-xs">
-              {first_name} {last_name}
+            <span className="text-2xl font-bold">
+              {`${first_name} ${last_name} - `}
             </span>
-          </Link>
-        </div>
-        <div class="flex items-center">
-          <div class="text-sm flex">
-            <img src={ubicacion} alt="ubicacion" width="16px" />
-            <span class="font-medium text-xs mx-3">
-              {"ubicacion Proximamente"}
-            </span>
+            <span className=" text-2xl font-bold">({username})</span>
+          </div>
+          <div className="flex items-center">
+            <div className="text-sm flex"></div>
           </div>
         </div>
-      </div>
-      <div class="py-3 flex">
-        {/* <img class="w-96 bg-cover rounded" src={imagePet} alt="imagepet" /> */}
-        <div class="bg-gray-200 flex w-52 flex-col content-around gap-9 justify-center items-center">
-          <div class="flex">
-            <span class="text-2xl font-bold">{username}</span>
+      </Link>
+
+    
+        <div className="bg-gray-200 flex py-3 flex-col content-around gap-9 justify-center items-center">
+          <div className="flex">
+            <span className="text-2xl font-bold">{"MIS MASCOTAS"}</span>
           </div>
-          <div class="text-sm flex">
-            <span class="font-bold text-lg text-gray-700">{email}</span>
+          <div className="flex">
+          
+            {pettit?.length
+              ? pettit?.map((pet) => (
+                <div className="rounded-full h-12 w-12 flex items-center justify-center overflow-hidden mr-2">
+               
+                    <img src={pet.image} alt="profilepic" />
+                  </div>
+                ))
+                : "QUIERO ADOPTAR!"}
+              
           </div>
         </div>
-      </div>
+      
     </div>
   );
 }
