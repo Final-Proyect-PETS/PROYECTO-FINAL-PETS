@@ -50,25 +50,20 @@ export default function UserCard({
         </div>
       </Link>
 
-    
-        <div className="bg-gray-200 flex py-3 flex-col content-around gap-9 justify-center items-center">
-          <div className="flex">
-            <span className="text-2xl font-bold">{"MIS MASCOTAS"}</span>
-          </div>
-          <div className="flex">
-          
-            {pettit?.length
-              ? pettit?.map((pet) => (
-                <div className="rounded-full h-12 w-12 flex items-center justify-center overflow-hidden mr-2">
-               
-                    <img src={pet.image} alt="profilepic" />
-                  </div>
-                ))
-                : "QUIERO ADOPTAR!"}
-              
-          </div>
+      <div className="bg-gray-200 flex py-3 flex-col content-around gap-9 justify-center items-center">
+        <div className="flex">
+          <span className="text-2xl font-bold">{"MIS MASCOTAS"}</span>
         </div>
-      
+        <div className="flex">
+          {pettit?.length
+            ? pettit?.map((pet) => (
+                <div className="rounded-full h-12 w-12 flex items-center justify-center overflow-hidden mr-2">
+                  <img src={pet.image} alt="profilepic" />
+                </div>
+              ))
+            : "QUIERO ADOPTAR!"}
+        </div>
+      </div>
     </div>
   );
 }
