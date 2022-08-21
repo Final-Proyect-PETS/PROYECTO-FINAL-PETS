@@ -124,7 +124,7 @@ export default function SideBar() {
       </div> */}
       <div className="bg-red-200 w-3/4 flex justify-center flex-col">
         <select
-          className="bg-red-200 font-bold"
+          className="bg-red-200 font-bold flex"
           onChange={(ev) => handlerFilterVacciantion(ev)}
         >
           <option hidden>Vacunado?</option>
