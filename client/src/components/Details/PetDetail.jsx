@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../NavBar/NavBar";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { getPetDetail } from "../../redux/Actions";
 
 export default function PetDetail() {
@@ -21,6 +21,9 @@ export default function PetDetail() {
         <div>
             <NavBar />
             <h1>Detalles 🐶</h1>
+            <Link  to="/updatepet">
+                  <button>:pencil:</button>
+            </Link>
             <div>
                 <h2>{petDetail.name}</h2>
                 {/* faltaria agregar el pool de images q viene como array */}

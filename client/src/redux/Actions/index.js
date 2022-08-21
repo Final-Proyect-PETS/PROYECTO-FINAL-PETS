@@ -132,10 +132,10 @@ export function patchUsuer(payload) {
   };
 }
 
-export function patchPet(payload) {
+export function patchPet(id, payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.patch(`http://localhost:3001/pets`, payload);
+      let json = await axios.patch(`http://localhost:3001/pets?id=${id}`, payload);
       return dispatch({
         type: actions.PATCH_PET,
         payload: json.data,
