@@ -70,7 +70,7 @@ export default function UpdateUser() {
       } else if (input.username.length > 20) {
         errors.username =
           "El nombre de usuario no puede tener más de 20 caracteres!";
-        // } else if (
+        // } else if if(
         //   users.find((u) => u.username === input.username.toLowerCase())
         // ) {
         //   errors.username = "El usuario ya existe!";

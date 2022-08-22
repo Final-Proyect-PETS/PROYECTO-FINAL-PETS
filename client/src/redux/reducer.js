@@ -17,18 +17,6 @@ export default function rootReducer(state = initialState, { type, payload }) {
         switchRender: payload,
       };
 
-    // case actions.SWITCH_RENDER:
-    //   if (payload === "mascota") {
-    //     return {
-    //       ...state,
-    //       pets: state.pets,
-    //     };
-    //   }else return{
-    //     ...state,
-    //     pets: state.users
-    //   }
-     
-
     //GET ALL
     case actions.GET_ALL_PETS:
       return {
