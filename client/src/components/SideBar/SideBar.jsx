@@ -124,7 +124,7 @@ export default function SideBar() {
       </div> */}
       <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
         <select
-          className="bg-gray-200 font-bold flex"
+          className="bg-gray-200 font-semibold p-2 flex"
           onChange={(ev) => handlerFilterVacciantion(ev)}
         >
           <option hidden>Vacunado?</option>
@@ -136,7 +136,7 @@ export default function SideBar() {
       </div>
       <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
         <select
-          className="bg-gray-200 font-bold"
+          className="bg-gray-200 font-semibold p-2"
           onChange={(ev) => handlerFilterCastraed(ev)}
         >
           <option hidden>Castrado?</option>
@@ -156,7 +156,7 @@ export default function SideBar() {
       </div>
       <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
         <select
-          className="bg-gray-200 font-bold"
+          className="bg-gray-200 font-semibold p-2"
           onChange={(ev) => handlerFilterTypePet(ev)}
         >
           <option hidden>TIPO DE MASCOTA</option>
@@ -167,7 +167,7 @@ export default function SideBar() {
       </div>
       <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
         <select
-          className="bg-gray-200 font-bold"
+          className="bg-gray-200 font-semibold p-2"
           onChange={(ev) => handlerFilterBySize(ev)}
         >
           <option hidden>TAMAÑO DE LA MASCOTA</option>
@@ -179,7 +179,7 @@ export default function SideBar() {
       </div>
       <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
         <select
-          className="bg-gray-200 font-bold"
+          className="bg-gray-200 font-semibold p-2"
           onChange={(ev) => handlerFilterByAge(ev)}
         >
           <option hidden>EDAD DE LA MASCOTA</option>
@@ -188,7 +188,7 @@ export default function SideBar() {
           <option value="young">Joven</option>
         </select>
       </div>
-      <button>ACA VA UN BOTON PARA CREAR</button>
+      <button className="py-2 px-4 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Crear nueva mascota</button>
     </div>
   );
 }
