@@ -96,9 +96,9 @@ export default function SideBar() {
     });
   }
   return (
-    <div className="flex bg-gray-200 flex-col w-3/4 h-screen items-center gap-7 shadow-2xl">
-      <div className="bg-gray-300 border border-b-black text-white text-2xl w-full flex justify-center items-center h-12">
-        <h1 className="font-bold">DESCUBRIR</h1>
+    <div className="flex bg-amber-800 border-x-2 border-white flex-col w-3/4 h-screen items-center gap-7 shadow-2xl">
+      <div className="border-y-2 border-white text-white text-xl w-full flex justify-center items-center h-12">
+        <h1 className="font-normal italic">Menú</h1>
       </div>
       <SearchBar />
       {/* <div className="bg-red-200 w-3/4 flex justify-center flex-col">
@@ -122,9 +122,9 @@ export default function SideBar() {
           <p />
         </div>
       </div> */}
-      <div className="bg-red-200 w-3/4 flex justify-center flex-col">
+      <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
         <select
-          className="bg-red-200 font-bold"
+          className="bg-gray-200 font-bold flex"
           onChange={(ev) => handlerFilterVacciantion(ev)}
         >
           <option hidden>Vacunado?</option>
@@ -134,9 +134,9 @@ export default function SideBar() {
         </select>
         <p />
       </div>
-      <div className="bg-red-200 w-3/4 flex justify-center flex-col">
+      <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
         <select
-          className="bg-red-200 font-bold"
+          className="bg-gray-200 font-bold"
           onChange={(ev) => handlerFilterCastraed(ev)}
         >
           <option hidden>Castrado?</option>
@@ -145,7 +145,7 @@ export default function SideBar() {
         </select>
         <p />
       </div>
-      <div className="bg-red-200 w-3/4 flex justify-center flex-col">
+      <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
         <div className="flex justify-center">
           <h3 className="font-bold">Ubicación</h3>
         </div>
@@ -154,9 +154,9 @@ export default function SideBar() {
           <p />
         </div>
       </div>
-      <div className="bg-red-200 w-3/4 flex justify-center flex-col">
+      <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
         <select
-          className="bg-red-200 font-bold"
+          className="bg-gray-200 font-bold"
           onChange={(ev) => handlerFilterTypePet(ev)}
         >
           <option hidden>TIPO DE MASCOTA</option>
@@ -165,9 +165,9 @@ export default function SideBar() {
         </select>
         <p />
       </div>
-      <div className="bg-red-200 w-3/4 flex justify-center flex-col">
+      <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
         <select
-          className="bg-red-200 font-bold"
+          className="bg-gray-200 font-bold"
           onChange={(ev) => handlerFilterBySize(ev)}
         >
           <option hidden>TAMAÑO DE LA MASCOTA</option>
@@ -177,9 +177,9 @@ export default function SideBar() {
         </select>
         <p />
       </div>
-      <div className="bg-red-200 w-3/4 flex justify-center flex-col">
+      <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
         <select
-          className="bg-red-200 font-bold"
+          className="bg-gray-200 font-bold"
           onChange={(ev) => handlerFilterByAge(ev)}
         >
           <option hidden>EDAD DE LA MASCOTA</option>
