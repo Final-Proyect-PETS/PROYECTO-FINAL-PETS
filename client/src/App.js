@@ -10,13 +10,23 @@ import PetRegister from "./components/PetRegister";
 import UpdateUser from "./components/Update/UpdateDataUsers";
 import UpdatePet from "./components/Update/UpdateDataPet";
 import Error404 from "./components/Error404/Error404";
+import { setAuthToken } from "./components/BrowserHistory/setAuthToken";
+import { history } from "./components/BrowserHistory/history";
+
+
 
 
 
 function App() {
+
+  const token = localStorage.getItem("token");
+  if (token) {
+    setAuthToken(token);
+  }
+
   return (
     <BrowserRouter>
-      <Routes>
+      <Routes history={history}>
         <Route path={"/"} element={<LandingPage />} />
         <Route path={"/home"} element={<Home />} />
         <Route path={"/users/:id"} element={<UserDetail />} />

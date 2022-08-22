@@ -3,8 +3,10 @@ const { Router } = require("express");
 const Pets = require("../models/pets");
 const User = require("../models/users");
 const router = Router();
+const jwt = require("jsonwebtoken");
+const verifyToken = require('../utils/middlewares/validateToken');
 
-router.get("/pets", async (req, res, next) => {
+router.get("/pets", verifyToken, async (req, res, next) => {
   const name = req.query.name;
   try {
     connection();
@@ -34,7 +36,7 @@ router.get("/pets", async (req, res, next) => {
   }
 });
 
-router.get("/users", async (req, res, next) => {
+router.get("/users", verifyToken, async (req, res, next) => {
   const name = req.query.name;
   try {
     connection();
@@ -64,7 +66,7 @@ router.get("/users", async (req, res, next) => {
   }
 });
 
-router.get("/users/:id", async (req, res, next) => {
+router.get("/users/:id", verifyToken, async (req, res, next) => {
   try {
     connection();
     console.log("conectado a users id");
@@ -79,7 +81,7 @@ router.get("/users/:id", async (req, res, next) => {
   }
 });
 
-router.get("/pets/:id", async (req, res, next) => {
+router.get("/pets/:id", verifyToken, async (req, res, next) => {
   try {
     connection();
   } catch (err) {
@@ -114,7 +116,20 @@ router.post("/users", (req, res, next) => {
   }
 });
 
-router.post("/pets/:id", async (req, res, next) => {
+router.post("/login", async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) return res.status(401).send("Usuario no encontrado");
+  console.log(req.body.password);
+  console.log(user.password);
+  const passwordIsValid = await user.comparePassword(req.body.password, user.password);
+  if (!passwordIsValid) return res.status(401).send("Contraseña incorrecta");
+  const token = jwt.sign({ id: user._id, }, process.env.SECRET_KEY, {
+    expiresIn: "1h",
+  });
+  res.header("token", token).json({error: null, data: {token}});
+})
+
+router.post("/pets/:id", verifyToken, async (req, res, next) => {
   const { id } = req.params;
   console.log(id);
   const {
@@ -164,7 +179,7 @@ router.post("/pets/:id", async (req, res, next) => {
   }
 });
 
-router.patch("/users", async (req, res, next) => {
+router.patch("/users", verifyToken, async (req, res, next) => {
   const {
     first_name,
     last_name,
@@ -195,7 +210,7 @@ router.patch("/users", async (req, res, next) => {
   }
 });
 
-router.patch("/pets", async (req, res, next) => {
+router.patch("/pets", verifyToken, async (req, res, next) => {
   const {
     id,
     name,
@@ -234,7 +249,7 @@ router.patch("/pets", async (req, res, next) => {
   }
 });
 
-router.get("/filters", async (req, res, next) => {
+router.get("/filters", verifyToken, async (req, res, next) => {
   try {
     connection();
     let {

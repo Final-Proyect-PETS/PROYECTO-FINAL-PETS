@@ -1,4 +1,6 @@
 import axios from "axios";
+import { setAuthToken } from "../../components/BrowserHistory/setAuthToken"
+
 import * as actions from "./actionTypes";
 //SWITCH RENDER//---------------------------------------------------
 export function switchRenderAction(input) {
@@ -160,4 +162,25 @@ export function filterByQuery(filterParams) {
       payload: json.data,
     });
   };
+}
+
+//LOGIN//--------------------
+export function userLogin(payload) {
+  return async function (dispatch) {
+    console.log(payload)
+    try {
+      let json = await axios.post("http://localhost:3001/login", payload).then((response) => {
+        const token = response.data.data.token
+        localStorage.setItem("token", token);
+        setAuthToken(token);  
+        console.log(token)
+      })
+      return dispatch({
+        type: actions.USER_LOGIN,
+        payload: json.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
