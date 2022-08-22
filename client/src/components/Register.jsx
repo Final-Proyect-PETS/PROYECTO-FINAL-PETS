@@ -3,11 +3,13 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postUser, getAllUsers } from "../redux/Actions/index.js";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { notificationSwal } from "../utils/notificationSwal.jsx";
 
 export default function Register() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const users = useSelector((state) => state.users);
 
@@ -147,7 +149,6 @@ export default function Register() {
     e.preventDefault();
     if (have() === false) {
       dispatch(postUser(input));
-
       setInput({
         first_name: "",
         last_name: "",
@@ -159,13 +160,30 @@ export default function Register() {
         telephone: "",
         place: "",
       });
+      notificationSwal(
+        "¡Enhorabuena!",
+        "Usuario creado con éxito",
+        "success",
+        "Ok"
+      );
+      navigate('/', { replace: true })
     } else if (have() === "e") {
-      alert("Faltan datos!");
-    } else alert("Por favor, llena todo correctamente!");
+      notificationSwal(
+        "¡Faltan datos!",
+        "Complete todos los campos obligatorios",
+        "error",
+        "Cancel"
+      );
+    } else notificationSwal(
+      "Faltan datos, por favor verifique y vuelva a intentarlo",
+      "Complete todos los campos obligatorios",
+      "error",
+      "Cancel"
+    );
   }
 
   return (
-    <div className="flex flex-col w-full mt-15 m-auto  py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
+    <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
       <div className="self-center mb-6 text-xl font-normal text-gray-600 sm:text-2xl dark:text-white">
         Registrate
       </div>
