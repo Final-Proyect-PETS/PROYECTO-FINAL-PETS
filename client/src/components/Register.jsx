@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postUser, getAllUsers } from "../redux/Actions/index.js";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -11,7 +12,8 @@ export default function Register() {
   const users = useSelector((state) => state.users);
 
   //console.log(users);
-
+  const [image, setImage] = useState("");
+  const [loadingImage, setLoadingImage] = useState(false);
   const [errors, setErrors] = useState({});
 
   const [input, setInput] = useState({
@@ -42,6 +44,32 @@ export default function Register() {
       })
     );
   };
+
+  async function handleImage(e) {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "prettyuser");
+    data.append("folder", "UserImages");
+    console.log(data.entries());
+    setLoadingImage(true);
+    const res = await axios.post(
+      "https://api.cloudinary.com/v1_1/ferrifullstack/image/upload",
+      data
+    );
+    setImage(res.data.secure_url);
+    setInput({
+      ...input,
+      image: res.data.secure_url,
+    });
+    setErrors(
+      validate({
+        ...input,
+        image: res.data.secure_url,
+      })
+    );
+    setLoadingImage(false);
+  }
 
   function validate(input) {
     let errors = {};
@@ -144,16 +172,20 @@ export default function Register() {
       <div className="mt-8 px-8 max-w-lg self-center">
         <form onSubmit={handleSubmit}>
           <div>
-              <label className="font-light text-white text-xl">Nombre</label>
-              <input
-                name="first_name"
-                value={input.first_name}
-                onChange={(e) => handleChange(e)}
-                placeholder="Nombre"
-                className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
-              />
-              {errors.first_name && <p className="font-bold text-red-700 text-center p-2">{errors.first_name}</p>}
-            
+            <label className="font-light text-white text-xl">Nombre</label>
+            <input
+              name="first_name"
+              value={input.first_name}
+              onChange={(e) => handleChange(e)}
+              placeholder="Nombre"
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+            />
+            {errors.first_name && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.first_name}
+              </p>
+            )}
+
             <label className="font-light text-white text-xl">Apellido</label>
             <input
               name="last_name"
@@ -162,10 +194,16 @@ export default function Register() {
               placeholder="Apellido"
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
-            {errors.last_name && <p className="font-bold text-red-700 text-center p-2">{errors.last_name}</p>}
+            {errors.last_name && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.last_name}
+              </p>
+            )}
           </div>
           <div>
-            <label className="font-light text-white text-xl">Nombre de usuario</label>
+            <label className="font-light text-white text-xl">
+              Nombre de usuario
+            </label>
             <input
               name="username"
               value={input.username}
@@ -173,21 +211,35 @@ export default function Register() {
               placeholder="Nombre de usuario"
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
-            {errors.username && <p className="font-bold text-red-700 text-center p-2">{errors.username}</p>}
+            {errors.username && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.username}
+              </p>
+            )}
           </div>
           <div>
-            <label className="font-light text-white text-xl">Imagen de Perfil</label>
+            <label className="font-light text-white text-xl">
+              Imagen de Perfil
+            </label>
             <input
               type="file"
               name="image"
-              value={input.image}
-              onChange={(e) => handleChange(e)}
+              onChange={(e) => handleImage(e)}
               placeholder="Imagen de perfil"
               className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
             ></input>
+            {loadingImage ? (
+              <h3 className="font-light text-white text-xl">
+                Cargando imagen...
+              </h3>
+            ) : (
+              <img src={image} alt="" width="300px" />
+            )}
           </div>
           <div>
-            <label className="font-light text-white text-xl">Correo electrónico</label>
+            <label className="font-light text-white text-xl">
+              Correo electrónico
+            </label>
             <input
               name="email"
               value={input.email}
@@ -195,7 +247,11 @@ export default function Register() {
               placeholder="Email"
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             ></input>
-            {errors.email && <p className="font-bold text-red-700 text-center p-2">{errors.email}</p>}
+            {errors.email && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.email}
+              </p>
+            )}
           </div>
           <div>
             <label className="font-light text-white text-xl">Contraseña</label>
@@ -207,7 +263,11 @@ export default function Register() {
               placeholder="Contraseña"
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             ></input>
-            {errors.password && <p className="font-bold text-red-700 text-center p-2">{errors.password}</p>}
+            {errors.password && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.password}
+              </p>
+            )}
           </div>
           <div>
             <label className="font-light text-white text-xl">Sobre mí</label>
@@ -240,12 +300,18 @@ export default function Register() {
             ></input>
           </div>
           <div>
-            <button type="submit" className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Crear</button>
+            <button
+              type="submit"
+              className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+            >
+              Crear
+            </button>
           </div>
-
         </form>
         <Link to="/">
-          <button className="py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Regresar</button>
+          <button className="py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+            Regresar
+          </button>
         </Link>
       </div>
     </div>

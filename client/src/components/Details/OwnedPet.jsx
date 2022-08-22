@@ -1,7 +1,7 @@
 import React from "react";
-import ubicacion from "../../assets/images/ubicacion.png";
+//import ubicacion from "../../assets/images/ubicacion.png";
 import { Link } from "react-router-dom";
-import styles from "./userDetailStyle.css";
+//import styles from "./userDetailStyle.css";
 
 export default function OwnedPet({
   idUser,
