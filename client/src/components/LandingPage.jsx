@@ -35,7 +35,7 @@ export default function LandingPage() {
 
     return (
         <div id="landing" className="flex">
-            <div className="flex flex-col-6 items-center">
+            <div className="flex flex-col-6 items-center ">
                 <div className="text-gray-800 p-20 pt-0 tracking-wide">
                     <h1 className="text-6xl font-semibold">Bienvenidos a </h1>
                     <p className="text-6xl font-normal italic bg-gray">'Happy Tails'</p>
