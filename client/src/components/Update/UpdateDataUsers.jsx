@@ -1,18 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { notificationSwal } from "../../utils/notificationSwal.jsx";
-
-// import useHistory
-import {
-  getUserDetail,
-  patchUsuer,
-  getAllUsers,
-} from "../../redux/Actions/index";
+import { getUserDetail, patchUsuer, getAllUsers } from "../../redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function UpdateUser() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const upDateUser = useSelector((state) => state.userDetail);
   const users = useSelector((state) => state.users);
 
@@ -108,7 +103,9 @@ export default function UpdateUser() {
       telephone: upDateUser.telephone,
       place: upDateUser.place,
     });
-    dispatch(getUserDetail(upDateUser._id)); //esto es porque en el estado userDetail me quedaba cargada
+    dispatch(getUserDetail(upDateUser._id));
+    navigate(`/users/${upDateUser._id}`, {replace: true})
+    //esto es porque en el estado userDetail me quedaba cargada
     //la frase "Datos Actualizados Exitosamente 👍", y preciso que se vuelva a cargar con el usuario para que al clickear el boton
     //para regresar, me tome bien sus datos y no aparezca como undefined.
   }

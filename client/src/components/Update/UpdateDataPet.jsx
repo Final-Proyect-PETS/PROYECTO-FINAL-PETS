@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getPetDetail, patchPet, getAllPets } from "../../redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import { notificationSwal } from "../../utils/notificationSwal.jsx";
@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 
 export default function UpdatePet() {
   let { id } = useParams();
+  let navigate = useNavigate();
+
   console.log(id);
   const dispatch = useDispatch();
   const upDatePet = useSelector((state) => state.petDetail);
@@ -107,6 +109,7 @@ export default function UpdatePet() {
 
     return errors;
   }
+
   function handleUpDate(e) {
     e.preventDefault();
     dispatch(patchPet(input));
@@ -128,6 +131,9 @@ export default function UpdatePet() {
       castrated: upDatePet.castrated,
       place: upDatePet.place,
     });
+
+    navigate(`/pet/${upDatePet._id}`, { replace: true })
+
     // let id = input.id
     // dispatch(patchPet(id,input))
     // console.log(input,"2")
@@ -244,11 +250,11 @@ export default function UpdatePet() {
 
           <button type="submit" className="py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg my-4">Actualizar</button>
         </form>
-         <div>
-         <Link to={`/pet/${upDatePet._id}`}>
+        <div>
+          <Link to={`/pet/${upDatePet._id}`}>
             <button className="py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Regresar</button>
-            </Link>
-            </div>
+          </Link>
+        </div>
       </div>
     </div>
 

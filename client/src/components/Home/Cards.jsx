@@ -3,7 +3,6 @@ import { getAllPets, getAllUsers } from "../../redux/Actions/index";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-//import { Link } from "react-router-dom";
 import Card from "./Card";
 import UserCard from "./UserCard";
 
