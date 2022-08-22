@@ -108,81 +108,88 @@ export default function UpdateUser() {
   }
 
   return (
-    <div>
-      <form onSubmit={(e) => handleUpDate(e)}>
+    <div className="flex flex-col w-full mt-15 m-auto  py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
+      <div className="self-center mb-6 text-xl font-normal text-gray-600 sm:text-2xl dark:text-white">
+        Edita tus datos
+      </div>
+      <div className="mt-8 px-8 max-w-lg self-center">
+        <form onSubmit={(e) => handleUpDate(e)}>
+          <div>
+            <label className="font-light text-white text-xl">Nombre</label>
+            <input
+              type="text"
+              name="first_name"
+              value={input.first_name}
+              onChange={(e) => handleChange(e)}
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+            />
+            {errors.first_name && <p className="font-bold text-red-700 text-center p-2">{errors.first_name}</p>}
+            <label className="font-light text-white text-xl">Apellido</label>
+            <input
+              type="text"
+              name="last_name"
+              value={input.last_name}
+              onChange={(e) => handleChange(e)}
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+            />
+            {errors.last_name && <p className="font-bold text-red-700 text-center p-2">{errors.last_name}</p>}
+
+            <label className="font-light text-white text-xl">Nombre de usuario</label>
+            <input
+              type="text"
+              name="username"
+              value={input.username}
+              onChange={(e) => handleChange(e)}
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+            />
+            {errors.username && <p className="font-bold text-red-700 text-center p-2">{errors.username}</p>}
+
+            <label className="font-light text-white text-xl">Imagen de perfil</label>
+            <input
+              type="text"
+              name="image"
+              value={input.image}
+              onChange={(e) => handleChange(e)}
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+              // className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
+            />
+
+            <label className="font-light text-white text-xl">Correo electrónico</label>
+            <input
+              type="text"
+              name="email"
+              value={input.email}
+              onChange={(e) => handleChange(e)}
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+            />
+            {errors.email && <p className="font-bold text-red-700 text-center p-2">{errors.email}</p>}
+
+            <label className="font-light text-white text-xl">Sobre mí</label>
+            <textarea
+              type="text"
+              name="about"
+              value={input.about}
+              onChange={(e) => handleChange(e)}
+              className="w-full py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent resize-none"
+            />
+
+            <label className="font-light text-white text-xl">Teléfono</label>
+            <input
+              type="text"
+              name="telephone"
+              value={input.telephone}
+              onChange={(e) => handleChange(e)}
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+            />
+
+            <button type="submit" className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Actualizar</button>
+          </div>
+        </form>
         <div>
-          <label>Nombre:</label>
-          <input
-            type="text"
-            name="first_name"
-            value={input.first_name}
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.first_name && <p>{errors.first_name}</p>}
-          <label>Apellido:</label>
-          <input
-            type="text"
-            name="last_name"
-            value={input.last_name}
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.last_name && <p>{errors.last_name}</p>}
+          <Link to={`/users/${upDateUser._id}`}>
+            <button className="py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Regresar</button>
+          </Link>
         </div>
-        <div>
-          <label>Alias:</label>
-          <input
-            type="text"
-            name="username"
-            value={input.username}
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.username && <p>{errors.username}</p>}
-        </div>
-        <div>
-          <label>ImagenDePerfil:</label>
-          <input
-            type="text"
-            name="image"
-            value={input.image}
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-        <div>
-          <label>Correo:</label>
-          <input
-            type="text"
-            name="email"
-            value={input.email}
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.email && <p>{errors.email}</p>}
-        </div>
-        <div>
-          <label>SobreMí:</label>
-          <input
-            type="text"
-            name="about"
-            value={input.about}
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-        <div>
-          <label>Telefono:</label>
-          <input
-            type="text"
-            name="telephone"
-            value={input.telephone}
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-        <div>
-          <button type="submit">Actualizar</button>
-        </div>
-      </form>
-      <div>
-        <Link to={`/users/${upDateUser._id}`}>
-          <button>Regresar</button>
-        </Link>
       </div>
     </div>
   );
