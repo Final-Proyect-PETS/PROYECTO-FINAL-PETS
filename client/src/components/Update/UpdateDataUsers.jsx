@@ -5,6 +5,49 @@ import { notificationSwal } from "../../utils/notificationSwal.jsx";
 import { getUserDetail, patchUsuer, getAllUsers } from "../../redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 
+function validateFrom(input) {
+  let errors = {};
+
+  if (input.first_name) {
+    if (!/^[a-zA-Z]+$/.test(input.first_name)) {
+      errors.first_name = "El nombre solo puede tener letras!";
+    } else if (input.first_name.length > 20) {
+      errors.first_name = "El nombre no puede tener más de 20 caracteres!";
+    } else errors.first_name = "";
+  } else errors.first_name = "El nombre es requerido!";
+
+  if (input.last_name) {
+    if (!/^[a-zA-Z]+$/.test(input.last_name)) {
+      errors.last_name = "El nombre solo puede tener letras!";
+    } else if (input.last_name.length > 20) {
+      errors.last_name = "El nombre no puede tener más de 20 caracteres!";
+    } else errors.last_name = "";
+  } else errors.last_name = "El nombre es requerido!";
+
+  if (input.username) {
+    if (!/^[A-Za-z0-9\s]+$/g.test(input.username)) {
+      errors.username = "El nombre de usuario debe tener letras y números!";
+    } else if (input.username.length > 20) {
+      errors.username =
+        "El nombre de usuario no puede tener más de 20 caracteres!";
+      // } else if if(
+      //   users.find((u) => u.username === input.username.toLowerCase())
+      // ) {
+      //   errors.username = "El usuario ya existe!";
+    } else errors.username = "";
+  } else errors.username = "El nombre de usuario es requerido!";
+
+  // if (input.email) {
+  //   if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.email)) {
+  //     errors.email = "El email debe ser valido!";
+  //   } else if (users.find((u) => u.email === input.email.toLowerCase())) {
+  //     errors.email = "El email ya esta registrado!";
+  //   } else errors.email = "";
+  // } else errors.email = "El email es necesario!";
+
+  return errors;
+}
+
 export default function UpdateUser() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -14,11 +57,12 @@ export default function UpdateUser() {
   const [errors, setErrors] = useState({});
 
   const [input, setInput] = useState({
+    id: upDateUser._id,
     first_name: upDateUser.first_name,
     last_name: upDateUser.last_name,
     username: upDateUser.username,
     image: upDateUser.image,
-    email: upDateUser.email,
+    // email: upDateUser.email,
     about: upDateUser.about,
     telephone: upDateUser.telephone,
     place: upDateUser.place,
@@ -41,48 +85,48 @@ export default function UpdateUser() {
       })
     );
   }
-  function validateFrom(input) {
-    let errors = {};
+  // function validateFrom(input) {
+  //   let errors = {};
 
-    if (input.first_name) {
-      if (!/^[a-zA-Z]+$/.test(input.first_name)) {
-        errors.first_name = "El nombre solo puede tener letras!";
-      } else if (input.first_name.length > 20) {
-        errors.first_name = "El nombre no puede tener más de 20 caracteres!";
-      } else errors.first_name = "";
-    } else errors.first_name = "El nombre es requerido!";
+  //   if (input.first_name) {
+  //     if (!/^[a-zA-Z]+$/.test(input.first_name)) {
+  //       errors.first_name = "El nombre solo puede tener letras!";
+  //     } else if (input.first_name.length > 20) {
+  //       errors.first_name = "El nombre no puede tener más de 20 caracteres!";
+  //     } else errors.first_name = "";
+  //   } else errors.first_name = "El nombre es requerido!";
 
-    if (input.last_name) {
-      if (!/^[a-zA-Z]+$/.test(input.last_name)) {
-        errors.last_name = "El nombre solo puede tener letras!";
-      } else if (input.last_name.length > 20) {
-        errors.last_name = "El nombre no puede tener más de 20 caracteres!";
-      } else errors.last_name = "";
-    } else errors.last_name = "El nombre es requerido!";
+  //   if (input.last_name) {
+  //     if (!/^[a-zA-Z]+$/.test(input.last_name)) {
+  //       errors.last_name = "El nombre solo puede tener letras!";
+  //     } else if (input.last_name.length > 20) {
+  //       errors.last_name = "El nombre no puede tener más de 20 caracteres!";
+  //     } else errors.last_name = "";
+  //   } else errors.last_name = "El nombre es requerido!";
 
-    if (input.username) {
-      if (!/^[A-Za-z0-9\s]+$/g.test(input.username)) {
-        errors.username = "El nombre de usuario debe tener letras y números!";
-      } else if (input.username.length > 20) {
-        errors.username =
-          "El nombre de usuario no puede tener más de 20 caracteres!";
-        // } else if if(
-        //   users.find((u) => u.username === input.username.toLowerCase())
-        // ) {
-        //   errors.username = "El usuario ya existe!";
-      } else errors.username = "";
-    } else errors.username = "El nombre de usuario es requerido!";
+  //   if (input.username) {
+  //     if (!/^[A-Za-z0-9\s]+$/g.test(input.username)) {
+  //       errors.username = "El nombre de usuario debe tener letras y números!";
+  //     } else if (input.username.length > 20) {
+  //       errors.username =
+  //         "El nombre de usuario no puede tener más de 20 caracteres!";
+  //       // } else if if(
+  //       //   users.find((u) => u.username === input.username.toLowerCase())
+  //       // ) {
+  //       //   errors.username = "El usuario ya existe!";
+  //     } else errors.username = "";
+  //   } else errors.username = "El nombre de usuario es requerido!";
 
-    if (input.email) {
-      if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.email)) {
-        errors.email = "El email debe ser valido!";
-      } else if (users.find((u) => u.email === input.email.toLowerCase())) {
-        errors.email = "El email ya esta registrado!";
-      } else errors.email = "";
-    } else errors.email = "El email es necesario!";
+  //   // if (input.email) {
+  //   //   if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.email)) {
+  //   //     errors.email = "El email debe ser valido!";
+  //   //   } else if (users.find((u) => u.email === input.email.toLowerCase())) {
+  //   //     errors.email = "El email ya esta registrado!";
+  //   //   } else errors.email = "";
+  //   // } else errors.email = "El email es necesario!";
 
-    return errors;
-  }
+  //   return errors;
+  // }
   function handleUpDate(e) {
     e.preventDefault();
     dispatch(patchUsuer(input)).then(
@@ -94,6 +138,7 @@ export default function UpdateUser() {
       )
     );
     setInput({
+      id: upDateUser._id,
       first_name: upDateUser.first_name,
       last_name: upDateUser.last_name,
       username: upDateUser.username,
@@ -156,8 +201,7 @@ export default function UpdateUser() {
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
               // className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
             />
-
-            <label className="font-light text-white text-xl">Correo electrónico</label>
+            {/* <label className="font-light text-white text-xl">Correo electrónico</label>
             <input
               type="text"
               name="email"
@@ -165,8 +209,7 @@ export default function UpdateUser() {
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
-            {errors.email && <p className="font-bold text-red-700 text-center p-2">{errors.email}</p>}
-
+            {errors.email && <p className="font-bold text-red-700 text-center p-2">{errors.email}</p>} */}
             <label className="font-light text-white text-xl">Sobre mí</label>
             <textarea
               type="text"
@@ -184,8 +227,10 @@ export default function UpdateUser() {
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
-
-            <button type="submit" className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Actualizar</button>
+            {errors.first_name||errors.last_name||errors.username||errors.image||errors.about||errors.telephone?
+            <h3>missing required fields</h3>
+            :<button type="submit" className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Actualizar</button>
+            }
           </div>
         </form>
         <div>
