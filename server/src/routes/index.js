@@ -195,9 +195,8 @@ router.patch("/users", async (req, res, next) => {
   }
 });
 
-router.patch("/pets", async (req, res, next) => {
+router.patch("/pets/:id", async (req, res, next) => {
   const {
-    id,
     name,
     image,
     type,
@@ -211,10 +210,9 @@ router.patch("/pets", async (req, res, next) => {
   } = req.body;
   try {
     const onePet = await Pets.findOne({
-      id: req.params.id,
+      _id: req.params.id,
     });
     await onePet.update({
-      id,
       name,
       image,
       type,
