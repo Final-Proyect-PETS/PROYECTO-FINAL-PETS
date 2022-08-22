@@ -7,6 +7,7 @@ export const GET_ALL_USERS = "GET_ALL_USERS"; //ok
 export const GET_PET_DETAIL = "GET_PET_DETAIL";
 export const GET_USER_DETAIL = "GET_USER_DETAIL";
 export const CLEAR_STATE = "CLEAR_STATE"; //OK
+export const CLEAR_STATE_PET = "CLEAR_STATE_PET"; //OK
 //GET BY NAME------------------
 export const GET_USER_BY_NAME = "GET_USER_BY_NAME"; //ok
 export const GET_PET_BY_NAME = "GET_PET_BY_NAME"; //ok

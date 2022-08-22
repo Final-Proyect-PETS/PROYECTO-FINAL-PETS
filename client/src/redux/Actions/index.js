@@ -115,6 +115,12 @@ export function clearState(payload) {
     payload,
   };
 }
+export function clearStatePet(payload) {
+  return {
+    type: actions.CLEAR_STATE_PET,
+    payload,
+  };
+}
 //UpDate//------------------------------------------------------------------------------------------------------------------
 export function patchUsuer(payload) {
   return async function (dispatch) {
