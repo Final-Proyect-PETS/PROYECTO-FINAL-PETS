@@ -46,7 +46,7 @@ export default function SearchBar() {
         ></input>
 
         <label
-          for="small-toggle"
+          htmlFor="small-toggle"
           className="inline-flex relative items-center mt-2 mx-4 cursor-pointer"
         >
           <input
