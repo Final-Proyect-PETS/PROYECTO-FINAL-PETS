@@ -68,6 +68,11 @@ export default function rootReducer(state = initialState, { type, payload }) {
         ...state,
         userDetail: {}, //seteas a 0 el estado de nuevo para una nueva peticion
       };
+      case actions.CLEAR_STATE_PET:
+        return {
+          ...state,
+          petDetail: {}, //seteas a 0 el estado de nuevo para una nueva peticion
+        };
     //UDPDATE
     case actions.PATCH_USER:
       return {
