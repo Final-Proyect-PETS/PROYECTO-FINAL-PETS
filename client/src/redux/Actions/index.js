@@ -151,6 +151,7 @@ export function filterByQuery(filterParams) {
     let json = await axios.get(
       `http://localhost:3001/filters?age=${filterParams.age}&creation_date=${filterParams.creation_date}&vaccinated=${filterParams.vaccinated}&castrated=${filterParams.castrated}&location=${filterParams.location}&pet_type=${filterParams.pet_type}&pet_size=${filterParams.pet_size}&gender=${filterParams.gender}`
     );
+    
     return dispatch({
       type: actions.FILTER_BY_QUERY,
       payload: json.data,

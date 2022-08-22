@@ -240,7 +240,9 @@ router.patch("/pets", async (req, res, next) => {
       place,
       gender,
     });
-    res.status(200).json("Los Datos de Tu Mascota se actualizaron exitosamente 🐶 ");
+    res
+      .status(200)
+      .json("Los Datos de Tu Mascota se actualizaron exitosamente 🐶 ");
   } catch (error) {
     next(error);
   }
@@ -303,17 +305,17 @@ router.get("/filters", async (req, res, next) => {
     if (vaccinated === "unknown") {
       all = all.filter((ev) => ev.vaccination === "unknown");
     }
-    if (gender === "female"){
-      all = all.filter((ev => ev.gender === "female"))
+    if (gender === "female") {
+      all = all.filter((ev) => ev.gender === "female");
     }
-    if (gender === "male"){
-      all = all.filter((ev => ev.gender === "male"))
+    if (gender === "male") {
+      all = all.filter((ev) => ev.gender === "male");
     }
-    if (creation_date === "asc"){
-      all = all.sort((a,b) => a.createdAt - b.createdAt)
+    if (creation_date === "asc") {
+      all = all.sort((a, b) => a.createdAt - b.createdAt);
     }
-    if (creation_date === "desc"){
-      all = all.sort((a,b) => b.createdAt - a.createdAt)
+    if (creation_date === "desc") {
+      all = all.sort((a, b) => b.createdAt - a.createdAt);
     }
     res.send(all);
   } catch (error) {
