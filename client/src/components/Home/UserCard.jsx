@@ -22,11 +22,8 @@ export default function UserCard({
     dispatch(getUserDetail(_id));
     return () => dispatch(clearState());
   }, [dispatch, _id]);
-  //   const userDetail = useSelector((state) => state.userDetail);
-  // console.log(userDetail)
 
   const pettit = pets;
-  console.log(pettit, "petppeptepe");
 
   return (
     <div
@@ -39,29 +36,53 @@ export default function UserCard({
             <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
               <img src={image} alt="profilepic" />
             </div>
-            <span className="text-2xl font-bold">
+            <span className="ml-2 font-bold text-xs">
               {`${first_name} ${last_name} - `}
             </span>
-            <span className=" text-2xl font-bold">({username})</span>
+            <span className="ml-2 font-bold text-xs">({username})</span>
           </div>
           <div className="flex items-center">
-            <div className="text-sm flex"></div>
+            <div className="text-sm flex">
+              <img src={ubicacion} alt="ubicacion" width="16px" />
+              <span className="font-medium text-xs mx-3">Proximamente</span>
+            </div>
           </div>
         </div>
       </Link>
-
-      <div className="bg-gray-200 flex py-3 flex-col content-around gap-9 justify-center items-center">
-        <div className="flex">
-          <span className="text-2xl font-bold">{"MIS MASCOTAS"}</span>
-        </div>
-        <div className="flex">
-          {pettit?.length
-            ? pettit?.map((pet) => (
-                <div className="rounded-full h-12 w-12 flex items-center justify-center overflow-hidden mr-2">
-                  <img src={pet.image} alt="profilepic" />
-                </div>
-              ))
-            : "QUIERO ADOPTAR!"}
+      <div className=" py-3 flex">
+        <img
+          className="border-solid border-2 border-[#B99782]  w-96 bg-cover rounded"
+          src={image}
+          alt="ProfilePicture"
+        />
+        <div className=" bg-gray-200 flex w-52 flex-col content-around gap-9 justify-center items-center">
+          {pettit?.length ? (
+            <div className="flex">
+              <h3 className="text-2xl font-bold">MIS MASCOTAS</h3>
+            </div>
+          ) : (
+            <div className="flex">
+              <span className="text-2xl font-bold">BUSCO PETS</span>
+            </div>
+          )}
+          <div className="text-sm flex">
+            <div className="grid grid-cols-2 place-content-center">
+              {pettit?.length
+                ? pettit?.map((pet) => (
+                    <div key={pet._id} className="m-1">
+                      <Link key={pet._id} to={`/pet/${pet._id}`}>
+                        <img
+                          key={pet._id}
+                          className="w-96 h-24 bg-cover border-solid border-2 border-[#B99782] rounded-full "
+                          src={pet.image}
+                          alt="ProfilePicture"
+                        />
+                      </Link>
+                    </div>
+                  ))
+                : ""}
+            </div>
+          </div>{" "}
         </div>
       </div>
     </div>

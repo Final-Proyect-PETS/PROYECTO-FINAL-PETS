@@ -17,37 +17,35 @@ export default function OwnedPet({
 }) {
   return (
     <>
-      <Link to={"/pet/" + idPet}>
-        <div className="flex items-center">
-          <div className="py-4 px-4 flex">
-            <div className=" flex justify-between p-3 border-b items-center bg-gray-200">
-              {/* <div className="flex"></div> */}
-              <div className="column">
-                <div className="flex items-center">
-                  <span className="text-2xl font-bold">{namePet}</span>
-                </div>
-                <span className="font-medium text-xs mx-3">
-                  Ubicacion: {place}
-                </span>
-                <div className="flex items-center">
-                  <Link to="/adopt/">
-                    <button class="bg-yellow-500 hover:bg-green-700 text-white font-bold py-5 px-4 border border-yellow-700 rounded">
-                      ADOPTAR
-                    </button>
-                  </Link>
-                </div>
+      <div className="flex items-center py-4 px-4 ">
+        <div className=" flex border-2 border-yellow-700 rounded">
+          <div className=" border-yellow-900 border-r-2  flex justify-between p-3 border items-center rounded bg-gray-300">
+            <div className=" column items-center mb-4 mr-4 ml-4 ">
+              <div className="">
+                <span className="text-2xl font-bold m-4">{namePet}</span>
               </div>
-              {/* <div className="flex items-center"></div> */}
-            </div>
 
+              {/* <span className="font-medium text-xs mx-3">
+                Ubicacion: {place}
+              </span> */}
+              <div className="flex items-center">
+                <Link to="/adopt/">
+                  <button className="bg-yellow-900 mt-4 hover:bg-green-700 text-white font-bold py-5 px-4 border border-yellow-700 rounded">
+                    ADOPTAR
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </div>
+          <Link to={"/pet/" + idPet}>
             <img
-              className="w-60 h-40 bg-cover rounded"
+              className="w-60 h-40 bg-cover "
               src={imagePet}
               alt="imagepet"
             />
-          </div>
+          </Link>
         </div>
-      </Link>
+      </div>
     </>
   );
 }

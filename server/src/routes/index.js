@@ -23,7 +23,8 @@ router.get("/pets", async (req, res, next) => {
           p.type?.toLowerCase().includes(name.toLowerCase()) ||
           p.age?.toString().includes(name)
       );
-      if (petFound.length) res.send(petFound);
+      if (petFound.length > 0) res.send(petFound);
+      if ((petFound.length = 0)) res.send(arrayPets);
       else res.send(arrayPets);
     } else {
       res.send(arrayPets);
@@ -52,24 +53,9 @@ router.get("/users", async (req, res, next) => {
           u.last_name?.toLowerCase().includes(name.toLowerCase()) ||
           u.email?.toLowerCase().includes(name.toLowerCase())
       );
-      if (userFound.length) res.send(userFound);
-      else {
-        userFound = arrayUsers.filter((u) => u.email === name);
-        if (userFound.length) res.send(userFound);
-        else {
-          userFound = arrayUsers.filter(
-            (u) => u.first_name.toLowerCase() === name.toLowerCase()
-          );
-          if (userFound.length) res.send(userFound);
-          else {
-            userFound = arrayUsers.filter(
-              (u) => u.last_name.toLowerCase() === name.toLowerCase()
-            );
-            if (userFound.length) res.send(userFound);
-            else res.send(["User not found"]);
-          }
-        }
-      }
+      if (userFound.length > 0) res.send(userFound);
+      if ((userFound.length = 0)) res.send(arrayUsers);
+      else res.send(arrayUsers);
     } else {
       res.send(arrayUsers);
     }
@@ -240,7 +226,9 @@ router.patch("/pets", async (req, res, next) => {
       place,
       gender,
     });
-    res.status(200).json("Los Datos de Tu Mascota se actualizaron exitosamente 🐶 ");
+    res
+      .status(200)
+      .json("Los Datos de Tu Mascota se actualizaron exitosamente 🐶 ");
   } catch (error) {
     next(error);
   }
@@ -301,11 +289,11 @@ router.get("/filters", async (req, res, next) => {
     if (vaccinated === "unknown") {
       all = all.filter((ev) => ev.vaccination === "unknown");
     }
-    if (gender === "female"){
-      all = all.filter((ev => ev.gender === "female"))
+    if (gender === "female") {
+      all = all.filter((ev) => ev.gender === "female");
     }
-    if (gender === "male"){
-      all = all.filter((ev => ev.gender === "male"))
+    if (gender === "male") {
+      all = all.filter((ev) => ev.gender === "male");
     }
     res.send(all);
   } catch (error) {
