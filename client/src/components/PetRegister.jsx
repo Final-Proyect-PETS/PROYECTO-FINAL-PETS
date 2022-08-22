@@ -282,200 +282,204 @@ export default function RegisterPet() {
   // }, [dispatch]);
 
   return (
-    <div className="bg-gray-300">
-      <div>
-        <Link to="/home">
-          <button>Go back home</button>
-        </Link>
+    <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
+      <div className="self-center mb-6 text-xl font-normal text-gray-600 sm:text-2xl dark:text-white">
+        Registra tu mascota para adoptar
       </div>
-      <form
-        onSubmit={handleSubmit}
-        className="bg-gray-700 rounded-lg shadow sm:max-w-md sm:w-full sm:mx-auto sm:overflow-hidden"
-      >
-        <div className="flex">
-          <h1>Registra tu mascota para adoptar!</h1>
-        </div>
-        <div>
-          <label>ID Usuario</label>
-          <input
-            type="text"
-            name="id"
-            value={input.id}
-            onChange={(e) => handleChange(e)}
-            placeholder="Campo provisorio, volará cuando esté el login"
-            className="rounded-lg border-transparent flex-1 appearance-none border border-red-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-          />
-          {errors.id && <p>{errors.id}</p>}
-        </div>
-        <div>
-          <label>Nombre</label>
-          <input
-            type="text"
-            name="name"
-            value={input.name}
-            onChange={(e) => handleChange(e)}
-            placeholder="Nombre de la mascota"
-            className="rounded-lg border-transparent flex-1 appearance-none border border-red-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-          />
-          {errors.name && <p>{errors.name}</p>}
-        </div>
-        <div>
-          <label>Imagen de perfil</label>
-          <input type="file" name="image" onChange={(e) => handleImage(e)} />
-          {loadingImage ? (
-            <h3>Cargando imagen...</h3>
-          ) : (
-            <img src={image} alt="" width="300px" />
-          )}
-          {errors.image && <p>{errors.image}</p>}
-        </div>
-        <div>
-          <label>Más imágenes</label>
-          <input
-            type="file"
-            name="imagePool"
-            onChange={(e) => handleImagePool(e)}
-          />
+
+      <div className="mt-8 px-8 max-w-lg self-center">
+        <form onSubmit={handleSubmit}>
           <div>
-            {loadingImagePool ? (
+            <label className="font-light text-white text-xl">ID Usuario</label>
+            <input
+              type="text"
+              name="id"
+              value={input.id}
+              onChange={(e) => handleChange(e)}
+              placeholder="Campo provisorio, volará cuando esté el login"
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+            />
+            {errors.id && <p className="font-bold text-red-700 text-center p-2">{errors.id}</p>}
+
+            <label className="font-light text-white text-xl">Nombre</label>
+            <input
+              type="text"
+              name="name"
+              value={input.name}
+              onChange={(e) => handleChange(e)}
+              placeholder="Nombre de la mascota"
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+            />
+            {errors.name && <p className="font-bold text-red-700 text-center p-2">{errors.name}</p>}
+          </div>
+          <div>
+            <label className="font-light text-white text-xl">Imagen de perfil</label>
+            <input type="file" name="image" onChange={(e) => handleImage(e)} className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent" />
+            {loadingImage ? (
               <h3>Cargando imagen...</h3>
             ) : (
-              input.imagePool.map((el) => (
-                <div key={addKey()}>
-                  <img src={el} alt="" width="300px" />
-                  <button
-                    key={el.id}
-                    type="button"
-                    onClick={() => handleDelete(el)}
-                  >
-                    X
-                  </button>
-                </div>
-              ))
+              <img src={image} alt="" width="300px" />
             )}
+            {errors.image && <p className="font-bold text-red-700 text-center p-2">{errors.image}</p>}
           </div>
-          {errors.imagePool && <p>{errors.imagePool}</p>}
-        </div>
-        <div>
-          <label>Tipo de mascota</label>
-          <select name="type" onChange={(e) => handleChange(e)}>
-            <option value="typeSelect" defaultValue hidden>
-              Seleccione tipo
-            </option>
-            <option value="dog" key={addKey()}>
-              Perro
-            </option>
-            <option value="cat" key={addKey()}>
-              Gato
-            </option>
-            <option value="other" key={addKey()}>
-              Otro
-            </option>
-          </select>
-          {errors.type && <p>{errors.type}</p>}
-        </div>
-        <div>
-          <label>Descripción</label>
-          <textarea
-            name="description"
-            value={input.description}
-            placeholder="Descripción"
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.description && <p>{errors.description}</p>}
-        </div>
-        <div>
-          <label>Tamaño</label>
-          <select name="size" onChange={(e) => handleChange(e)}>
-            <option value="sizeSelect" defaultValue hidden>
-              Seleccione tamaño
-            </option>
-            <option value="small" key={addKey()}>
-              Chico
-            </option>
-            <option value="medium" key={addKey()}>
-              Mediano
-            </option>
-            <option value="big" key={addKey()}>
-              Grande
-            </option>
-          </select>
-          {errors.size && <p>{errors.size}</p>}
-        </div>
-        <div>
-          <label>Edad</label>
-          <input
-            type="text"
-            name="age"
-            value={input.age}
-            onChange={(e) => handleChange(e)}
-            placeholder="Edad"
-            className="rounded-lg border-transparent flex-1 appearance-none border border-red-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-          />
-          {errors.age && <p>{errors.age}</p>}
-        </div>
-        <div>
-          <label>¿Vacunado?</label>
-          <select name="vaccination" onChange={(e) => handleChange(e)}>
-            <option value="vaccinationSelect" defaultValue hidden>
-              Seleccione opción
-            </option>
-            <option value="yes" key={addKey()}>
-              Sí
-            </option>
-            <option value="no" key={addKey()}>
-              No
-            </option>
-            <option value="unknown" key={addKey()}>
-              No sé
-            </option>
-          </select>
-          {errors.vaccination && <p>{errors.vaccination}</p>}
-        </div>
-        <div>
-          <fieldset onChange={(e) => handleChange(e)}>
-            <legend>¿Castrado?</legend>
-            <div>
-              <input type="radio" name="castrated" value={true} />
-              <label>Sí</label>
+          <div>
+            <label className="font-light text-white text-xl">Más imágenes</label>
+            <input
+              type="file"
+              name="imagePool"
+              onChange={(e) => handleImagePool(e)}
+              className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
+            />
+            <div className="font-light text-white text-xl">
+              {loadingImagePool ? (
+                <h3>Cargando imagen...</h3>
+              ) : (
+                input.imagePool.map((el) => (
+                  <div key={addKey()}>
+                    <button
+                      key={el.id}
+                      type="button"
+                      onClick={() => handleDelete(el)}
+                      className="px-2 border-4 rounded-lg font-bold text-yellow-900 border-yellow-900"
+                    >
+                      x
+                    </button>
+                    <img src={el} alt="" width="300px" />
+                  </div>
+                ))
+              )}
             </div>
-            <div>
-              <input type="radio" name="castrated" value={false} />
-              <label>No</label>
-            </div>
-          </fieldset>
-          {errors.castrated && <p>{errors.castrated}</p>}
-        </div>
-        <div>
-          <fieldset onChange={(e) => handleChange(e)}>
-            <legend>Genero</legend>
-            <div>
-              <input type="radio" name="gender" value="female" />
-              <label>Hembra</label>
-            </div>
-            <div>
-              <input type="radio" name="gender" value="male" />
-              <label>Macho</label>
-            </div>
-          </fieldset>
-          {errors.gender && <p>{errors.gender}</p>}
-        </div>
-        <div>
-          <label>Ubicación</label>
-          <input
-            type="text"
-            name="place"
-            value={input.place}
-            onChange={(e) => handleChange(e)}
-            placeholder="Ubicación"
-            className="rounded-lg border-transparent flex-1 appearance-none border border-red-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-          />
-          {errors.place && <p>{errors.place}</p>}
-        </div>
-        <div>
-          <button type="submit">Crear</button>
-        </div>
-      </form>
+            {errors.imagePool && <p className="font-bold text-red-700 text-center p-2">{errors.imagePool}</p>}
+          </div>
+          <div>
+            <label className="font-light text-white text-xl">Tipo de mascota</label>
+            <select name="type" onChange={(e) => handleChange(e)} className="bg-gray-50 border border-gray-300 text-gray-400 text-base rounded-lg focus:ring-yellow-800 focus:border-transparent focus:outline-none focus:ring-2 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-yellow-800 dark:focus:border-transparent">
+              <option value="typeSelect" defaultValue hidden>
+                Seleccione tipo
+              </option>
+              <option value="dog" key={addKey()}>
+                Perro
+              </option>
+              <option value="cat" key={addKey()}>
+                Gato
+              </option>
+              <option value="other" key={addKey()}>
+                Otro
+              </option>
+            </select>
+            {errors.type && <p className="font-bold text-red-700 text-center p-2">{errors.type}</p>}
+          </div>
+          <div>
+            <label className="font-light text-white text-xl">Descripción</label>
+            <textarea
+              name="description"
+              value={input.description}
+              placeholder="Descripción"
+              onChange={(e) => handleChange(e)}
+              className="w-full py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent resize-none"
+            />
+            {errors.description && <p className="font-bold text-red-700 text-center p-2">{errors.description}</p>}
+          </div>
+          <div>
+            <label className="font-light text-white text-xl">Tamaño</label>
+            <select name="size" onChange={(e) => handleChange(e)} className="bg-gray-50 border border-gray-300 text-gray-400 text-base rounded-lg focus:ring-yellow-800 focus:border-transparent focus:outline-none focus:ring-2 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-yellow-800 dark:focus:border-transparent">
+              <option value="sizeSelect" defaultValue hidden>
+                Seleccione tamaño
+              </option>
+              <option value="small" key={addKey()}>
+                Chico
+              </option>
+              <option value="medium" key={addKey()}>
+                Mediano
+              </option>
+              <option value="big" key={addKey()}>
+                Grande
+              </option>
+            </select>
+            {errors.size && <p className="font-bold text-red-700 text-center p-2">{errors.size}</p>}
+          </div>
+          <div>
+            <label className="font-light text-white text-xl">Edad</label>
+            <input
+              type="text"
+              name="age"
+              value={input.age}
+              onChange={(e) => handleChange(e)}
+              placeholder="Edad"
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+            />
+            {errors.age && <p className="font-bold text-red-700 text-center p-2">{errors.age}</p>}
+          </div>
+          <div>
+            <label className="font-light text-white text-xl">¿Vacunado?</label>
+            <span>
+              <select name="vaccination" className="bg-gray-50 border border-gray-300 text-gray-400 text-base rounded-lg focus:ring-yellow-800 focus:border-transparent focus:outline-none focus:ring-2 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-yellow-800 dark:focus:border-transparent" onChange={(e) => handleChange(e)}>
+                <option value="vaccinationSelect" defaultValue hidden>
+                  Seleccione opción
+                </option>
+                <option value="yes" key={addKey()}>
+                  Sí
+                </option>
+                <option value="no" key={addKey()}>
+                  No
+                </option>
+                <option value="unknown" key={addKey()}>
+                  No sé
+                </option>
+              </select>
+            </span>
+            {errors.vaccination && <p className="font-bold text-red-700 text-center p-2">{errors.vaccination}</p>}
+          </div>
+          <div>
+            <fieldset onChange={(e) => handleChange(e)}>
+              <legend className="font-light text-white text-xl">¿Castrado?</legend>
+              <span className="p-3">
+                <input type="radio" name="castrated" value={true} className="w-4 h-4 mx-4 accent-yellow-900" />
+                <label className="font-light text-white text-xl">Sí</label>
+                </span>
+                <span className="p-16">
+                <input type="radio" name="castrated" value={false} className="w-4 h-4 mx-4 accent-yellow-900" />
+                <label className="font-light text-white text-xl">No</label>
+              </span>
+            </fieldset>
+            {errors.castrated && <p className="font-bold text-red-700 text-center p-2">{errors.castrated}</p>}
+          </div>
+          <div>
+            <fieldset onChange={(e) => handleChange(e)}>
+              <legend className="font-light text-white text-xl">Género</legend>
+              <span className="p-3">
+                <input type="radio" name="gender" value="female" className="w-4 h-4 mx-4 accent-yellow-900"/>
+                <label className="font-light text-white text-xl">Hembra</label>
+              </span>
+              <span className="p-3">
+                <input type="radio" name="gender" value="male" className="w-4 h-4 mx-4 accent-yellow-900"/>
+                <label className="font-light text-white text-xl">Macho</label>
+              </span>
+            </fieldset>
+            {errors.gender && <p className="font-bold text-red-700 text-center p-2">{errors.gender}</p>}
+          </div>
+          <div>
+            <label className="font-light text-white text-xl">Ubicación</label>
+            <input
+              type="text"
+              name="place"
+              value={input.place}
+              onChange={(e) => handleChange(e)}
+              placeholder="Ubicación"
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+            />
+            {errors.place && <p className="font-bold text-red-700 text-center p-2">{errors.place}</p>}
+          </div>
+          <div>
+            <button type="submit" className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Crear</button>
+
+          </div>
+        </form>
+
+        <Link to="/home" >
+          <button className="py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Regresar</button>
+        </Link>
+      </div>
     </div>
   );
 }

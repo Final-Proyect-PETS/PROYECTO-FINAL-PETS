@@ -127,7 +127,7 @@ export default function UpdatePet() {
   }
   //console.log(id_console);
   return (
-    <div className="flex flex-col w-full mt-15 m-auto  py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
+    <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
       <div className="self-center mb-6 text-xl font-normal text-gray-600 sm:text-2xl dark:text-white">
         Edita los datos de tu mascota
         </div>
@@ -144,7 +144,7 @@ export default function UpdatePet() {
                 onChange={(e) => handleChange(e)}
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
               />
-              {errors.name && <p>{errors.name}</p>}
+              {errors.name && <p className="font-bold text-red-700 text-center p-2">{errors.name}</p>}
             
               <label className="font-light text-white text-xl">Imagen</label>
               <input
@@ -155,7 +155,7 @@ export default function UpdatePet() {
                 onChange={(e) => handleChange(e)}
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
               />
-              {errors.image && <p>{errors.image}</p>}
+              {errors.image && <p className="font-bold text-red-700 text-center p-2">{errors.image}</p>}
             
               <label className="font-light text-white text-xl">Tipo</label>
               <input
@@ -166,7 +166,7 @@ export default function UpdatePet() {
                 onChange={(e) => handleChange(e)}
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
               />
-              {errors.type && <p>{errors.type}</p>}
+              {errors.type && <p className="font-bold text-red-700 text-center p-2">{errors.type}</p>}
             
               <label className="font-light text-white text-xl">Descripción</label>
               <textarea
@@ -177,7 +177,7 @@ export default function UpdatePet() {
                 onChange={(e) => handleChange(e)}
                 className="w-full py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent resize-none"
               />
-              {errors.description && <p>{errors.description}</p>}
+              {errors.description && <p className="font-bold text-red-700 text-center p-2">{errors.description}</p>}
             
               <label className="font-light text-white text-xl">Tamaño</label>
               <input
@@ -188,7 +188,7 @@ export default function UpdatePet() {
                 onChange={(e) => handleChange(e)}
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
               />
-              {errors.size && <p>{errors.size}</p>}
+              {errors.size && <p className="font-bold text-red-700 text-center p-2">{errors.size}</p>}
            
               <label className="font-light text-white text-xl">Edad</label>
               <input
@@ -199,7 +199,7 @@ export default function UpdatePet() {
                 onChange={(e) => handleChange(e)}
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
               />
-              {errors.age && <p>{errors.age}</p>}
+              {errors.age && <p className="font-bold text-red-700 text-center p-2">{errors.age}</p>}
             
               <label className="font-light text-white text-xl">Vacunado</label>
               <input
@@ -210,7 +210,7 @@ export default function UpdatePet() {
                 onChange={(e) => handleChange(e)}
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
               />
-              {errors.vaccination && <p>{errors.vaccination}</p>}
+              {errors.vaccination && <p className="font-bold text-red-700 text-center p-2">{errors.vaccination}</p>}
             
               <label className="font-light text-white text-xl">Castrado</label>
               <input
@@ -221,7 +221,7 @@ export default function UpdatePet() {
                 onChange={(e) => handleChange(e)}
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
               />
-              {errors.castrated && <p>{errors.castrated}</p>}
+              {errors.castrated && <p className="font-bold text-red-700 text-center p-2">{errors.castrated}</p>}
             
               <label className="font-light text-white text-xl">Ubicacion</label>
               <input
@@ -232,7 +232,7 @@ export default function UpdatePet() {
                 onChange={(e) => handleChange(e)}
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
               />
-              {errors.place && <p>{errors.place}</p>}
+              {errors.place && <p className="font-bold text-red-700 text-center p-2">{errors.place}</p>}
             </div>
 
             <button type="submit" className="py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg my-4">Actualizar</button>
