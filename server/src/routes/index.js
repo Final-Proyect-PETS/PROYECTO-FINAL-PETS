@@ -211,6 +211,7 @@ router.patch("/users", async (req, res, next) => {
 
 router.patch("/pets", async (req, res, next) => {
   const {
+    id,
     name,
     image,
     type,
@@ -227,6 +228,7 @@ router.patch("/pets", async (req, res, next) => {
       id: req.params.id,
     });
     await onePet.update({
+      id,
       name,
       image,
       type,
@@ -238,9 +240,7 @@ router.patch("/pets", async (req, res, next) => {
       place,
       gender,
     });
-    res
-      .status(200)
-      .json("Los Datos de Tu Mascota se actualizaron exitosamente 🐶 ");
+    res.status(200).json("Los Datos de Tu Mascota se actualizaron exitosamente 🐶 ");
   } catch (error) {
     next(error);
   }
