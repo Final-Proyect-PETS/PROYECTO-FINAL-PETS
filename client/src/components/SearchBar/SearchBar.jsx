@@ -42,8 +42,7 @@ export default function SearchBar() {
           placeholder="Buscar usuarios o mascotas..."
           className="rounded-lg border-transparent appearance-none border border-gray-300 p-2 w-full"
           onChange={(e) => handleInputChange(e)}
-        ></input>
-
+        />
         <label
           htmlFor="small-toggle"
           className="inline-flex relative items-center mt-2 mx-4 cursor-pointer"

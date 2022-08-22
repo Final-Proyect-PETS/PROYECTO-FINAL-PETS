@@ -25,7 +25,7 @@ export default function PetDetail() {
       <div className="flex w-2/3 my-10 ml-60 flex-row border-2 border-black">
         <div className="flex flex-col w-1/2 m-3 items-center gap-3">
           <Link to="/updatepet">
-            <button>Editar</button>
+            <button className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-600 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Editar mascota</button>
           </Link>{/* faltaria agregar el pool de images q viene como array */}
           <img
             src={petDetail.image}
@@ -74,7 +74,7 @@ export default function PetDetail() {
           </div>
           <div className="flex justify-center items-center h-1/5">
             <Link to="/adopt/">
-              <button class="bg-yellow-500 hover:bg-green-700 text-white font-bold py-5 px-4 border border-yellow-700 rounded">
+              <button className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-green-700 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
                 ADOPTAR
               </button>
             </Link>

@@ -1,11 +1,10 @@
 import ubicacion from "../../assets/images/ubicacion.png";
-
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useEffect, React } from "react";
 import { getUserDetail, clearState } from "../../redux/Actions/index";
-import OwnedPet from "../Details/OwnedPet";
+
+
 export default function UserCard({
   _id,
   first_name,
