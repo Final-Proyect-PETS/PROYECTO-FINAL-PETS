@@ -40,7 +40,7 @@ export default function SearchBar() {
     <div className="flex m-1.5 mx-6 px-10">
       <form>
         <input
-          placeholder="Busca algo..."
+          placeholder="Busca usuarios o mascotas..."
           className="rounded-lg border-transparent appearance-none border border-gray-300 p-2 w-full"
           onChange={(e) => handleInputChange(e)}
         ></input>
