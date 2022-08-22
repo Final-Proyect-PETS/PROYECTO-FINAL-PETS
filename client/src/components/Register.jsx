@@ -137,112 +137,117 @@ export default function Register() {
   }
 
   return (
-    <div className="bg-gray-300">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-gray-700 rounded-lg shadow sm:max-w-md sm:w-full sm:mx-auto sm:overflow-hidden"
-      >
-        <Link to="/">
-        <button>    <h1>Regresar!</h1></button>
-        </Link>
-        <div className="flex">
-          <h1>Registrate!</h1>
-        </div>
-        <div>
-          <label>Nombre</label>
-          <input
-            name="first_name"
-            value={input.first_name}
-            onChange={(e) => handleChange(e)}
-            placeholder="Nombre"
-            className="rounded-lg border-transparent flex-1 appearance-none border border-red-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-          ></input>
-          {errors.first_name && <p>{errors.first_name}</p>}
-          <label>Apellido</label>
-          <input
-            name="last_name"
-            value={input.last_name}
-            onChange={(e) => handleChange(e)}
-            placeholder="Apellido"
-            className="rounded-lg border-transparent flex-1 appearance-none border border-red-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-          ></input>
-          {errors.last_name && <p>{errors.last_name}</p>}
-        </div>
-        <div>
-          <label>Nombre de usuario</label>
-          <input
-            name="username"
-            value={input.username}
-            onChange={(e) => handleChange(e)}
-            placeholder="Nombre de usuario"
-            className="rounded-lg border-transparent flex-1 appearance-none border border-red-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-          ></input>
-          {errors.username && <p>{errors.username}</p>}
-        </div>
-        <div>
-          <label>Imagen de Perfil</label>
-          <input
-            type="file"
-            name="image"
-            value={input.image}
-            onChange={(e) => handleChange(e)}
-            placeholder="Imagen de perfil"
-          ></input>
-        </div>
-        <div>
-          <label>Correo</label>
-          <input
-            name="email"
-            value={input.email}
-            onChange={(e) => handleChange(e)}
-            placeholder="Email"
-            className="rounded-lg border-transparent flex-1 appearance-none border border-red-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-          ></input>
-          {errors.email && <p>{errors.email}</p>}
-        </div>
-        <div>
-          <label>Contraseña</label>
-          <input
-            type="password"
-            name="password"
-            value={input.password}
-            onChange={(e) => handleChange(e)}
-            placeholder="Contraseña"
-            className="rounded-lg border-transparent flex-1 appearance-none border border-red-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-          ></input>
-          {errors.password && <p>{errors.password}</p>}
-        </div>
-        <div>
-          <label>Sobre mí</label>
-          <textarea
-            name="about"
-            value={input.about}
-            placeholder="Descripción"
-            onChange={(e) => handleChange(e)}
-          ></textarea>
-        </div>
-        <div>
-          <label>Telefono</label>
-          <input
-            name="telephone"
-            value={input.telephone}
-            onChange={(e) => handleChange(e)}
-            placeholder="Telefono"
-          ></input>
-        </div>
-        <div>
-          <label>Ubicación</label>
-          <input
-            name="place"
-            value={input.place}
-            onChange={(e) => handleChange(e)}
-            placeholder="Ubicación"
-          ></input>
-        </div>
-        <div>
-          <button type="submit">Crear</button>
-        </div>
-      </form>
+    <div className="flex flex-col w-full max-w-md m-14 mr-24 mt-0 py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
+      <div className="self-center mb-6 text-xl font-light text-gray-600 sm:text-2xl dark:text-white">
+        Registrate
+      </div>
+      <div className="mt-8">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-gray-700 rounded-lg shadow sm:max-w-md sm:w-full sm:mx-auto sm:overflow-hidden"
+        >
+          
+          
+
+          <div >
+            <label>Nombre</label>
+            <input
+              name="first_name"
+              value={input.first_name}
+              onChange={(e) => handleChange(e)}
+              placeholder="Nombre"
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+            ></input>
+            {errors.first_name && <p>{errors.first_name}</p>}
+            <label>Apellido</label>
+            <input
+              name="last_name"
+              value={input.last_name}
+              onChange={(e) => handleChange(e)}
+              placeholder="Apellido"
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+            ></input>
+            {errors.last_name && <p>{errors.last_name}</p>}
+          </div>
+          <div>
+            <label>Nombre de usuario</label>
+            <input
+              name="username"
+              value={input.username}
+              onChange={(e) => handleChange(e)}
+              placeholder="Nombre de usuario"
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+            ></input>
+            {errors.username && <p>{errors.username}</p>}
+          </div>
+          <div>
+            <label>Imagen de Perfil</label>
+            <input
+              type="file"
+              name="image"
+              value={input.image}
+              onChange={(e) => handleChange(e)}
+              placeholder="Imagen de perfil"
+            ></input>
+          </div>
+          <div>
+            <label>Correo</label>
+            <input
+              name="email"
+              value={input.email}
+              onChange={(e) => handleChange(e)}
+              placeholder="Email"
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+            ></input>
+            {errors.email && <p>{errors.email}</p>}
+          </div>
+          <div>
+            <label>Contraseña</label>
+            <input
+              type="password"
+              name="password"
+              value={input.password}
+              onChange={(e) => handleChange(e)}
+              placeholder="Contraseña"
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+            ></input>
+            {errors.password && <p>{errors.password}</p>}
+          </div>
+          <div>
+            <label>Sobre mí</label>
+            <textarea
+              name="about"
+              value={input.about}
+              placeholder="Descripción"
+              onChange={(e) => handleChange(e)}
+            ></textarea>
+          </div>
+          <div>
+            <label>Telefono</label>
+            <input
+              name="telephone"
+              value={input.telephone}
+              onChange={(e) => handleChange(e)}
+              placeholder="Telefono"
+            ></input>
+          </div>
+          <div>
+            <label>Ubicación</label>
+            <input
+              name="place"
+              value={input.place}
+              onChange={(e) => handleChange(e)}
+              placeholder="Ubicación"
+            ></input>
+          </div>
+          <div>
+            <button type="submit">Crear</button>
+          </div>
+          
+        </form><Link to="/">
+            <button>    <h1>Regresar!</h1></button>
+          </Link>
+      </div>
     </div>
   );
 }
