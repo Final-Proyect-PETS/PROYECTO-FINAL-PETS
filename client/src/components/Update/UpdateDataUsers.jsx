@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { notificationSwal } from "../../utils/notificationSwal.jsx";
 
 // import useHistory
 import {
@@ -90,7 +91,12 @@ export default function UpdateUser() {
   function handleUpDate(e) {
     e.preventDefault();
     dispatch(patchUsuer(input)).then(
-      alert("Datos Actualizados Exitosamente 👍")
+      notificationSwal(
+        "¡Enhorabuena!",
+        "Tus datos fueron modificados con éxito",
+        "success",
+        "Ok"
+      )
     );
     setInput({
       first_name: upDateUser.first_name,

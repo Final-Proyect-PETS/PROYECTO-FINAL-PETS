@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPetDetail, patchPet, getAllPets } from "../../redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
+import { notificationSwal } from "../../utils/notificationSwal.jsx";
 
 export default function UpdatePet() {
   let { id } = useParams();
@@ -108,7 +109,12 @@ export default function UpdatePet() {
   function handleUpDate(e) {
     e.preventDefault();
     dispatch(patchPet(input));
-    alert("Datos Actualizados Exitosamente 👍");
+    notificationSwal(
+      "¡Enhorabuena!",
+      "La mascota se modificó con éxito",
+      "success",
+      "Ok"
+    );
     setInput({
       id: upDatePet._id,
       name: upDatePet.name,
