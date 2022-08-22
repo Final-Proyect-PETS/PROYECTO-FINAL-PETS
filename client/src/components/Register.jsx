@@ -142,9 +142,7 @@ export default function Register() {
         Registrate
       </div>
       <div className="mt-8 px-8 max-w-lg self-center">
-        <form
-          onSubmit={handleSubmit}
-        >
+        <form onSubmit={handleSubmit}>
           <div>
               <label className="font-light text-white text-xl">Nombre</label>
               <input
@@ -242,7 +240,7 @@ export default function Register() {
             ></input>
           </div>
           <div>
-            <button type="submit" className="py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg my-4">Crear</button>
+            <button type="submit" className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Crear</button>
           </div>
 
         </form>
