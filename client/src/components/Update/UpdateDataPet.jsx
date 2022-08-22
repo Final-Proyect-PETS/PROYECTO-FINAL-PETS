@@ -171,14 +171,19 @@ export default function UpdatePet() {
             {errors.image && <p className="font-bold text-red-700 text-center p-2">{errors.image}</p>}
 
             <label className="font-light text-white text-xl">Tipo</label>
-            <input
+            <select  name="type" onChange={(e) => handleChange(e)}>
+              <option value="dog" selected={input.type === "dog" ? true:false}>Perro</option>
+              <option value="cat" selected={input.type === "cat" ? true:false}>Gato</option>
+              <option value="other" selected={input.type === "other" ? true:false}>Otro</option>
+            </select>
+            {/* <input
               type="text"
               name="type"
               value={input.type}
               // placeholder={upDatePet.type}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
-            />
+            /> */}
             {errors.type && <p className="font-bold text-red-700 text-center p-2">{errors.type}</p>}
 
             <label className="font-light text-white text-xl">Descripción</label>
@@ -193,14 +198,19 @@ export default function UpdatePet() {
             {errors.description && <p className="font-bold text-red-700 text-center p-2">{errors.description}</p>}
 
             <label className="font-light text-white text-xl">Tamaño</label>
-            <input
+            <select name="size" onChange={(e) => handleChange(e)}>
+              <option value="big" selected={input.size === "big" ? true:false}>Grande</option>
+              <option value="medium" selected={input.size === "medium" ? true:false}>Mediano</option>
+              <option value="small" selected={input.size === "small" ? true:false}>Chico</option>
+            </select>
+            {/* <input
               type="text"
               name="size"
               value={input.size}
               // placeholder={upDatePet.size}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
-            />
+            /> */}
             {errors.size && <p className="font-bold text-red-700 text-center p-2">{errors.size}</p>}
 
             <label className="font-light text-white text-xl">Edad</label>
@@ -215,25 +225,34 @@ export default function UpdatePet() {
             {errors.age && <p className="font-bold text-red-700 text-center p-2">{errors.age}</p>}
 
             <label className="font-light text-white text-xl">Vacunado</label>
-            <input
+            <select name="vaccination" onChange={(e) => handleChange(e)}>
+              <option value="yes" selected={input.vaccination === "yes" ? true:false}>Sí</option>
+              <option value="no" selected={input.vaccination === "no" ? true:false}>No</option>
+              <option value="unknown" selected={input.vaccination === "unknown" ? true:false}>No sé</option>
+            </select>
+            {/* <input
               type="text"
               name="vaccination"
               value={input.vaccination}
               // placeholder={upDatePet.vaccination}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
-            />
+            /> */}
             {errors.vaccination && <p className="font-bold text-red-700 text-center p-2">{errors.vaccination}</p>}
 
             <label className="font-light text-white text-xl">Castrado</label>
-            <input
+            <select name="castrated" onChange={(e) => handleChange(e)}>
+              <option value="true" selected={input.castrated === "true" ? true:false}>Sí</option>
+              <option value="false" selected={input.castrated === "false" ? true:false}>No</option>
+            </select>
+            {/* <input
               type="text"
               name="castrated"
               value={input.castrated}
               // placeholder={upDatePet.castrated}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
-            />
+            /> */}
             {errors.castrated && <p className="font-bold text-red-700 text-center p-2">{errors.castrated}</p>}
 
             <label className="font-light text-white text-xl">Ubicacion</label>
