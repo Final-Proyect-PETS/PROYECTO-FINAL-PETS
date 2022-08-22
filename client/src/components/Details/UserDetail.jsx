@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getUserDetail } from "../../redux/Actions";
-import Card from "../Home/Card";
 import NavBar from "../NavBar/NavBar";
 import OwnedPet from "./OwnedPet";
 import "./userDetailStyle.css";

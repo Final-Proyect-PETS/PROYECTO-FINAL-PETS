@@ -316,7 +316,7 @@ export default function RegisterPet() {
             <label className="font-light text-white text-xl">Imagen de perfil</label>
             <input type="file" name="image" onChange={(e) => handleImage(e)} className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent" />
             {loadingImage ? (
-              <h3>Cargando imagen...</h3>
+              <h3 className="font-light text-white text-xl">Cargando imagen...</h3>
             ) : (
               <img src={image} alt="" width="300px" />
             )}
@@ -472,7 +472,6 @@ export default function RegisterPet() {
           </div>
           <div>
             <button type="submit" className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Crear</button>
-
           </div>
         </form>
 
