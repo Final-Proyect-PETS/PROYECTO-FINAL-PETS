@@ -8,7 +8,7 @@ router.get("/pets", async (req, res, next) => {
   const name = req.query.name;
   try {
     connection();
-    console.log("conectado");
+    console.log("conectado a pets");
   } catch (err) {
     console.error(err);
   }
@@ -64,27 +64,6 @@ router.get("/users", async (req, res, next) => {
   }
 });
 
-router.post("/users", (req, res, next) => {
-  try {
-    const post = new User({
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password,
-      image: req.body.image,
-      telephone: req.body.telephone,
-      about: req.body.about,
-
-      pets: req.body.pets,
-    });
-
-    post.save().then((per) => res.json(per));
-  } catch (error) {
-    next(error);
-  }
-});
-
 router.get("/users/:id", async (req, res, next) => {
   try {
     connection();
@@ -109,6 +88,27 @@ router.get("/pets/:id", async (req, res, next) => {
   try {
     const arrayPets = await Pets.findById(req.params.id).populate("user");
     res.send(arrayPets);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/users", (req, res, next) => {
+  try {
+    const post = new User({
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+      image: req.body.image,
+      telephone: req.body.telephone,
+      about: req.body.about,
+
+      pets: req.body.pets,
+    });
+
+    post.save().then((per) => res.json(per));
   } catch (error) {
     next(error);
   }
@@ -245,7 +245,6 @@ router.get("/filters", async (req, res, next) => {
       location,
       pet_type,
       pet_size,
-      pet_age,
       gender,
     } = req.query;
     let all = await Pets.find().populate("user");
@@ -280,6 +279,9 @@ router.get("/filters", async (req, res, next) => {
     if (pet_type === "dog") {
       all = all.filter((ev) => ev.type === "dog");
     }
+    if (pet_type === "other") {
+      all = all.filter((ev) => ev.type === "other");
+    }
     if (vaccinated === "yes") {
       all = all.filter((ev) => ev.vaccination === "yes");
     }
@@ -294,6 +296,12 @@ router.get("/filters", async (req, res, next) => {
     }
     if (gender === "male") {
       all = all.filter((ev) => ev.gender === "male");
+    }
+    if (creation_date === "asc") {
+      all = all.sort((a, b) => a.createdAt - b.createdAt);
+    }
+    if (creation_date === "desc") {
+      all = all.sort((a, b) => b.createdAt - a.createdAt);
     }
     res.send(all);
   } catch (error) {
