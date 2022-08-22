@@ -28,10 +28,10 @@ export default function UpdateUser() {
     place: upDateUser.place,
   });
 
-  useEffect(() => {
-    dispatch(getUserDetail());
-    dispatch(getAllUsers());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getUserDetail());
+  //   dispatch(getAllUsers());
+  // }, [dispatch]);
 
   function handleChange(e) {
     setInput({
@@ -89,8 +89,9 @@ export default function UpdateUser() {
   }
   function handleUpDate(e) {
     e.preventDefault();
-    dispatch(patchUsuer(input));
-    alert("Datos Actulizados Exitosamente 👍");
+    dispatch(patchUsuer(input)).then(
+      alert("Datos Actualizados Exitosamente 👍")
+    );
     setInput({
       first_name: upDateUser.first_name,
       last_name: upDateUser.last_name,
@@ -101,6 +102,9 @@ export default function UpdateUser() {
       telephone: upDateUser.telephone,
       place: upDateUser.place,
     });
+    dispatch(getUserDetail(upDateUser._id)); //esto es porque en el estado userDetail me quedaba cargada
+    //la frase "Datos Actualizados Exitosamente 👍", y preciso que se vuelva a cargar con el usuario para que al clickear el boton
+    //para regresar, me tome bien sus datos y no aparezca como undefined.
   }
 
   return (
