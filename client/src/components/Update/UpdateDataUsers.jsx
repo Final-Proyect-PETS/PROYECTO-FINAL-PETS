@@ -14,6 +14,7 @@ export default function UpdateUser() {
   const [errors, setErrors] = useState({});
 
   const [input, setInput] = useState({
+    id:upDateUser._id,
     first_name: upDateUser.first_name,
     last_name: upDateUser.last_name,
     username: upDateUser.username,

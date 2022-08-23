@@ -164,7 +164,7 @@ router.post("/pets/:id", async (req, res, next) => {
   }
 });
 
-router.patch("/users", async (req, res, next) => {
+router.patch("/users/:id", async (req, res, next) => {
   const {
     first_name,
     last_name,
@@ -177,7 +177,7 @@ router.patch("/users", async (req, res, next) => {
   } = req.body;
   try {
     const oneUser = await User.findOne({
-      id: req.params.id,
+      _id: req.params.id,
     });
     await oneUser.update({
       first_name,
@@ -195,9 +195,8 @@ router.patch("/users", async (req, res, next) => {
   }
 });
 
-router.patch("/pets", async (req, res, next) => {
+router.patch("/pets/:id", async (req, res, next) => {
   const {
-    id,
     name,
     image,
     type,
@@ -211,10 +210,9 @@ router.patch("/pets", async (req, res, next) => {
   } = req.body;
   try {
     const onePet = await Pets.findOne({
-      id: req.params.id,
+      _id: req.params.id,
     });
-    await onePet.update({
-      id,
+    await onePet.updateOne({
       name,
       image,
       type,
@@ -228,7 +226,7 @@ router.patch("/pets", async (req, res, next) => {
     });
     res
       .status(200)
-      .json("Los Datos de Tu Mascota se actualizaron exitosamente 🐶 ");
+      .send("Los Datos de Tu Mascota se actualizaron exitosamente 🐶 ");
   } catch (error) {
     next(error);
   }
