@@ -7,11 +7,25 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { notificationSwal } from "../utils/notificationSwal.jsx";
+import { useEffect } from "react";
+import { getUserDetail } from "../redux/Actions/index.js";
 
 export default function RegisterPet() {
   const dispatch = useDispatch();
 
   // const pets = useSelector((state) => state.pets);
+
+  const id = localStorage.getItem("id")
+
+  // const user = useSelector((state) => state.userDetail)
+
+  // const userId = user.id
+
+  // const navigate = Navigate()
+
+  // useEffect(() => {
+  //   dispatch(getUserDetail(id))
+  // }, [dispatch, id])
 
   const [errors, setErrors] = useState({});
   const [image, setImage] = useState("");
@@ -20,7 +34,7 @@ export default function RegisterPet() {
   const [loadingImagePool, setLoadingImagePool] = useState(false);
 
   const [input, setInput] = useState({
-    id: "",
+    id: id,
     name: "",
     image: "",
     imagePool: [],
@@ -290,16 +304,6 @@ export default function RegisterPet() {
       <div className="mt-8 px-8 max-w-lg self-center">
         <form onSubmit={handleSubmit}>
           <div>
-            <label className="font-light text-white text-xl">ID Usuario</label>
-            <input
-              type="text"
-              name="id"
-              value={input.id}
-              onChange={(e) => handleChange(e)}
-              placeholder="Campo provisorio, volará cuando esté el login"
-              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
-            />
-            {errors.id && <p className="font-bold text-red-700 text-center p-2">{errors.id}</p>}
 
             <label className="font-light text-white text-xl">Nombre</label>
             <input

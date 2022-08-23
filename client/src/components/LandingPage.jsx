@@ -103,16 +103,20 @@ export default function LandingPage() {
                                     </span>
                                 </div>
                             </div>
-                            <div className="flex w-full">
+                            <div className="flex flex-row justify-center gap-16">
+                            <div className="flex bg-gray-200">
                                 {/* <Link to="/home" className="py-2 px-4  bg-yellow-800 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"> */}
-                                <button type="submit" >
-                                    Ingresar
+                                <button type="submit">
+                                    Enviar datos
                                 </button>
                                 {/* </Link> */}
                             </div>
+                            <div className="bg-gray-700">
+                                <button><Link to="/home">Entrar home</Link></button>
+                            </div>
+                            </div>
                         </form>
                     </div>
-
                     <div className="flex items-center justify-center mt-6">
 
                         <Link to="/register" className="inline-flex items-center text-s font-thin text-center text-gray-500 hover:text-gray-700 dark:text-gray-100 dark:hover:text-yellow-900">

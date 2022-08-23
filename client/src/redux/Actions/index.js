@@ -127,7 +127,7 @@ export function clearStatePet(payload) {
 export function patchUsuer(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.patch(`http://localhost:3001/users`, payload);
+      let json = await axios.patch(`http://localhost:3001/users/${payload.id}`, payload);
       return dispatch({
         type: actions.PATCH_USER,
         payload: json.data,
@@ -141,7 +141,7 @@ export function patchUsuer(payload) {
 export function patchPet(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.patch(`http://localhost:3001/pets`, payload);
+      let json = await axios.patch(`http://localhost:3001/pets/${payload.id}`, payload);
       return dispatch({
         type: actions.PATCH_PET,
         payload: json.data,
@@ -178,6 +178,20 @@ export function userLogin(payload) {
       })
       return dispatch({
         type: actions.USER_LOGIN,
+        payload: json.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function getUserProfile(id) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.get(`http://localhost:3001/home/users/${id}`)
+      return dispatch({
+        type: actions.GET_USER_PROFILE,
         payload: json.data
       })
     } catch (error) {

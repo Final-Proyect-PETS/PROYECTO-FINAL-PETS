@@ -1,16 +1,51 @@
 import React from "react";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getPetDetail, patchPet, getAllPets } from "../../redux/Actions/index";
+import { patchPet, } from "../../redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import { notificationSwal } from "../../utils/notificationSwal.jsx";
 import { Link } from "react-router-dom";
+
+function validateFrom(input) {
+  let errors = {};
+
+  if (input.name) {
+    if (!/^[a-zA-Z]+$/.test(input.name)) {
+      errors.name = "El nombre sólo puede tener letras!";
+    } else if (input.name.length > 20) {
+      errors.name = "El nombre no puede tener más de 20 caracteres!";
+    }
+  } else errors.name = "El nombre es requerido!";
+
+  if (!input.description) errors.description = "La descripción es requerida!";
+
+  if (!input.size) errors.size = "El tamaño es requerido!";
+
+  if (input.age) {
+    if (isNaN(input.age)) errors.age = "Sólo se permiten números";
+    if (/[  +]$/.test(input.age)) errors.age = "Sólo se permiten números";
+    if (!Number.isInteger(Number(input.age)))
+      errors.age = "Sólo se permiten números enteros";
+    if (parseInt(input.age) <= 0 || parseInt(input.age) > 25)
+      errors.age = "La edad debe ser entre 1 y 25 años";
+  } else errors.age = "La edad es requerida!";
+
+  if (input.place) {
+    //   if (!/^[a-zA-Z]+$/.test(input.place)) {
+    //   errors.place = "La ubicación sólo puede tener letras!";
+    if (input.place.length > 30) {
+      errors.place = "La ubicación no puede tener más de 30 caracteres!";
+    }
+  } else errors.place = "La ubicación es requerida!";
+
+  return errors;
+}
 
 export default function UpdatePet() {
   let { id } = useParams();
   let navigate = useNavigate();
 
-  console.log(id);
+
   const dispatch = useDispatch();
   const upDatePet = useSelector((state) => state.petDetail);
   //const id_console = upDatePet._id;
@@ -30,19 +65,6 @@ export default function UpdatePet() {
     place: upDatePet.place,
   });
 
-  /* const [input, setInput] = useState({
-        id: upDatePet._id,
-        name: "",
-        image: "",
-        type: "",
-        description: "",
-        size: "",
-        age: "",
-        vaccination: "",
-        castrated: "",
-        place: "",
-    }) */
-
   //   useEffect(() => {
   //     dispatch(getAllPets());
   //     dispatch(getPetDetail(id));
@@ -53,13 +75,6 @@ export default function UpdatePet() {
       ...input,
       [e.target.name]: e.target.value,
     });
-    // if(input[e.target.name] === ""){
-    //     setInput({
-    //         ...input,
-    //         [e.target.name]: e.target.placeholder
-    //     })
-    // }
-    // console.log(input)
     setErrors(
       validateFrom({
         ...input,
@@ -67,48 +82,60 @@ export default function UpdatePet() {
       })
     );
   }
-  function validateFrom(input) {
-    let errors = {};
-
-    if (input.name) {
-      if (!/^[a-zA-Z]+$/.test(input.name)) {
-        errors.name = "El nombre sólo puede tener letras!";
-      } else if (input.name.length > 20) {
-        errors.name = "El nombre no puede tener más de 20 caracteres!";
-      }
-    } else errors.name = "El nombre es requerido!";
-
-    if (!input.type) errors.type = "El tipo de mascota es requerido!";
-
-    if (!input.description) errors.description = "La descripción es requerida!";
-
-    if (!input.size) errors.size = "El tamaño es requerido!";
-
-    if (input.age) {
-      if (isNaN(input.age)) errors.age = "Sólo se permiten números";
-      if (/[  +]$/.test(input.age)) errors.age = "Sólo se permiten números";
-      if (!Number.isInteger(Number(input.age)))
-        errors.age = "Sólo se permiten números enteros";
-      if (parseInt(input.age) <= 0 || parseInt(input.age) > 25)
-        errors.age = "La edad debe ser entre 1 y 25 años";
-    } else errors.age = "La edad es requerida!";
-
-    if (!input.vaccination)
-      errors.vaccination = "La información sobre vacunas es requerida!";
-
-    if (!input.castrated)
-      errors.castrated = "La información sobre castración es requerida!";
-
-    if (input.place) {
-      //   if (!/^[a-zA-Z]+$/.test(input.place)) {
-      //   errors.place = "La ubicación sólo puede tener letras!";
-      if (input.place.length > 30) {
-        errors.place = "La ubicación no puede tener más de 30 caracteres!";
-      }
-    } else errors.place = "La ubicación es requerida!";
-
-    return errors;
+  function handleChangeSelect(e) {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+    setErrors(
+      validateFrom({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
   }
+  // function validateFrom(input) {
+  //   let errors = {};
+
+  //   if (input.name) {
+  //     if (!/^[a-zA-Z]+$/.test(input.name)) {
+  //       errors.name = "El nombre sólo puede tener letras!";
+  //     } else if (input.name.length > 20) {
+  //       errors.name = "El nombre no puede tener más de 20 caracteres!";
+  //     }
+  //   } else errors.name = "El nombre es requerido!";
+
+  //   if (!input.type) errors.type = "El tipo de mascota es requerido!";
+
+  //   if (!input.description) errors.description = "La descripción es requerida!";
+
+  //   if (!input.size) errors.size = "El tamaño es requerido!";
+
+  //   if (input.age) {
+  //     if (isNaN(input.age)) errors.age = "Sólo se permiten números";
+  //     if (/[  +]$/.test(input.age)) errors.age = "Sólo se permiten números";
+  //     if (!Number.isInteger(Number(input.age)))
+  //       errors.age = "Sólo se permiten números enteros";
+  //     if (parseInt(input.age) <= 0 || parseInt(input.age) > 25)
+  //       errors.age = "La edad debe ser entre 1 y 25 años";
+  //   } else errors.age = "La edad es requerida!";
+
+  //   if (!input.vaccination)
+  //     errors.vaccination = "La información sobre vacunas es requerida!";
+
+  //   if (!input.castrated)
+  //     errors.castrated = "La información sobre castración es requerida!";
+
+  //   if (input.place) {
+  //     //   if (!/^[a-zA-Z]+$/.test(input.place)) {
+  //     //   errors.place = "La ubicación sólo puede tener letras!";
+  //     if (input.place.length > 30) {
+  //       errors.place = "La ubicación no puede tener más de 30 caracteres!";
+  //     }
+  //   } else errors.place = "La ubicación es requerida!";
+
+  //   return errors;
+  // }
 
   function handleUpDate(e) {
     e.preventDefault();
@@ -133,12 +160,7 @@ export default function UpdatePet() {
     });
 
     navigate(`/pet/${upDatePet._id}`, { replace: true })
-
-    // let id = input.id
-    // dispatch(patchPet(id,input))
-    // console.log(input,"2")
   }
-  //console.log(id_console);
   return (
     <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
       <div className="self-center mb-6 text-xl font-normal text-gray-600 sm:text-2xl dark:text-white">
@@ -152,8 +174,7 @@ export default function UpdatePet() {
             <input
               type="text"
               name="name"
-              value={input.name}
-              // placeholder={upDatePet.name}
+              placeholder={input.name}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
@@ -163,111 +184,72 @@ export default function UpdatePet() {
             <input
               type="text"
               name="image"
-              value={input.image}
-              // placeholder={upDatePet.image}
+              placeholder={input.image}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
             {errors.image && <p className="font-bold text-red-700 text-center p-2">{errors.image}</p>}
 
             <label className="font-light text-white text-xl">Tipo</label>
-            <select  name="type" onChange={(e) => handleChange(e)}>
+            <select  name="type" onChange={(e) => handleChangeSelect(e)}>
               <option value="dog" selected={input.type === "dog" ? true:false}>Perro</option>
               <option value="cat" selected={input.type === "cat" ? true:false}>Gato</option>
               <option value="other" selected={input.type === "other" ? true:false}>Otro</option>
             </select>
-            {/* <input
-              type="text"
-              name="type"
-              value={input.type}
-              // placeholder={upDatePet.type}
-              onChange={(e) => handleChange(e)}
-              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
-            /> */}
             {errors.type && <p className="font-bold text-red-700 text-center p-2">{errors.type}</p>}
-
             <label className="font-light text-white text-xl">Descripción</label>
             <textarea
               type="text"
               name="description"
-              value={input.description}
-              // placeholder={upDatePet.description}
+              placeholder={input.description}
               onChange={(e) => handleChange(e)}
               className="w-full py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent resize-none"
             />
             {errors.description && <p className="font-bold text-red-700 text-center p-2">{errors.description}</p>}
 
             <label className="font-light text-white text-xl">Tamaño</label>
-            <select name="size" onChange={(e) => handleChange(e)}>
+            <select name="size" onChange={(e) => handleChangeSelect(e)}>
               <option value="big" selected={input.size === "big" ? true:false}>Grande</option>
               <option value="medium" selected={input.size === "medium" ? true:false}>Mediano</option>
               <option value="small" selected={input.size === "small" ? true:false}>Chico</option>
             </select>
-            {/* <input
-              type="text"
-              name="size"
-              value={input.size}
-              // placeholder={upDatePet.size}
-              onChange={(e) => handleChange(e)}
-              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
-            /> */}
             {errors.size && <p className="font-bold text-red-700 text-center p-2">{errors.size}</p>}
-
             <label className="font-light text-white text-xl">Edad</label>
             <input
               type="text"
               name="age"
-              value={input.age}
-              // placeholder={upDatePet.age}
+              placeholder={input.age}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
             {errors.age && <p className="font-bold text-red-700 text-center p-2">{errors.age}</p>}
-
             <label className="font-light text-white text-xl">Vacunado</label>
-            <select name="vaccination" onChange={(e) => handleChange(e)}>
+            <select name="vaccination" onChange={(e) => handleChangeSelect(e)}>
               <option value="yes" selected={input.vaccination === "yes" ? true:false}>Sí</option>
               <option value="no" selected={input.vaccination === "no" ? true:false}>No</option>
               <option value="unknown" selected={input.vaccination === "unknown" ? true:false}>No sé</option>
             </select>
-            {/* <input
-              type="text"
-              name="vaccination"
-              value={input.vaccination}
-              // placeholder={upDatePet.vaccination}
-              onChange={(e) => handleChange(e)}
-              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
-            /> */}
             {errors.vaccination && <p className="font-bold text-red-700 text-center p-2">{errors.vaccination}</p>}
-
             <label className="font-light text-white text-xl">Castrado</label>
-            <select name="castrated" onChange={(e) => handleChange(e)}>
+            <select name="castrated" onChange={(e) => handleChangeSelect(e)}>
               <option value="true" selected={input.castrated === "true" ? true:false}>Sí</option>
               <option value="false" selected={input.castrated === "false" ? true:false}>No</option>
             </select>
-            {/* <input
-              type="text"
-              name="castrated"
-              value={input.castrated}
-              // placeholder={upDatePet.castrated}
-              onChange={(e) => handleChange(e)}
-              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
-            /> */}
             {errors.castrated && <p className="font-bold text-red-700 text-center p-2">{errors.castrated}</p>}
-
             <label className="font-light text-white text-xl">Ubicacion</label>
             <input
               type="text"
               name="place"
-              value={input.place}
-              // placeholder={upDatePet.place}
+              placeholder={input.place}              
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
             {errors.place && <p className="font-bold text-red-700 text-center p-2">{errors.place}</p>}
           </div>
-
-          <button type="submit" className="py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg my-4">Actualizar</button>
+          {errors.name||errors.image||errors.type||errors.size||errors.age||errors.vaccination||errors.castrated||errors.place?
+            <h3>missing required fields</h3>
+            :<button type="submit" className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Actualizar</button>
+          }
         </form>
         <div>
           <Link to={`/pet/${upDatePet._id}`}>
