@@ -29,10 +29,12 @@ export default function NavBar() {
           <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Happy Tails</span>
         </Link>
         <div className="flex items-center md:order-2">
-          <button type="button" className="flex mr-3 text-sm rounded-full justify-center items-center gap-3 md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+        <Link to={"/users/" + id}>
+          <button type="button" className="flex mr-3 text-sm justify-center items-center gap-3 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
             <h4>{user.first_name} {user.last_name}</h4>
             <img className="w-8 h-8 rounded-full" src={user.image} alt="foto perfil" />
           </button>
+        </Link>
           {/* <!-- Dropdown menu --> */}
           <div className="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
             <div className="py-3 px-4">
