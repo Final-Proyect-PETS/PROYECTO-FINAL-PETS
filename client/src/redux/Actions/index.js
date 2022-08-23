@@ -171,7 +171,9 @@ export function userLogin(payload) {
     try {
       let json = await axios.post("http://localhost:3001/login", payload).then((response) => {
         const token = response.data.data.token
+        const id = response.data.id.id
         localStorage.setItem("token", token);
+        localStorage.setItem("id", id)
         setAuthToken(token);  
         console.log(token)
       })

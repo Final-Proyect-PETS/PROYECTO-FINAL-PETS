@@ -1,7 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { getUserDetail } from "../../redux/Actions";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 export default function NavBar() {
+
+
+  const dispatch = useDispatch()
+
+  const id = localStorage.getItem("id")
+
+  const user = useSelector((state) => state.userDetail)
+
+  useEffect(() => {
+    dispatch(getUserDetail(id))
+  }, [dispatch, id])
+
+  
+
+
   return (
     <nav className="bg-amber-800 border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-amber-800 w-screen">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
@@ -10,9 +29,9 @@ export default function NavBar() {
           <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Happy Tails</span>
         </Link>
         <div className="flex items-center md:order-2">
-          <button type="button" className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-            <span className="sr-only">Open user menu</span>
-            <img className="w-8 h-8 rounded-full" src="https://img.freepik.com/fotos-premium/hombre-caucasico-joven-persona-pared-blanca-apuntando-mano-camisa-blanco-orgulloso-confiado_1187-76423.jpg?w=740" alt="foto perfil" />
+          <button type="button" className="flex mr-3 text-sm rounded-full justify-center items-center gap-3 md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+            <h4>{user.first_name} {user.last_name}</h4>
+            <img className="w-8 h-8 rounded-full" src={user.image} alt="foto perfil" />
           </button>
           {/* <!-- Dropdown menu --> */}
           <div className="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">

@@ -126,7 +126,8 @@ router.post("/login", async (req, res, next) => {
   const token = jwt.sign({ id: user._id, }, process.env.SECRET_KEY, {
     expiresIn: "1h",
   });
-  res.header("token", token).json({error: null, data: {token}});
+  const id = user.id
+  res.header("token", token).json({error: null, data: {token}, id: {id}});
 })
 
 router.post("/pets/:id", verifyToken, async (req, res, next) => {
