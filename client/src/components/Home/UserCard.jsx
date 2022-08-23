@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useEffect, React } from "react";
 import { getUserDetail, clearState } from "../../redux/Actions/index";
 
-
+/* console.log() */
 export default function UserCard({
   _id,
   first_name,
