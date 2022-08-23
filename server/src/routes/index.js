@@ -104,7 +104,7 @@ router.post("/users", (req, res, next) => {
       image: req.body.image,
       telephone: req.body.telephone,
       about: req.body.about,
-
+      place: req.body.place,
       pets: req.body.pets,
     });
 
