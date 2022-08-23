@@ -1,6 +1,6 @@
 const User = require("../../models/users");
 
-const register = (first_name, last_name, username, email, password, image, telephone, about) => {
+async function register(first_name, last_name, username, email, password, image, telephone, about) {
     try {
         const post = new User({
             first_name,
@@ -13,10 +13,11 @@ const register = (first_name, last_name, username, email, password, image, telep
             about
         });
 
-        post.save().then(per => per);
+        await post.save()
+        return post
     } catch (error) {
         console.error(error);
     }
 }
 
-module.exports = register
+module.exports = { register }

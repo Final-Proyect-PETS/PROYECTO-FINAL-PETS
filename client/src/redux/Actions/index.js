@@ -175,7 +175,6 @@ export function userLogin(payload) {
         localStorage.setItem("token", token);
         localStorage.setItem("id", id)
         setAuthToken(token);
-        console.log(token)
       })
       return dispatch({
         type: actions.USER_LOGIN,

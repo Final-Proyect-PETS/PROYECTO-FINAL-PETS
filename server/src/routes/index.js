@@ -8,29 +8,31 @@ const userId = require("./gets")
 const petId = require("./gets")
 const filters = require("./filters")
 const register = require("./register")
+const login = require("./login")
 const router = Router();
 const jwt = require("jsonwebtoken");
+const errorHandler = require("../utils/middlewares/errorHandler")
 const verifyToken = require('../utils/middlewares/validateToken');
 
 
 router.use("/home", verifyToken, pets, users, userId, petId, filters)
 router.use("/register", register)
+router.use("/login", login)
+router.use(errorHandler);
 
 
 
-router.post("/login", async (req, res, next) => {
-  const user = await User.findOne({ email: req.body.email });
-  if (!user) return res.status(401).send("Usuario no encontrado");
-  console.log(req.body.password);
-  console.log(user.password);
-  const passwordIsValid = await user.comparePassword(req.body.password, user.password);
-  if (!passwordIsValid) return res.status(401).send("Contraseña incorrecta");
-  const token = jwt.sign({ id: user._id, }, process.env.SECRET_KEY, {
-    expiresIn: "1h",
-  });
-  const id = user.id
-  res.header("token", token).json({ error: null, data: { token }, id: { id } });
-})
+// router.post("/login", async (req, res, next) => {
+//   const user = await User.findOne({ email: req.body.email });
+//   if (!user) return res.status(401).send("Usuario no encontrado");
+//   console.log(req.body.password);
+//   console.log(user.password);
+//   const passwordIsValid = await user.comparePassword(req.body.password, user.password);
+//   if (!passwordIsValid) return res.status(401).send("Contraseña incorrecta");
+//   const token = jwt.sign({ id: user._id, }, process.env.SECRET_KEY);
+//   const id = user.id
+//   res.header("token", token).json({ error: null, data: { token }, id: { id } });
+// })
 
 router.post("/pets/:id", verifyToken, async (req, res, next) => {
   const { id } = req.params;

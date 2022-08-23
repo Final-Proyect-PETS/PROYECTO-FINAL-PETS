@@ -64,14 +64,6 @@ usersSchema.methods.comparePassword = function (candidatePassword) {
   })
 };
 
-// usersSchema.methods.setPassword = function (password) {
-//     this.salt = crypto.randomBytes(16).toString('hex');
-//     this.password = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
-// }
-// usersSchema.methods.validPassword = function (password) {
-//     const hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
-//     return this.password === hash;
-// }
 
 const User = mongoose.model("User", usersSchema);
 
