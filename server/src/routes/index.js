@@ -2,119 +2,21 @@ const connection = require("../db");
 const { Router } = require("express");
 const Pets = require("../models/pets");
 const User = require("../models/users");
+const pets = require("./gets")
+const users = require("./gets")
+const userId = require("./gets")
+const petId = require("./gets")
+const filters = require("./filters")
+const register = require("./register")
 const router = Router();
 const jwt = require("jsonwebtoken");
 const verifyToken = require('../utils/middlewares/validateToken');
 
-router.get("/pets", verifyToken, async (req, res, next) => {
-  const name = req.query.name;
-  try {
-    connection();
-    console.log("conectado a pets");
-  } catch (err) {
-    console.error(err);
-  }
-  try {
-    const arrayPets = await Pets.find().populate("user");
-    ///CAMBIE LOGICA,EN VEZ DE === USE .INCLUDES y || para mas placer
-    if (name) {
-      let petFound = arrayPets.filter(
-        (p) =>
-          p.name?.toLowerCase().includes(name.toLowerCase()) ||
-          p.place?.toLowerCase().includes(name.toLowerCase()) ||
-          p.type?.toLowerCase().includes(name.toLowerCase()) ||
-          p.age?.toString().includes(name)
-      );
-      if (petFound.length > 0) res.send(petFound);
-      if ((petFound.length = 0)) res.send(arrayPets);
-      else res.send(arrayPets);
-    } else {
-      res.send(arrayPets);
-    }
-  } catch (error) {
-    next(error);
-  }
-});
 
-router.get("/users", verifyToken, async (req, res, next) => {
-  const name = req.query.name;
-  try {
-    connection();
-    console.log("conectado a users");
-  } catch (err) {
-    console.error(err);
-  }
-  try {
-    const arrayUsers = await User.find().populate("pets");
-    if (name) {
-      //LOGICA CAMBIADO CON .INCLUDES Y || PARA MAS PLACERR
-      let userFound = arrayUsers.filter(
-        (u) =>
-          u.username?.toLowerCase().includes(name.toLowerCase()) ||
-          u.first_name?.toLowerCase().includes(name.toLowerCase()) ||
-          u.last_name?.toLowerCase().includes(name.toLowerCase()) ||
-          u.email?.toLowerCase().includes(name.toLowerCase())
-      );
-      if (userFound.length > 0) res.send(userFound);
-      if ((userFound.length = 0)) res.send(arrayUsers);
-      else res.send(arrayUsers);
-    } else {
-      res.send(arrayUsers);
-    }
-  } catch (error) {
-    next(error);
-  }
-});
+router.use("/home", verifyToken, pets, users, userId, petId, filters)
+router.use("/register", register)
 
-router.get("/users/:id", verifyToken, async (req, res, next) => {
-  try {
-    connection();
-    console.log("conectado a users id");
-  } catch (err) {
-    next(err);
-  }
-  try {
-    const arrayUsers = await User.findById(req.params.id).populate("pets");
-    res.send(arrayUsers);
-  } catch (error) {
-    next(error);
-  }
-});
 
-router.get("/pets/:id", verifyToken, async (req, res, next) => {
-  try {
-    connection();
-  } catch (err) {
-    next(err);
-  }
-  try {
-    const arrayPets = await Pets.findById(req.params.id).populate("user");
-    res.send(arrayPets);
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.post("/users", (req, res, next) => {
-  try {
-    const post = new User({
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password,
-      image: req.body.image,
-      telephone: req.body.telephone,
-      about: req.body.about,
-
-      pets: req.body.pets,
-    });
-
-    post.save().then((per) => res.json(per));
-  } catch (error) {
-    next(error);
-  }
-});
 
 router.post("/login", async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
@@ -127,7 +29,7 @@ router.post("/login", async (req, res, next) => {
     expiresIn: "1h",
   });
   const id = user.id
-  res.header("token", token).json({error: null, data: {token}, id: {id}});
+  res.header("token", token).json({ error: null, data: { token }, id: { id } });
 })
 
 router.post("/pets/:id", verifyToken, async (req, res, next) => {
@@ -250,79 +152,5 @@ router.patch("/pets", verifyToken, async (req, res, next) => {
   }
 });
 
-router.get("/filters", verifyToken, async (req, res, next) => {
-  try {
-    connection();
-    let {
-      age,
-      creation_date,
-      vaccinated,
-      castrated,
-      location,
-      pet_type,
-      pet_size,
-      gender,
-    } = req.query;
-    let all = await Pets.find().populate("user");
-
-    if (age === "young") {
-      all = all.filter((ev) => ev.age < 6);
-    }
-    if (age === "adult") {
-      all = all.filter((ev) => ev.age > 5 && ev.age < 10);
-    }
-    if (age === "old") {
-      all = all.filter((ev) => ev.age > 9);
-    }
-    if (castrated === "true") {
-      all = all.filter((ev) => ev.castrated === true);
-    }
-    if (castrated === "false") {
-      all = all.filter((ev) => ev.castrated === false);
-    }
-    if (pet_size === "big") {
-      all = all.filter((ev) => ev.size === "big");
-    }
-    if (pet_size === "medium") {
-      all = all.filter((ev) => ev.size === "medium");
-    }
-    if (pet_size === "small") {
-      all = all.filter((ev) => ev.size === "small");
-    }
-    if (pet_type === "cat") {
-      all = all.filter((ev) => ev.type === "cat");
-    }
-    if (pet_type === "dog") {
-      all = all.filter((ev) => ev.type === "dog");
-    }
-    if (pet_type === "other") {
-      all = all.filter((ev) => ev.type === "other");
-    }
-    if (vaccinated === "yes") {
-      all = all.filter((ev) => ev.vaccination === "yes");
-    }
-    if (vaccinated === "no") {
-      all = all.filter((ev) => ev.vaccination === "no");
-    }
-    if (vaccinated === "unknown") {
-      all = all.filter((ev) => ev.vaccination === "unknown");
-    }
-    if (gender === "female") {
-      all = all.filter((ev) => ev.gender === "female");
-    }
-    if (gender === "male") {
-      all = all.filter((ev) => ev.gender === "male");
-    }
-    if (creation_date === "asc") {
-      all = all.sort((a, b) => a.createdAt - b.createdAt);
-    }
-    if (creation_date === "desc") {
-      all = all.sort((a, b) => b.createdAt - a.createdAt);
-    }
-    res.send(all);
-  } catch (error) {
-    next(error);
-  }
-});
 
 module.exports = router;
