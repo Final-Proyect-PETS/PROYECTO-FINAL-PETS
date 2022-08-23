@@ -17,6 +17,8 @@ export default function UserDetail() {
 
   const userDetail = useSelector((state) => state.userDetail);
 
+  console.log(userDetail)
+
   return (
     Object.keys(userDetail).length ? (
       <>
@@ -59,6 +61,11 @@ export default function UserDetail() {
                       🖍Editar
                     </button>
                   </Link>
+                </div>
+                <div>
+                  {userDetail.isAdmin === true ? <Link to="/admin">
+                    <button>Vista de admin</button>
+                  </Link> : false}
                 </div>
               </div>
             </div>
