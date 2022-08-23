@@ -186,3 +186,17 @@ export function userLogin(payload) {
     }
   }
 }
+
+export function getUserProfile (id) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.get(`http://localhost:3001/users/${id}`)
+      return dispatch ({
+        type: actions.GET_USER_PROFILE,
+        payload: json.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
