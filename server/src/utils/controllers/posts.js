@@ -5,12 +5,11 @@ const connection = require("../../db")
 const postPet = async (id, name, image, imagePool, type, description, size, age, vaccination, castrated, place, gender) => {
     try {
         connection();
-        console.log("conectado a users");
     } catch (error) {
         console.error(error);
     }
     try {
-        const foundUser = await User.findById(id);
+        const foundUser = await User.findById({ _id: id });
 
         const newPet = new Pets({
             name,

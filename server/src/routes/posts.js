@@ -4,7 +4,7 @@ const verifyToken = require('../utils/middlewares/validateToken');
 const router = Router()
 
 router.post("/pets/:id", verifyToken, async (req, res, next) => {
-    const { id } = req.params;
+    const _id = req.params.id;
     const {
         name,
         image,
@@ -19,7 +19,7 @@ router.post("/pets/:id", verifyToken, async (req, res, next) => {
         gender,
     } = req.body;
     try {
-        const newPet = postPet(id, name, image, imagePool, type, description, size, age, vaccination, castrated, place, gender)
+        const newPet = postPet(_id, name, image, imagePool, type, description, size, age, vaccination, castrated, place, gender)
         res.status(201).send(newPet)
     } catch (error) {
         console.error(error);

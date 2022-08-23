@@ -27,7 +27,7 @@ const usersSchema = new Schema(
         "Please fill a valid email address",
       ],
     },
-    password: { type: String, required: [true, "Password is required"], match: [/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/,] },
+    password: String,
     about: String,
     telephone: String,
     place: String,
