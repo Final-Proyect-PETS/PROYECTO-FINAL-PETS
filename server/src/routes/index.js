@@ -164,7 +164,7 @@ router.post("/pets/:id", async (req, res, next) => {
   }
 });
 
-router.patch("/users", async (req, res, next) => {
+router.patch("/users/:id", async (req, res, next) => {
   const {
     first_name,
     last_name,
@@ -177,7 +177,7 @@ router.patch("/users", async (req, res, next) => {
   } = req.body;
   try {
     const oneUser = await User.findOne({
-      id: req.params.id,
+      _id: req.params.id,
     });
     await oneUser.update({
       first_name,
