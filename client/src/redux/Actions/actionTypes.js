@@ -19,5 +19,7 @@ export const PATCH_USER = "PATCH_USER";
 export const PATCH_PET = "PATCH_PET";
 // FILTERS -----------------
 export const FILTER_BY_QUERY = "FILTER_BY_QUERY";
+// LOGIN
+export const USER_LOGIN = "USER_LOGIN"
 /* export const SORT_BY_DATE = "SORT_BY_DATE"
 export const SORT_BY_AGE = "SORT_BY_AGE" */
