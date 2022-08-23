@@ -12,7 +12,13 @@ import UpdatePet from "./components/Update/UpdateDataPet";
 import Error404 from "./components/Error404/Error404";
 import { setAuthToken } from "./components/BrowserHistory/setAuthToken";
 import { history } from "./components/BrowserHistory/history";
+
 import PrivateRoutes from "./components/PrivateRoute.js/PrivateRoute"
+
+import PrivateRoutes from "./components/PrivateRoute.js/PrivateRoute";
+import PrivateAdmin from "./components/PrivateRoute.js/PrivateAdmin"
+import AdminView from "./components/AdminView/AdminView";
+
 
 function App() {
   const token = localStorage.getItem("token");
@@ -34,6 +40,9 @@ function App() {
           <Route path={"/updateuser"} element={<UpdateUser />} />z
           <Route path={"/updatepet"} element={<UpdatePet />} />
           <Route path={"*"} element={<Error404 />} />
+        </Route>
+        <Route element={<PrivateAdmin />}>
+          <Route path={"/admin"} element={<AdminView />}/>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -6,8 +6,6 @@ const PrivateRoutes = () => {
 
   let auth = { token: tokenn ? true : false };
 
-  console.log(auth.token)
-
   return (
     auth.token ? <Outlet/> : <Navigate to="/"/>
   );
