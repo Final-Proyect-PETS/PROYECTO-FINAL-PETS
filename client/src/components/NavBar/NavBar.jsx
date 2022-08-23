@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { getUserDetail } from "../../redux/Actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -14,11 +14,16 @@ export default function NavBar() {
 
   const user = useSelector((state) => state.userDetail)
 
+  // const navigate = Navigate()
+
   useEffect(() => {
     dispatch(getUserDetail(id))
   }, [dispatch, id])
 
-  
+  function removeToken(ev) {
+    localStorage.removeItem("token")
+    localStorage.removeItem("id")
+  }
 
 
   return (
@@ -35,6 +40,9 @@ export default function NavBar() {
             <img className="w-8 h-8 rounded-full" src={user.image} alt="foto perfil" />
           </button>
         </Link>
+        <div>
+        <button onClick={removeToken}><Link to="/">Logout</Link></button>
+        </div>
           {/* <!-- Dropdown menu --> */}
           <div className="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
             <div className="py-3 px-4">
