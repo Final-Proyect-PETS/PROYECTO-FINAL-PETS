@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getPetDetail, patchPet, getAllPets } from "../../redux/Actions/index";
+import { patchPet, } from "../../redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import { notificationSwal } from "../../utils/notificationSwal.jsx";
 import { Link } from "react-router-dom";
@@ -71,6 +71,18 @@ export default function UpdatePet() {
   //   }, [dispatch]);
 
   function handleChange(e) {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+    setErrors(
+      validateFrom({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
+  }
+  function handleChangeSelect(e) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
@@ -162,7 +174,7 @@ export default function UpdatePet() {
             <input
               type="text"
               name="name"
-              value={input.name}
+              placeholder={input.name}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
@@ -172,14 +184,14 @@ export default function UpdatePet() {
             <input
               type="text"
               name="image"
-              value={input.image}
+              placeholder={input.image}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
             {errors.image && <p className="font-bold text-red-700 text-center p-2">{errors.image}</p>}
 
             <label className="font-light text-white text-xl">Tipo</label>
-            <select  name="type" onChange={(e) => handleChange(e)}>
+            <select  name="type" onChange={(e) => handleChangeSelect(e)}>
               <option value="dog" selected={input.type === "dog" ? true:false}>Perro</option>
               <option value="cat" selected={input.type === "cat" ? true:false}>Gato</option>
               <option value="other" selected={input.type === "other" ? true:false}>Otro</option>
@@ -189,14 +201,14 @@ export default function UpdatePet() {
             <textarea
               type="text"
               name="description"
-              value={input.description}
+              placeholder={input.description}
               onChange={(e) => handleChange(e)}
               className="w-full py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent resize-none"
             />
             {errors.description && <p className="font-bold text-red-700 text-center p-2">{errors.description}</p>}
 
             <label className="font-light text-white text-xl">Tamaño</label>
-            <select name="size" onChange={(e) => handleChange(e)}>
+            <select name="size" onChange={(e) => handleChangeSelect(e)}>
               <option value="big" selected={input.size === "big" ? true:false}>Grande</option>
               <option value="medium" selected={input.size === "medium" ? true:false}>Mediano</option>
               <option value="small" selected={input.size === "small" ? true:false}>Chico</option>
@@ -206,20 +218,20 @@ export default function UpdatePet() {
             <input
               type="text"
               name="age"
-              value={input.age}
+              placeholder={input.age}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
             {errors.age && <p className="font-bold text-red-700 text-center p-2">{errors.age}</p>}
             <label className="font-light text-white text-xl">Vacunado</label>
-            <select name="vaccination" onChange={(e) => handleChange(e)}>
+            <select name="vaccination" onChange={(e) => handleChangeSelect(e)}>
               <option value="yes" selected={input.vaccination === "yes" ? true:false}>Sí</option>
               <option value="no" selected={input.vaccination === "no" ? true:false}>No</option>
               <option value="unknown" selected={input.vaccination === "unknown" ? true:false}>No sé</option>
             </select>
             {errors.vaccination && <p className="font-bold text-red-700 text-center p-2">{errors.vaccination}</p>}
             <label className="font-light text-white text-xl">Castrado</label>
-            <select name="castrated" onChange={(e) => handleChange(e)}>
+            <select name="castrated" onChange={(e) => handleChangeSelect(e)}>
               <option value="true" selected={input.castrated === "true" ? true:false}>Sí</option>
               <option value="false" selected={input.castrated === "false" ? true:false}>No</option>
             </select>
@@ -228,7 +240,7 @@ export default function UpdatePet() {
             <input
               type="text"
               name="place"
-              value={input.place}              
+              placeholder={input.place}              
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />

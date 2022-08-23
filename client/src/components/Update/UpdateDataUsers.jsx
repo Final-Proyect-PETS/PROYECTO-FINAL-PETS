@@ -1,8 +1,8 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { notificationSwal } from "../../utils/notificationSwal.jsx";
-import { getUserDetail, patchUsuer, getAllUsers } from "../../redux/Actions/index";
+import { getUserDetail, patchUsuer,  } from "../../redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 
 function validateFrom(input) {
@@ -52,7 +52,7 @@ export default function UpdateUser() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const upDateUser = useSelector((state) => state.userDetail);
-  const users = useSelector((state) => state.users);
+
 
   const [errors, setErrors] = useState({});
 
@@ -167,7 +167,7 @@ export default function UpdateUser() {
             <input
               type="text"
               name="first_name"
-              value={input.first_name}
+              placeholder={input.first_name}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
@@ -176,7 +176,7 @@ export default function UpdateUser() {
             <input
               type="text"
               name="last_name"
-              value={input.last_name}
+              placeholder={input.last_name}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
@@ -186,7 +186,7 @@ export default function UpdateUser() {
             <input
               type="text"
               name="username"
-              value={input.username}
+              placeholder={input.username}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
@@ -196,7 +196,7 @@ export default function UpdateUser() {
             <input
               type="text"
               name="image"
-              value={input.image}
+              placeholder={input.image}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
               // className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
@@ -214,7 +214,7 @@ export default function UpdateUser() {
             <textarea
               type="text"
               name="about"
-              value={input.about}
+              placeholder={input.about}
               onChange={(e) => handleChange(e)}
               className="w-full py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent resize-none"
             />
@@ -223,7 +223,7 @@ export default function UpdateUser() {
             <input
               type="text"
               name="telephone"
-              value={input.telephone}
+              placeholder ={input.telephone}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
