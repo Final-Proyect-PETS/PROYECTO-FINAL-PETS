@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, Navigate } from "react-router-dom";
-import { getUserDetail } from "../../redux/Actions";
+import { getUserProfile } from "../../redux/Actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -12,12 +12,12 @@ export default function NavBar() {
 
   const id = localStorage.getItem("id")
 
-  const user = useSelector((state) => state.userDetail)
+  const user = useSelector((state) => state.userProfile)
 
   // const navigate = Navigate()
 
   useEffect(() => {
-    dispatch(getUserDetail(id))
+    dispatch(getUserProfile(id))
   }, [dispatch, id])
 
   function removeToken(ev) {
