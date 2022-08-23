@@ -27,7 +27,7 @@ export default function OwnedPet({
                 <span className="text-2xl font-bold m-4">{namePet}</span>
               </div>
 
-              {/* <span className="font-medium text-xs mx-3">
+              {/* < span className="font-medium text-xs mx-3">
                 Ubicacion: {place}
               </span> */}
               {isAdopted === true ? (
