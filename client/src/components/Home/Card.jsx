@@ -14,7 +14,6 @@ export default function Card({
   size,
   gender,
 }) {
-console.log()
   return (
     <>
       <div

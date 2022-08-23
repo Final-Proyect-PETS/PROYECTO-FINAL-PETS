@@ -45,7 +45,7 @@ export default function UpdatePet() {
   let { id } = useParams();
   let navigate = useNavigate();
 
-  console.log(id);
+
   const dispatch = useDispatch();
   const upDatePet = useSelector((state) => state.petDetail);
   //const id_console = upDatePet._id;
