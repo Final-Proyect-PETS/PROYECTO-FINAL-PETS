@@ -1,8 +1,9 @@
 const { Router } = require('express')
 const { postPet } = require("../utils/controllers/posts")
+const verifyToken = require('../utils/middlewares/validateToken');
 const router = Router()
 
-router.post("/pets/:id", async (req, res, next) => {
+router.post("/pets/:id", verifyToken, async (req, res, next) => {
     const { id } = req.params;
     const {
         name,
@@ -24,3 +25,5 @@ router.post("/pets/:id", async (req, res, next) => {
         console.error(error);
     }
 })
+
+module.exports = router

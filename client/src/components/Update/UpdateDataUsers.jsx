@@ -2,7 +2,7 @@ import React from "react";
 import { useState, } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { notificationSwal } from "../../utils/notificationSwal.jsx";
-import { getUserDetail, patchUsuer,  } from "../../redux/Actions/index";
+import { getUserDetail, patchUsuer, } from "../../redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 
 function validateFrom(input) {
@@ -149,7 +149,7 @@ export default function UpdateUser() {
       place: upDateUser.place,
     });
     dispatch(getUserDetail(upDateUser._id));
-    navigate(`/users/${upDateUser._id}`, {replace: true})
+    navigate(`/users/${upDateUser._id}`, { replace: true })
     //esto es porque en el estado userDetail me quedaba cargada
     //la frase "Datos Actualizados Exitosamente 👍", y preciso que se vuelva a cargar con el usuario para que al clickear el boton
     //para regresar, me tome bien sus datos y no aparezca como undefined.
@@ -199,7 +199,7 @@ export default function UpdateUser() {
               placeholder={input.image}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
-              // className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
+            // className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
             />
             {/* <label className="font-light text-white text-xl">Correo electrónico</label>
             <input
@@ -221,15 +221,15 @@ export default function UpdateUser() {
 
             <label className="font-light text-white text-xl">Teléfono</label>
             <input
-              type="text"
+              type="tel"
               name="telephone"
-              placeholder ={input.telephone}
+              placeholder={input.telephone}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
-            {errors.first_name||errors.last_name||errors.username||errors.image||errors.about||errors.telephone?
-            <h3>missing required fields</h3>
-            :<button type="submit" className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Actualizar</button>
+            {errors.first_name || errors.last_name || errors.username || errors.image || errors.about || errors.telephone ?
+              <h3>missing required fields</h3>
+              : <button type="submit" className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Actualizar</button>
             }
           </div>
         </form>

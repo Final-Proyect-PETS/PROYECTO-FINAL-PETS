@@ -35,4 +35,4 @@ const postPet = async (id, name, image, imagePool, type, description, size, age,
     }
 }
 
-module.exports = { posts }
+module.exports = { postPet }
