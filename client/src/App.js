@@ -12,7 +12,7 @@ import UpdatePet from "./components/Update/UpdateDataPet";
 import Error404 from "./components/Error404/Error404";
 import { setAuthToken } from "./components/BrowserHistory/setAuthToken";
 import { history } from "./components/BrowserHistory/history";
-import PrivateRoutes from "./components/PrivateRoute.js/PrivateRoute";
+import PrivateRoutes from "./components/PrivateRoute.js/PrivateRoute"
 
 function App() {
   const token = localStorage.getItem("token");

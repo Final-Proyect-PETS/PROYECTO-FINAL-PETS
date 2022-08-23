@@ -14,7 +14,9 @@ export default function OwnedPet({
   place,
   size,
   gender,
+  isAdopted,
 }) {
+  console.log(isAdopted, "Esta Adoptado?");
   return (
     <>
       <div className="flex items-center py-4 px-4 ">
@@ -28,13 +30,27 @@ export default function OwnedPet({
               {/* <span className="font-medium text-xs mx-3">
                 Ubicacion: {place}
               </span> */}
-              <div className="flex items-center">
-                <Link to="/adopt/">
-                  <button className="bg-yellow-900 mt-4 hover:bg-green-700 text-white font-bold py-5 px-4 border border-yellow-700 rounded">
-                    ADOPTAR
-                  </button>
-                </Link>
-              </div>
+              {isAdopted === true ? (
+                isAdopted === true ? (
+                  <div className="flex items-center">
+                    <Link to="/adopt/">
+                      <button className="bg-yellow-900 mt-4 hover:bg-green-700 text-white font-bold py-5 px-4 border border-yellow-700 rounded">
+                        ADOPTAR
+                      </button>
+                    </Link>
+                  </div>
+                ) : (
+                  <></>
+                )
+              ) : (
+                <div className="flex items-center">
+                  <Link to="formulario de adopcion">
+                    <button className="bg-yellow-900 mt-4 hover:bg-red-700 justify-center text-white font-bold py-2 px-4 border border-yellow-700 rounded">
+                      OFRECER MASCOTA
+                    </button>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
           <Link to={"/pet/" + idPet}>
