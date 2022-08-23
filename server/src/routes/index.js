@@ -29,7 +29,7 @@ router.get("/pets", verifyToken, async (req, res, next) => {
       if ((petFound.length = 0)) res.send(arrayPets);
       else res.send(arrayPets);
     } else {
-      res.send(arrayPets);
+      res.send(arrayPets.sort((a, b) => b.createdAt - a.createdAt));
     }
   } catch (error) {
     next(error);
@@ -180,7 +180,8 @@ router.post("/pets/:id", verifyToken, async (req, res, next) => {
   }
 });
 
-router.patch("/users", verifyToken, async (req, res, next) => {
+
+router.patch("/users/:id", verifyToken, async (req, res, next) => {
   const {
     first_name,
     last_name,
@@ -193,7 +194,7 @@ router.patch("/users", verifyToken, async (req, res, next) => {
   } = req.body;
   try {
     const oneUser = await User.findOne({
-      id: req.params.id,
+      _id: req.params.id,
     });
     await oneUser.update({
       first_name,
@@ -211,9 +212,8 @@ router.patch("/users", verifyToken, async (req, res, next) => {
   }
 });
 
-router.patch("/pets", verifyToken, async (req, res, next) => {
+router.patch("/pets/:id", verifyToken, async (req, res, next) => {
   const {
-    id,
     name,
     image,
     type,
@@ -227,10 +227,9 @@ router.patch("/pets", verifyToken, async (req, res, next) => {
   } = req.body;
   try {
     const onePet = await Pets.findOne({
-      id: req.params.id,
+      _id: req.params.id,
     });
     await onePet.update({
-      id,
       name,
       image,
       type,
@@ -314,10 +313,10 @@ router.get("/filters", verifyToken, async (req, res, next) => {
       all = all.filter((ev) => ev.gender === "male");
     }
     if (creation_date === "asc") {
-      all = all.sort((a, b) => a.createdAt - b.createdAt);
+      all = all.sort((a, b) => b.createdAt - a.createdAt);
     }
     if (creation_date === "desc") {
-      all = all.sort((a, b) => b.createdAt - a.createdAt);
+      all = all.sort((a, b) => a.createdAt - b.createdAt);
     }
     res.send(all);
   } catch (error) {
