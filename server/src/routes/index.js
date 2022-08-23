@@ -27,7 +27,7 @@ router.get("/pets", async (req, res, next) => {
       if ((petFound.length = 0)) res.send(arrayPets);
       else res.send(arrayPets);
     } else {
-      res.send(arrayPets);
+      res.send(arrayPets.sort((a, b) => b.createdAt - a.createdAt));
     }
   } catch (error) {
     next(error);
@@ -296,10 +296,10 @@ router.get("/filters", async (req, res, next) => {
       all = all.filter((ev) => ev.gender === "male");
     }
     if (creation_date === "asc") {
-      all = all.sort((a, b) => a.createdAt - b.createdAt);
+      all = all.sort((a, b) => b.createdAt - a.createdAt);
     }
     if (creation_date === "desc") {
-      all = all.sort((a, b) => b.createdAt - a.createdAt);
+      all = all.sort((a, b) => a.createdAt - b.createdAt);
     }
     res.send(all);
   } catch (error) {
