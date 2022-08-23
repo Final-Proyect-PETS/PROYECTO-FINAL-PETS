@@ -212,7 +212,9 @@ router.patch("/pets/:id", async (req, res, next) => {
     const onePet = await Pets.findOne({
       _id: req.params.id,
     });
+
     await onePet.updateOne({
+
       name,
       image,
       type,
