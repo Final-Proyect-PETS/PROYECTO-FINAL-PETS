@@ -1,13 +1,11 @@
 const connection = require("../db");
-
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
 const { Router } = require("express");
 const Pets = require("../models/pets");
 const User = require("../models/users");
 const router = Router();
 
 router.get("/pets", async (req, res, next) => {
+<<<<<<< HEAD
     try {
         connection()
         console.log("conectado a /pets");
@@ -20,9 +18,39 @@ router.get("/pets", async (req, res, next) => {
         res.send(arrayPets);
     } catch (error) {
         next(error);
+=======
+  const name = req.query.name;
+  try {
+    connection();
+    console.log("conectado a pets");
+  } catch (err) {
+    console.error(err);
+  }
+  try {
+    const arrayPets = await Pets.find().populate("user");
+    ///CAMBIE LOGICA,EN VEZ DE === USE .INCLUDES y || para mas placer
+    if (name) {
+      let petFound = arrayPets.filter(
+        (p) =>
+          p.name?.toLowerCase().includes(name.toLowerCase()) ||
+          p.place?.toLowerCase().includes(name.toLowerCase()) ||
+          p.type?.toLowerCase().includes(name.toLowerCase()) ||
+          p.age?.toString().includes(name)
+      );
+      if (petFound.length > 0) res.send(petFound);
+      if ((petFound.length = 0)) res.send(arrayPets);
+      else res.send(arrayPets);
+    } else {
+      res.send(arrayPets);
+>>>>>>> 6a3a9205c5a19f3730b8b7568aab661a4f9346d6
     }
+  } catch (error) {
+    next(error);
+  }
 });
+
 router.get("/users", async (req, res, next) => {
+<<<<<<< HEAD
     try {
 
         connection()
@@ -30,26 +58,38 @@ router.get("/users", async (req, res, next) => {
 
     } catch (err) {
         console.error(err);
+=======
+  const name = req.query.name;
+  try {
+    connection();
+    console.log("conectado a users");
+  } catch (err) {
+    console.error(err);
+  }
+  try {
+    const arrayUsers = await User.find().populate("pets");
+    if (name) {
+      //LOGICA CAMBIADO CON .INCLUDES Y || PARA MAS PLACERR
+      let userFound = arrayUsers.filter(
+        (u) =>
+          u.username?.toLowerCase().includes(name.toLowerCase()) ||
+          u.first_name?.toLowerCase().includes(name.toLowerCase()) ||
+          u.last_name?.toLowerCase().includes(name.toLowerCase()) ||
+          u.email?.toLowerCase().includes(name.toLowerCase())
+      );
+      if (userFound.length > 0) res.send(userFound);
+      if ((userFound.length = 0)) res.send(arrayUsers);
+      else res.send(arrayUsers);
+    } else {
+      res.send(arrayUsers);
+>>>>>>> 6a3a9205c5a19f3730b8b7568aab661a4f9346d6
     }
-    try {
-        const arrayUsers = await User.find().populate("pets")
-        res.send(arrayUsers)
-    } catch (error) {
-        next(error);
-    }
-})
-router.post("/users", (req, res) => {
-    try {
-        const post = new User({
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password,
-            image: req.body.image,
-            telephone: req.body.telephone,
-            about: req.body.about,
+  } catch (error) {
+    next(error);
+  }
+});
 
+<<<<<<< HEAD
 
             pets: req.body.pets,
         });
@@ -60,29 +100,195 @@ router.post("/users", (req, res) => {
         next(error);
     }
 })
+=======
+router.get("/users/:id", async (req, res, next) => {
+  try {
+    connection();
+    console.log("conectado a users id");
+  } catch (err) {
+    next(err);
+  }
+  try {
+    const arrayUsers = await User.findById(req.params.id).populate("pets");
+    res.send(arrayUsers);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/pets/:id", async (req, res, next) => {
+  try {
+    connection();
+  } catch (err) {
+    next(err);
+  }
+  try {
+    const arrayPets = await Pets.findById(req.params.id).populate("user");
+    res.send(arrayPets);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/users", (req, res, next) => {
+  try {
+    const post = new User({
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+      image: req.body.image,
+      telephone: req.body.telephone,
+      about: req.body.about,
+
+      pets: req.body.pets,
+    });
+
+    post.save().then((per) => res.json(per));
+  } catch (error) {
+    next(error);
+  }
+});
+>>>>>>> 6a3a9205c5a19f3730b8b7568aab661a4f9346d6
 
 router.post("/pets/:id", async (req, res, next) => {
-    const { id } = req.params;
-    console.log(id);
-    const {
-        name,
-        image,
-        type,
-        description,
-        size,
-        age,
-        vaccination,
-        castrated,
-        place,
+  const { id } = req.params;
+  console.log(id);
+  const {
+    name,
+    image,
+    imagePool,
+    type,
+    description,
+    size,
+    age,
+    vaccination,
+    castrated,
+    place,
+    gender,
+  } = req.body;
 
-    } = req.body;
+  try {
+    connection();
+    console.log("conectado a users");
+  } catch (error) {
+    next(error);
+  }
 
-    try {
-        connection();
-        console.log("conectado a users");
-    } catch (err) {
-        console.error(err);
+  try {
+    const foundUser = await User.findById(id);
+
+    const newPet = new Pets({
+      name,
+      image,
+      imagePool,
+      type,
+      description,
+      size,
+      age,
+      vaccination,
+      castrated,
+      place,
+      gender,
+      user: foundUser._id,
+    });
+    await newPet.save();
+    foundUser.pets.push(newPet._id);
+    await foundUser.save();
+    res.status(201).json(newPet);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.patch("/users", async (req, res, next) => {
+  const {
+    first_name,
+    last_name,
+    username,
+    email,
+    password,
+    image,
+    telephone,
+    about,
+  } = req.body;
+  try {
+    const oneUser = await User.findOne({
+      id: req.params.id,
+    });
+    await oneUser.update({
+      first_name,
+      last_name,
+      username,
+      email,
+      password,
+      image,
+      telephone,
+      about,
+    });
+    res.status(200).json("Datos Actualizados Exitosamente 👌");
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.patch("/pets/:id", async (req, res, next) => {
+  const {
+    name,
+    image,
+    type,
+    description,
+    size,
+    age,
+    vaccination,
+    castrated,
+    place,
+    gender,
+  } = req.body;
+  try {
+    const onePet = await Pets.findOne({
+      _id: req.params.id,
+    });
+    await onePet.update({
+      name,
+      image,
+      type,
+      description,
+      size,
+      age,
+      vaccination,
+      castrated,
+      place,
+      gender,
+    });
+    res
+      .status(200)
+      .json("Los Datos de Tu Mascota se actualizaron exitosamente 🐶 ");
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/filters", async (req, res, next) => {
+  try {
+    connection();
+    let {
+      age,
+      creation_date,
+      vaccinated,
+      castrated,
+      location,
+      pet_type,
+      pet_size,
+      gender,
+    } = req.query;
+    let all = await Pets.find().populate("user");
+
+    if (age === "young") {
+      all = all.filter((ev) => ev.age < 6);
     }
+<<<<<<< HEAD
 
     try {
         const foundUser = await User.findById(id);
@@ -113,3 +319,63 @@ router.post("/pets/:id", async (req, res, next) => {
 module.exports = router;
 
 
+=======
+    if (age === "adult") {
+      all = all.filter((ev) => ev.age > 5 && ev.age < 10);
+    }
+    if (age === "old") {
+      all = all.filter((ev) => ev.age > 9);
+    }
+    if (castrated === "true") {
+      all = all.filter((ev) => ev.castrated === true);
+    }
+    if (castrated === "false") {
+      all = all.filter((ev) => ev.castrated === false);
+    }
+    if (pet_size === "big") {
+      all = all.filter((ev) => ev.size === "big");
+    }
+    if (pet_size === "medium") {
+      all = all.filter((ev) => ev.size === "medium");
+    }
+    if (pet_size === "small") {
+      all = all.filter((ev) => ev.size === "small");
+    }
+    if (pet_type === "cat") {
+      all = all.filter((ev) => ev.type === "cat");
+    }
+    if (pet_type === "dog") {
+      all = all.filter((ev) => ev.type === "dog");
+    }
+    if (pet_type === "other") {
+      all = all.filter((ev) => ev.type === "other");
+    }
+    if (vaccinated === "yes") {
+      all = all.filter((ev) => ev.vaccination === "yes");
+    }
+    if (vaccinated === "no") {
+      all = all.filter((ev) => ev.vaccination === "no");
+    }
+    if (vaccinated === "unknown") {
+      all = all.filter((ev) => ev.vaccination === "unknown");
+    }
+    if (gender === "female") {
+      all = all.filter((ev) => ev.gender === "female");
+    }
+    if (gender === "male") {
+      all = all.filter((ev) => ev.gender === "male");
+    }
+    if (creation_date === "asc") {
+      all = all.sort((a, b) => a.createdAt - b.createdAt);
+    }
+    if (creation_date === "desc") {
+      all = all.sort((a, b) => b.createdAt - a.createdAt);
+    }
+    res.send(all);
+  } catch (error) {
+    next(error);
+  }
+});
+
+module.exports = router;
+>>>>>>> 6a3a9205c5a19f3730b8b7568aab661a4f9346d6
