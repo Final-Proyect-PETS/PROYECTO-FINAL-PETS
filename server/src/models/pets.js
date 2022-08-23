@@ -15,7 +15,8 @@ const petsSchema = new Schema({
     place: String,
     imagePool: [String],
     deleted: { type: Boolean, default: false },
-    user: { type: mongoose.Schema.ObjectId, ref: "User" }
+    user: { type: mongoose.Schema.ObjectId, ref: "User" },
+    isAdopted: { type: Boolean, default: false }
 }, {
     timestamps: true
 });
