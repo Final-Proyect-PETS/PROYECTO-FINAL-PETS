@@ -56,10 +56,10 @@ async function filtro(age, creation_date, vaccinated, castrated, location, pet_t
             all = all.filter((ev) => ev.gender === "male");
         }
         if (creation_date === "asc") {
-            all = all.sort((a, b) => a.createdAt - b.createdAt);
+            all = all.sort((a, b) => b.createdAt - a.createdAt);
         }
         if (creation_date === "desc") {
-            all = all.sort((a, b) => b.createdAt - a.createdAt);
+            all = all.sort((a, b) => a.createdAt - b.createdAt);
         }
         return all;
     } catch (error) {

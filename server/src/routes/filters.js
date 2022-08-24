@@ -1,9 +1,10 @@
 const { Router } = require('express')
-const { filtro } = require("../utils/controllers/filters.js")
+const { filtro } = require("../utils/controllers/filters.js");
+const verifyToken = require('../utils/middlewares/validateToken.js');
 
 const router = Router()
 
-router.get("/filters", async (req, res, next) => {
+router.get("/filters", verifyToken, async (req, res, next) => {
     let {
         age,
         creation_date,
