@@ -110,6 +110,19 @@ export function postUser(payload) {
     }
   };
 }
+export function postImage(archivo) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.post(`http://localhost:3001/home/images`, archivo);
+      return dispatch({
+        type: actions.POST_IMAGE,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 //CLEAR//-------------------------------------------------------------------------------------------------------------------
 export function clearState(payload) {
   return {
