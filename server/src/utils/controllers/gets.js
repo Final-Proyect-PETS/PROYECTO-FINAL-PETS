@@ -5,7 +5,6 @@ const connection = require("../../db")
 const getPets = async (name) => {
     try {
         connection();
-        console.log("conectado a pets");
     } catch (err) {
         console.error(err);
     }
@@ -33,7 +32,6 @@ const getPets = async (name) => {
 const getUsers = async (name) => {
     try {
         connection();
-        console.log("conectado a users");
     } catch (err) {
         console.error(err);
     }
@@ -54,14 +52,13 @@ const getUsers = async (name) => {
             return arrayUsers;
         }
     } catch (error) {
-        console.error(error, "hola");
+        console.error(error);
     }
 }
 
 const userId = async (id) => {
     try {
         connection();
-        console.log("conectado a users id");
     } catch (err) {
         console.error(err);
     }
@@ -77,7 +74,6 @@ const userId = async (id) => {
 const petId = async (id) => {
     try {
         connection();
-        console.log("conectado a pets id");
     } catch (err) {
         console.error(err);
     }

@@ -6,10 +6,7 @@ const mongoose = require("mongoose");
 //Model
 //const Persona = require("../src/models/Prueba");
 
-const usuario = "PFHENRY_user";
-const password = "BlljBxfxHrJSnYyY";
-
-const uri = `mongodb+srv://${usuario}:${password}@cluster0.zcau31k.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.usuario}:${process.env.password}@${process.env.dbname}/?retryWrites=true&w=majority`;
 
 module.exports = () => {
   mongoose

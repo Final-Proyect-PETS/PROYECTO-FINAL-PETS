@@ -10,7 +10,7 @@ router.patch("/pets/:id", verifyToken, async (req, res, next) => {
         const petPatch = await patchPet(_id, name, image, type, description, size, age, vaccination, castrated, place, gender)
         res.status(201).send(petPatch)
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 })
 
