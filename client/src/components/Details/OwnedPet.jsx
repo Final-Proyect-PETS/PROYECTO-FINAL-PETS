@@ -26,7 +26,7 @@ export default function OwnedPet({
     id: idPet,
     name: namePet,
     isAdopted: isAdopted,
-  }); //asa
+  }); //asaas
 
   var payload = {
     id: idPet,
