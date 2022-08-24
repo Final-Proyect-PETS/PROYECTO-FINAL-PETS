@@ -12,7 +12,7 @@ export function switchRenderAction(input) {
 export function getAllUsers() {
   return async (dispatch) => {
     return await axios
-      .get("http://localhost:3001/users")
+      .get("http://localhost:3001/home/users")
       .then((json) =>
         dispatch({ type: actions.GET_ALL_USERS, payload: json.data })
       )
@@ -22,7 +22,7 @@ export function getAllUsers() {
 export function getAllPets() {
   return async (dispatch) => {
     return await axios
-      .get("http://localhost:3001/pets")
+      .get("http://localhost:3001/home/pets")
       .then((json) =>
         dispatch({ type: actions.GET_ALL_PETS, payload: json.data })
       )
@@ -33,7 +33,7 @@ export function getAllPets() {
 export function getUserDetail(id) {
   return async (dispatch) => {
     return await axios
-      .get(`http://localhost:3001/users/${id}`)
+      .get(`http://localhost:3001/home/users/${id}`)
       .then((json) =>
         dispatch({ type: actions.GET_USER_DETAIL, payload: json.data })
       )
@@ -43,7 +43,7 @@ export function getUserDetail(id) {
 export function getPetDetail(id) {
   return async (dispatch) => {
     return await axios
-      .get(`http://localhost:3001/pets/${id}`)
+      .get(`http://localhost:3001/home/pets/${id}`)
       .then((json) =>
         dispatch({ type: actions.GET_PET_DETAIL, payload: json.data })
       )
@@ -54,7 +54,7 @@ export function getPetDetail(id) {
 export function getUserByName(name) {
   return async function (dispatch) {
     try {
-      var json = await axios.get("http://localhost:3001/users?name=" + name);
+      var json = await axios.get("http://localhost:3001/home/users?name=" + name);
       return dispatch({
         type: actions.GET_USER_BY_NAME,
         payload: json.data,
@@ -67,7 +67,7 @@ export function getUserByName(name) {
 export function getPetByName(name) {
   return async function (dispatch) {
     try {
-      var json = await axios.get("http://localhost:3001/pets?name=" + name);
+      var json = await axios.get("http://localhost:3001/home/pets?name=" + name);
       return dispatch({
         type: actions.GET_PET_BY_NAME,
         payload: json.data,
@@ -84,7 +84,7 @@ export function getPetByName(name) {
 export function postPet(id, payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.post(`http://localhost:3001/pets/${id}`, payload);
+      let json = await axios.post(`http://localhost:3001/home/pets/${id}`, payload);
       dispatch({
         type: actions.POST_PET,
         payload: json.data,
@@ -100,7 +100,7 @@ export function postUser(payload) {
   console.log(payload, "payload arriba del dispatch");
   return async function (dispatch) {
     try {
-      let json = await axios.post(`http://localhost:3001/users`, payload);
+      let json = await axios.post(`http://localhost:3001/register`, payload);
       return dispatch({
         type: actions.POST_USER,
         payload: json.data,
@@ -127,7 +127,7 @@ export function clearStatePet(payload) {
 export function patchUsuer(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.patch(`http://localhost:3001/users/${payload.id}`, payload);
+      let json = await axios.patch(`http://localhost:3001/home/users/${payload.id}`, payload);
       return dispatch({
         type: actions.PATCH_USER,
         payload: json.data,
@@ -141,7 +141,7 @@ export function patchUsuer(payload) {
 export function patchPet(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.patch(`http://localhost:3001/pets/${payload.id}`, payload);
+      let json = await axios.patch(`http://localhost:3001/home/pets/${payload.id}`, payload);
       return dispatch({
         type: actions.PATCH_PET,
         payload: json.data,
@@ -155,7 +155,7 @@ export function patchPet(payload) {
 export function filterByQuery(filterParams) {
   return async function (dispatch) {
     let json = await axios.get(
-      `http://localhost:3001/filters?age=${filterParams.age}&creation_date=${filterParams.creation_date}&vaccinated=${filterParams.vaccinated}&castrated=${filterParams.castrated}&location=${filterParams.location}&pet_type=${filterParams.pet_type}&pet_size=${filterParams.pet_size}&gender=${filterParams.gender}`
+      `http://localhost:3001/home/filters?age=${filterParams.age}&creation_date=${filterParams.creation_date}&vaccinated=${filterParams.vaccinated}&castrated=${filterParams.castrated}&location=${filterParams.location}&pet_type=${filterParams.pet_type}&pet_size=${filterParams.pet_size}&gender=${filterParams.gender}`
     );
     return dispatch({
       type: actions.FILTER_BY_QUERY,
@@ -174,11 +174,24 @@ export function userLogin(payload) {
         const id = response.data.id.id
         localStorage.setItem("token", token);
         localStorage.setItem("id", id)
-        setAuthToken(token);  
-        console.log(token)
+        setAuthToken(token);
       })
       return dispatch({
         type: actions.USER_LOGIN,
+        payload: json.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function getUserProfile(id) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.get(`http://localhost:3001/home/users/${id}`)
+      return dispatch({
+        type: actions.GET_USER_PROFILE,
         payload: json.data
       })
     } catch (error) {

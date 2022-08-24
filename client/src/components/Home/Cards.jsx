@@ -109,6 +109,7 @@ export default function Cards() {
               about={user.about}
               telephone={user.telephone}
               pets={user.pets} //aca seguro hay que meter otro .name o algo asi
+              place={user.place}
             />
           ))
         )

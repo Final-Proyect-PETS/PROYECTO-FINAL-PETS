@@ -77,7 +77,7 @@ export default function Register() {
     let errors = {};
 
     if (input.first_name) {
-      if (!/^[a-zA-Z]+$/.test(input.first_name)) {
+      if (!/^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1\s]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/g.test(input.first_name)) {
         errors.first_name = "El nombre solo puede tener letras";
       } else if (input.first_name.length > 20) {
         errors.first_name = "El nombre no puede tener más de 20 caracteres";
@@ -85,7 +85,7 @@ export default function Register() {
     } else errors.first_name = "El nombre es necesario";
 
     if (input.last_name) {
-      if (!/^[a-zA-Z]+$/.test(input.last_name)) {
+      if (!/^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1\s]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/g.test(input.last_name)) {
         errors.last_name = "El nombre solo puede tener letras";
       } else if (input.last_name.length > 20) {
         errors.last_name = "El nombre no puede tener más de 20 caracteres";
@@ -301,6 +301,7 @@ export default function Register() {
             <label className="font-light text-white text-xl">Telefono</label>
             <input
               name="telephone"
+              type="tel"
               value={input.telephone}
               onChange={(e) => handleChange(e)}
               placeholder="Telefono"

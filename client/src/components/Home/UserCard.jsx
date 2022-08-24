@@ -15,6 +15,7 @@ export default function UserCard({
   about,
   telephone,
   pets,
+  place,
 }) {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function UserCard({
           <div className="flex items-center">
             <div className="text-sm flex">
               <img src={ubicacion} alt="ubicacion" width="16px" />
-              <span className="font-medium text-xs mx-3">Proximamente</span>
+              <span className="font-medium text-xs mx-3">{place}</span>
             </div>
           </div>
         </div>

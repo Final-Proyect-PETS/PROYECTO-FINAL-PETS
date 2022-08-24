@@ -16,7 +16,7 @@ const usersSchema = new Schema(
       match: [/^[a-zA-Z\s]*$/, "Last name can only contain letters"],
     },
     username: { type: String, required: true, unique: true },
-    image: String,
+    image: { type: String, default: "https://assets.stickpng.com/images/585e4beacb11b227491c3399.png" },
     email: {
       type: String,
       lowercase: true,
@@ -64,14 +64,6 @@ usersSchema.methods.comparePassword = function (candidatePassword) {
   })
 };
 
-// usersSchema.methods.setPassword = function (password) {
-//     this.salt = crypto.randomBytes(16).toString('hex');
-//     this.password = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
-// }
-// usersSchema.methods.validPassword = function (password) {
-//     const hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
-//     return this.password === hash;
-// }
 
 const User = mongoose.model("User", usersSchema);
 

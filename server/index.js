@@ -11,9 +11,9 @@
 // \  \    `-'            |                          |
 //  `-'                   '--------------------------'
 const server = require("./src/app.js");
+const connection = require("./src/db.js");
 
 //ver forma de hacer un force true para mongoose
 
-const connection = require("./src/db.js");
 connection();
 server.listen(3001, () => console.log("listening at port 3001 "));
