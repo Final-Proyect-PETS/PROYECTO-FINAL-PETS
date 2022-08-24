@@ -16,7 +16,7 @@ const usersSchema = new Schema(
       match: [/^[a-zA-Z\s]*$/, "Last name can only contain letters"],
     },
     username: { type: String, required: true, unique: true },
-    image: String,
+    image: { type: String, default: "https://assets.stickpng.com/images/585e4beacb11b227491c3399.png" },
     email: {
       type: String,
       lowercase: true,
