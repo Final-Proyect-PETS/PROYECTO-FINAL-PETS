@@ -1,6 +1,8 @@
 const { Router } = require('express')
 const { postPet } = require("../utils/controllers/posts")
 const verifyToken = require('../utils/middlewares/validateToken');
+const cloudinary = require("../utils/cloudinary")
+const upload = require("../utils/multer")
 const router = Router()
 
 router.post("/pets/:id", verifyToken, async (req, res, next) => {
@@ -25,5 +27,16 @@ router.post("/pets/:id", verifyToken, async (req, res, next) => {
         console.error(error);
     }
 })
+
+router.post("/images" ,verifyToken, upload.single("file"), async (req, res, next) => {
+    try {
+      if(req.file) {
+        const result = await cloudinary.uploader.upload(req.file.path)
+        res.status(201).json(result.secure_url)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  })
 
 module.exports = router

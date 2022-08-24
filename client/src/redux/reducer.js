@@ -64,6 +64,10 @@ export default function rootReducer(state = initialState, { type, payload }) {
       return {
         ...state,
       };
+      case actions.POST_IMAGE:
+        return {
+          ...state,
+        };
     //CLEAR
     case actions.CLEAR_STATE:
       return {

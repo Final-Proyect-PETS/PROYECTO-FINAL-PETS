@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postPet, getAllPets } from "../redux/Actions/index.js";
+import { postPet, postImage } from "../redux/Actions/index.js";
 //import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -60,6 +60,9 @@ export default function RegisterPet() {
       })
     );
   }
+/*   function uploadImage (image) {
+    dispatch(postImage(image)).then(e => {return e.payload})
+  } */
 
   async function handleImage(e) {
     const files = e.target.files;
@@ -68,22 +71,20 @@ export default function RegisterPet() {
     data.append("upload_preset", "pretty");
     data.append("folder", "Images");
     setLoadingImage(true);
-    const res = await axios.post(
-      "https://api.cloudinary.com/v1_1/ferrifullstack/image/upload",
-      data
-    );
-    setImage(res.data.secure_url);
-    setInput({
-      ...input,
-      image: res.data.secure_url,
-    });
-    setErrors(
-      validate({
+    dispatch(postImage(data)).then( e =>{
+      setImage(e.payload)
+      setInput({
         ...input,
-        image: res.data.secure_url,
-      })
-    );
-    setLoadingImage(false);
+        image: e.payload,
+      });
+      setErrors(
+        validate({
+          ...input,
+          image: e.payload,
+        })
+      );
+      setLoadingImage(false);
+  })
   }
 
   async function handleImagePool(e) {
@@ -93,22 +94,20 @@ export default function RegisterPet() {
     data.append("upload_preset", "pretty");
     data.append("folder", "Images");
     setLoadingImagePool(true);
-    const res = await axios.post(
-      "https://api.cloudinary.com/v1_1/ferrifullstack/image/upload",
-      data
-    );
-    setImagePool(res.data.secure_url);
+    dispatch(postImage(data)).then (e =>{
+    setImagePool(e.payload);
     setInput({
       ...input,
-      imagePool: [...input.imagePool, res.data.secure_url],
+      imagePool: [...input.imagePool, e.payload],
     });
     setErrors(
       validate({
         ...input,
-        imagePool: [...input.imagePool, res.data.secure_url],
+        imagePool: [...input.imagePool, e.payload],
       })
     );
     setLoadingImagePool(false);
+    })
   }
 
   function validate(input) {
@@ -318,7 +317,7 @@ export default function RegisterPet() {
           </div>
           <div>
             <label className="font-light text-white text-xl">Imagen de perfil</label>
-            <input type="file" name="image" onChange={(e) => handleImage(e)} className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent" />
+            <input type="file" name="image" accept=".jpg, .png, .jpeg" onChange={(e) => handleImage(e)} className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent" />
             {loadingImage ? (
               <h3 className="font-light text-white text-xl">Cargando imagen...</h3>
             ) : (
@@ -331,6 +330,7 @@ export default function RegisterPet() {
             <input
               type="file"
               name="imagePool"
+              accept=".jpg, .png, .jpeg"
               onChange={(e) => handleImagePool(e)}
               className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
             />
