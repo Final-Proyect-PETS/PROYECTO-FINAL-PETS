@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 //import ubicacion from "../../assets/images/ubicacion.png";
 import { Link } from "react-router-dom";
@@ -18,26 +19,48 @@ export default function OwnedPet({
   gender,
   isAdopted,
 }) {
+  const dispatch = useDispatch();
   const loggedUser = useSelector((state) => state.userProfile);
   const userDetail = useSelector((state) => state.userDetail);
   const allUsers = useSelector((state) => state.users);
 
-  const dispatch = useDispatch();
+  const [adopt, setAdopt] = useState({
+    id: idPet,
+    name: namePet,
+    isAdopted: isAdopted,
+  });
 
   function patchAdoptionHandler(e) {
-    console.log(isAdopted, "IS ADOPTED TRAIDA");
+    // e.preventDefault();
 
-    let payload = { id: idPet, name: namePet, isAdopted: isAdopted };
-    if (isAdopted === "true" || isAdopted === true) {
-      payload = { id: idPet, name: "lucas", isAdopted: "false" };
+    console.log(adopt, "ADOPT INICIAL");
 
-      console.log(payload.isAdopted, "PAYLOAD");
+    if (adopt.isAdopted === "true" || adopt.isAdopted === true) {
+      setAdopt({ id: idPet, name: "juan", isAdopted: false });
+      console.log(adopt,"FALSE")
+      dispatch(patchPet(adopt));
     }
 
-    if (isAdopted === "false" || isAdopted === false) {
-      payload = { id: idPet, name: "luquita", isAdopted: "true" };
+    if (adopt.isAdopted === "false" || adopt.isAdopted === false) {
+      setAdopt({ id: idPet, name: "Joaco", isAdopted: true });
+      console.log(adopt,"TRUE")
+      dispatch(patchPet(adopt));
     }
-    dispatch(patchPet(payload));
+  }
+
+  function changeIDHandler(e) {
+    let idAdoptante = "6304e6e4a3b3fc85c8b4feeb"; //Lautaro
+
+    idUser = idAdoptante;
+    setAdopt({
+      id: idPet,
+      name: namePet,
+      isAdopted: isAdopted,
+      idUser: idAdoptante,
+    });
+    dispatch(patchPet(adopt));
+
+    loggedUser.pets.push(idPet);
   }
 
   return (
@@ -51,15 +74,18 @@ export default function OwnedPet({
               </div>
 
               {loggedUser._id === userDetail._id ? (
-                isAdopted === false ? (
+                adopt.isAdopted === "false" ? (
                   <div className="column items-center">
-                    <Link to="/tradepet/">
-                      {" "}
-                      {/* link de mierda -------------------------------------------------------------------------*/}
-                      <button className="bg-yellow-900 mr-4 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-4 border border-yellow-700 rounded">
-                        TRASPASAR MASCOTA →
-                      </button>
-                    </Link>
+                    {/* <Link to="/tradepet/"> */}{" "}
+                    {/* link de mierda -------------------------------------------------------------------------*/}
+                    <button
+                      on
+                      onClick={(e) => changeIDHandler(e)}
+                      className="bg-yellow-900 mr-4 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-4 border border-yellow-700 rounded"
+                    >
+                      TRASPASAR MASCOTA →
+                    </button>
+                    {/* </Link> */}
                     {/* <Link to="/quitadopt/"> */}{" "}
                     {/* link de mierda*------------------------------------------------------------------- */}
                     <button
@@ -78,7 +104,7 @@ export default function OwnedPet({
                     PUBLICAR EN ADOPCION
                   </button>
                 )
-              ) : isAdopted === false ? (
+              ) : adopt.isAdopted === "false" ? (
                 <div className="column items-center">
                   <Link to="/adopt/">
                     {/* link de mierda -------------------------------------------------------------------------*/}

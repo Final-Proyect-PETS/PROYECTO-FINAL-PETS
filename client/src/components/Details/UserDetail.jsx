@@ -16,7 +16,7 @@ export default function UserDetail() {
 
   const loggedUser = useSelector((state) => state.userProfile);
   const userDetail = useSelector((state) => state.userDetail);
-  console.log(userDetail.pets, "USUARIO LOGUEADO");
+
 
   return Object.keys(userDetail).length ? (
     <>
