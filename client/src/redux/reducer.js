@@ -7,7 +7,7 @@ const initialState = {
   petDetail: [], //detail route
   switchRender: [], //switch
   token: null,
-  userProfile: [],
+  userProfile: [],//usuario loggeado
 };
 
 export default function rootReducer(state = initialState, { type, payload }) {

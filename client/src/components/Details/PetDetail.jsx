@@ -6,28 +6,38 @@ import { useParams, Link } from "react-router-dom";
 import { getPetDetail, clearStatePet } from "../../redux/Actions";
 
 export default function PetDetail() {
-
-
-  let { id } = useParams()
-  const dispatch = useDispatch()
+  let { id } = useParams();
+  const dispatch = useDispatch();
   const petDetail = useSelector((state) => state.petDetail);
+  const loggedUser = useSelector((state) => state.userProfile);
+
+  console.log(petDetail, "PETDETAIL");
 
   useEffect(() => {
-    dispatch(clearStatePet())
+    dispatch(clearStatePet());
     dispatch(getPetDetail(id));
   }, [dispatch, id]);
 
-  return (
-    Object.keys(petDetail).length ? (
+  return Object.keys(petDetail).length ? (
     <div>
       <NavBar />
-      <h1 className="flex justify-center font-semibold text-3xl mt-3">Detalles 🐶</h1>
+      <h1 className="flex justify-center font-semibold text-3xl mt-3">
+        Detalles 🐶
+      </h1>
 
       <div className="flex w-2/3 my-10 ml-60 flex-row border-2 border-black">
         <div className="flex flex-col w-1/2 m-3 items-center gap-3">
-          <Link to="/updatepet">
-            <button className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-600 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Editar mascota</button>
-          </Link>{/* faltaria agregar el pool de images q viene como array */}
+          {loggedUser._id === petDetail.user._id ? (
+            <Link to="/updatepet">
+              <button className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-600 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                Editar mascota
+              </button>
+            </Link>
+          ) : (
+            <></>
+          )}
+
+          {/* faltaria agregar el pool de images q viene como array */}
           <img
             src={petDetail.image}
             alt="imagen mascota"
@@ -49,8 +59,8 @@ export default function PetDetail() {
                 {petDetail.size === "big"
                   ? "Grande"
                   : petDetail.size === "medium"
-                    ? "Mediano"
-                    : "Chico"}
+                  ? "Mediano"
+                  : "Chico"}
               </h3>
             </div>
             <div className="w-1/2 h-1/2 flex justify-center items-center border-b">
@@ -59,8 +69,8 @@ export default function PetDetail() {
                 {petDetail.vaccination === "yes"
                   ? "Sí"
                   : petDetail.vaccination === "no"
-                    ? "No"
-                    : "No se sabe"}
+                  ? "No"
+                  : "No se sabe"}
               </h3>
             </div>
             <h1 className="absolute flex justify-center items-center">Datos</h1>
@@ -82,8 +92,9 @@ export default function PetDetail() {
           </div>
         </div>
       </div>
-    </div>) : (
-      <div role="status">
+    </div>
+  ) : (
+    <div role="status">
       <svg
         className="inline mr-2 w-10 h-10 m-12 text-gray-200 animate-spin dark:text-gray-600 fill-yellow-700"
         viewBox="0 0 100 101"
@@ -100,6 +111,5 @@ export default function PetDetail() {
         />
       </svg>
     </div>
-    )
-  )
+  );
 }
