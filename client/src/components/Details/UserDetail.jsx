@@ -9,14 +9,18 @@ import "./userDetailStyle.css";
 export default function UserDetail() {
   let { id } = useParams();
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(clearState());
     dispatch(getUserDetail(id));
   }, [dispatch, id]);
 
+  const loggedUser = useSelector((state) => state.userProfile);
   const userDetail = useSelector((state) => state.userDetail);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2420491ffbe9adf4c0db21fa4e2534bd65191e7c
   return Object.keys(userDetail).length ? (
     <>
       <NavBar />
@@ -43,38 +47,33 @@ export default function UserDetail() {
 
                 <h3 className="text-2xl ">{userDetail.about}</h3>
                 <div>
-                  <Link to="/petregister">
-                    <button className="py-2 mt-5 px-4 bg-yellow-600 hover:bg-green-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
-                      Crear nueva mascota
-                    </button>
-                  </Link>
+                  {loggedUser._id === userDetail._id ? (
+                    <Link to="/petregister">
+                      <button className="py-2 mt-5 px-4 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                        Crear nueva mascota
+                      </button>
+                    </Link>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
-              <div className="column items-center">
-                <div className="ml-3">
+              <div className="ml-3">
+                {loggedUser._id === userDetail._id ? (
                   <Link to="/updateuser">
                     <button className="py-2 mt-5 px-4 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
                       🖍Editar
                     </button>
                   </Link>
-                </div>
-                <div className="flex justify-end ml-5">
-                  {userDetail.isAdmin === true ? (
-                    <Link to="/admin">
-                      <button className="py-2 mt-5 px-4 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
-                        Vista de admin
-                      </button>
-                    </Link>
-                  ) : (
-                    false
-                  )}
-                </div>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>
           <div className="w-full mt-1 border-b  absolute  justify-center items-center bg-gray-100">
             <div className="w-full mt-1 border-b  absolute grid justify-center items-center bg-gray-500">
-              <h3 className="text-2xl">Mis Mascotas</h3>
+              <h3 className="text-2xl ">Mis Mascotas</h3>
             </div>
             <div className="grid grid-cols-3 mt-10 place-content-center ">
               {userDetail.pets?.length ? (
@@ -97,7 +96,7 @@ export default function UserDetail() {
                     castrated={pets.castrated}
                     gender={pets.gender}
                     isAdopted={pets.isAdopted}
-                  />
+                  ></OwnedPet>
                 ))
               ) : (
                 <h3 className="text-2xl font-bold">

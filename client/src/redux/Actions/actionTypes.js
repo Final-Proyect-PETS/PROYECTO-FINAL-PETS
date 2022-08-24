@@ -14,8 +14,13 @@ export const GET_PET_BY_NAME = "GET_PET_BY_NAME";
 //POST-----------------
 export const POST_PET = "POST_PET";
 export const POST_USER = "POST_USER";
+<<<<<<< HEAD
 export const POST_IMAGE = "POST_IMAGE";
 //UPDATE----------------
+=======
+export const POST_ADOPTION = "POST_ADOPTION"//OK
+//THE UPDATE----------------
+>>>>>>> 2420491ffbe9adf4c0db21fa4e2534bd65191e7c
 export const PATCH_USER = "PATCH_USER";
 export const PATCH_PET = "PATCH_PET";
 //FILTERS -----------------

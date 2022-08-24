@@ -1,5 +1,9 @@
 import axios from "axios";
 import { setAuthToken } from "../../components/BrowserHistory/setAuthToken";
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2420491ffbe9adf4c0db21fa4e2534bd65191e7c
 import * as actions from "./actionTypes";
 
 //SWITCH RENDER//--------------------------------------------------------------
@@ -114,6 +118,7 @@ export function postUser(payload) {
     }
   };
 }
+<<<<<<< HEAD
 export function postImage(archivo) {
   return async function (dispatch) {
     try {
@@ -128,6 +133,10 @@ export function postImage(archivo) {
   };
 }
 //CLEAR//-----------------------------------------------------------------
+=======
+
+//CLEAR//-------------------------------------------------------------------------------------------------------------------
+>>>>>>> 2420491ffbe9adf4c0db21fa4e2534bd65191e7c
 export function clearState(payload) {
   return {
     type: actions.CLEAR_STATE,
