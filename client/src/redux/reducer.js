@@ -8,6 +8,7 @@ const initialState = {
   switchRender: [], //switch
   token: null,
   userProfile: [],//usuario loggeado
+  payment: ""
 };
 
 export default function rootReducer(state = initialState, { type, payload }) {
@@ -178,6 +179,12 @@ export default function rootReducer(state = initialState, { type, payload }) {
     //       ...state,
     //       pets: sortAge
     //   }
+    case actions.PAYMENT_MP:
+      return {
+        ...state,
+        payment: payload
+      };
+
 
     default:
       return state;

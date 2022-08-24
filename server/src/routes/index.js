@@ -11,10 +11,35 @@ const postPet = require("./posts");
 const patchPet = require("./patch")
 const patchUser = require("./patch");
 const errorHandler = require("../utils/middlewares/errorHandler")
+//payment
+const PaymentService = require("./payments/PaymentService");
+const PaymentController = require("./payments/PaymentControllers");
 
 router.use("/home", pets, users, userId, petId, filters, postPet, patchPet, patchUser)
 router.use("/register", register)
 router.use("/login", login)
 router.use(errorHandler);
+
+//-----payments
+
+const PaymentInstance = new PaymentController(new PaymentService());
+
+// router.get("/payments", function (req, res, next) {
+//     return res.json({
+//       "/payment": "generates a payment link",
+//       "/subscription": "generates a subscription link"
+//     });
+//   });
+  
+  router.get("/linkpayment", function (req, res, next) {
+    PaymentInstance.getPaymentLink(req, res);
+  });
+  
+  router.get("/subscription", function (req, res, next) {
+    PaymentInstance.getSubscriptionLink(req, res);
+  });
+  
+
+
 
 module.exports = router;

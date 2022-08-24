@@ -24,3 +24,5 @@ export const USER_LOGIN = "USER_LOGIN"
 export const GET_USER_PROFILE = "GET_USER_PROFILE"
 /* export const SORT_BY_DATE = "SORT_BY_DATE"
 export const SORT_BY_AGE = "SORT_BY_AGE" */
+//PAYMENT - MERCADO PAGO
+export const PAYMENT_MP = "PAYMENT_MP"

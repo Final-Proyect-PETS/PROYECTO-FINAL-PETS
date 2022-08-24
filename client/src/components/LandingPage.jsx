@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./LandingPage.css"
 import { useDispatch } from "react-redux";
 import { userLogin } from "../redux/Actions/index"
-import { useEffect } from "react";
+
 // import { useDispatch } from "react-redux"
 
 function validate(input) {

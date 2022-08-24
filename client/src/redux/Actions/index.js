@@ -1,5 +1,5 @@
 import axios from "axios";
-import { setAuthToken } from "../../components/BrowserHistory/setAuthToken"
+import { setAuthToken } from "../../components/BrowserHistory/setAuthToken";
 
 import * as actions from "./actionTypes";
 //SWITCH RENDER//---------------------------------------------------
@@ -54,7 +54,9 @@ export function getPetDetail(id) {
 export function getUserByName(name) {
   return async function (dispatch) {
     try {
-      var json = await axios.get("http://localhost:3001/home/users?name=" + name);
+      var json = await axios.get(
+        "http://localhost:3001/home/users?name=" + name
+      );
       return dispatch({
         type: actions.GET_USER_BY_NAME,
         payload: json.data,
@@ -67,7 +69,9 @@ export function getUserByName(name) {
 export function getPetByName(name) {
   return async function (dispatch) {
     try {
-      var json = await axios.get("http://localhost:3001/home/pets?name=" + name);
+      var json = await axios.get(
+        "http://localhost:3001/home/pets?name=" + name
+      );
       return dispatch({
         type: actions.GET_PET_BY_NAME,
         payload: json.data,
@@ -84,7 +88,10 @@ export function getPetByName(name) {
 export function postPet(id, payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.post(`http://localhost:3001/home/pets/${id}`, payload);
+      let json = await axios.post(
+        `http://localhost:3001/home/pets/${id}`,
+        payload
+      );
       dispatch({
         type: actions.POST_PET,
         payload: json.data,
@@ -127,7 +134,10 @@ export function clearStatePet(payload) {
 export function patchUsuer(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.patch(`http://localhost:3001/home/users/${payload.id}`, payload);
+      let json = await axios.patch(
+        `http://localhost:3001/home/users/${payload.id}`,
+        payload
+      );
       return dispatch({
         type: actions.PATCH_USER,
         payload: json.data,
@@ -141,7 +151,10 @@ export function patchUsuer(payload) {
 export function patchPet(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.patch(`http://localhost:3001/home/pets/${payload.id}`, payload);
+      let json = await axios.patch(
+        `http://localhost:3001/home/pets/${payload.id}`,
+        payload
+      );
       return dispatch({
         type: actions.PATCH_PET,
         payload: json.data,
@@ -167,35 +180,52 @@ export function filterByQuery(filterParams) {
 //LOGIN//--------------------
 export function userLogin(payload) {
   return async function (dispatch) {
-    console.log(payload)
+    console.log(payload);
     try {
-      let json = await axios.post("http://localhost:3001/login", payload).then((response) => {
-        const token = response.data.data.token
-        const id = response.data.id.id
-        localStorage.setItem("token", token);
-        localStorage.setItem("id", id)
-        setAuthToken(token);
-      })
+      let json = await axios
+        .post("http://localhost:3001/login", payload)
+        .then((response) => {
+          const token = response.data.data.token;
+          const id = response.data.id.id;
+          localStorage.setItem("token", token);
+          localStorage.setItem("id", id);
+          setAuthToken(token);
+        });
       return dispatch({
         type: actions.USER_LOGIN,
-        payload: json.data
-      })
+        payload: json.data,
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 }
 
 export function getUserProfile(id) {
   return async function (dispatch) {
     try {
-      let json = await axios.get(`http://localhost:3001/home/users/${id}`)
+      let json = await axios.get(`http://localhost:3001/home/users/${id}`);
       return dispatch({
         type: actions.GET_USER_PROFILE,
-        payload: json.data
-      })
+        payload: json.data,
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
+}
+
+export function paymentMp(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.get(`http://localhost:3001/linkpayment`, payload);
+      console.log(json);
+      return dispatch({
+        type: actions.PAYMENT_MP,
+        payload: json.data.init_point,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
