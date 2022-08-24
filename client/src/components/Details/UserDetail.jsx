@@ -17,10 +17,7 @@ export default function UserDetail() {
   const loggedUser = useSelector((state) => state.userProfile);
   const userDetail = useSelector((state) => state.userDetail);
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 2420491ffbe9adf4c0db21fa4e2534bd65191e7c
   return Object.keys(userDetail).length ? (
     <>
       <NavBar />

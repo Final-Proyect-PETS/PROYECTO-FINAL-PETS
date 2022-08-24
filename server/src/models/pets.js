@@ -17,7 +17,7 @@ const petsSchema = new Schema(
       lowercase: true,
     },
     castrated: Boolean,
-    place: String,
+    place: String, 
     imagePool: [String],
     deleted: { type: Boolean, default: false },
     user: { type: mongoose.Schema.ObjectId, ref: "User" },

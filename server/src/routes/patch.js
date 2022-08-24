@@ -33,11 +33,8 @@ router.patch("/pets/:id", verifyToken, async (req, res, next) => {
       gender,
       isAdopted
     );
-<<<<<<< HEAD
+
     res.status(201).send(petPatch);
-=======
-    res.status(201).send("actualizado");
->>>>>>> 2420491ffbe9adf4c0db21fa4e2534bd65191e7c
   } catch (error) {
     next(error);
   }
