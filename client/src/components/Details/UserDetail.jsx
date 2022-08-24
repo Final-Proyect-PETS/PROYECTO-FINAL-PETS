@@ -17,8 +17,6 @@ export default function UserDetail() {
 
   const userDetail = useSelector((state) => state.userDetail);
 
-  console.log(userDetail);
-
   return Object.keys(userDetail).length ? (
     <>
       <NavBar />
