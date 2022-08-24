@@ -32,30 +32,32 @@ export default function OwnedPet({
               </div>
 
               {""}
-              {loggedUser._id === userDetail._id? isAdopted === false ? (
-                <div className="column items-center">
+              {loggedUser._id === userDetail._id ? (
+                isAdopted === false ? (
+                  <div className="column items-center">
+                    <Link to="/adopt/">
+                      {" "}
+                      {/* link de mierda -------------------------------------------------------------------------*/}
+                      <button className="bg-yellow-900 mr-4 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-4 border border-yellow-700 rounded">
+                        TRASPASAR MASCOTA →
+                      </button>
+                    </Link>
+                    <Link to="/quitadopt/">
+                      {" "}
+                      {/* link de mierda*------------------------------------------------------------------- */}
+                      <button className="bg-yellow-900 mt-4 hover:bg-red-700 text-white font-bold py-2 px-4 border border-yellow-700 rounded">
+                        QUITAR DISPONIBILIDAD
+                      </button>
+                    </Link>
+                  </div>
+                ) : (
                   <Link to="/adopt/">
-                    {" "}
-                    {/* link de mierda -------------------------------------------------------------------------*/}
-                    <button className="bg-yellow-900 mr-4 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-4 border border-yellow-700 rounded">
-                      TRAMITAR PET
+                    <button className="bg-yellow-900 mt-4 hover:bg-green-900 text-white font-bold py-2 px-4 border border-yellow-700 rounded">
+                      PUBLICAR EN ADOPCION
                     </button>
                   </Link>
-                  <Link to="/quitadopt/">
-                    {" "}
-                    {/* link de mierda*------------------------------------------------------------------- */}
-                    <button className="bg-yellow-900 mt-4 hover:bg-red-700 text-white font-bold py-2 px-4 border border-yellow-700 rounded">
-                      QUITAR DE ADOPCION
-                    </button>
-                  </Link>
-                </div>
-              ) : (
-                <Link to="/adopt/">
-                  <button className="bg-yellow-900 mt-4 hover:bg-green-900 text-white font-bold py-2 px-4 border border-yellow-700 rounded">
-                    DAR EN ADOPCION
-                  </button>
-                </Link>
-              ):isAdopted === false ? (
+                )
+              ) : isAdopted === false ? (
                 <div className="column items-center">
                   <Link to="/adopt/">
                     {" "}
@@ -64,12 +66,11 @@ export default function OwnedPet({
                       ADOPTAR
                     </button>
                   </Link>
-               
                 </div>
               ) : (
                 <Link to="/home">
                   <button className="bg-yellow-900 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-4 border border-yellow-700 rounded">
-              TENGO DUEÑO
+                    TENGO DUEÑO
                   </button>
                 </Link>
               )}
