@@ -1,31 +1,15 @@
 import React from "react";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { postPet, postImage } from "../redux/Actions/index.js";
-//import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { notificationSwal } from "../utils/notificationSwal.jsx";
-import { useEffect } from "react";
-import { getUserDetail } from "../redux/Actions/index.js";
 
 export default function RegisterPet() {
   const dispatch = useDispatch();
 
-  // const pets = useSelector((state) => state.pets);
-
-  const id = localStorage.getItem("id")
-
-  // const user = useSelector((state) => state.userDetail)
-
-  // const userId = user.id
-
-  // const navigate = Navigate()
-
-  // useEffect(() => {
-  //   dispatch(getUserDetail(id))
-  // }, [dispatch, id])
+  const id = localStorage.getItem("id");
 
   const [errors, setErrors] = useState({});
   const [image, setImage] = useState("");
@@ -60,9 +44,6 @@ export default function RegisterPet() {
       })
     );
   }
-/*   function uploadImage (image) {
-    dispatch(postImage(image)).then(e => {return e.payload})
-  } */
 
   async function handleImage(e) {
     const files = e.target.files;
@@ -71,8 +52,8 @@ export default function RegisterPet() {
     data.append("upload_preset", "pretty");
     data.append("folder", "Images");
     setLoadingImage(true);
-    dispatch(postImage(data)).then( e =>{
-      setImage(e.payload)
+    dispatch(postImage(data)).then((e) => {
+      setImage(e.payload);
       setInput({
         ...input,
         image: e.payload,
@@ -84,7 +65,7 @@ export default function RegisterPet() {
         })
       );
       setLoadingImage(false);
-  })
+    });
   }
 
   async function handleImagePool(e) {
@@ -94,20 +75,20 @@ export default function RegisterPet() {
     data.append("upload_preset", "pretty");
     data.append("folder", "Images");
     setLoadingImagePool(true);
-    dispatch(postImage(data)).then (e =>{
-    setImagePool(e.payload);
-    setInput({
-      ...input,
-      imagePool: [...input.imagePool, e.payload],
-    });
-    setErrors(
-      validate({
+    dispatch(postImage(data)).then((e) => {
+      setImagePool(e.payload);
+      setInput({
         ...input,
         imagePool: [...input.imagePool, e.payload],
-      })
-    );
-    setLoadingImagePool(false);
-    })
+      });
+      setErrors(
+        validate({
+          ...input,
+          imagePool: [...input.imagePool, e.payload],
+        })
+      );
+      setLoadingImagePool(false);
+    });
   }
 
   function validate(input) {
@@ -290,10 +271,6 @@ export default function RegisterPet() {
     return key++;
   }
 
-  // useEffect(() => {
-  //   dispatch(getAllPets());
-  // }, [dispatch]);
-
   return (
     <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
       <div className="self-center mb-6 text-xl font-normal text-gray-600 sm:text-2xl dark:text-white">
@@ -303,7 +280,6 @@ export default function RegisterPet() {
       <div className="mt-8 px-8 max-w-lg self-center">
         <form onSubmit={handleSubmit}>
           <div>
-
             <label className="font-light text-white text-xl">Nombre</label>
             <input
               type="text"
@@ -313,20 +289,40 @@ export default function RegisterPet() {
               placeholder="Nombre de la mascota"
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
-            {errors.name && <p className="font-bold text-red-700 text-center p-2">{errors.name}</p>}
+            {errors.name && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.name}
+              </p>
+            )}
           </div>
           <div>
-            <label className="font-light text-white text-xl">Imagen de perfil</label>
-            <input type="file" name="image" accept=".jpg, .png, .jpeg" onChange={(e) => handleImage(e)} className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent" />
+            <label className="font-light text-white text-xl">
+              Imagen de perfil
+            </label>
+            <input
+              type="file"
+              name="image"
+              accept=".jpg, .png, .jpeg"
+              onChange={(e) => handleImage(e)}
+              className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
+            />
             {loadingImage ? (
-              <h3 className="font-light text-white text-xl">Cargando imagen...</h3>
+              <h3 className="font-light text-white text-xl">
+                Cargando imagen...
+              </h3>
             ) : (
               <img src={image} alt="" width="300px" />
             )}
-            {errors.image && <p className="font-bold text-red-700 text-center p-2">{errors.image}</p>}
+            {errors.image && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.image}
+              </p>
+            )}
           </div>
           <div>
-            <label className="font-light text-white text-xl">Más imágenes</label>
+            <label className="font-light text-white text-xl">
+              Más imágenes
+            </label>
             <input
               type="file"
               name="imagePool"
@@ -353,11 +349,21 @@ export default function RegisterPet() {
                 ))
               )}
             </div>
-            {errors.imagePool && <p className="font-bold text-red-700 text-center p-2">{errors.imagePool}</p>}
+            {errors.imagePool && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.imagePool}
+              </p>
+            )}
           </div>
           <div>
-            <label className="font-light text-white text-xl">Tipo de mascota</label>
-            <select name="type" onChange={(e) => handleChange(e)} className="bg-gray-50 border border-gray-300 text-gray-400 text-base rounded-lg focus:ring-yellow-800 focus:border-transparent focus:outline-none focus:ring-2 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-yellow-800 dark:focus:border-transparent">
+            <label className="font-light text-white text-xl">
+              Tipo de mascota
+            </label>
+            <select
+              name="type"
+              onChange={(e) => handleChange(e)}
+              className="bg-gray-50 border border-gray-300 text-gray-400 text-base rounded-lg focus:ring-yellow-800 focus:border-transparent focus:outline-none focus:ring-2 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-yellow-800 dark:focus:border-transparent"
+            >
               <option value="typeSelect" defaultValue hidden>
                 Seleccione tipo
               </option>
@@ -371,7 +377,11 @@ export default function RegisterPet() {
                 Otro
               </option>
             </select>
-            {errors.type && <p className="font-bold text-red-700 text-center p-2">{errors.type}</p>}
+            {errors.type && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.type}
+              </p>
+            )}
           </div>
           <div>
             <label className="font-light text-white text-xl">Descripción</label>
@@ -382,11 +392,19 @@ export default function RegisterPet() {
               onChange={(e) => handleChange(e)}
               className="w-full py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent resize-none"
             />
-            {errors.description && <p className="font-bold text-red-700 text-center p-2">{errors.description}</p>}
+            {errors.description && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.description}
+              </p>
+            )}
           </div>
           <div>
             <label className="font-light text-white text-xl">Tamaño</label>
-            <select name="size" onChange={(e) => handleChange(e)} className="bg-gray-50 border border-gray-300 text-gray-400 text-base rounded-lg focus:ring-yellow-800 focus:border-transparent focus:outline-none focus:ring-2 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-yellow-800 dark:focus:border-transparent">
+            <select
+              name="size"
+              onChange={(e) => handleChange(e)}
+              className="bg-gray-50 border border-gray-300 text-gray-400 text-base rounded-lg focus:ring-yellow-800 focus:border-transparent focus:outline-none focus:ring-2 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-yellow-800 dark:focus:border-transparent"
+            >
               <option value="sizeSelect" defaultValue hidden>
                 Seleccione tamaño
               </option>
@@ -400,7 +418,11 @@ export default function RegisterPet() {
                 Grande
               </option>
             </select>
-            {errors.size && <p className="font-bold text-red-700 text-center p-2">{errors.size}</p>}
+            {errors.size && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.size}
+              </p>
+            )}
           </div>
           <div>
             <label className="font-light text-white text-xl">Edad</label>
@@ -412,12 +434,20 @@ export default function RegisterPet() {
               placeholder="Edad"
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
-            {errors.age && <p className="font-bold text-red-700 text-center p-2">{errors.age}</p>}
+            {errors.age && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.age}
+              </p>
+            )}
           </div>
           <div>
             <label className="font-light text-white text-xl">¿Vacunado?</label>
             <span>
-              <select name="vaccination" className="bg-gray-50 border border-gray-300 text-gray-400 text-base rounded-lg focus:ring-yellow-800 focus:border-transparent focus:outline-none focus:ring-2 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-yellow-800 dark:focus:border-transparent" onChange={(e) => handleChange(e)}>
+              <select
+                name="vaccination"
+                className="bg-gray-50 border border-gray-300 text-gray-400 text-base rounded-lg focus:ring-yellow-800 focus:border-transparent focus:outline-none focus:ring-2 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-yellow-800 dark:focus:border-transparent"
+                onChange={(e) => handleChange(e)}
+              >
                 <option value="vaccinationSelect" defaultValue hidden>
                   Seleccione opción
                 </option>
@@ -432,35 +462,69 @@ export default function RegisterPet() {
                 </option>
               </select>
             </span>
-            {errors.vaccination && <p className="font-bold text-red-700 text-center p-2">{errors.vaccination}</p>}
+            {errors.vaccination && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.vaccination}
+              </p>
+            )}
           </div>
           <div>
             <fieldset onChange={(e) => handleChange(e)}>
-              <legend className="font-light text-white text-xl">¿Castrado?</legend>
+              <legend className="font-light text-white text-xl">
+                ¿Castrado?
+              </legend>
               <span className="p-3">
-                <input type="radio" name="castrated" value={true} className="w-4 h-4 mx-4 accent-yellow-900" />
+                <input
+                  type="radio"
+                  name="castrated"
+                  value={true}
+                  className="w-4 h-4 mx-4 accent-yellow-900"
+                />
                 <label className="font-light text-white text-xl">Sí</label>
-                </span>
-                <span className="p-16">
-                <input type="radio" name="castrated" value={false} className="w-4 h-4 mx-4 accent-yellow-900" />
+              </span>
+              <span className="p-16">
+                <input
+                  type="radio"
+                  name="castrated"
+                  value={false}
+                  className="w-4 h-4 mx-4 accent-yellow-900"
+                />
                 <label className="font-light text-white text-xl">No</label>
               </span>
             </fieldset>
-            {errors.castrated && <p className="font-bold text-red-700 text-center p-2">{errors.castrated}</p>}
+            {errors.castrated && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.castrated}
+              </p>
+            )}
           </div>
           <div>
             <fieldset onChange={(e) => handleChange(e)}>
               <legend className="font-light text-white text-xl">Género</legend>
               <span className="p-3">
-                <input type="radio" name="gender" value="female" className="w-4 h-4 mx-4 accent-yellow-900"/>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  className="w-4 h-4 mx-4 accent-yellow-900"
+                />
                 <label className="font-light text-white text-xl">Hembra</label>
               </span>
               <span className="p-3">
-                <input type="radio" name="gender" value="male" className="w-4 h-4 mx-4 accent-yellow-900"/>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  className="w-4 h-4 mx-4 accent-yellow-900"
+                />
                 <label className="font-light text-white text-xl">Macho</label>
               </span>
             </fieldset>
-            {errors.gender && <p className="font-bold text-red-700 text-center p-2">{errors.gender}</p>}
+            {errors.gender && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.gender}
+              </p>
+            )}
           </div>
           <div>
             <label className="font-light text-white text-xl">Ubicación</label>
@@ -472,15 +536,26 @@ export default function RegisterPet() {
               placeholder="Ubicación"
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
-            {errors.place && <p className="font-bold text-red-700 text-center p-2">{errors.place}</p>}
+            {errors.place && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.place}
+              </p>
+            )}
           </div>
           <div>
-            <button type="submit" className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Crear</button>
+            <button
+              type="submit"
+              className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+            >
+              Crear
+            </button>
           </div>
         </form>
 
-        <Link to="/home" >
-          <button className="py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Regresar</button>
+        <Link to="/home">
+          <button className="py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+            Regresar
+          </button>
         </Link>
       </div>
     </div>

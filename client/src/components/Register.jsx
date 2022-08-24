@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { postUser, getAllUsers } from "../redux/Actions/index.js";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { notificationSwal } from "../utils/notificationSwal.jsx";
+import axios from "axios";
 
 export default function Register() {
   const dispatch = useDispatch();
