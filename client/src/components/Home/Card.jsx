@@ -55,8 +55,8 @@ export default function Card({
                 </span>
               </div>
               <div>
-                    <span className="text-2xl font-bold">{gender}</span>
-                </div>
+                <span className="text-2xl font-bold">{gender}</span>
+              </div>
             </div>
           </div>
         </Link>
