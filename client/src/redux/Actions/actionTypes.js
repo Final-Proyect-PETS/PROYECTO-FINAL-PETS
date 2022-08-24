@@ -14,6 +14,7 @@ export const GET_PET_BY_NAME = "GET_PET_BY_NAME"; //ok
 //THE POST-----------------
 export const POST_PET = "POST_PET";
 export const POST_USER = "POST_USER";
+export const POST_ADOPTION = "POST_ADOPTION"//OK
 //THE UPDATE----------------
 export const PATCH_USER = "PATCH_USER";
 export const PATCH_PET = "PATCH_PET";
