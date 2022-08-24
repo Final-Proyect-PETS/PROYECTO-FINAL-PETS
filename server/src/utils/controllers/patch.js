@@ -18,7 +18,7 @@ async function patchUser(id, first_name, last_name, username, email, password, i
         connection();
         const oneUser = await User.findOne({ _id: id });
         let userUpdate = oneUser;
-        await userUpdate.update({ first_name, last_name, username, email, password, image, telephone, about, });
+        await userUpdate.update({ first_name, last_name, username, email, password, image, telephone, about });
         const userActualizado = User.findOne({ _id: id }).populate("pets")
         return userActualizado;
     } catch (error) {
