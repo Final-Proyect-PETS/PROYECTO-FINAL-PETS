@@ -28,7 +28,7 @@ router.post("/pets/:id", verifyToken, async (req, res, next) => {
     }
 })
 
-router.post("/images" ,verifyToken, upload.single("file"), async (req, res, next) => {
+router.post("/images" , upload.single("file"), async (req, res, next) => {
     try {
       if(req.file) {
         const result = await cloudinary.uploader.upload(req.file.path)
