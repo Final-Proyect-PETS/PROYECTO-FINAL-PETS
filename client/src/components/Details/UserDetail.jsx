@@ -93,7 +93,7 @@ export default function UserDetail() {
                     castrated={pets.castrated}
                     gender={pets.gender}
                     isAdopted={pets.isAdopted}
-                  />
+                  ></OwnedPet>
                 ))
               ) : (
                 <h3 className="text-2xl font-bold">
