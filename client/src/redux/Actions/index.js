@@ -222,7 +222,7 @@ export function paymentMp(payload) {
       console.log(json);
       return dispatch({
         type: actions.PAYMENT_MP,
-        payload: json.data.init_point,
+        payload: json.data,
       });
     } catch (error) {
       console.log(error);

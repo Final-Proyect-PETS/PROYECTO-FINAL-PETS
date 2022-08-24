@@ -1,6 +1,5 @@
 const axios = require("axios");
 
-
 class PaymentService {
   //crea un link de pago
   async createPayment() {
@@ -20,11 +19,13 @@ class PaymentService {
           unit_price: 10
         }
       ],
-      back_urls: {
-        failure: "/failure",
-        pending: "/pending",
-        success: "/success"
-      }
+      back_url: "https://locahost:3000/donations"
+
+      // back_urls: {
+      //   failure: "https://locahost:3000/donations",
+      //   pending: "/pending",
+      //   success: "/success"
+      // }
     };
 
     const payment = await axios.post(url, body, {

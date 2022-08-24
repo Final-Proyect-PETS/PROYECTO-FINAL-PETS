@@ -1,7 +1,6 @@
 import React from "react";
 import NavBar from "../NavBar/NavBar";
 import "../LandingPage.css";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getUserProfile, paymentMp } from "../../redux/Actions";
 import { useDispatch } from "react-redux";
@@ -10,26 +9,25 @@ import { useEffect } from "react";
 export default function Donation() {
 
     const dispatch = useDispatch()
-    const navigate = useNavigate();
 
     const id = localStorage.getItem("id")
     const user = useSelector((state) => state.userProfile)
 
-    const pay = useSelector((state) => state.payment)
-    console.log(pay)
+    //objeto
+    const payment = useSelector((state) => state.payment.init_point) //id, init_point
 
     useEffect(() => {
         dispatch(getUserProfile(id))
     }, [dispatch, id])
 
-   function handleClick() {
-        dispatch(paymentMp());
+    function handleClick() {
+        dispatch(paymentMp())
+
         //window.location.replace(pay);
         // navigate(pay, { replace: true })
-        window.open(pay, '_blank')
+        
+        .then(window.open(payment, "_self", "width=300, height=300"))
     }
-
-
 
     return (
         <div id="landing" className="w-full">
@@ -47,6 +45,9 @@ export default function Donation() {
                 <div className="flex justify-center items-center gap-4">
                     <h2 className="text-xl">Podes donar haciendo click en el siguiente botón:</h2>
                     <button className="py-4 px-4 bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-600 focus:ring-offset-yellow-600 text-white w-44 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg" onClick={(e) => handleClick(e)}>Donar</button>
+
+
+                    {/* <Comprar data={payment}/> */}
                 </div>
             </div>
         </div>
