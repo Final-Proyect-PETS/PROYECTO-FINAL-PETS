@@ -24,7 +24,8 @@ router.post("/logingoogle", async (req, res) => {
                 } else {
                     if (user) {
                         console.log("entro al ifuser")
-                        const token = jwt.sign({ id: req.user._id }, process.env.SECRET_KEY)
+                        let id = user._id
+                        const token = jwt.sign({ id: id }, process.env.SECRET_KEY)
                         console.log(token);
                         res.header("token", token).json({ error: null, data: { token }, id: { id } })
                     } else {
@@ -41,7 +42,6 @@ router.post("/logingoogle", async (req, res) => {
                         } catch (error) {
                             console.log(error)
                         }
-
                     }
                 }
 
