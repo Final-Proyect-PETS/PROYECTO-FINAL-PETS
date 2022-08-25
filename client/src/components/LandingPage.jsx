@@ -56,12 +56,12 @@ export default function LandingPage() {
 
   useEffect(() => {
     gapi.load("client:auth2", () => {
-      gapi.auth2.init({clientId: clientId})
+      gapi.auth2.init({ clientId: clientId })
     })
   })
 
   const responseGoogle = (response) => {
-    dispatch(userLogin(input))
+    dispatch(userLoginGoogle(response))
     console.log(response);
   };
 

@@ -211,23 +211,23 @@ export function userLogin(payload) {
   };
 }
 
-export function userLoginGoogle (payload) {
+export function userLoginGoogle(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.post("http://localhost/home/logingoogle", payload).
-      then(response => {
-        const token = response.data.data.token;
+      let json = await axios.post("http://localhost:3001/logingoogle", payload)
+        .then(response => {
+          const token = response.data.data.token;
           const id = response.data.id.id;
           localStorage.setItem("token", token);
           localStorage.setItem("id", id);
           setAuthToken(token);
-      })
-      return dispatch ({
+        })
+      return dispatch({
         type: actions.USER_LOGIN_GOOGLE,
         payload: json.data
       })
     } catch (error) {
-      
+
     }
   }
 }
