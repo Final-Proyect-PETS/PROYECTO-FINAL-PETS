@@ -114,6 +114,7 @@ export function postUser(payload) {
     }
   };
 }
+
 export function postImage(archivo) {
   return async function (dispatch) {
     try {
@@ -128,6 +129,7 @@ export function postImage(archivo) {
   };
 }
 //CLEAR//-----------------------------------------------------------------
+
 export function clearState(payload) {
   return {
     type: actions.CLEAR_STATE,
@@ -209,7 +211,7 @@ export function userLogin(payload) {
       console.log(error);
     }
   };
-}
+} 
 
 export function getUserProfile(id) {
   return async function (dispatch) {
