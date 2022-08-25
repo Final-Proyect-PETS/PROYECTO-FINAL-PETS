@@ -12,11 +12,11 @@ import UpdatePet from "./components/Update/UpdateDataPet";
 import Error404 from "./components/Error404/Error404";
 import { setAuthToken } from "./components/BrowserHistory/setAuthToken";
 import { history } from "./components/BrowserHistory/history";
-
 import PrivateRoutes from "./components/PrivateRoute.js/PrivateRoute";
 import PrivateAdmin from "./components/PrivateRoute.js/PrivateAdmin";
 import AdminView from "./components/AdminView/AdminView";
 import Donation from "./components/Donaciones/Donation";
+import TradePet from "./components/TradePet/TradePet";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -36,8 +36,9 @@ function App() {
           <Route path={"/about"} element={<About />} />
           <Route path={"/donations"} element={<Donation />} />
           <Route path={"/petregister"} element={<PetRegister />} />
-          <Route path={"/updateuser"} element={<UpdateUser />} />z
+          <Route path={"/updateuser"} element={<UpdateUser />} />
           <Route path={"/updatepet"} element={<UpdatePet />} />
+          <Route path={"/tradepet"} element={<TradePet />} />
           <Route path={"*"} element={<Error404 />} />
         </Route>
         <Route element={<PrivateAdmin />}>

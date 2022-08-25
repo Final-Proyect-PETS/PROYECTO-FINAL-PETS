@@ -33,7 +33,6 @@ export default function SearchBar() {
     getUserNow(nameUser);
     // console.log(e.target.value,"ETV")
     // console.log(namePet, "inputState");//va uno atrasado//console.log para juancito------------------------------------------------------------
-
   }
   return (
     <div className="flex m-1.5 px-10">

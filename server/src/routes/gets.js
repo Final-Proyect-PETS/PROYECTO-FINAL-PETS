@@ -8,13 +8,13 @@ const router = Router()
 router.get("/pets", verifyToken, async (req, res, next) => {
     try {
         const pets = await getPets(req.query.name)
-        res.status(200).send(pets)
+        res.status(200).send(pets.sort((a, b) => b.createdAt - a.createdAt))
     } catch (err) {
         next(err)
     }
 })
 
-router.get("/users", verifyToken, async (req, res, next) => {
+router.get("/users", async (req, res, next) => {
     try {
         const users = await getUsers(req.query.name)
         res.status(200).send(users)

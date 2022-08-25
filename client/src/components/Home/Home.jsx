@@ -14,7 +14,6 @@ export default function Home() {
           <section className="flex w-1/3 fixed mt-14">
             <SideBar />
           </section>
-
           <section className="flex w-full justify-center mt-6">
             <Cards />
           </section>
