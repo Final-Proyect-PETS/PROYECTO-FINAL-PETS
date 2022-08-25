@@ -216,6 +216,7 @@ export function userLoginGoogle(payload) {
     try {
       let json = await axios.post("http://localhost:3001/logingoogle", payload)
         .then(response => {
+          console.log(response)
           const token = response.data.data.token;
           const id = response.data.id.id;
           localStorage.setItem("token", token);
