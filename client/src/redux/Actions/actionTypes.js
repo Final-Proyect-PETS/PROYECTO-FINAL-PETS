@@ -23,3 +23,4 @@ export const FILTER_BY_QUERY = "FILTER_BY_QUERY";
 //LOGIN -----------------
 export const USER_LOGIN = "USER_LOGIN";
 export const GET_USER_PROFILE = "GET_USER_PROFILE";
+export const USER_LOGIN_GOOGLE = "USER_LOGIN_GOOGLE"

@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import "./LandingPage.css";
 import { useDispatch } from "react-redux";
 import { userLogin } from "../redux/Actions/index";
+import { GoogleLogin } from "react-google-login";
+import { gapi } from "gapi-script"
+import { useEffect } from "react";
+import { userLoginGoogle } from "../redux/Actions/index"
 
 function validate(input) {
   let errors = {};
@@ -48,6 +52,19 @@ export default function LandingPage() {
     alert("Usuario enviado");
   }
 
+  const clientId = "841685042609-24rmh0gcg16vvfl3j8cgrll1nr23pi04.apps.googleusercontent.com"
+
+  useEffect(() => {
+    gapi.load("client:auth2", () => {
+      gapi.auth2.init({clientId: clientId})
+    })
+  })
+
+  const responseGoogle = (response) => {
+    dispatch(userLogin(input))
+    console.log(response);
+  };
+
   return (
     <div id="landing" className="flex w-screen">
       <div className="flex flex-col-6 m-5 mx-9 mt-8 w-screen items-center">
@@ -59,7 +76,6 @@ export default function LandingPage() {
             Somos una organización sin fines de lucro con el objetivo de
             encontrar un hogar feliz para nuestros amigos de 4 patas...
           </p>
-
         </div>
 
         <div className="flex flex-col w-full max-w-md m-14 mr-24 py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
@@ -126,6 +142,15 @@ export default function LandingPage() {
                 </div>
               </div>
               <div className="flex flex-row justify-center gap-16">
+                <div>
+                  <GoogleLogin
+                    clientId={clientId}
+                    buttonText="Login"
+                    onSuccess={responseGoogle}
+                    onFailure={responseGoogle}
+                    cookiePolicy={"single_host_origin"}
+                  />{" "}
+                </div>
                 <div className="flex bg-gray-200">
                   {/* <Link to="/home" className="py-2 px-4  bg-yellow-800 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"> */}
                   <button type="submit">Enviar datos</button>
