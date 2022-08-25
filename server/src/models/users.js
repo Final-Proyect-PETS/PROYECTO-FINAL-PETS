@@ -29,6 +29,7 @@ const usersSchema = new Schema(
     about: String,
     telephone: String,
     place: String,
+    deleted: { type: Boolean, default: false },
     isAdmin: { type: Boolean, default: false },
     reviews: Number,
     pets: [{ type: mongoose.Schema.ObjectId, ref: "Pet" }],
