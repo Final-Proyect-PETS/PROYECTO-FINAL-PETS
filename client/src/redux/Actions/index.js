@@ -219,7 +219,6 @@ export function paymentMp(payload) {
   return async function (dispatch) {
     try {
       let json = await axios.get(`http://localhost:3001/linkpayment`, payload);
-      console.log(json);
       return dispatch({
         type: actions.PAYMENT_MP,
         payload: json.data,

@@ -37,7 +37,8 @@ router.use(errorHandler);
 const PaymentInstance = new PaymentController(new PaymentService());
 
 router.get("/linkpayment", function (req, res, next) {
-  PaymentInstance.getPaymentLink(req, res);
+    PaymentInstance.getPaymentLink(req, res);
+    console.log("saluditos desde el back", req.body)
 });
 
 router.get("/subscription", function (req, res, next) {

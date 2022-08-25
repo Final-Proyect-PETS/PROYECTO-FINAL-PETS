@@ -4,7 +4,7 @@ class PaymentService {
   //crea un link de pago
   async createPayment() {
     const url = "https://api.mercadopago.com/checkout/preferences";
-
+    
     const body = {
       //payer-email -> usuario comprador
       payer_email: "test_user_80969189@testuser.com",
@@ -31,10 +31,10 @@ class PaymentService {
     const payment = await axios.post(url, body, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer APP_USR-3337857880360419-082317-ee4e1d4f9bb57743e23b718f2bb462ef-1185072042`,
+        Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
       },
     });
-    console.log(payment.data);
+    
     return payment.data;
   }
 
@@ -59,7 +59,7 @@ class PaymentService {
     const subscription = await axios.post(url, body, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer APP_USR-3337857880360419-082317-ee4e1d4f9bb57743e23b718f2bb462ef-1185072042`,
+        Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
       },
     });
 
