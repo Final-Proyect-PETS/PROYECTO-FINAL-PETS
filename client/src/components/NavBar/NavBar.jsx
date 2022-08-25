@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getUserProfile } from "../../redux/Actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -16,7 +16,7 @@ export default function NavBar() {
 
   // const navigate = Navigate()
 
-  useEffect(() => {
+  useEffect(() => {   //ESTE USE EFFECT ANDA
     dispatch(getUserProfile(id))
   }, [dispatch, id])
 

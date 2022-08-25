@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { filterByQuery, sortAge, sortDate } from "../../redux/Actions";
+import { filterByQuery } from "../../redux/Actions";
 import SearchBar from "../SearchBar/SearchBar";
 
 export default function SideBar() {
@@ -57,19 +57,21 @@ export default function SideBar() {
       castrated: ev.target.value,
     });
   }
-  function handlerFilterByPlace(ev) {
-    ev.preventDefault();
-    dispatch(
-      filterByQuery({
-        ...filterParams,
-        location: ev.target.value,
-      })
-    );
-    setFilterParams({
-      ...filterParams,
-      location: ev.target.value,
-    });
-  }
+
+  // function handlerFilterByPlace(ev) {
+  //   ev.preventDefault();
+  //   dispatch(
+  //     filterByQuery({
+  //       ...filterParams,
+  //       location: ev.target.value,
+  //     })
+  //   );
+
+  //   setFilterParams({
+  //     ...filterParams,
+  //     location: ev.target.value,
+  //   });
+  // }
   function handlerFilterTypePet(ev) {
     ev.preventDefault();
     dispatch(
@@ -128,7 +130,7 @@ export default function SideBar() {
         <h1 className="font-normal italic">Menú</h1>
       </div>
       <SearchBar />
-{/*       <div className="bg-red-200 w-3/4 flex justify-center flex-col">
+      {/*       <div className="bg-red-200 w-3/4 flex justify-center flex-col">
         <div className="flex justify-center">
           <h3 className="font-bold">Ordenar mascotas por edad</h3>
         </div>
@@ -143,9 +145,21 @@ export default function SideBar() {
           <h3 className="font-bold">Antiguedad de publicaciones</h3>
         </div>
         <div className="flex justify-center gap-1">
-          <button name = "desc" value = "desc" onClick={(ev) => handlerFilterPublicationAge(ev)}>Mas antigua</button>
+          <button
+            name="desc"
+            value="desc"
+            onClick={(ev) => handlerFilterPublicationAge(ev)}
+          >
+            Mas antigua
+          </button>
           <p />
-          <button name = "asc" value = "asc" onClick={(ev) => handlerFilterPublicationAge(ev)}>Mas reciente</button>
+          <button
+            name="asc"
+            value="asc"
+            onClick={(ev) => handlerFilterPublicationAge(ev)}
+          >
+            Mas reciente
+          </button>
           <p />
         </div>
       </div>
@@ -172,7 +186,7 @@ export default function SideBar() {
         </select>
         <p />
       </div>
-{/*       <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
+      {/*       <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
         <div className="flex justify-center">
           <h3 className="font-bold">Ubicación</h3>
         </div>

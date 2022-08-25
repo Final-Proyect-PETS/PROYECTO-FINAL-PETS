@@ -14,7 +14,7 @@ function validate(input) {
   if (!input.email) {
     errors.email = "El email es necesario";
   } else if (
-    !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.email)
+    !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(input.email)
   ) {
     errors.email = "Ingrese un email válido";
   } else errors.email = "";
