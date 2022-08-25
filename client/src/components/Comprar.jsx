@@ -2,12 +2,13 @@ import { useEffect } from "react";
 //import axios from 'axios'
 
 export default function Comprar({ data }) {
+  console.log(data);
   useEffect(() => {
     const script = document.createElement("script");
     const attr_data_preference = document.createAttribute("data-preference-id");
     //const attr_nonce = document.createAttribute('nonce')
 
-    attr_data_preference.value = data.id;
+    attr_data_preference.value = data;
 
     //attr_nonce.value = 'abcdefg'
     script.src =

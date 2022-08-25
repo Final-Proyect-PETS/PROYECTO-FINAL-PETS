@@ -6,31 +6,44 @@ import { getUserProfile, paymentMp } from "../../redux/Actions";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import Comprar from "../Comprar";
+import { useState } from "react";
+import axios from "axios";
 
 export default function Donation() {
   const dispatch = useDispatch();
 
   const id = localStorage.getItem("id");
   const user = useSelector((state) => state.userProfile);
-  const datos = {
-    id: "1185045553-e4b1aa23-63df-4e0d-9891-5759052319c5",
-    init_point:
-      "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=1185045553-e4b1aa23-63df-4e0d-9891-5759052319c5",
-  };
+  // const datos = {
+  //   id: "1185045553-e4b1aa23-63df-4e0d-9891-5759052319c5",
+  //   init_point:
+  //     "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=1185045553-e4b1aa23-63df-4e0d-9891-5759052319c5",
+  // };
 
   //objeto
-  const payment = useSelector((state) => state.payment.init_point); //id, init_point
+  const payment = useSelector((state) => state.payment.id); //id, init_point
 
   useEffect(() => {
     dispatch(getUserProfile(id));
   }, [dispatch, id]);
+  const [datos, setDatos] = useState("");
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://localhost:3001/mercadopago`)
+  //     .then((data) => {
+  //       setDatos(data.data);
+  //       console.info("Contenido de data:", data);
+  //     })
+  //     .catch((err) => console.error(err));
+  // }, []);
 
   function handleClick() {
-    dispatch(paymentMp())
-      //window.location.replace(pay);
-      // navigate(pay, { replace: true })
+    dispatch(paymentMp());
+    //window.location.replace(pay);
+    // navigate(pay, { replace: true })
 
-      .then(window.open(payment, "_self", "width=300, height=300"));
+    //.then(window.open(payment, "_self", "width=300, height=300"));
   }
 
   return (
@@ -62,10 +75,11 @@ export default function Donation() {
             className="py-4 px-4 bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-600 focus:ring-offset-yellow-600 text-white w-44 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
             onClick={(e) => handleClick(e)}
           >
-            Donar
+            Generar orden de pago por 10 pesos
           </button>
+          {payment ? <Comprar data={payment} /> : null}
 
-          <Comprar data={datos} />
+          {/* <Comprar data={datos} /> */}
 
           {/* <Comprar data={payment}/> */}
         </div>
