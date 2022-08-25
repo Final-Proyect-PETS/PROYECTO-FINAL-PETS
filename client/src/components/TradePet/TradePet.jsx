@@ -33,7 +33,10 @@ export default function TradePet() {
   const fetchMoreData = async () => {
     setCardsPerPage(CardsPerPage + 6);
   };
-
+  function checkboxHandler(e) {
+    //algo con idPet
+    console.log(e.target.value, "CHECKBOXPET");
+  }
   return (
     <>
       <NavBar />
@@ -65,19 +68,30 @@ export default function TradePet() {
               </div>
               {getUsers?.length > 0 ? (
                 getUsers.map((user) => (
-                  <AdopterCard
-                    key={user._id}
-                    _id={user._id}
-                    first_name={user.first_name}
-                    last_name={user.last_name}
-                    username={user.username}
-                    image={user.image}
-                    email={user.email}
-                    about={user.about}
-                    telephone={user.telephone}
-                    pets={user.pets} //aca seguro hay que meter otro .name o algo asi
-                    place={user.place}
-                  />
+                  <div className="flex bg-gray-600 mt-2">
+                    <label>
+                      <input
+                        onChange={(e) => checkboxHandler(e)}
+                        type="checkbox"
+                        id="cbox1"
+                      />{" "}
+                      seleccionar usuario
+                    </label>
+                    <br />
+                    <AdopterCard
+                      key={user._id}
+                      _id={user._id}
+                      first_name={user.first_name}
+                      last_name={user.last_name}
+                      username={user.username}
+                      image={user.image}
+                      email={user.email}
+                      about={user.about}
+                      telephone={user.telephone}
+                      pets={user.pets} //aca seguro hay que meter otro .name o algo asi
+                      place={user.place}
+                    />
+                  </div>
                 ))
               ) : (
                 <div role="status">
@@ -106,15 +120,26 @@ export default function TradePet() {
           2-Selecciona la mascota que quieres dar en adopcion
           {loggedUser.pets?.length ? (
             loggedUser.pets.map((pets) => (
-              <InAdoptionCards
-                key={pets._id}
-                idUser={loggedUser._id}
-                idPet={pets._id}
-                namePet={pets.name}
-                imagePet={pets.image}
-                isAdopted={pets.isAdopted}
-                pets={loggedUser.pets}
-              />
+              <div className="flex bg-gray-600 mt-2">
+                <InAdoptionCards
+                  key={pets._id}
+                  idUser={loggedUser._id}
+                  idPet={pets._id}
+                  namePet={pets.name}
+                  imagePet={pets.image}
+                  isAdopted={pets.isAdopted}
+                  pets={loggedUser.pets}
+                />
+                <label>
+                  <input
+                    onClick={(e) => checkboxHandler(e)}
+                    type="checkbox"
+                    id="cbox1"
+                  />{" "}
+                  seleccionar Mascota
+                </label>
+                <br />
+              </div>
             ))
           ) : (
             <div role="status">
@@ -138,6 +163,9 @@ export default function TradePet() {
         </div>
         <div className="bg-green-800 mt-2">
           3-adoptar copiando propiedades,borradologico,etc
+          <p>ownerID_LoggedUSER_ID: {loggedUser._id}</p>
+          <p>userID_AdopterUSER_ID : {}</p>
+          <p>petID: </p>
         </div>
       </div>
     </>

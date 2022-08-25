@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { React } from "react";
 
-export default function UserCard({
+export default function AdopterCard({
   _id,
   first_name,
   last_name,
@@ -15,14 +15,10 @@ export default function UserCard({
   pets,
   place,
 }) {
-  //const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(getUserDetail(_id));
-  //   return () => dispatch(clearState());
-  // }, [dispatch, _id]);  //LO COMENTE ANOCHE t borre dispatch de import
-
-  const pettit = pets;
-
+  function checkboxHandler(e) {
+    //e.preventDefault();
+    console.log(e.target.value,"CHECKBOXaDOPTER")
+  }
   return (
     <div
       id={_id}
@@ -43,16 +39,10 @@ export default function UserCard({
             <img src={ubicacion} alt="ubicacion" width="16px" />
             <span className="font-medium text-xs mx-3">{place}</span>
           </div>
-          
         </div>
       </div>
 
       <div className=" py-3 flex">
-        {/* <img
-          className="border-solid border-2 border-[#B99782]  w-96 bg-cover rounded"
-          src={image}
-          alt="ProfilePicture"
-        /> */}
         <div className=" bg-gray-200 flex w-52 flex-col content-around gap-9 justify-center items-center">
           <div className="text-sm flex">
             <div className="grid grid-cols-2 place-content-center">
@@ -74,6 +64,7 @@ export default function UserCard({
             </div>
           </div>
         </div>
+       
       </div>
     </div>
   );

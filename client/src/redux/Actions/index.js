@@ -248,3 +248,20 @@ export function getUserProfile(id) {
     }
   };
 }
+//ADOPT---------------
+export function tradePet (payload){
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(
+        `http://localhost:3001/home/adopt`,
+        payload
+      );
+      return dispatch({
+        type: actions.ADOPT,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
