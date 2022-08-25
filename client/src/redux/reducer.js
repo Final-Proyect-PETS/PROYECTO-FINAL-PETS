@@ -6,6 +6,8 @@ const initialState = {
   userDetail: [], //detail route
   petDetail: [], //detail route
   switchRender: [], //switch
+  token: null,
+  userProfile: [], //usuario loggeado
 };
 
 export default function rootReducer(state = initialState, { type, payload }) {
@@ -62,111 +64,53 @@ export default function rootReducer(state = initialState, { type, payload }) {
       return {
         ...state,
       };
+    case actions.POST_IMAGE:
+      return {
+        ...state,
+      };
     //CLEAR
     case actions.CLEAR_STATE:
       return {
         ...state,
         userDetail: {}, //seteas a 0 el estado de nuevo para una nueva peticion
       };
-      case actions.CLEAR_STATE_PET:
-        return {
-          ...state,
-          petDetail: {}, //seteas a 0 el estado de nuevo para una nueva peticion
-        };
+    case actions.CLEAR_STATE_PET:
+      return {
+        ...state,
+        petDetail: {}, //seteas a 0 el estado de nuevo para una nueva peticion
+      };
     //UDPDATE
     case actions.PATCH_USER:
       return {
         ...state,
         userDetail: payload,
       };
-      case actions.PATCH_PET:
-        return{
-           ...state,
-           petDetail: payload
-        }; 
+    case actions.PATCH_PET:
+      return {
+        ...state,
+        petDetail: payload,
+      };
     //FILTROS
     case actions.FILTER_BY_QUERY:
       return {
         ...state,
         pets: payload,
       };
-
-    // case actions.SORT_BY_DATE:
-    //   const date = payload === "asc" ? state.pets.sort(function(a, b) {
-    //     if (a.createdAt > b.createdAt){
-    //       return 0
-    //     }
-    //     if(b.createdAt > a.createdAt){
-    //       return -1
-    //     }
-    //     return 0
-    //   }) : state.pets.sort(function (a,b){
-    //     if (a.createdAt > b.createdAt){
-    //       return -1
-    //     }
-    //     return 0
-    //   })
-    //   return {
-    //     ...state,
-    //     pets: date
-    //   }
-    //   case actions.SORT_BY_AGE:
-    //     if(payload === "desc"){
-    //          const data = state.pets.sort((a, b) => b.age - a.age)
-    //          return {
-    //           ...state,
-    //           pets: data
-    //          }
-    //         }
-    //       if(payload === "asc"){
-    //         const data = state.pets.sort((a, b) => a.age - b.age)
-    //         return {
-    //           ...state,
-    //           pets: data
-    //         }
-    //       }
-    //       const age = payload === "asc" ? state.pets.sort(function(a, b) {
-    //         if (a.age > b.age){
-    //           return 1
-    //         }
-    //         if(b.age > a.age){
-    //           return -1
-    //         }
-    //         return 0
-    //       }) : state.pets.sort(function (a,b){
-    //         if (a.age > b.age){
-    //           return -1
-    //         }
-    //         return 0
-    //       })
-    //       return {
-    //         ...state,
-    //         pets: age,
-    //       }
-    //       const sortAge = payload === 'asc' ?
-    //       state.pets.sort(function (a, b) {
-    //           if (a.age > b.age) {
-    //               return 1
-    //           }
-    //           if (b.age > a.age) {
-    //               return -1
-    //           }
-    //           return 0
-    //       }) :
-    //       state.pets.sort(function (a, b) {
-    //           if (a.age > b.age) {
-    //               return -1
-    //           }
-    //           if (b.age > a.age) {
-    //               return 1
-    //           }
-    //           return 0
-    //       })
-    //   return {
-    //       ...state,
-    //       pets: sortAge
-    //   }
-
+    //LOGIN
+    case actions.USER_LOGIN:
+      return {
+        ...state,
+      };
+    case actions.USER_LOGIN_GOOGLE:
+      return {
+        ...state,
+      };
+    case actions.GET_USER_PROFILE:
+      return {
+        ...state,
+        userProfile: payload,
+      };
+      
     default:
       return state;
   }

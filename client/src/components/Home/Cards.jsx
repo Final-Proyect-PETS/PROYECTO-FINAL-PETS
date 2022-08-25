@@ -23,8 +23,6 @@ export default function Cards() {
 
   const switchRender = useSelector((state) => state.switchRender);
 
-  //Estado Local//-----------
-  // const [input, setInput] = useState("mascota");//lleve
 
   //PAGINADO-----------------------------------------------------------------------
   const [CurrentPag, setCurrentPag] = useState(1);
@@ -42,17 +40,7 @@ export default function Cards() {
   const fetchMoreData = async () => {
     setCardsPerPage(CardsPerPage + 6);
   };
-  //-------------------------------------------------------------------------------------------------
 
-  // function handleToogle(e) {
-  //   if (input === "mascota") {
-  //     setInput("usuario");
-  //     console.log(input, "DBusuario");
-  //   } else {
-  //     setInput("mascota");
-  //     console.log(input, "DBmascota");
-  //   }
-  // }//lleve
 
   return (
     <InfiniteScroll
@@ -109,6 +97,7 @@ export default function Cards() {
               about={user.about}
               telephone={user.telephone}
               pets={user.pets} //aca seguro hay que meter otro .name o algo asi
+              place={user.place}
             />
           ))
         )

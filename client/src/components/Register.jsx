@@ -1,10 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postUser, getAllUsers } from "../redux/Actions/index.js";
+import { postUser, getAllUsers, postImage } from "../redux/Actions/index.js";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { notificationSwal } from "../utils/notificationSwal.jsx";
 
 export default function Register() {
@@ -47,37 +46,34 @@ export default function Register() {
     );
   };
 
-  async function handleImage(e) {
+    async function handleImage(e) {
     const files = e.target.files;
     const data = new FormData();
     data.append("file", files[0]);
-    data.append("upload_preset", "prettyuser");
-    data.append("folder", "UserImages");
-    console.log(data.entries());
+    data.append("upload_preset", "pretty");
+    data.append("folder", "Images");
     setLoadingImage(true);
-    const res = await axios.post(
-      "https://api.cloudinary.com/v1_1/ferrifullstack/image/upload",
-      data
-    );
-    setImage(res.data.secure_url);
-    setInput({
-      ...input,
-      image: res.data.secure_url,
-    });
-    setErrors(
-      validate({
+    dispatch(postImage(data)).then((e) => {
+      setImage(e.payload);
+      setInput({
         ...input,
-        image: res.data.secure_url,
-      })
-    );
-    setLoadingImage(false);
+        image: e.payload,
+      });
+      setErrors(
+        validate({
+          ...input,
+          image: e.payload,
+        })
+      );
+      setLoadingImage(false);
+    });
   }
 
   function validate(input) {
     let errors = {};
 
     if (input.first_name) {
-      if (!/^[a-zA-Z]+$/.test(input.first_name)) {
+      if (!/^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1\s]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/g.test(input.first_name)) {
         errors.first_name = "El nombre solo puede tener letras";
       } else if (input.first_name.length > 20) {
         errors.first_name = "El nombre no puede tener más de 20 caracteres";
@@ -85,7 +81,7 @@ export default function Register() {
     } else errors.first_name = "El nombre es necesario";
 
     if (input.last_name) {
-      if (!/^[a-zA-Z]+$/.test(input.last_name)) {
+      if (!/^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1\s]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/g.test(input.last_name)) {
         errors.last_name = "El nombre solo puede tener letras";
       } else if (input.last_name.length > 20) {
         errors.last_name = "El nombre no puede tener más de 20 caracteres";
@@ -106,7 +102,7 @@ export default function Register() {
     } else errors.username = "El nombre de usuario es necesario";
 
     if (input.email) {
-      if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.email)) {
+      if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(input.email)) {
         errors.email = "El email debe ser valido!";
       } else if (users.find((u) => u.email === input.email.toLowerCase())) {
         errors.email = "El email ya esta registrado";
@@ -242,6 +238,7 @@ export default function Register() {
             <input
               type="file"
               name="image"
+              accept=".jpg, .png, .jpeg"
               onChange={(e) => handleImage(e)}
               placeholder="Imagen de perfil"
               className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
@@ -301,6 +298,7 @@ export default function Register() {
             <label className="font-light text-white text-xl">Telefono</label>
             <input
               name="telephone"
+              type="tel"
               value={input.telephone}
               onChange={(e) => handleChange(e)}
               placeholder="Telefono"
