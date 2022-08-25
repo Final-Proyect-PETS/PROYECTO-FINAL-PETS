@@ -9,7 +9,7 @@ const getPets = async (name) => {
         console.error(err);
     }
     try {
-        const arrayPets = await Pets.find().populate("user");
+        const arrayPets = await Pets.find({ deleted: false }).populate({ path: "user", match: { deleted: false } });
         if (name) {
             let petFound = arrayPets.filter(
                 (p) =>
@@ -36,7 +36,7 @@ const getUsers = async (name) => {
         console.error(err);
     }
     try {
-        const arrayUsers = await User.find().populate("pets");
+        const arrayUsers = await User.find({ deleted: false }).populate({ path: "pets", match: { deleted: false } });
         if (name) {
             let userFound = arrayUsers.filter(
                 (u) =>
@@ -63,7 +63,7 @@ const userId = async (id) => {
         console.error(err);
     }
     try {
-        const arrayUsers = await User.findById(id).populate("pets");
+        const arrayUsers = await User.findById(id).populate({ path: "pets", match: { deleted: false } });
         return arrayUsers;
     } catch (error) {
         console.error(error);
@@ -78,7 +78,7 @@ const petId = async (id) => {
         console.error(err);
     }
     try {
-        const pet = await Pets.findById(id).populate("user");
+        const pet = await Pets.findById(id).populate({ path: "user", match: { deleted: false } });
         return pet;
     } catch (error) {
         console.error(error);
