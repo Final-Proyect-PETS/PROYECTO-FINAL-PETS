@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { filterByQuery } from "../../redux/Actions";
-import SearchBar from "../SearchBar/SearchBar";
+import SearchBar from "../SearchBars/SearchBar";
 
 export default function SideBar() {
   const dispatch = useDispatch();

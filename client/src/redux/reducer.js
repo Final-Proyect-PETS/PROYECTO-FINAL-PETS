@@ -8,6 +8,7 @@ const initialState = {
   switchRender: [], //switch
   token: null,
   userProfile: [], //usuario loggeado
+  // adoptUsers
 };
 
 export default function rootReducer(state = initialState, { type, payload }) {

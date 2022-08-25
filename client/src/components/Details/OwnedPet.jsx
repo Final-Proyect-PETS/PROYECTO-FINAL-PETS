@@ -70,7 +70,7 @@ export default function OwnedPet({
               {loggedUser._id === userDetail._id ? (
                 adopt.isAdopted === false ? (
                   <div className="column items-center">
-                    {/* <Link to="/tradepet"> */}
+                    <Link to="/tradepet">
                     {/* link de mierda -------------------------------------------------------------------------*/}
                     <button
                       onClick={(e) => changeIDHandler(e)}
@@ -78,7 +78,7 @@ export default function OwnedPet({
                     >
                       TRASPASAR MASCOTA →
                     </button>
-                    {/* </Link> */}
+                    </Link>
                     {/* <Link to="/quitadopt/"> */}{" "}
                     {/* link de mierda*------------------------------------------------------------------- */}
                     <button
