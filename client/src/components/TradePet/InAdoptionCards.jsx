@@ -17,6 +17,7 @@ export default function InAdoptionCard({
  
   return (
     <>
+     
       <div className="flex items-center py-2 px-5 ">
         <div className=" flex border-2 border-yellow-700 rounded">
           <div className=" border-yellow-900 border-r-2  flex justify-between p-3 border items-center rounded bg-gray-300">

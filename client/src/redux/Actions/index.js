@@ -250,6 +250,7 @@ export function getUserProfile(id) {
 }
 //ADOPT---------------
 export function tradePet (payload){
+  console.log(payload)
   return async function (dispatch) {
     try {
       let json = await axios.patch(
