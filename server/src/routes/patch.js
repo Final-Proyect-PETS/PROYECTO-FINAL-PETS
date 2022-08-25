@@ -17,6 +17,7 @@ router.patch("/pets/:id", verifyToken, async (req, res, next) => {
     place,
     gender,
     isAdopted,
+    deleted
   } = req.body;
   try {
     const petPatch = await patchPet(
@@ -31,7 +32,8 @@ router.patch("/pets/:id", verifyToken, async (req, res, next) => {
       castrated,
       place,
       gender,
-      isAdopted
+      isAdopted,
+      deleted
     );
 
     res.status(201).send(petPatch);
@@ -50,6 +52,7 @@ router.patch("/users/:id", verifyToken, async (req, res, next) => {
     image,
     telephone,
     about,
+    deleted
   } = req.body;
   try {
     const userPatch = await patchUser(
@@ -61,7 +64,8 @@ router.patch("/users/:id", verifyToken, async (req, res, next) => {
       password,
       image,
       telephone,
-      about
+      about,
+      deleted
     );
     res.status(201).send(userPatch);
   } catch (error) {

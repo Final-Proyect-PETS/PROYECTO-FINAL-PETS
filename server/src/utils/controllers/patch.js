@@ -14,7 +14,8 @@ const patchPet = async (
   castrated,
   place,
   gender,
-  isAdopted
+  isAdopted,
+  deleted
 ) => {
   try {
     connection();
@@ -31,6 +32,7 @@ const patchPet = async (
       place,
       gender,
       isAdopted,
+      deleted
     });
     return onePet;
   } catch (err) {
@@ -47,7 +49,8 @@ async function patchUser(
   password,
   image,
   telephone,
-  about
+  about,
+  deleted
 ) {
   try {
     connection();
@@ -62,6 +65,7 @@ async function patchUser(
       image,
       telephone,
       about,
+      deleted
     });
     const userActualizado = User.findOne({ _id: id }).populate("pets");
     return userActualizado;

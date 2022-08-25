@@ -67,10 +67,10 @@ export default function Cards() {
           CurrentPages.map((pets) => (
             <Card
               key={pets._id}
-              idUser={pets.user["_id"]}
-              first_name={pets.user["first_name"]}
-              last_name={pets.user["last_name"]}
-              imageUser={pets.user["image"]}
+              idUser={pets.user?._id}
+              first_name={pets.user?.first_name}
+              last_name={pets.user?.last_name}
+              imageUser={pets.user?.image}
               idPet={pets._id}
               namePet={pets.name}
               imagePet={pets.image}
