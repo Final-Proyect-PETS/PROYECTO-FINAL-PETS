@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { /* useParams */ useNavigate } from "react-router-dom";
 import { patchPet, } from "../../redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import { notificationSwal } from "../../utils/notificationSwal.jsx";
@@ -42,7 +42,7 @@ function validateFrom(input) {
 }
 
 export default function UpdatePet() {
-  let { id } = useParams();
+  // let { id } = useParams();
   let navigate = useNavigate();
 
 

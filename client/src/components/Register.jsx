@@ -102,7 +102,7 @@ export default function Register() {
     } else errors.username = "El nombre de usuario es necesario";
 
     if (input.email) {
-      if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.email)) {
+      if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(input.email)) {
         errors.email = "El email debe ser valido!";
       } else if (users.find((u) => u.email === input.email.toLowerCase())) {
         errors.email = "El email ya esta registrado";

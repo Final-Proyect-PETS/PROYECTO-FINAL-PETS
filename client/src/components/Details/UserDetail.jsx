@@ -17,7 +17,6 @@ export default function UserDetail() {
   const loggedUser = useSelector((state) => state.userProfile);
   const userDetail = useSelector((state) => state.userDetail);
 
-
   return Object.keys(userDetail).length ? (
     <>
       <NavBar />
@@ -74,25 +73,15 @@ export default function UserDetail() {
             </div>
             <div className="grid grid-cols-3 mt-10 place-content-center ">
               {userDetail.pets?.length ? (
-                userDetail?.pets.map((pets) => (
+                userDetail.pets.map((pets) => (
                   <OwnedPet
                     key={pets._id}
-                    idUser={pets.user["_id"]}
-                    first_name={pets.user["first_name"]}
-                    last_name={pets.user["last_name"]}
-                    imageUser={pets.user["image"]}
+                    idUser={userDetail._id}
                     idPet={pets._id}
                     namePet={pets.name}
                     imagePet={pets.image}
-                    type={pets.type}
-                    place={pets.place}
-                    size={pets.size}
-                    description={pets.description}
-                    age={pets.age}
-                    vaccination={pets.vaccination}
-                    castrated={pets.castrated}
-                    gender={pets.gender}
                     isAdopted={pets.isAdopted}
+                    pets={userDetail.pets}
                   ></OwnedPet>
                 ))
               ) : (

@@ -2,44 +2,42 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getPetDetail, patchPet } from "../../redux/Actions";
-import { useEffect } from "react";
+import { patchPet } from "../../redux/Actions";
 
 export default function OwnedPet({
   idUser,
-  first_name,
-  last_name,
-  imageUser,
   idPet,
   namePet,
   imagePet,
-  place,
-  size,
-  gender,
   isAdopted,
+  pets,
 }) {
   const dispatch = useDispatch();
   const loggedUser = useSelector((state) => state.userProfile);
-  const allUsers = useSelector((state) => state.users);
 
   const [adopt, setAdopt] = useState({
     id: idPet,
     name: namePet,
     isAdopted: isAdopted,
-  }); //asaas
+  });
+  const [changeId, setChangeId] = useState({
+    idPetFromUserSchema: idPet, //sacado de userDetail.pets._id//
+    idUserFromUserSchema: idUser, //sacado de userDetail._id
+    isAdopted: isAdopted, //sacado de userDetail.pets.isAdopted
+  });
 
+  //---------------------------------------------------handler Cambiar Botones-----------------------------------------
   var payload = {
     id: idPet,
     name: namePet,
     isAdopted: isAdopted,
   };
   function patchAdoptionHandler(e) {
-     e.preventDefault();
+    e.preventDefault();
 
     if (adopt.isAdopted === true) {
       payload = { id: idPet, name: namePet, isAdopted: false };
       setAdopt({ id: idPet, name: namePet, isAdopted: false });
-      // dispatch(patchPet(adopt));
     } else {
       payload = { id: idPet, name: namePet, isAdopted: true };
       setAdopt({ id: idPet, name: namePet, isAdopted: true });
@@ -47,17 +45,15 @@ export default function OwnedPet({
     dispatch(patchPet(payload));
   }
 
+  //-------------------------------------------------handler para cambiar mascota de usuario-------------------------------------------------------------------
+  var payload2 = {
+    id: idPet, //para patch de ruta /:id
+  };
+
   function changeIDHandler(e) {
-    // let idAdoptante = "6304e6e4a3b3fc85c8b4feeb"; //Lautaro
-    // idUser = idAdoptante;
-    // setAdopt({
-    //   id: idPet,
-    //   name: namePet,
-    //   isAdopted: isAdopted,
-    //   idUser: idAdoptante,
-    // });
-    // dispatch(patchPet(adopt));
-    // loggedUser.pets.push(idPet);
+    // e.preventDefault();
+    let idAdoptante = "6304e6e4a3b3fc85c8b4feeb"; //Lautaro
+    //HACER NUEVA RUTA PATCH?????????????????
   }
 
   const userDetail = useSelector((state) => state.userDetail);
@@ -74,7 +70,7 @@ export default function OwnedPet({
               {loggedUser._id === userDetail._id ? (
                 adopt.isAdopted === false ? (
                   <div className="column items-center">
-                    {/* <Link to="/tradepet/"> */}{" "}
+                    {/* <Link to="/tradepet"> */}
                     {/* link de mierda -------------------------------------------------------------------------*/}
                     <button
                       onClick={(e) => changeIDHandler(e)}
