@@ -101,6 +101,10 @@ export default function rootReducer(state = initialState, { type, payload }) {
       return {
         ...state,
       };
+    case actions.USER_LOGIN_GOOGLE:
+      return {
+        ...state,
+      };
     case actions.GET_USER_PROFILE:
       return {
         ...state,
