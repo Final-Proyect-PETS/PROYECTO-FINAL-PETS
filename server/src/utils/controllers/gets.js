@@ -63,7 +63,7 @@ const userId = async (id) => {
         console.error(err);
     }
     try {
-        const arrayUsers = await User.findById(id).populate({ path: "pets", match: { deleted: false } });
+        const arrayUsers = await User.findOne({ _id: id, deleted: false }).populate({ path: "pets", match: { deleted: false } });
         return arrayUsers;
     } catch (error) {
         console.error(error);
@@ -78,7 +78,7 @@ const petId = async (id) => {
         console.error(err);
     }
     try {
-        const pet = await Pets.findById(id).populate({ path: "user", match: { deleted: false } });
+        const pet = await Pets.findOne({ _id: id, deleted: false }).populate({ path: "user", match: { deleted: false } });
         return pet;
     } catch (error) {
         console.error(error);
