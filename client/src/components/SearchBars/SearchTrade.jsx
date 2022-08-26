@@ -12,8 +12,6 @@ export default function SearchBar() {
     e.preventDefault();
     setNameUser(e.target.value);
     getUserNow(nameUser);
-    // console.log(e.target.value,"ETV")
-    // console.log(namePet, "inputState");//va uno atrasado//console.log para juancito------------------------------------------------------------
   }
 
   return (

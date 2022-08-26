@@ -171,7 +171,7 @@ export function patchPet(payload) {
         type: actions.PATCH_PET,
         payload: json.data,
       });
-      return("OK")
+      return "OK";
     } catch (error) {
       console.log(error);
     }

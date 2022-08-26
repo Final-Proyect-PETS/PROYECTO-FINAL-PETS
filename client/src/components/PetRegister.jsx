@@ -140,7 +140,6 @@ export default function RegisterPet() {
         errors.place = "La ubicación no puede tener más de 30 caracteres!";
       }
     } else errors.place = "La ubicación es requerida!";
-    //console.log(input);
 
     return errors;
   }
