@@ -11,6 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { notificationSwal } from "../../utils/notificationSwal.jsx";
 import Swal from "sweetalert2";
+import NavBar from "../NavBar/NavBar";
 
 export default function AdoptForm() {
   const dispatch = useDispatch();
@@ -99,67 +100,70 @@ export default function AdoptForm() {
   //     console.log(input)
   // }
   return (
-    <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
-      <div className="flex items-center mt-8 px-18 max-w-lg self-center">
-        <form
-          className="flex flex-col justift-content"
-          onSubmit={handlerSubmit}
-        >
-          {/* <button onClick={aaa}>console.log</button>   */}
-          <div>
-            <h1 className="text-5xl font-bold">
-              Envia una notificación al dueño mostrando tu interés
-            </h1>
-          </div>
-          <div className="flex flex-col mt-5 px-3 py-3 text-white bg-gray-500 rounded bg-opacity-50">
-            <h1 className="  text-black">Nombre Completo</h1>
-            <h1 className="text-3xl font-bold">
-              {loggedUser.first_name + " " + loggedUser.last_name}{" "}
-            </h1>
-          </div>
-          <div className="flex flex-col mt-5 px-3 py-3 text-white bg-gray-500 rounded bg-opacity-50">
-            <h1 className="  text-black">Usuario</h1>
-            <h1 className="text-3xl font-bold">{loggedUser.username}</h1>
-          </div>
-          <div className="flex flex-col mt-5 px-3 py-3 text-white bg-gray-500 rounded bg-opacity-50">
-            <h1 className="  text-black">Email</h1>
-            <h1 className="text-3xl font-bold">{loggedUser.email}</h1>
-          </div>
+    <>
+      <NavBar />
+      <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 shadow sm:px-6 md:px-8 lg:px-10">
+        <div className="flex items-center mt-8 px-18 max-w-lg self-center">
+          <form
+            className="flex flex-col justift-content"
+            onSubmit={handlerSubmit}
+          >
+            {/* <button onClick={aaa}>console.log</button>   */}
+            <div>
+              <h1 className="text-5xl font-bold">
+                Envia una notificación al dueño mostrando tu interés
+              </h1>
+            </div>
+            <div className="flex flex-col mt-5 px-3 py-3 text-white bg-gray-500 rounded bg-opacity-50">
+              <h1 className="  text-black">Nombre Completo:</h1>
+              <h1 className="text-3xl font-bold">
+                {loggedUser.first_name + " " + loggedUser.last_name}{" "}
+              </h1>
+            </div>
+            <div className="flex flex-col mt-5 px-3 py-3 text-white bg-gray-500 rounded bg-opacity-50">
+              <h1 className="  text-black">Usuario:</h1>
+              <h1 className="text-3xl font-bold">{loggedUser.username}</h1>
+            </div>
+            <div className="flex flex-col mt-5 px-3 py-3 text-white bg-gray-500 rounded bg-opacity-50">
+              <h1 className="  text-black">Email:</h1>
+              <h1 className="text-3xl font-bold">{loggedUser.email}</h1>
+            </div>
 
-          <div className="flex flex-col mt-5 px-3 py-3 text-white bg-gray-500 rounded bg-opacity-50">
-            <h1 className="  text-black">Telefono de contacto</h1>
-            <h1 className="text-3xl font-bold">{loggedUser.telephone}</h1>
-          </div>
+            <div className="flex flex-col mt-5 px-3 py-3 text-white bg-gray-500 rounded bg-opacity-50">
+              <h1 className="  text-black">Telefono de contacto:</h1>
+              <h1 className="text-3xl font-bold">{loggedUser.telephone}</h1>
+            </div>
 
-          <div className="flex flex-col mt-5 px-3 py-3 text-white bg-gray-500 rounded bg-opacity-50">
-            <h1 className="  text-black">Tu Mensaje:</h1>
+            <div className="flex flex-col mt-5 px-3 py-3 text-white bg-gray-500 rounded bg-opacity-50">
+              <h1 className="  text-black">Tu Mensaje:</h1>
 
-            <textarea
-              className="rounded"
-              name="message"
-              value={input.message}
-              placeholder="Mensaje para el dueño de la mascota..."
-              onChange={(ev) => handleChange(ev)}
-            ></textarea>
-          </div>
-          <div className="flex items-center ">
-            <h3>¿Algun dato es incorrecto?</h3>
-            <Link to="/updateuser">
-              <button className="bg-yellow-900 ml-10 mr-1 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-2 border border-yellow-700 rounded">
-                Editar perfil→
+              <textarea
+                className="rounded  text-black"
+                name="message"
+                value={input.message}
+                placeholder="Mensaje para el dueño de la mascota..."
+                onChange={(ev) => handleChange(ev)}
+              ></textarea>
+            </div>
+            <div className="flex items-center ">
+              <h3>¿Algun dato es incorrecto?</h3>
+              <Link to="/updateuser">
+                <button className="bg-yellow-900 ml-10 mr-1 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-2 border border-yellow-700 rounded">
+                  Editar perfil→
+                </button>
+              </Link>
+            </div>
+            <div className="flex justify-content py-3">
+              <button
+                type="submit"
+                className="bg-green-500 w-full hover:bg-yellow-500 text-white font-bold py-5 px-20 border border-yellow-700 rounded"
+              >
+                💌ENVIAR NOTIFICACIÓN DE ADOPCIÓN💌
               </button>
-            </Link>
-          </div>
-          <div className="flex justify-content py-3">
-            <button
-              type="submit"
-              className="bg-green-500 w-full hover:bg-yellow-500 text-white font-bold py-5 px-20 border border-yellow-700 rounded"
-            >
-              ENVIAR NOTIFICACIÓN DE ADOPCIÓN
-            </button>
-          </div>
-        </form>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

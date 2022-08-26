@@ -44,7 +44,7 @@ export default function NavBar() {
               data-dropdown-toggle="user-dropdown"
               data-dropdown-placement="bottom"
             >
-              <h4>
+              <h4 className=" text-white font-bold">
                 {user.first_name} {user.last_name}
               </h4>
               <img
@@ -56,7 +56,9 @@ export default function NavBar() {
           </Link>
           <div>
             <button onClick={removeToken}>
-              <Link to="/">Logout</Link>
+              <Link to="/">
+                <h4 className=" text-white">Cerrar Sesión</h4>
+              </Link>
             </button>
           </div>
           {/* <!-- Dropdown menu --> */}
@@ -72,8 +74,7 @@ export default function NavBar() {
                 name@flowbite.com
               </span>
             </div>
-            <ul className="py-1" aria-labelledby="user-menu-button">
-            </ul>
+            <ul className="py-1" aria-labelledby="user-menu-button"></ul>
           </div>
           <button
             data-collapse-toggle="mobile-menu-2"

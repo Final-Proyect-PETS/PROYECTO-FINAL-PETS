@@ -17,10 +17,8 @@ export default function UserDetail() {
   const loggedUser = useSelector((state) => state.userProfile);
   const userDetail = useSelector((state) => state.userDetail);
 
-
   console.log("MI PERFIL", loggedUser);
   console.log("USERdetail-", userDetail);
-
 
   return Object.keys(userDetail).length ? (
     <>
@@ -38,7 +36,7 @@ export default function UserDetail() {
                 <h1 className="text-5xl font-bold">
                   {userDetail.first_name + " " + userDetail.last_name}
                 </h1>
-                <h3 className="text-2xl ">{`"${userDetail.username}"`}</h3>
+                <h3 className="text-2xl">{`"${userDetail.username}"`}</h3>
                 <h3 className="text-2xl font-bold">
                   Tel:{userDetail.telephone}
                 </h3>
@@ -49,26 +47,33 @@ export default function UserDetail() {
                 <h3 className="text-2xl ">{userDetail.about}</h3>
                 <div>
                   {loggedUser._id === userDetail._id ? (
-                    <Link to="/petregister">
-                      <button className="py-2 mt-5 px-4 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
-                        Crear nueva mascota
-                      </button>
-                    </Link>
+                    <div className="flex">
+                      <Link to="/petregister">
+                        <button className="py-2 mt-5 px-4 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                          📝Crear nueva mascota
+                        </button>
+                      </Link>
+                      <Link to="/updateuser">
+                        <button className="py-2 mt-5 ml-5 px-4 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                          ✏️Editar Perfil
+                        </button>
+                      </Link>
+                    </div>
                   ) : (
                     <></>
                   )}
                 </div>
               </div>
               <div className="ml-3">
-                {loggedUser._id === userDetail._id ? (
+                {/* {loggedUser._id === userDetail._id ? (
                   <Link to="/updateuser">
                     <button className="py-2 mt-5 px-4 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
-                      🖍Editar
+                    ✏️Editar Perfil
                     </button>
                   </Link>
                 ) : (
                   <></>
-                )}
+                )} */}
               </div>
             </div>
           </div>
