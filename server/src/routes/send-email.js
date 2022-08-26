@@ -23,10 +23,10 @@ router.post('/sendemail',async(req,res)=>{
     <img src = "https://cdn-icons-png.flaticon.com/512/194/194279.png" style="width:100px;"/>
     <h1>Info del usuario</h1> 
     <ul>
-        <li>Nombre:${adopter_name}</li>
-        <li>Nombre de usuario:${adopter_username}</li>
-        <li>Email:${adopter_email}</li>
-        <li>Telefono:${adopter_telephone}</li>
+        <li>Nombre: ${adopter_name}</li>
+        <li>Nombre de usuario: ${adopter_username}</li>
+        <li> Email: ${adopter_email}</li>
+        <li>Telefono: ${adopter_telephone}</li>
     </ul>
     <p>${message}</p>`
 
