@@ -20,7 +20,7 @@ export default function Donation() {
   }, [dispatch, id]);
 
   //setear el boton deshabilitado una vez clickeado
-  const [activeButton, setActive] =useState(false)
+  const [activeButton, setActive] =useState(true)
 
   function handleClick(e) {
     e.preventDefault()
@@ -59,13 +59,14 @@ export default function Donation() {
         </div>
         <div className="flex justify-center items-center gap-4">
           <h2 className="text-xl">
-            Podes donar haciendo click en el siguiente botón:
+            Podes donar generando un link de pago haciendo click en el siguiente botón:
           </h2>
           <button className="py-4 px-4 bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-600 focus:ring-offset-yellow-600 text-white w-44 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
           onClick={(e) => handleClick(e)} disabled={!activeButton}
           >
-            Donar
+            Donar $100
           </button>
+          <div id='form1'></div>
         </div>
       </div>
     </div>

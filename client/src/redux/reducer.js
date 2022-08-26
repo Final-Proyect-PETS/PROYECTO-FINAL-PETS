@@ -9,6 +9,7 @@ const initialState = {
   token: null,
   userProfile: [], //usuario loggeado
   tradePet: [],
+  payment: {},
 };
 
 export default function rootReducer(state = initialState, { type, payload }) {
