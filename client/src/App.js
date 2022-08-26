@@ -17,6 +17,7 @@ import PrivateAdmin from "./components/PrivateRoute.js/PrivateAdmin";
 import AdminView from "./components/AdminView/AdminView";
 import Donation from "./components/Donaciones/Donation";
 import TradePet from "./components/TradePet/TradePet";
+import AdoptForm from "./components/AdoptForm/AdoptForm";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -39,6 +40,7 @@ function App() {
           <Route path={"/updateuser"} element={<UpdateUser />} />
           <Route path={"/updatepet"} element={<UpdatePet />} />
           <Route path={"/tradepet"} element={<TradePet />} />
+          <Route path={"/adopt/:id"} element={<AdoptForm />} />
           <Route path={"*"} element={<Error404 />} />
         </Route>
         <Route element={<PrivateAdmin />}>
