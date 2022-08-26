@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { /* useParams */ useNavigate } from "react-router-dom";
-import { patchPet, } from "../../redux/Actions/index";
+import { patchPet } from "../../redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import { notificationSwal } from "../../utils/notificationSwal.jsx";
 import { Link } from "react-router-dom";
@@ -44,7 +44,6 @@ function validateFrom(input) {
 export default function UpdatePet() {
   // let { id } = useParams();
   let navigate = useNavigate();
-
 
   const dispatch = useDispatch();
   const upDatePet = useSelector((state) => state.petDetail);
@@ -159,7 +158,7 @@ export default function UpdatePet() {
       place: upDatePet.place,
     });
 
-    navigate(`/pet/${upDatePet._id}`, { replace: true })
+    navigate(`/pet/${upDatePet._id}`, { replace: true });
   }
   return (
     <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
@@ -167,7 +166,6 @@ export default function UpdatePet() {
         Edita los datos de tu mascota
       </div>
       <div className="mt-8 px-8 max-w-lg self-center">
-
         <form onSubmit={(e) => handleUpDate(e)}>
           <div>
             <label className="font-light text-white text-xl">Nombre</label>
@@ -178,7 +176,11 @@ export default function UpdatePet() {
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
-            {errors.name && <p className="font-bold text-red-700 text-center p-2">{errors.name}</p>}
+            {errors.name && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.name}
+              </p>
+            )}
 
             <label className="font-light text-white text-xl">Imagen</label>
             <input
@@ -188,15 +190,38 @@ export default function UpdatePet() {
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
-            {errors.image && <p className="font-bold text-red-700 text-center p-2">{errors.image}</p>}
+            {errors.image && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.image}
+              </p>
+            )}
 
             <label className="font-light text-white text-xl">Tipo</label>
-            <select  name="type" onChange={(e) => handleChangeSelect(e)}>
-              <option value="dog" selected={input.type === "dog" ? true:false}>Perro</option>
-              <option value="cat" selected={input.type === "cat" ? true:false}>Gato</option>
-              <option value="other" selected={input.type === "other" ? true:false}>Otro</option>
+            <select name="type" onChange={(e) => handleChangeSelect(e)}>
+              <option
+                value="dog"
+                selected={input.type === "dog" ? true : false}
+              >
+                Perro
+              </option>
+              <option
+                value="cat"
+                selected={input.type === "cat" ? true : false}
+              >
+                Gato
+              </option>
+              <option
+                value="other"
+                selected={input.type === "other" ? true : false}
+              >
+                Otro
+              </option>
             </select>
-            {errors.type && <p className="font-bold text-red-700 text-center p-2">{errors.type}</p>}
+            {errors.type && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.type}
+              </p>
+            )}
             <label className="font-light text-white text-xl">Descripción</label>
             <textarea
               type="text"
@@ -205,15 +230,38 @@ export default function UpdatePet() {
               onChange={(e) => handleChange(e)}
               className="w-full py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent resize-none"
             />
-            {errors.description && <p className="font-bold text-red-700 text-center p-2">{errors.description}</p>}
+            {errors.description && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.description}
+              </p>
+            )}
 
             <label className="font-light text-white text-xl">Tamaño</label>
             <select name="size" onChange={(e) => handleChangeSelect(e)}>
-              <option value="big" selected={input.size === "big" ? true:false}>Grande</option>
-              <option value="medium" selected={input.size === "medium" ? true:false}>Mediano</option>
-              <option value="small" selected={input.size === "small" ? true:false}>Chico</option>
+              <option
+                value="big"
+                selected={input.size === "big" ? true : false}
+              >
+                Grande
+              </option>
+              <option
+                value="medium"
+                selected={input.size === "medium" ? true : false}
+              >
+                Mediano
+              </option>
+              <option
+                value="small"
+                selected={input.size === "small" ? true : false}
+              >
+                Chico
+              </option>
             </select>
-            {errors.size && <p className="font-bold text-red-700 text-center p-2">{errors.size}</p>}
+            {errors.size && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.size}
+              </p>
+            )}
             <label className="font-light text-white text-xl">Edad</label>
             <input
               type="text"
@@ -222,42 +270,97 @@ export default function UpdatePet() {
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
-            {errors.age && <p className="font-bold text-red-700 text-center p-2">{errors.age}</p>}
+            {errors.age && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.age}
+              </p>
+            )}
             <label className="font-light text-white text-xl">Vacunado</label>
             <select name="vaccination" onChange={(e) => handleChangeSelect(e)}>
-              <option value="yes" selected={input.vaccination === "yes" ? true:false}>Sí</option>
-              <option value="no" selected={input.vaccination === "no" ? true:false}>No</option>
-              <option value="unknown" selected={input.vaccination === "unknown" ? true:false}>No sé</option>
+              <option
+                value="yes"
+                selected={input.vaccination === "yes" ? true : false}
+              >
+                Sí
+              </option>
+              <option
+                value="no"
+                selected={input.vaccination === "no" ? true : false}
+              >
+                No
+              </option>
+              <option
+                value="unknown"
+                selected={input.vaccination === "unknown" ? true : false}
+              >
+                No sé
+              </option>
             </select>
-            {errors.vaccination && <p className="font-bold text-red-700 text-center p-2">{errors.vaccination}</p>}
+            {errors.vaccination && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.vaccination}
+              </p>
+            )}
             <label className="font-light text-white text-xl">Castrado</label>
             <select name="castrated" onChange={(e) => handleChangeSelect(e)}>
-              <option value="true" selected={input.castrated === "true" ? true:false}>Sí</option>
-              <option value="false" selected={input.castrated === "false" ? true:false}>No</option>
+              <option
+                value="true"
+                selected={input.castrated === "true" ? true : false}
+              >
+                Sí
+              </option>
+              <option
+                value="false"
+                selected={input.castrated === "false" ? true : false}
+              >
+                No
+              </option>
             </select>
-            {errors.castrated && <p className="font-bold text-red-700 text-center p-2">{errors.castrated}</p>}
+            {errors.castrated && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.castrated}
+              </p>
+            )}
             <label className="font-light text-white text-xl">Ubicacion</label>
             <input
               type="text"
               name="place"
-              placeholder={input.place}              
+              placeholder={input.place}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
-            {errors.place && <p className="font-bold text-red-700 text-center p-2">{errors.place}</p>}
+            {errors.place && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.place}
+              </p>
+            )}
           </div>
-          {errors.name||errors.image||errors.type||errors.size||errors.age||errors.vaccination||errors.castrated||errors.place?
+          {errors.name ||
+          errors.image ||
+          errors.type ||
+          errors.size ||
+          errors.age ||
+          errors.vaccination ||
+          errors.castrated ||
+          errors.place ? (
             <h3>missing required fields</h3>
-            :<button type="submit" className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Actualizar</button>
-          }
+          ) : (
+            <button
+              type="submit"
+              className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+            >
+              Actualizar
+            </button>
+          )}
         </form>
         <div>
           <Link to={`/pet/${upDatePet._id}`}>
-            <button className="py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Regresar</button>
+            <button className="py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+              Regresar
+            </button>
           </Link>
         </div>
       </div>
     </div>
-
   );
 }

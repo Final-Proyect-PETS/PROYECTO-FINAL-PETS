@@ -82,7 +82,7 @@ export default function UserDetail() {
                     imagePet={pets.image}
                     isAdopted={pets.isAdopted}
                     pets={userDetail.pets}
-                  isDeleted={pets.deleted}
+                    isDeleted={pets.deleted}
                   ></OwnedPet>
                 ))
               ) : (

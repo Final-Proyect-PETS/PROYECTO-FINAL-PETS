@@ -45,8 +45,9 @@ export default function PetDetail() {
             // width="500px"
             className="w-96"
           />
-          <h2 className="font-semibold">Descripción: {petDetail.description}</h2>
-         
+          <h2 className="font-semibold">
+            Descripción: {petDetail.description}
+          </h2>
         </div>
 
         <div className="flex flex-col w-1/2">

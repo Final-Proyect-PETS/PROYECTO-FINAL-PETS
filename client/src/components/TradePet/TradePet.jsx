@@ -50,8 +50,11 @@ export default function TradePet() {
         <div className="px-1">
           <div className="bg-gray-600 mt-2">
             <div className=" opacity-90 h-1/3 bg-red-500 mt-2">
-            <h3 className="text-2xl ">   1-Selecciona el usuario a quien darás tu mascota (nuevo dueño).</h3> 
-              
+              <h3 className="text-2xl ">
+                {" "}
+                1-Selecciona el usuario a quien darás tu mascota (nuevo dueño).
+              </h3>
+
               <div className="">
                 <SearchTrade />
               </div>
@@ -111,8 +114,10 @@ export default function TradePet() {
         </div>
 
         <div className="bg-yellow-600 opacity-90 h-1/3 mt-2 px-2">
-        
-        <h3 className="text-2xl ">   2-Selecciona la mascota que quieres dar en adopcion.</h3> 
+          <h3 className="text-2xl ">
+            {" "}
+            2-Selecciona la mascota que quieres dar en adopcion.
+          </h3>
           <form action="">
             {loggedUser.pets?.length ? (
               loggedUser.pets.map((pets) => (
@@ -160,9 +165,11 @@ export default function TradePet() {
           </form>
         </div>
         <div className=" flex flex-col px-2 h-1/3 items-center bg-green-800 opacity-90 mt-2">
-        
-        <h3 className="text-2xl "> 3-Revisa tus selecciones y cuando estes seguro, pulsa el botón.</h3> 
-          
+          <h3 className="text-2xl ">
+            {" "}
+            3-Revisa tus selecciones y cuando estes seguro, pulsa el botón.
+          </h3>
+
           <button
             className="opacity-100 bg-yellow-600 mt-4 hover:bg-green-900 text-white font-bold py-6 px-1 border border-yellow-700 rounded"
             onClick={(e) => submitHandler(e)}

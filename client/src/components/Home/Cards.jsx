@@ -23,7 +23,6 @@ export default function Cards() {
 
   const switchRender = useSelector((state) => state.switchRender);
 
-
   //PAGINADO-----------------------------------------------------------------------
   const [CurrentPag, setCurrentPag] = useState(1);
 
@@ -40,7 +39,6 @@ export default function Cards() {
   const fetchMoreData = async () => {
     setCardsPerPage(CardsPerPage + 6);
   };
-
 
   return (
     <InfiniteScroll

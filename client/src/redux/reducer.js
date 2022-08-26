@@ -111,12 +111,12 @@ export default function rootReducer(state = initialState, { type, payload }) {
         ...state,
         userProfile: payload,
       };
-      //ADOPT
-      case actions.ADOPT:
-        return{
-          ...state,
-          tradePet:payload
-        }
+    //ADOPT
+    case actions.ADOPT:
+      return {
+        ...state,
+        tradePet: payload,
+      };
     default:
       return state;
   }
