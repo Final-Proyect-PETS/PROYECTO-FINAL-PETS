@@ -4,7 +4,7 @@ import NavBar from "../NavBar/NavBar";
 import SearchTrade from "../SearchBars/SearchTrade";
 import { getAllUsers, tradePet } from "../../redux/Actions/index";
 import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AdopterCard from "./AdopterCard";
 import InAdoptionCards from "./InAdoptionCards";
 import "../LandingPage.css";

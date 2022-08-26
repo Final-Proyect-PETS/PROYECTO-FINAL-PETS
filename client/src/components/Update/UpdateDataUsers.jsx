@@ -51,7 +51,7 @@ function validateFrom(input) {
 export default function UpdateUser() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const upDateUser = useSelector((state) => state.userDetail);
+  const upDateUser = useSelector((state) => state.userProfile);
 
   const [errors, setErrors] = useState({});
 
