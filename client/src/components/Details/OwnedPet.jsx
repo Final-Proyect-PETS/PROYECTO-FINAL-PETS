@@ -3,27 +3,31 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { patchPet } from "../../redux/Actions";
-
+import { useNavigate } from "react-router-dom";
+import { notificationSwal } from "../../utils/notificationSwal.jsx";
+import Swal from "sweetalert2";
 export default function OwnedPet({
   idUser,
   idPet,
   namePet,
   imagePet,
   isAdopted,
-  pets,
+  isDeleted,
 }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const loggedUser = useSelector((state) => state.userProfile);
+  const userDetail = useSelector((state) => state.userDetail);
 
   const [adopt, setAdopt] = useState({
     id: idPet,
     name: namePet,
     isAdopted: isAdopted,
   });
-  const [changeId, setChangeId] = useState({
-    idPetFromUserSchema: idPet, //sacado de userDetail.pets._id//
-    idUserFromUserSchema: idUser, //sacado de userDetail._id
-    isAdopted: isAdopted, //sacado de userDetail.pets.isAdopted
+
+  const [deleted, setDeleted] = useState({
+    id: idPet,
+    deleted: isDeleted,
   });
 
   //---------------------------------------------------handler Cambiar Botones-----------------------------------------
@@ -45,18 +49,27 @@ export default function OwnedPet({
     dispatch(patchPet(payload));
   }
 
-  //-------------------------------------------------handler para cambiar mascota de usuario-------------------------------------------------------------------
-  var payload2 = {
-    id: idPet, //para patch de ruta /:id
+  //-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-DELETE-x-x-x-x-x-x-x--x-x-x-x--x-x
+  var payloadDelete = {
+    id: idPet,
+    deleted: isDeleted,
   };
 
-  function changeIDHandler(e) {
-    // e.preventDefault();
-    let idAdoptante = "6304e6e4a3b3fc85c8b4feeb"; //Lautaro
-    //HACER NUEVA RUTA PATCH?????????????????
+  function deleteHandler(e) {
+    e.preventDefault();
+    setDeleted({
+      id: idPet,
+      deleted: true,
+    });
+    payloadDelete = {
+      id: idPet,
+      deleted: true,
+    };
+    dispatch(patchPet(payloadDelete));
+    // alert("eliminando mascota");
+    navigate("/home", { replace: true });  //oponer sweet
   }
 
-  const userDetail = useSelector((state) => state.userDetail);
   return (
     <>
       <div className="flex items-center py-4 px-5 ">
@@ -68,49 +81,63 @@ export default function OwnedPet({
               </div>
 
               {loggedUser._id === userDetail._id ? (
-                adopt.isAdopted === false ? (
-                  <div className="column items-center">
-                    <Link to="/tradepet">
-                    {/* link de mierda -------------------------------------------------------------------------*/}
+                adopt.isAdopted === false && deleted.deleted === false ? (
+                  <div className="column justify-content items-center">
+                    <div className="flex justify-content items-center">
+                      <Link to="/tradepet">
+                        <button className="bg-yellow-900 mr-1 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-2 border border-yellow-700 rounded">
+                          <h2 className="font-semibold"> TRASPASAR MASCOTA</h2>
+                        </button>
+                      </Link>
+                      <button
+                        onClick={(e) => patchAdoptionHandler(e)}
+                        className="bg-yellow-900 mt-4 hover:bg-red-700 text-white font-bold py-2 px-2 border border-yellow-700 rounded"
+                      >
+                        QUITAR DE ADOPCIÓN
+                      </button>
+                    </div>
                     <button
-                      onClick={(e) => changeIDHandler(e)}
-                      className="bg-yellow-900 mr-4 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-4 border border-yellow-700 rounded"
+                      onClick={(e) => deleteHandler(e)}
+                      className="bg-yellow-900 ml-1 mt-4 hover:bg-red-700 text-white font-bold py-1 px-6 border border-yellow-700 rounded"
                     >
-                      TRASPASAR MASCOTA →
+                      ELIMINAR MASCOTA
                     </button>
-                    </Link>
-                    {/* <Link to="/quitadopt/"> */}{" "}
-                    {/* link de mierda*------------------------------------------------------------------- */}
-                    <button
-                      onClick={(e) => patchAdoptionHandler(e)}
-                      className="bg-yellow-900 mt-4 hover:bg-red-700 text-white font-bold py-2 px-4 border border-yellow-700 rounded"
-                    >
-                      QUITAR DISPONIBILIDAD
-                    </button>
-                    {/* </Link> */}
                   </div>
                 ) : (
-                  <button
-                    onClick={(e) => patchAdoptionHandler(e)}
-                    className="bg-yellow-900 mt-4 hover:bg-green-900 text-white font-bold py-2 px-4 border border-yellow-700 rounded"
-                  >
-                    PUBLICAR EN ADOPCION
-                  </button>
+                  <div className="column justify-content items-center">
+                    <button
+                      onClick={(e) => patchAdoptionHandler(e)}
+                      className="bg-yellow-900 mt-4 hover:bg-green-900 text-white font-bold py-6 px-1 border border-yellow-700 rounded"
+                    >
+                      PONER EN ADOPCIÓN
+                    </button>
+                    <button
+                      onClick={(e) => deleteHandler(e)}
+                      className="bg-yellow-900 mt-4 hover:bg-red-700 text-white font-bold py-2 px-2 border border-yellow-700 rounded"
+                    >
+                      ELIMINAR MASCOTA
+                    </button>
+                  </div>
                 )
               ) : loggedUser._id !== userDetail._id &&
-                adopt.isAdopted === false ? (
-                <div className="column items-center">
-                  <Link to="/adopt/">
+                adopt.isAdopted === false &&
+                deleted.deleted === false ? (
+                <div className="flex flex-col items-center">
+                  <Link to={`/pet/${idPet}`}>
                     {/* link de mierda -------------------------------------------------------------------------*/}
                     <button className="bg-yellow-900 mr-4 mt-4 hover:bg-green-900 text-white font-bold py-2 px-4 border border-yellow-700 rounded">
-                      ADOPTAR
+                      <h2 className="font-semibold">
+                        {" "}
+                        ¡Mascota esta en adopcion!
+                      </h2>
+                      <h2 className=""> VER PERFIL</h2>
                     </button>
                   </Link>
                 </div>
               ) : (
-                <Link to="/home">
+                <Link to={`/pet/${idPet}`}>
                   <button className="bg-yellow-900 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-4 border border-yellow-700 rounded">
-                    TENGO DUEÑO
+                    VER PERFIL
                   </button>
                 </Link>
               )}
