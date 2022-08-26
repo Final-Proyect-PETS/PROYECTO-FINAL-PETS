@@ -32,7 +32,7 @@ const patchPet = async (
       place,
       gender,
       isAdopted,
-      deleted
+      deleted,
     });
     return onePet;
   } catch (err) {
@@ -65,7 +65,7 @@ async function patchUser(
       image,
       telephone,
       about,
-      deleted
+      deleted,
     });
     const userActualizado = User.findOne({ _id: id }).populate("pets");
     return userActualizado;
