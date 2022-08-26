@@ -17,10 +17,8 @@ export const POST_USER = "POST_USER";
 
 export const POST_IMAGE = "POST_IMAGE";
 //UPDATE----------------
-
 export const POST_ADOPTION = "POST_ADOPTION"; //OK
 //THE UPDATE----------------
-
 export const PATCH_USER = "PATCH_USER";
 export const PATCH_PET = "PATCH_PET";
 //FILTERS -----------------
@@ -31,3 +29,4 @@ export const GET_USER_PROFILE = "GET_USER_PROFILE";
 export const USER_LOGIN_GOOGLE = "USER_LOGIN_GOOGLE";
 //ADOPT ------------------
 export const ADOPT = "ADOPT";
+export const ADOPT_EMAIL = "ADOPT_EMAIL";

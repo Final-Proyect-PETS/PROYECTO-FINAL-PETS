@@ -16,17 +16,13 @@ export default function AdopterCard({
   place,
 }) {
   function checkboxHandler(e) {
-   
-    console.log(e.target.value,"CHECKBOXaDOPTER")
+    console.log(e.target.value, "CHECKBOXaDOPTER");
   }
   return (
     <div
       id={_id}
       className="rounded overflow-hidden border border-[#B99782] w-full bg-white my-2 md:mx-0 lg:mx-0"
     >
-
-
-
       <div className="w-full flex justify-between p-3 border-b items-center bg-[#B99782]">
         <div className="flex items-center">
           <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
@@ -67,7 +63,6 @@ export default function AdopterCard({
             </div>
           </div>
         </div>
-       
       </div>
     </div>
   );

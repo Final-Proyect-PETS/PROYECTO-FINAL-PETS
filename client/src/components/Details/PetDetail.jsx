@@ -12,8 +12,6 @@ export default function PetDetail() {
   const petDetail = useSelector((state) => state.petDetail);
   const loggedUser = useSelector((state) => state.userProfile);
 
-  console.log(petDetail, "PETDETAIL");
-
   useEffect(() => {
     dispatch(clearStatePet());
     dispatch(getPetDetail(id));
@@ -45,8 +43,9 @@ export default function PetDetail() {
             // width="500px"
             className="w-96"
           />
-          <h2 className="font-semibold">Descripción: {petDetail.description}</h2>
-         
+          <h2 className="font-semibold">
+            Descripción: {petDetail.description}
+          </h2>
         </div>
 
         <div className="flex flex-col w-1/2">
@@ -105,11 +104,11 @@ export default function PetDetail() {
                       PERFIL DEL DUEÑO
                     </button>
                   </Link>
-                  {/* <Link to="/adopt/">
+                  {/* { <Link to={`/adopt/${petDetail._id}`}>
                   <button className="py-2 px-4 my-4 w-full ml-2 bg-yellow-900 hover:bg-green-700 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
                     LO QUIERO!
                   </button>
-                </Link> */}
+                </Link> } */}
                 </div>
               ) : (
                 <div className="flex flex-col justify-center items-center">
@@ -123,7 +122,7 @@ export default function PetDetail() {
                         PERFIL DEL DUEÑO
                       </button>
                     </Link>
-                    <Link to="/adopt/">
+                    <Link to={`/adopt/${petDetail._id}`}>
                       <button className="py-2 px-4 my-2 mb-5  w-full ml-2 bg-yellow-900 hover:bg-green-700 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
                         LO QUIERO!
                       </button>

@@ -59,7 +59,6 @@ export default function OwnedPet({
   };
 
   function deleteHandler(e) {
-    console.log("boton apretado")
     e.preventDefault();
     setDeleted({
       id: idPet,
@@ -70,7 +69,7 @@ export default function OwnedPet({
       deleted: true,
     };
     // dispatch(patchPet(payloadDelete));
-  
+
     if (true) {
       Swal.fire({
         title: "¿Está seguro de que desea eliminar esta mascota?",
@@ -79,34 +78,36 @@ export default function OwnedPet({
         showCancelButton: true,
         cancelButtonText: "No",
         confirmButtonText: "Sí",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          dispatch(patchPet(payloadDelete)).then((e) => {
-            if (e === "OK") {
-              notificationSwal(
-                "¡Enhorabuena!",
-                "Mascota eliminada con éxito",
-                "success",
-                "Ok"
-              );
-            } else {
-              notificationSwal(
-                "¡Ooops!",
-                "No se pudo eliminar la mascota, intente mas tarde",
-                "error",
-                "Cancel"
-              );
-            }
-          });
-        } else {
-          notificationSwal(
-            "Operación cancelada",
-            "Mascota no eliminada",
-            "error",
-            "Cancel"
-          );
-        }
-      }).then(()=>navigate(`/users/${idUser}`, { replace: true }))
+      })
+        .then((result) => {
+          if (result.isConfirmed) {
+            dispatch(patchPet(payloadDelete)).then((e) => {
+              if (e === "OK") {
+                notificationSwal(
+                  "¡Enhorabuena!",
+                  "Mascota eliminada con éxito",
+                  "success",
+                  "Ok"
+                );
+              } else {
+                notificationSwal(
+                  "¡Ooops!",
+                  "No se pudo eliminar la mascota, intente mas tarde",
+                  "error",
+                  "Cancel"
+                );
+              }
+            });
+          } else {
+            notificationSwal(
+              "Operación cancelada",
+              "Mascota no eliminada",
+              "error",
+              "Cancel"
+            );
+          }
+        })
+        .then(() => navigate(`/users/${idUser}`, { replace: true }));
     } //oponer sweet
   }
 

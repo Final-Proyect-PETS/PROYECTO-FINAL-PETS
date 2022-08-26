@@ -117,6 +117,12 @@ export default function rootReducer(state = initialState, { type, payload }) {
           ...state,
           tradePet:payload
         }
+      case actions.ADOPT_EMAIL:
+        return{
+          ...state,
+          userDetail:payload
+        }
+
     default:
       return state;
   }
