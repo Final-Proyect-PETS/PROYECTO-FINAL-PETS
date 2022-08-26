@@ -16,8 +16,21 @@ export default function SideBar() {
     pet_type: "all",
     pet_size: "all",
     gender: "all",
+    is_adopted:"no",
   });
-
+  function handlerFilterIsAdopted(ev) {
+    ev.preventDefault();
+    dispatch(
+      filterByQuery({
+        ...filterParams,
+        is_adopted: ev.target.value,
+      })
+    );
+    setFilterParams({
+      ...filterParams,
+      is_adopted: ev.target.value,
+    });
+  }
   function handlerFilterPublicationAge(ev) {
     ev.preventDefault();
     dispatch(
@@ -205,6 +218,16 @@ export default function SideBar() {
           <option hidden>GENERO DE LA MASCOTA</option>
           <option value="male">Macho</option>
           <option value="female">Hembra</option>
+        </select>
+      </div>
+      <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
+        <select
+          className="bg-gray-200 font-semibold p-2"
+          onChange={(ev) => handlerFilterIsAdopted(ev)}
+        >
+          <option hidden>¿YA ADOPTADO?</option>
+          <option value="yes">Si</option>
+          <option value="no">No</option>
         </select>
       </div>
       <Link to="/petregister">
