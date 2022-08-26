@@ -30,3 +30,4 @@ export const USER_LOGIN_GOOGLE = "USER_LOGIN_GOOGLE";
 //ADOPT ------------------
 export const ADOPT = "ADOPT";
 export const ADOPT_EMAIL = "ADOPT_EMAIL";
+export const INTERESTED_USERS = "INTERESTED_USERS"

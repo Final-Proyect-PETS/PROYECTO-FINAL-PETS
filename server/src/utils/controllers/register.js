@@ -8,7 +8,8 @@ async function register(
   password,
   image,
   telephone,
-  about
+  about,
+  interestedUsers,
 ) {
   try {
     const post = new User({
@@ -20,6 +21,7 @@ async function register(
       image,
       telephone,
       about,
+      interestedUsers,
     });
 
     await post.save();

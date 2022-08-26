@@ -57,7 +57,7 @@ export default function NavBar() {
           <div>
             <button onClick={removeToken}>
               <Link to="/">
-                <h4 className=" text-white">Cerrar Sesión</h4>
+                <h4 className="ml-3 text-white">Cerrar Sesión</h4>
               </Link>
             </button>
           </div>
