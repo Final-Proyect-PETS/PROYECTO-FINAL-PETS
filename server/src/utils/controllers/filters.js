@@ -13,7 +13,10 @@ async function filtro(
 ) {
   connection();
   try {
-    let all = await Pets.find().populate("user");
+    let all = await Pets.find({ deleted: false }).populate({
+      path: "user",
+      match: { deleted: false },
+    });
 
     if (age === "young") {
       all = all.filter((ev) => ev.age < 6);
