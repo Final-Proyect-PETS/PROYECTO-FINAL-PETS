@@ -19,7 +19,7 @@ router.patch("/pets/:id", verifyToken, async (req, res, next) => {
     place,
     gender,
     isAdopted,
-    deleted
+    deleted,
   } = req.body;
   try {
     const petPatch = await patchPet(
@@ -54,7 +54,7 @@ router.patch("/users/:id", verifyToken, async (req, res, next) => {
     image,
     telephone,
     about,
-    deleted
+    deleted,
   } = req.body;
   try {
     const userPatch = await patchUser(

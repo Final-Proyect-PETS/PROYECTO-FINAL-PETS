@@ -12,8 +12,6 @@ export default function PetDetail() {
   const petDetail = useSelector((state) => state.petDetail);
   const loggedUser = useSelector((state) => state.userProfile);
 
-  console.log(petDetail, "PETDETAIL");
-
   useEffect(() => {
     dispatch(clearStatePet());
     dispatch(getPetDetail(id));
@@ -45,8 +43,9 @@ export default function PetDetail() {
             // width="500px"
             className="w-96"
           />
-          <h2 className="font-semibold">Descripción: {petDetail.description}</h2>
-         
+          <h2 className="font-semibold">
+            Descripción: {petDetail.description}
+          </h2>
         </div>
 
         <div className="flex flex-col w-1/2">

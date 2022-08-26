@@ -122,6 +122,7 @@ export default function rootReducer(state = initialState, { type, payload }) {
           ...state,
           userDetail:payload
         }
+
     default:
       return state;
   }

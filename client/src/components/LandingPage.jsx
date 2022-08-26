@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./LandingPage.css";
 import { useDispatch } from "react-redux";
 import { userLogin } from "../redux/Actions/index";
@@ -32,6 +32,7 @@ function validate(input) {
 
 export default function LandingPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [errors, setError] = useState({});
   const [input, setInput] = useState({
@@ -44,12 +45,19 @@ export default function LandingPage() {
       ...input,
       [e.target.name]: e.target.value,
     });
+    setError(
+      validate({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(userLogin(input));
-    alert("Usuario enviado");
+    dispatch(userLogin(input)).then(()=> {
+      navigate("/home")
+    })
   }
 
   const clientId = "841685042609-24rmh0gcg16vvfl3j8cgrll1nr23pi04.apps.googleusercontent.com"
@@ -61,8 +69,9 @@ export default function LandingPage() {
   })
 
   const responseGoogle = (response) => {
-    dispatch(userLoginGoogle(response))
-    console.log(response);
+    dispatch(userLoginGoogle(response)).then(()=>{
+      navigate("/home")
+    })
   };
 
   return (
@@ -105,6 +114,7 @@ export default function LandingPage() {
                     id="sign-in-email"
                     className=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
                     placeholder="Complete su email"
+                    required
                   />
                   {errors.email && <p>{errors.email}</p>}
                 </div>
@@ -124,12 +134,13 @@ export default function LandingPage() {
                   </span>
                   <input
                     type="password"
-                    id="sign-in-email"
+                    id="sign-in-password"
                     name="password"
                     value={input.password}
                     onChange={(e) => handleChange(e)}
                     className=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
                     placeholder="Complete su contraseña"
+                    required
                   />
                   {errors.password && <p>{errors.password}</p>}
                 </div>
@@ -152,14 +163,9 @@ export default function LandingPage() {
                   />{" "}
                 </div>
                 <div className="flex bg-gray-200">
-                  {/* <Link to="/home" className="py-2 px-4  bg-yellow-800 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"> */}
-                  <button type="submit">Enviar datos</button>
-                  {/* </Link> */}
+                  <button type="submit">  Log in    </button>
                 </div>
                 <div className="bg-gray-700">
-                  <button>
-                    <Link to="/home">Entrar home</Link>
-                  </button>
                 </div>
               </div>
             </form>
@@ -167,8 +173,7 @@ export default function LandingPage() {
           <div className="flex items-center justify-center mt-6">
             <Link
               to="/register"
-              className="inline-flex items-center text-s font-thin text-center text-gray-500 hover:text-gray-700 dark:text-gray-100 dark:hover:text-yellow-900"
-            >
+              className="inline-flex items-center text-s font-thin text-center text-gray-500 hover:text-gray-700 dark:text-gray-100 dark:hover:text-yellow-900">
               <span className="ml-2">¿No tiene una cuenta? Ingrese aquí.</span>
             </Link>
           </div>
