@@ -17,6 +17,11 @@ export default function UserDetail() {
   const loggedUser = useSelector((state) => state.userProfile);
   const userDetail = useSelector((state) => state.userDetail);
 
+
+  console.log("MI PERFIL", loggedUser);
+  console.log("USERdetail-", userDetail);
+
+
   return Object.keys(userDetail).length ? (
     <>
       <NavBar />
@@ -83,6 +88,7 @@ export default function UserDetail() {
                     isAdopted={pets.isAdopted}
                     pets={userDetail.pets}
                     isDeleted={pets.deleted}
+                    interestedUsers={userDetail.interestedUsers}
                   ></OwnedPet>
                 ))
               ) : (

@@ -15,6 +15,7 @@ export default function OwnedPet({
   imagePet,
   isAdopted,
   isDeleted,
+  interestedUsers,
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -124,9 +125,9 @@ export default function OwnedPet({
               adopt.isAdopted === false && deleted.deleted === false ? (
                 <div className="column justify-content items-center">
                   <div className="flex justify-content items-center">
-                    <Link to="/tradepet">
-                      <button className="bg-yellow-900 mr-1 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-2 border border-yellow-700 rounded">
-                        <h2 className="font-semibold"> TRASPASAR MASCOTA</h2>
+                    <Link to="/interestedtraders">
+                      <button className="bg-green-500 mr-1 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-2 border border-yellow-700 rounded">
+                        <h2 className="font-semibold">{`INTERESADOS ${interestedUsers.length}`}</h2>
                       </button>
                     </Link>
                     <button
@@ -136,6 +137,14 @@ export default function OwnedPet({
                       QUITAR DE ADOPCIÓN
                     </button>
                   </div>
+                  <Link to="/tradepet">
+                    <button className="bg-yellow-900 mr-1 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-2 border border-yellow-700 rounded">
+                      <h2 className="font-semibold">
+                        {" "}
+                        TRASPASAR MASCOTA a otros usuarios
+                      </h2>
+                    </button>
+                  </Link>
                   <button
                     onClick={(e) => deleteHandler(e)}
                     className="bg-yellow-900 ml-1 mt-4 hover:bg-red-700 text-white font-bold py-1 px-6 border border-yellow-700 rounded"

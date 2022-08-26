@@ -18,6 +18,7 @@ import AdminView from "./components/AdminView/AdminView";
 import Donation from "./components/Donaciones/Donation";
 import TradePet from "./components/TradePet/TradePet";
 import AdoptForm from "./components/AdoptForm/AdoptForm";
+import InterestedTraders from "./components/TradePet/IneterestedTraders";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -40,6 +41,7 @@ function App() {
           <Route path={"/updateuser"} element={<UpdateUser />} />
           <Route path={"/updatepet"} element={<UpdatePet />} />
           <Route path={"/tradepet"} element={<TradePet />} />
+          <Route path={"/interestedtraders"} element={<InterestedTraders />} />
           <Route path={"/adopt/:id"} element={<AdoptForm />} />
           <Route path={"*"} element={<Error404 />} />
         </Route>
