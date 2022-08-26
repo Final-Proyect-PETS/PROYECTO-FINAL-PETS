@@ -5,10 +5,11 @@ import { useSelector } from "react-redux";
 import { getUserProfile, paymentMp } from "../../redux/Actions";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
 
 export default function Donation() {
-    const dispatch = useDispatch();
 
+    const dispatch = useDispatch();
     const id = localStorage.getItem("id");
     const user = useSelector((state) => state.userProfile);
 
@@ -21,7 +22,7 @@ export default function Donation() {
     function handleClick(e) {
         e.preventDefault()
 
-        dispatch(paymentMp(user._id));
+        dispatch(paymentMp(user.email));
 
         if (payment) {
             const script = document.createElement("script");
@@ -31,6 +32,7 @@ export default function Donation() {
             script.setAttributeNode(attr_data_preference);
             document.getElementById("form1").appendChild(script);
         }
+        
     }
 
     return (

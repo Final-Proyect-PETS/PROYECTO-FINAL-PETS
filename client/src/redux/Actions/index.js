@@ -218,7 +218,7 @@ export function getUserProfile(id) {
 export function paymentMp(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.get(`http://localhost:3001/linkpayment`, payload);
+      let json = await axios.get(`http://localhost:3001/linkpayment/${payload}`);
       return dispatch({
         type: actions.PAYMENT_MP,
         payload: json.data,

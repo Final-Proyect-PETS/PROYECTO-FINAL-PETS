@@ -14,9 +14,6 @@ router.patch("/pets/:id", verifyToken, async (req, res, next) => {
     }
 })
 
-
-
-
 router.patch("/users/:id", verifyToken, async (req, res, next) => {
     const { first_name, last_name, username, email, password, image, telephone, about } = req.body;
     try {
