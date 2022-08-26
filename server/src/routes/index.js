@@ -13,6 +13,7 @@ const patchPet = require("./patch");
 const patchUser = require("./patch");
 const adoptionMail = require("./send-email");
 const postImage = require("./posts");
+const payment = require("./payment");
 const errorHandler = require("../utils/middlewares/errorHandler");
 
 router.use(
@@ -27,6 +28,8 @@ router.use(
   patchUser,
   postImage
 );
+
+router.use("/linkpayment", payment);
 router.use("/register", register);
 router.use("/login", login);
 router.use("/", loginGoogle);
