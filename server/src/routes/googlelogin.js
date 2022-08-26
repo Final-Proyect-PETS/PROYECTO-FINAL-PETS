@@ -31,6 +31,7 @@ router.post("/logingoogle", async (req, res) => {
                     } else {
                         try {
                             let newUser = new User({
+                                username: name,
                                 first_name: given_name,
                                 last_name: family_name,
                                 email: email,
