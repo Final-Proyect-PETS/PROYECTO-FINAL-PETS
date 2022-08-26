@@ -16,7 +16,7 @@ export default function SideBar() {
     pet_type: "all",
     pet_size: "all",
     gender: "all",
-    is_adopted:"no",
+    is_adopted:"all",
   });
   function handlerFilterIsAdopted(ev) {
     ev.preventDefault();
