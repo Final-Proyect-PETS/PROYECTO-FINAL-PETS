@@ -134,7 +134,7 @@ export default function LandingPage() {
                   </span>
                   <input
                     type="password"
-                    id="sign-in-email"
+                    id="sign-in-password"
                     name="password"
                     value={input.password}
                     onChange={(e) => handleChange(e)}
