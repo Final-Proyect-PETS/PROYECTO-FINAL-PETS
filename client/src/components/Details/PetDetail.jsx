@@ -12,8 +12,6 @@ export default function PetDetail() {
   const petDetail = useSelector((state) => state.petDetail);
   const loggedUser = useSelector((state) => state.userProfile);
 
-  console.log(petDetail, "PETDETAIL");
-
   useEffect(() => {
     dispatch(clearStatePet());
     dispatch(getPetDetail(id));

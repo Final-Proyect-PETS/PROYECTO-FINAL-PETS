@@ -12,7 +12,6 @@ export default function Register() {
 
   const users = useSelector((state) => state.users);
 
-  //console.log(users);
   const [image, setImage] = useState("");
   const [loadingImage, setLoadingImage] = useState(false);
   const [errors, setErrors] = useState({});

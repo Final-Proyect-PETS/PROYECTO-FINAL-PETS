@@ -59,7 +59,6 @@ export default function OwnedPet({
   };
 
   function deleteHandler(e) {
-    console.log("boton apretado");
     e.preventDefault();
     setDeleted({
       id: idPet,

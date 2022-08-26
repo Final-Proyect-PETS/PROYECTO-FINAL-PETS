@@ -15,11 +15,6 @@ export default function UserCard({
   pets,
   place,
 }) {
-  //const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(getUserDetail(_id));
-  //   return () => dispatch(clearState());
-  // }, [dispatch, _id]);  //LO COMENTE ANOCHE t borre dispatch de import
 
   const pettit = pets;
 

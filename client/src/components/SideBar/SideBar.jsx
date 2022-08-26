@@ -58,20 +58,6 @@ export default function SideBar() {
     });
   }
 
-  // function handlerFilterByPlace(ev) {
-  //   ev.preventDefault();
-  //   dispatch(
-  //     filterByQuery({
-  //       ...filterParams,
-  //       location: ev.target.value,
-  //     })
-  //   );
-
-  //   setFilterParams({
-  //     ...filterParams,
-  //     location: ev.target.value,
-  //   });
-  // }
   function handlerFilterTypePet(ev) {
     ev.preventDefault();
     dispatch(
@@ -130,16 +116,6 @@ export default function SideBar() {
         <h1 className="font-normal italic">Menú</h1>
       </div>
       <SearchBar />
-      {/*       <div className="bg-red-200 w-3/4 flex justify-center flex-col">
-        <div className="flex justify-center">
-          <h3 className="font-bold">Ordenar mascotas por edad</h3>
-        </div>
-        <div className="flex justify-center gap-1">
-          <button name = "asc" value = "asc" onClick={(ev) => handlerSortAge(ev)}>Ascendente</button> <p />
-          <button name = "desc" value = "desc" onClick={(ev) => handlerSortAge(ev)}>Descendente</button>
-          <p />
-        </div>
-      </div> */}
       <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
         <div className="flex justify-center">
           <h3 className="font-bold">Antiguedad de publicaciones</h3>
@@ -186,15 +162,6 @@ export default function SideBar() {
         </select>
         <p />
       </div>
-      {/*       <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
-        <div className="flex justify-center">
-          <h3 className="font-bold">Ubicación</h3>
-        </div>
-        <div className="flex justify-center gap-1">
-          <button onClick={(ev) => handlerFilterByPlace(ev)}>Ubicación</button>
-          <p />
-        </div>
-      </div> */}
       <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
         <select
           className="bg-gray-200 font-semibold p-2"

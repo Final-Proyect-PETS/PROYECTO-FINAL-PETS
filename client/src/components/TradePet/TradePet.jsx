@@ -19,7 +19,6 @@ export default function TradePet() {
 
   const getUsers = useSelector((state) => state.users);
   const loggedUser = useSelector((state) => state.userProfile);
-  // const tradePet = useSelector((state) => state.tradePet);
 
   const [data, setData] = useState({
     petId: "",

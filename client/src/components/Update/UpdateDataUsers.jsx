@@ -216,15 +216,6 @@ export default function UpdateUser() {
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
               // className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
             />
-            {/* <label className="font-light text-white text-xl">Correo electrónico</label>
-            <input
-              type="text"
-              name="email"
-              value={input.email}
-              onChange={(e) => handleChange(e)}
-              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
-            />
-            {errors.email && <p className="font-bold text-red-700 text-center p-2">{errors.email}</p>} */}
             <label className="font-light text-white text-xl">Sobre mí</label>
             <textarea
               type="text"

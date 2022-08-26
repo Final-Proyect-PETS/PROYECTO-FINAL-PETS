@@ -42,12 +42,10 @@ function validateFrom(input) {
 }
 
 export default function UpdatePet() {
-  // let { id } = useParams();
   let navigate = useNavigate();
 
   const dispatch = useDispatch();
   const upDatePet = useSelector((state) => state.petDetail);
-  //const id_console = upDatePet._id;
 
   const [errors, setErrors] = useState({});
 
@@ -64,10 +62,6 @@ export default function UpdatePet() {
     place: upDatePet.place,
   });
 
-  //   useEffect(() => {
-  //     dispatch(getAllPets());
-  //     dispatch(getPetDetail(id));
-  //   }, [dispatch]);
 
   function handleChange(e) {
     setInput({
@@ -93,48 +87,6 @@ export default function UpdatePet() {
       })
     );
   }
-  // function validateFrom(input) {
-  //   let errors = {};
-
-  //   if (input.name) {
-  //     if (!/^[a-zA-Z]+$/.test(input.name)) {
-  //       errors.name = "El nombre sólo puede tener letras!";
-  //     } else if (input.name.length > 20) {
-  //       errors.name = "El nombre no puede tener más de 20 caracteres!";
-  //     }
-  //   } else errors.name = "El nombre es requerido!";
-
-  //   if (!input.type) errors.type = "El tipo de mascota es requerido!";
-
-  //   if (!input.description) errors.description = "La descripción es requerida!";
-
-  //   if (!input.size) errors.size = "El tamaño es requerido!";
-
-  //   if (input.age) {
-  //     if (isNaN(input.age)) errors.age = "Sólo se permiten números";
-  //     if (/[  +]$/.test(input.age)) errors.age = "Sólo se permiten números";
-  //     if (!Number.isInteger(Number(input.age)))
-  //       errors.age = "Sólo se permiten números enteros";
-  //     if (parseInt(input.age) <= 0 || parseInt(input.age) > 25)
-  //       errors.age = "La edad debe ser entre 1 y 25 años";
-  //   } else errors.age = "La edad es requerida!";
-
-  //   if (!input.vaccination)
-  //     errors.vaccination = "La información sobre vacunas es requerida!";
-
-  //   if (!input.castrated)
-  //     errors.castrated = "La información sobre castración es requerida!";
-
-  //   if (input.place) {
-  //     //   if (!/^[a-zA-Z]+$/.test(input.place)) {
-  //     //   errors.place = "La ubicación sólo puede tener letras!";
-  //     if (input.place.length > 30) {
-  //       errors.place = "La ubicación no puede tener más de 30 caracteres!";
-  //     }
-  //   } else errors.place = "La ubicación es requerida!";
-
-  //   return errors;
-  // }
 
   function handleUpDate(e) {
     e.preventDefault();
