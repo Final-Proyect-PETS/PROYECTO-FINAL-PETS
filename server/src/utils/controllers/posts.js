@@ -14,7 +14,7 @@ const postPet = async (
   vaccination,
   castrated,
   place,
-  gender
+  gender,
 ) => {
   try {
     connection();

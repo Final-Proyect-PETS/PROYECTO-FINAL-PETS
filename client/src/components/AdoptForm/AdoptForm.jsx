@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom"
-import { getUserProfile, getAllUsers, getPetDetail, emailAdopt } from "../../redux/Actions";
+import { getUserProfile, getAllUsers, getPetDetail, emailAdopt, patchUsuer, patchInterestedUsers } from "../../redux/Actions";
 
 export default function AdoptForm(){
 
@@ -20,8 +20,24 @@ export default function AdoptForm(){
         adopter_email: loggedUser.email,
         adopter_telephone: loggedUser.telephone,
         message: "",
-        link: `http://localhost:3000/users/${loggedUser._id}`
+        link: `http://localhost:3000/users/${loggedUser._id}`,
+        pet_name: petDetail.name,
       }); 
+      
+      const [currentUser, setCurrentUser] = useState({
+        id: petDetail.user._id,
+        first_name: petDetail.user.first_name,
+        last_name: petDetail.user.last_name,
+        username: petDetail.user.username,
+        image: petDetail.user.image,
+        email: petDetail.user.email,
+        about: petDetail.user.about,
+        telephone: petDetail.user.telephone,
+        place: petDetail.user.place,
+        about: petDetail.user.about,
+        deleted: petDetail.user.deleted,
+        interestedUsers: petDetail.user.interestedUsers,
+      })
       /* useEffect(
         dispatch(getAllUsers()),
         dispatch(getUserProfile()),
@@ -33,19 +49,22 @@ export default function AdoptForm(){
           [e.target.name]: e.target.value,
         });
     }
-    function handlerSubmit(ev){
-        ev.preventDefault()
-        dispatch(
-            emailAdopt(input)
-        )
+    const obj = {
+        ownerId: petDetail.user._id,
+        userId: loggedUser._id
     }
-      function aaa (){
-        console.log(input)
-    }  
+     function handlerSubmit(ev){
+        ev.preventDefault()
+        if (petDetail.user.interestedUsers !== loggedUser._id){
+            dispatch(
+                emailAdopt(),
+                patchInterestedUsers(obj)
+                )} 
+                alert("Ya se mando una solicitud de adopcion")
+        }   
     return (
         <div>
             <form onSubmit={handlerSubmit}>
-              {/* <button onClick={aaa}>console.log</button>   */} 
                 <div>
                     <span>Nombre de Usuario: {loggedUser.username}</span>
                 </div>
@@ -65,12 +84,12 @@ export default function AdoptForm(){
                 </div>
                 <div>
                     <h3>¿Algun dato es incorrecto?</h3>
-                    <Link to="/updateuser">
+                    <Link to="/petDetail.user">
                     <button>Editar</button>
                     </Link>
                 </div>
                 <div>
-                    <button type="submit">ADOPTAR</button>
+                    <button  type="submit">ADOPTAR</button>
                 </div>
             </form>
         </div>
