@@ -167,10 +167,11 @@ export function patchPet(payload) {
         `http://localhost:3001/home/pets/${payload.id}`,
         payload
       );
-      return dispatch({
+      dispatch({
         type: actions.PATCH_PET,
         payload: json.data,
       });
+      return("OK")
     } catch (error) {
       console.log(error);
     }
@@ -211,28 +212,27 @@ export function userLogin(payload) {
       console.log(error);
     }
   };
-} 
+}
 
 export function userLoginGoogle(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.post("http://localhost:3001/logingoogle", payload)
-        .then(response => {
-          console.log(response)
+      let json = await axios
+        .post("http://localhost:3001/logingoogle", payload)
+        .then((response) => {
+          console.log(response);
           const token = response.data.data.token;
           const id = response.data.id.id;
           localStorage.setItem("token", token);
           localStorage.setItem("id", id);
           setAuthToken(token);
-        })
+        });
       return dispatch({
         type: actions.USER_LOGIN_GOOGLE,
-        payload: json.data
-      })
-    } catch (error) {
-
-    }
-  }
+        payload: json.data,
+      });
+    } catch (error) {}
+  };
 }
 
 export function getUserProfile(id) {
@@ -249,14 +249,11 @@ export function getUserProfile(id) {
   };
 }
 //ADOPT---------------
-export function tradePet (payload){
-  console.log(payload)
+export function tradePet(payload) {
+  console.log(payload);
   return async function (dispatch) {
     try {
-      let json = await axios.patch(
-        `http://localhost:3001/home/adopt`,
-        payload
-      );
+      let json = await axios.patch(`http://localhost:3001/home/adopt`, payload);
       return dispatch({
         type: actions.ADOPT,
         payload: json.data,

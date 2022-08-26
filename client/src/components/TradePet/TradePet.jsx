@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import AdopterCard from "./AdopterCard";
 import InAdoptionCards from "./InAdoptionCards";
+import "../LandingPage.css";
 
 export default function TradePet() {
   const dispatch = useDispatch();
@@ -42,23 +43,26 @@ export default function TradePet() {
   }
   console.log(data, "PAYLOAD");
   return (
-    <>
+    <div id="landing" className="w-full">
       <NavBar />
 
-      <div className="grid grid-cols-3 mt-10 place-content-center ">
-        <div className="">
+      <div className="grid grid-cols-3  opacity-90 h- mt-5 place-content-center ">
+        <div className="px-1">
           <div className="bg-gray-600 mt-2">
-            <SearchTrade />
-          </div>
-          <div className="bg-gray-600 mt-2 h-40">
-            <div className="bg-red-700 mt-2">
-              "1-Selecciona el usuario a quien darás tu mascota - "Nuevo Dueño"
-              <div className="bg-gray-600 mt-2 ">
+            <div className=" opacity-90 h-1/3 bg-red-500 mt-2">
+            <h3 className="text-2xl ">   1-Selecciona el usuario a quien darás tu mascota (nuevo dueño).</h3> 
+              
+              <div className="">
+                <SearchTrade />
+              </div>
+              <div className=" mt-2 ">
                 <form>
                   {getUsers?.length > 0 ? (
                     getUsers.map((user) => (
                       <div className="flex bg-gray-600 mt-2">
                         <input
+                          className="w-10 h-10 text-green-600 bg-gray-100 border-gray-300  dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600"
+                          key={user._id + "1"}
                           type="radio"
                           name="adopter"
                           id={user._id}
@@ -106,13 +110,16 @@ export default function TradePet() {
           </div>
         </div>
 
-        <div className="bg-yellow-600 mt-2">
-          2-Selecciona la mascota que quieres dar en adopcion
+        <div className="bg-yellow-600 opacity-90 h-1/3 mt-2 px-2">
+        
+        <h3 className="text-2xl ">   2-Selecciona la mascota que quieres dar en adopcion.</h3> 
           <form action="">
             {loggedUser.pets?.length ? (
               loggedUser.pets.map((pets) => (
                 <div className="flex bg-gray-600 mt-2">
                   <input
+                    key={pets._id + "1"}
+                    className="w-10 h-10 text-green-600 bg-gray-100 border-gray-300  dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600"
                     type="radio"
                     name="pets"
                     id={pets._id}
@@ -152,16 +159,18 @@ export default function TradePet() {
             )}
           </form>
         </div>
-        <div className="bg-green-800 mt-2">
-          3-adoptar copiando propiedades,borradologico,etc
-          <p>ownerID_LoggedUSER_ID: {data.ownerId}</p>
-          <p>userID_AdopterUSER_ID : {data.userId}</p>
-          <p>petID: {data.petId} </p>
-          <button classname="bg-green-200 " onClick={(e) => submitHandler(e)}>
-            ENVIAR DATOS
+        <div className=" flex flex-col px-2 h-1/3 items-center bg-green-800 opacity-90 mt-2">
+        
+        <h3 className="text-2xl "> 3-Revisa tus selecciones y cuando estes seguro, pulsa el botón.</h3> 
+          
+          <button
+            className="opacity-100 bg-yellow-600 mt-4 hover:bg-green-900 text-white font-bold py-6 px-1 border border-yellow-700 rounded"
+            onClick={(e) => submitHandler(e)}
+          >
+            ENVIAR MASCOTA CON SU NUEVO DUEÑO
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
