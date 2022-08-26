@@ -13,6 +13,7 @@ router.post("/", async (req, res, next) => {
     image,
     telephone,
     about,
+    place
   } = req.body;
   try {
     const postUser = await register(
@@ -23,7 +24,8 @@ router.post("/", async (req, res, next) => {
       password,
       image,
       telephone,
-      about
+      about,
+      place
     );
     res.status(201).send(postUser);
   } catch (err) {
