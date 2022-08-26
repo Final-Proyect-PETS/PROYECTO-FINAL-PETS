@@ -10,7 +10,7 @@ const router = Router();
 const postPet = require("./posts");
 const patchPet = require("./patch");
 const patchUser = require("./patch");
-const mercadopago = require("./payments/mercadopago");
+//const mercadopago = require("./payments/mercadopago");
 const errorHandler = require("../utils/middlewares/errorHandler");
 //payment
 const PaymentService = require("./payments/PaymentService");
@@ -29,7 +29,7 @@ router.use(
 );
 router.use("/register", register);
 router.use("/login", login);
-router.use("/mercadopago", mercadopago);
+// router.use("/mercadopago", mercadopago);
 router.use(errorHandler);
 
 //-----payments
@@ -38,7 +38,6 @@ const PaymentInstance = new PaymentController(new PaymentService());
 
 router.get("/linkpayment", function (req, res, next) {
     PaymentInstance.getPaymentLink(req, res);
-    console.log("saluditos desde el back", req.body)
 });
 
 router.get("/subscription", function (req, res, next) {
