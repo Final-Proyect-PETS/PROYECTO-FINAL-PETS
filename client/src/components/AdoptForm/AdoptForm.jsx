@@ -1,11 +1,18 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom"
+
 import { getUserProfile, getAllUsers, getPetDetail, emailAdopt, patchUsuer, patchInterestedUsers } from "../../redux/Actions";
+
+import { useNavigate } from "react-router-dom";
+import {notificationSwal} from "../../utils/notificationSwal.jsx";
+import Swal from "sweetalert2";
+
 
 export default function AdoptForm(){
 
     const dispatch = useDispatch()
+    const navigate = useNavigate();
 
     const loggedUser = useSelector((state) => state.userProfile)
     const petDetail = useSelector((state) => state.petDetail)
@@ -49,6 +56,7 @@ export default function AdoptForm(){
           [e.target.name]: e.target.value,
         });
     }
+
     const obj = {
         ownerId: petDetail.user._id,
         userId: loggedUser._id
@@ -62,6 +70,65 @@ export default function AdoptForm(){
                 )} 
                 alert("Ya se mando una solicitud de adopcion")
         }   
+
+    // const sendPatch = {
+    //     id: petDetail.user._id,
+    //     interestedUsers: loggedUser,
+    // }
+    // function handlerSubmit(ev){
+    //     ev.preventDefault()
+    //     dispatch(
+    //         emailAdopt(input),
+    //         patchUsuer(sendPatch)
+    //     )  
+    // }
+
+    function handlerSubmit(ev){
+        ev.preventDefault()
+        if (true) {
+          Swal.fire({
+            title: "¿Está seguro de que desea adoptar esta mascota?",
+            // text: "Esta mascota se eliminará",
+            icon: "warning",
+            showCancelButton: true,
+            cancelButtonText: "No",
+            confirmButtonText: "Sí",
+          })
+            .then((result) => {
+              if (result.isConfirmed) {
+                dispatch(emailAdopt(input)).then((e) => {
+                  if (e === "OK") {
+                    notificationSwal(
+                      "¡Enhorabuena!",
+                      "El dueño recibio tu mensaje éxitosamente 👌",
+                      "success",
+                      "Ok"
+                    );
+                  } else {
+                    notificationSwal(
+                      "¡Ooops!",
+                      "No se pudo eliminar la mascota, intente mas tarde",
+                      "error",
+                      "Cancel"
+                    );
+                  }
+                });
+              } else {
+                notificationSwal(
+                  "Operación cancelada",
+                  "Mascota no Adoptada",
+                  "error",
+                  "Cancel"
+                );
+              }
+            })
+            .then(() => navigate("/home", { replace: true }));
+        } 
+    }
+    //   function aaa (){
+    //     console.log(input)
+    // }  
+
     return (
         <div>
             <form onSubmit={handlerSubmit}>

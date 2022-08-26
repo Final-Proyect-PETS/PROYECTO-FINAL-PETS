@@ -278,10 +278,11 @@ export function emailAdopt(payload){
   return async function (dispatch){
     try{
       let json = await axios.post(`http://localhost:3001/mail/sendemail`, payload)
-      return dispatch({
+       dispatch({
         type: actions.ADOPT_EMAIL,
         payload: json.data
       })
+      return "OK"
     } catch(error){
       console.log(error)
     }
