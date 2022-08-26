@@ -80,7 +80,7 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
     const { petId, userId, ownerId } = req.body;
     const user = await User.findOne({ _id: userId });
 
-    await Pets.updateOne({ _id: petId }, { $set: { user: userId } });
+    await Pets.updateOne({ _id: petId }, { $set: { user: userId, isAdopted: true } });
     await User.updateOne(
       { _id: userId },
       { $set: { pets: [...user.pets, petId] } }
