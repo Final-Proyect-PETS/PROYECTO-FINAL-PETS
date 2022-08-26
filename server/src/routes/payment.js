@@ -14,17 +14,19 @@ router.get("/:email", verifyToken, (req, res, next) => {
   });
 
   let preference = {
-    items: [{
-      title: "Donación a Happy Tails",
-      description: "",
-      picture_url: "https://cdn-icons-png.flaticon.com/512/194/194279.png",
-      category_id: "category123",
-      quantity: 1,
-      unit_price: 100,
-    }],
+    items: [
+      {
+        title: "Donación a Happy Tails",
+        description: "",
+        picture_url: "https://cdn-icons-png.flaticon.com/512/194/194279.png",
+        category_id: "category123",
+        quantity: 1,
+        unit_price: 100,
+      },
+    ],
     external_reference: `${id_orden}`, //`${new Date().valueOf()}`,
     back_urls: {
-      success: "http://localhost:3000/donations",
+      success: "http://localhost:3001/paymentsuccess",
       failure: "http://localhost:3000/home",
       pending: "https://localhost:3000/home",
     },
@@ -51,9 +53,5 @@ router.get("/:email", verifyToken, (req, res, next) => {
       console.log(error);
     });
 });
-
-// router.get("/pagos", verifyToken, (req, res) =>{
-//   return res.redirect("http://localhost:3000/home")
-// })
 
 module.exports = router;

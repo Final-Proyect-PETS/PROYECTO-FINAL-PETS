@@ -17,6 +17,7 @@ import PrivateRoutes from "./components/PrivateRoute.js/PrivateRoute";
 import PrivateAdmin from "./components/PrivateRoute.js/PrivateAdmin";
 import AdminView from "./components/AdminView/AdminView";
 import Donation from "./components/Donaciones/Donation";
+import PaymentSuccess from "./components/PaymentSuccess";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -36,8 +37,9 @@ function App() {
           <Route path={"/about"} element={<About />} />
           <Route path={"/donations"} element={<Donation />} />
           <Route path={"/petregister"} element={<PetRegister />} />
-          <Route path={"/updateuser"} element={<UpdateUser />} />z
+          <Route path={"/updateuser"} element={<UpdateUser />} />
           <Route path={"/updatepet"} element={<UpdatePet />} />
+          <Route path={"/paymentsuccess"} element={<PaymentSuccess />} />
           <Route path={"*"} element={<Error404 />} />
         </Route>
         <Route element={<PrivateAdmin />}>

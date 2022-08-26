@@ -25,9 +25,15 @@ router.use(
   patchUser
 );
 
-router.use("/linkpayment", payment)
+router.use("/linkpayment", payment);
 router.use("/register", register);
 router.use("/login", login);
 router.use(errorHandler);
+
+router.get("/paymentsuccess", (req, res) => {
+  const { payment_id, status } = req.query;
+  console.log(status);
+  return res.redirect("http://localhost:3000/paymentsuccess");
+});
 
 module.exports = router;
