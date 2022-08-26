@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { getUserProfile, paymentMp } from "../../redux/Actions";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 
 export default function Donation() {
@@ -19,11 +20,11 @@ export default function Donation() {
         dispatch(getUserProfile(id));
     }, [dispatch, id]);
 
+    const[activeButton, setActive] = useState(true)
+
     function handleClick(e) {
         e.preventDefault()
-
         dispatch(paymentMp(user.email));
-
         if (payment) {
             const script = document.createElement("script");
             const attr_data_preference = document.createAttribute("data-preference-id");
@@ -32,7 +33,7 @@ export default function Donation() {
             script.setAttributeNode(attr_data_preference);
             document.getElementById("form1").appendChild(script);
         }
-        
+        // setActive(false)
     }
 
     return (
@@ -62,9 +63,9 @@ export default function Donation() {
                     </h2>
                     <button
                         className="py-4 px-4 bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-600 focus:ring-offset-yellow-600 text-white w-44 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
-                        onClick={(e) => handleClick(e)}
+                        onClick={(e) => handleClick(e)} disabled={!activeButton}
                     >
-                        Generar orden de pago por 10 pesos
+                        Generar orden de pago por 100 pesos
                     </button>
                     {/* {payment ? <Comprar data={payment} /> : null} */}
 
