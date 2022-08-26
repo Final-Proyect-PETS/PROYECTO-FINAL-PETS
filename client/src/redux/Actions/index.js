@@ -167,10 +167,11 @@ export function patchPet(payload) {
         `http://localhost:3001/home/pets/${payload.id}`,
         payload
       );
-      return dispatch({
+      dispatch({
         type: actions.PATCH_PET,
         payload: json.data,
       });
+      return("OK")
     } catch (error) {
       console.log(error);
     }
