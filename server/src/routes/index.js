@@ -10,7 +10,7 @@ const router = Router();
 const postPet = require("./posts");
 const patchPet = require("./patch");
 const patchUser = require("./patch");
-const payment = require("./payment")
+const payment = require("./payment");
 const errorHandler = require("../utils/middlewares/errorHandler");
 
 router.use(

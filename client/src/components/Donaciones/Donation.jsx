@@ -4,6 +4,7 @@ import "../LandingPage.css";
 import { useSelector } from "react-redux";
 import { getUserProfile, paymentMp } from "../../redux/Actions";
 import { useDispatch } from "react-redux";
+import {useNavigate} from "react-router-dom"
 import { useEffect } from "react";
 import { useState } from "react";
 // import { useNavigate } from "react-router-dom";
@@ -11,6 +12,8 @@ import { useState } from "react";
 export default function Donation() {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const id = localStorage.getItem("id");
     const user = useSelector((state) => state.userProfile);
 
@@ -34,7 +37,14 @@ export default function Donation() {
             document.getElementById("form1").appendChild(script);
         }
         // setActive(false)
+        
     }
+   
+  
+//   const params = useLocation().search;
+//   const purchaseId = params.slice(params.indexOf('=') + 1, params.indexOf('&'));
+// const { token } = JSON.parse(window.localStorage.getItem('user'));
+
 
     return (
         <div id="landing" className="w-full">
