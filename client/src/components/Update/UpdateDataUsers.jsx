@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { notificationSwal } from "../../utils/notificationSwal.jsx";
-import { getUserDetail, patchUsuer } from "../../redux/Actions/index";
+import { getUserDetail, patchUsuer, postImage } from "../../redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 
 function validateFrom(input) {
@@ -52,6 +52,8 @@ export default function UpdateUser() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const upDateUser = useSelector((state) => state.userProfile);
+  const [image, setImage] = useState("");
+  const [loadingImage, setLoadingImage] = useState(false);
 
   const [errors, setErrors] = useState({});
 
@@ -61,7 +63,7 @@ export default function UpdateUser() {
     last_name: upDateUser.last_name,
     username: upDateUser.username,
     image: upDateUser.image,
-    // email: upDateUser.email,
+    email: upDateUser.email,
     about: upDateUser.about,
     telephone: upDateUser.telephone,
     place: upDateUser.place,
@@ -154,6 +156,29 @@ export default function UpdateUser() {
     //para regresar, me tome bien sus datos y no aparezca como undefined.
   }
 
+  async function handleImage(e) {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "pretty");
+    data.append("folder", "Images");
+    setLoadingImage(true);
+    dispatch(postImage(data)).then((e) => {
+      setImage(e.payload);
+      setInput({
+        ...input,
+        image: e.payload,
+      });
+      setErrors(
+        validateFrom({
+          ...input,
+          image: e.payload,
+        })
+      );
+      setLoadingImage(false);
+    });
+  }
+
   return (
     <div className="flex flex-col w-full mt-15 m-auto  py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
       <div className="self-center mb-6 text-xl font-normal text-gray-600 sm:text-2xl dark:text-white">
@@ -205,17 +230,42 @@ export default function UpdateUser() {
               </p>
             )}
 
+          <div>
             <label className="font-light text-white text-xl">
-              Imagen de perfil
+              Imagen de Perfil
             </label>
             <input
-              type="text"
+              type="file"
               name="image"
-              placeholder={input.image}
+              accept=".jpg, .png, .jpeg"
+              onChange={(e) => handleImage(e)}
+              placeholder="Imagen de perfil"
+              className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
+            ></input>
+            {loadingImage ? (
+              <h3 className="font-light text-white text-xl">
+                Cargando imagen...
+              </h3>
+            ) : (
+              <img src={image || upDateUser.image} alt="" width="300px" />
+            )}
+          </div>
+          <div>
+            <label className="font-light text-white text-xl">
+              Correo electrónico
+            </label>
+            <input
+              name="email"
+              placeholder={input.email}
               onChange={(e) => handleChange(e)}
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
-              // className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
-            />
+            ></input>
+            {errors.email && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.email}
+              </p>
+            )}
+          </div>
             <label className="font-light text-white text-xl">Sobre mí</label>
             <textarea
               type="text"
