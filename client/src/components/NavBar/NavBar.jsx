@@ -54,7 +54,7 @@ export default function NavBar() {
               </h4>
               <Link to="/notifications">
                       <button className="bg-amber-800  hover:bg-green-900   text-white font-bold py-1 px-1 border border-yellow-700 rounded-full">
-                        <h2 className="font-semibold">{`🔔${user.interestedUsers.length}`}</h2>
+                        <h2 className="font-semibold">{`🔔${user?.interestedUsers?.length}`}</h2>
                       </button>
                     </Link>
             </button>
