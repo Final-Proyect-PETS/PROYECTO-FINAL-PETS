@@ -4,12 +4,12 @@ import NavBar from "../NavBar/NavBar";
 import SearchTrade from "../SearchBars/SearchTrade";
 import { getAllUsers, tradePet } from "../../redux/Actions/index";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import AdopterCard from "./AdopterCard";
 import InAdoptionCards from "./InAdoptionCards";
 import "../LandingPage.css";
 
-export default function TradePet() {
+export default function InterestedTraders() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -62,7 +62,8 @@ export default function TradePet() {
                   {getUsers?.length > 0 ? (
                     getUsers.map((user) => (
                       <div className="flex bg-gray-600 mt-2">
-                        <input
+                        ACA VAN LOS USUARIOS INTERESADOS
+                        {/* <input
                           className="w-10 h-10 text-green-600 bg-gray-100 border-gray-300  dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600"
                           key={user._id + "1"}
                           type="radio"
@@ -84,7 +85,7 @@ export default function TradePet() {
                           telephone={user.telephone}
                           pets={user.pets}
                           place={user.place}
-                        />
+                        /> */}
                       </div>
                     ))
                   ) : (
@@ -118,7 +119,24 @@ export default function TradePet() {
             2-Selecciona la mascota que quieres dar en adopcion.
           </h3>
           <form action="">
-            {loggedUser.pets?.length ? (
+          <>
+      <div className="flex items-center py-2 px-5 ">
+        <div className=" flex border-2 border-yellow-700 rounded">
+          <div className=" border-yellow-900 border-r-2  flex justify-between p-3 border items-center rounded bg-gray-300">
+            <div className=" column items-center mb-4 mr-4 ml-4 ">
+              <div className="flex justify-center">
+                <span className="text-2xl font-bold ">TOMAS ESTA INTERESADO EN ROBERTA</span>
+                <span className="text-2xl font-bold ">ENVIAR MASCOTA</span>
+                <span className="text-2xl font-bold ">ELIMINAR PETICION</span>
+              </div>
+            </div>
+          </div>
+
+          <span className="text-2xl font-bold ">ACA VA LA IMAGEN DE LA MASCOTA</span>
+        </div>
+      </div>
+    </>
+            {/* {loggedUser.pets?.length ? (
               loggedUser.pets.map((pets) => (
                 <div className="flex bg-gray-600 mt-2">
                   <input
@@ -160,7 +178,7 @@ export default function TradePet() {
                   />
                 </svg>
               </div>
-            )}
+            )} */}
           </form>
         </div>
         <div className=" flex flex-col px-2 h-1/3 items-center bg-green-800 opacity-90 mt-2">

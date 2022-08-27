@@ -260,19 +260,35 @@ export function tradePet(payload) {
   };
 }
 
+ export function patchInterestedUsers(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(`http://localhost:3001/home/interestedUsers`, payload);
+      return dispatch({
+        type: actions.INTERESTED_USERS,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+} 
+
 export function emailAdopt(payload){
   return async function (dispatch){
     try{
       let json = await axios.post(`http://localhost:3001/mail/sendemail`, payload)
-      return dispatch({
+       dispatch({
         type: actions.ADOPT_EMAIL,
         payload: json.data
       })
+      return "OK"
     } catch(error){
       console.log(error)
     }
   }
 }
+
 
 export function paymentMp(payload) {
   return async function (dispatch) {
@@ -287,3 +303,4 @@ export function paymentMp(payload) {
     }
   };
 }
+

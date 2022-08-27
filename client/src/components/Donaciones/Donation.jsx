@@ -20,21 +20,22 @@ export default function Donation() {
   }, [dispatch, id]);
 
   //setear el boton deshabilitado una vez clickeado
-  const [activeButton, setActive] =useState(true)
+  const [activeButton, setActive] = useState(true)
 
   function handleClick(e) {
     e.preventDefault()
     dispatch(paymentMp(user.email));
     if (payment) {
-        const script = document.createElement("script");
-        const attr_data_preference = document.createAttribute("data-preference-id");
-        attr_data_preference.value = payment;
-        script.src = "https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
-        script.setAttributeNode(attr_data_preference);
-        document.getElementById("form1").appendChild(script);
+      e.preventDefault()
+      const script = document.createElement("script");
+      const attr_data_preference = document.createAttribute("data-preference-id");
+      attr_data_preference.value = payment;
+      script.src = "https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
+      script.setAttributeNode(attr_data_preference);
+      document.getElementById("form1").appendChild(script);
     }
     // setActive(false)
-}
+  }
 
   return (
     <div id="landing" className="w-full">
@@ -62,7 +63,7 @@ export default function Donation() {
             Podes donar generando un link de pago haciendo click en el siguiente botón:
           </h2>
           <button className="py-4 px-4 bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-600 focus:ring-offset-yellow-600 text-white w-44 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
-          onClick={(e) => handleClick(e)} disabled={!activeButton}
+            onClick={(e) => handleClick(e)} disabled={!activeButton}
           >
             Donar $100
           </button>
