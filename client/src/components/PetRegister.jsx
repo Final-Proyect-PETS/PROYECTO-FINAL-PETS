@@ -1,13 +1,15 @@
 import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postPet, postImage } from "../redux/Actions/index.js";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { notificationSwal } from "../utils/notificationSwal.jsx";
+import MapboxAutocomplete from 'react-mapbox-autocomplete';
 
 export default function RegisterPet() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const id = localStorage.getItem("id");
 
@@ -133,13 +135,13 @@ export default function RegisterPet() {
     if (!input.gender)
       errors.gender = "La información sobre castración es requerida!";
 
-    if (input.place) {
-      if (!/^[a-zA-Z0-9\s]+$/.test(input.place)) {
-        errors.place = "La ubicación sólo puede tener letras y/o números!";
-      } else if (input.place.length > 30) {
-        errors.place = "La ubicación no puede tener más de 30 caracteres!";
-      }
-    } else errors.place = "La ubicación es requerida!";
+    // if (input.place) {
+    //   if (!/^[a-zA-Z0-9\s]+$/.test(input.place)) {
+    //     errors.place = "La ubicación sólo puede tener letras y/o números!";
+    //   } else if (input.place.length > 30) {
+    //     errors.place = "La ubicación no puede tener más de 30 caracteres!";
+    //   }
+    // } else errors.place = "La ubicación es requerida!";
 
     return errors;
   }
@@ -202,6 +204,7 @@ export default function RegisterPet() {
                 "success",
                 "Ok"
               );
+              navigate("/home")
             } else {
               notificationSwal(
                 "¡Ooops!",
@@ -270,6 +273,17 @@ export default function RegisterPet() {
     return key++;
   }
 
+  function _suggestionSelect(result, lat, long, text) {
+    console.log(result, lat, long, text);
+    setInput({
+      ...input, place: result
+    })
+    console.log(input)
+  }
+  const mapAccess = {
+    mapboxApiAccessToken:
+      "pk.eyJ1Ijoiam9uc2VuIiwiYSI6IkR6UU9oMDQifQ.dymRIgqv-UV6oz0-HCFx1w"
+  }
   return (
     <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
       <div className="self-center mb-6 text-xl font-normal text-gray-600 sm:text-2xl dark:text-white">
@@ -306,11 +320,11 @@ export default function RegisterPet() {
               className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
             />
             {loadingImage ? (
-              <h3 className="font-light text-white text-xl">
+              <h3 className="font-light text-white text-xl self-center">
                 Cargando imagen...
               </h3>
             ) : (
-              <img src={image} alt="" width="300px" />
+              <img src={image} alt="" className="max-w-xs" />
             )}
             {errors.image && (
               <p className="font-bold text-red-700 text-center p-2">
@@ -527,13 +541,20 @@ export default function RegisterPet() {
           </div>
           <div>
             <label className="font-light text-white text-xl">Ubicación</label>
-            <input
+            {/* <input
               type="text"
               name="place"
               value={input.place}
               onChange={(e) => handleChange(e)}
               placeholder="Ubicación"
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+            /> */}
+            <MapboxAutocomplete
+              publicKey={mapAccess.mapboxApiAccessToken}
+              inputClass="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+              onSuggestionSelect={_suggestionSelect}
+              resetSearch={false}
+              placeholder="Escriba su ciudad"
             />
             {errors.place && (
               <p className="font-bold text-red-700 text-center p-2">

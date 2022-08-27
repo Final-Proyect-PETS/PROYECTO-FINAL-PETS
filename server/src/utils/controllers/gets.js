@@ -50,7 +50,8 @@ const getUsers = async (name) => {
           u.username?.toLowerCase().includes(name.toLowerCase()) ||
           u.first_name?.toLowerCase().includes(name.toLowerCase()) ||
           u.last_name?.toLowerCase().includes(name.toLowerCase()) ||
-          u.email?.toLowerCase().includes(name.toLowerCase())
+          u.email?.toLowerCase().includes(name.toLowerCase()) ||
+          u.place?.toLowerCase().includes(name.toLowerCase())
       );
       if (userFound.length > 0) return userFound;
       if ((userFound.length = 0))

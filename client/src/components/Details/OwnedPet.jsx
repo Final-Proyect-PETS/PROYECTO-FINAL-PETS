@@ -15,6 +15,7 @@ export default function OwnedPet({
   imagePet,
   isAdopted,
   isDeleted,
+  interestedUsers,
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -114,48 +115,52 @@ export default function OwnedPet({
   return (
     <div className="flex items-center py-4 px-5 ">
       <div className=" flex border-2 border-yellow-700 rounded">
-        <div className=" border-yellow-900 border-r-2  flex justify-between p-3 border items-center rounded bg-gray-300">
+        <div className=" border-yellow-900 border-r-2  flex justify-between  border items-center rounded bg-gray-300">
           <div className=" column items-center mb-4 mr-4 ml-4 ">
+            {loggedUser._id===userDetail._id?  <button
+              onClick={(e) => deleteHandler(e)}
+              className="bg-red-600 mt-4 hover:bg-red-700 text-white font-bold py- px-1 border border-yellow-700 rounded"
+            >
+              ✖️
+            </button>:<></>}
+          
+            {/* <span className="text-2xl font-bold ">{namePet}</span> */}
             <div className="flex justify-center">
               <span className="text-2xl font-bold ">{namePet}</span>
             </div>
 
             {loggedUser._id === userDetail._id ? (
               adopt.isAdopted === false && deleted.deleted === false ? (
-                <div className="column justify-content items-center">
-                  <div className="flex justify-content items-center">
-                    <Link to="/tradepet">
-                      <button className="bg-yellow-900 mr-1 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-2 border border-yellow-700 rounded">
-                        <h2 className="font-semibold"> TRASPASAR MASCOTA</h2>
+                <div className="flex flex-col justify-content items-center">
+                  <div className="flex  justify-content items-center">
+                    <Link to="/interestedtraders">
+                      <button className=" flex bg-green-600 mt-4 hover:bg-green-900 mr-1 mt-4  text-white font-bold py-2 px-2 border border-yellow-700 rounded">
+                        <h2 className="font-semibold">{`🔔 ${interestedUsers.length}`}</h2>
                       </button>
                     </Link>
+
+                    <Link to="/tradepet">
+                      <button className="bg-yellow-900 mr-1 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-2 border border-yellow-700 rounded">
+                        <h2 className="font-semibold"> CAMBIAR DUEÑO</h2>
+                      </button>
+                    </Link>
+                  </div>
+                  <div className="flex">
                     <button
                       onClick={(e) => patchAdoptionHandler(e)}
-                      className="bg-yellow-900 mt-4 hover:bg-red-700 text-white font-bold py-2 px-2 border border-yellow-700 rounded"
+                      className="bg-red-900 mt-4 hover:bg-red-600 text-white font-bold py-1 px-1 border border-yellow-700 rounded"
                     >
-                      QUITAR DE ADOPCIÓN
+                      ⛔ PARAR ADOPCION
                     </button>
                   </div>
-                  <button
-                    onClick={(e) => deleteHandler(e)}
-                    className="bg-yellow-900 ml-1 mt-4 hover:bg-red-700 text-white font-bold py-1 px-6 border border-yellow-700 rounded"
-                  >
-                    ELIMINAR MASCOTA
-                  </button>
                 </div>
               ) : (
-                <div className="column justify-content items-center">
+                <div className="flex flex-col justify-content items-center">
                   <button
                     onClick={(e) => patchAdoptionHandler(e)}
-                    className="bg-yellow-900 mt-4 hover:bg-green-900 text-white font-bold py-6 px-1 border border-yellow-700 rounded"
+                    className="bg-green-900 mt-4 hover:bg-green-600 text-white font-bold py-4 px-1 border border-yellow-700 rounded"
                   >
-                    PONER EN ADOPCIÓN
-                  </button>
-                  <button
-                    onClick={(e) => deleteHandler(e)}
-                    className="bg-yellow-900 mt-4 hover:bg-red-700 text-white font-bold py-2 px-2 border border-yellow-700 rounded"
-                  >
-                    ELIMINAR MASCOTA
+                    ✔️ PONER EN ADOPCIÓN
                   </button>
                 </div>
               )
@@ -165,7 +170,7 @@ export default function OwnedPet({
               <div className="flex flex-col items-center">
                 <Link to={`/pet/${idPet}`}>
                   {/* link de mierda -------------------------------------------------------------------------*/}
-                  <button className="bg-yellow-900 mr-4 mt-3 hover:bg-green-900 text-white font-bold  px-4 border border-yellow-700 rounded">
+                  <button className="bg-green-900 mr-4 mt-3 hover:bg-green-600 text-white font-bold  px-4 border border-yellow-700 rounded">
                     <h2 className="font-semibold"> ¡Mascota en adopcion!</h2>
                     <h2 className=""> VER PERFIL</h2>
                   </button>
