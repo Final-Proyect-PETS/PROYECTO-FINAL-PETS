@@ -15,7 +15,7 @@ export default function Notifications() {
   const navigate = useNavigate();
 
   const loggedUser = useSelector((state) => state.userProfile);
-
+console.log(loggedUser.interestedUsers)
   return (
     <div id="landing" className="w-full">
       <NavBar />
@@ -46,4 +46,5 @@ export default function Notifications() {
       </>
     </div>
   );
+
 }

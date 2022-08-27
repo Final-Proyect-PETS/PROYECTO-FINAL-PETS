@@ -44,14 +44,19 @@ export default function NavBar() {
               data-dropdown-toggle="user-dropdown"
               data-dropdown-placement="bottom"
             >
-              <h4 className=" text-white font-bold">
-                {user.first_name} {user.last_name}
-              </h4>
               <img
                 className="w-8 h-8 rounded-full"
                 src={user.image}
                 alt="foto perfil"
               />
+              <h4 className=" text-white font-bold">
+                {user.first_name} {user.last_name}
+              </h4>
+              <Link to="/notifications">
+                      <button className="bg-amber-800  hover:bg-green-900   text-white font-bold py-1 px-1 border border-yellow-700 rounded-full">
+                        <h2 className="font-semibold">{`🔔${user.interestedUsers.length}`}</h2>
+                      </button>
+                    </Link>
             </button>
           </Link>
           <div>
