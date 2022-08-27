@@ -1,22 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import NavBar from "../NavBar/NavBar";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { Modal, Button } from "flowbite-react/lib/esm/components";
 
 export default function AdminView() {
   const getUsers = useSelector((state) => state.users);
 
   const getPets = useSelector((state) => state.pets);
 
+  const [show, setShow] = useState(false)
+
   const petsAdopted = getPets.filter((p) => p.isAdopted === true);
 
   const petsNotAdopted = getPets.filter((p) => p.isAdopted === false);
 
+  const onClick = () =>{
+    setShow(true)
+  }
+
+  const onClose = () =>{
+    setShow(false)
+  }
+
   return (
     <div>
-      <div className="fixed">
-        <NavBar />
-      </div>
+
+      <NavBar />
+
       <div className="flex h-screen pt-20">
         <div className="w-1/2 overflow-hidden border border-r-black">
           <div className="h-1/4 bg-gray-200 flex justify-center items-center flex-col border border-b-black">
@@ -38,12 +49,40 @@ export default function AdminView() {
                         className="w-8 h-8 rounded-full"
                       />
                     }
-                    {
-                      <Link to={"/users/" + u._id}>
-                        {u.first_name} {u.last_name}
-                      </Link>
-                    }{" "}
-                    | {u.username} | {u.email}{" "}</div> <div className="w-2/5 bg-gray-500 flex justify-center"><div><button>Info</button></div></div>
+                      {
+                        <Link to={"/users/" + u._id}>
+                          {u.first_name} {u.last_name}
+                        </Link>
+                      }{" "}
+                      | {u.username} | {u.email}{" "}</div> <div className="w-2/5 bg-gray-500 flex justify-center"><div>
+                        <Button onClick={onClick}>
+                          Info
+                        </Button>
+                        <Modal
+                          show={show}
+                          onClose={onClose}
+                        >
+                          <Modal.Header>
+                            Terms of Service
+                          </Modal.Header>
+                          <Modal.Body>
+                            <div className="space-y-6">
+                              <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.
+                              </p>
+                              <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
+                              </p>
+                            </div>
+                          </Modal.Body>
+                          {/* <Modal.Footer>
+                            <Button show={show} onClose={onClose}>
+                                Volver
+                            </Button>
+                          </Modal.Footer> */}
+                        </Modal>
+                      </div>
+                    </div>
                   </li>
                 ))}
               </ol>
