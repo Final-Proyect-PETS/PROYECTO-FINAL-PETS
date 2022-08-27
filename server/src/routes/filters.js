@@ -14,6 +14,7 @@ router.get("/filters", verifyToken, async (req, res, next) => {
     pet_type,
     pet_size,
     gender,
+    is_adopted,
   } = req.query;
   try {
     const filter = await filtro(
@@ -24,7 +25,8 @@ router.get("/filters", verifyToken, async (req, res, next) => {
       location,
       pet_type,
       pet_size,
-      gender
+      gender,
+      is_adopted
     );
     res.status(200).send(filter);
   } catch (err) {

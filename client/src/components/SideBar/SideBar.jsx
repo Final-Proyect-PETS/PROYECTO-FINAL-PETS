@@ -16,8 +16,21 @@ export default function SideBar() {
     pet_type: "all",
     pet_size: "all",
     gender: "all",
+    is_adopted: "all",
   });
-
+  function handlerFilterIsAdopted(ev) {
+    ev.preventDefault();
+    dispatch(
+      filterByQuery({
+        ...filterParams,
+        is_adopted: ev.target.value,
+      })
+    );
+    setFilterParams({
+      ...filterParams,
+      is_adopted: ev.target.value,
+    });
+  }
   function handlerFilterPublicationAge(ev) {
     ev.preventDefault();
     dispatch(
@@ -116,32 +129,20 @@ export default function SideBar() {
         <h1 className="font-normal italic">Menú</h1>
       </div>
       <SearchBar />
-      <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
-        <div className="flex justify-center">
-          <h3 className="font-bold">Antiguedad de publicaciones</h3>
-        </div>
-        <div className="flex justify-center gap-1">
-          <button
-            name="desc"
-            value="desc"
-            onClick={(ev) => handlerFilterPublicationAge(ev)}
-          >
-            Mas antigua
-          </button>
-          <p />
-          <button
-            name="asc"
-            value="asc"
-            onClick={(ev) => handlerFilterPublicationAge(ev)}
-          >
-            Mas reciente
-          </button>
-          <p />
-        </div>
-      </div>
-      <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
+      <div className=" bg-gray-200 w-3/4 flex justify-center flex-col">
         <select
-          className="bg-gray-200 font-semibold p-2 flex"
+          className="bg-gray-200 font-semibold p-2"
+          onChange={(ev) => handlerFilterIsAdopted(ev)}
+        >
+          <option hidden>¿YA ADOPTADO?</option>
+          <option value="yes">Si</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+
+      <div className=" bg-gray-200 w-3/4 flex justify-center flex-col">
+        <select
+          className="bg-gray-200 font-semibold p-2"
           onChange={(ev) => handlerFilterVacciantion(ev)}
         >
           <option hidden>Vacunado?</option>
@@ -207,9 +208,32 @@ export default function SideBar() {
           <option value="female">Hembra</option>
         </select>
       </div>
+      <div className="bg-gray-200 w-3/4 flex justify-center flex-col">
+        <div className="flex justify-center">
+          <h3 className="font-bold">Antiguedad de publicaciones</h3>
+        </div>
+        <div className="flex justify-center gap-1">
+          <button
+            name="desc"
+            value="desc"
+            onClick={(ev) => handlerFilterPublicationAge(ev)}
+          >
+            Mas antigua
+          </button>
+          <p />
+          <button
+            name="asc"
+            value="asc"
+            onClick={(ev) => handlerFilterPublicationAge(ev)}
+          >
+            Mas reciente
+          </button>
+          <p />
+        </div>
+      </div>
       <Link to="/petregister">
         <button className="py-2 px-4 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
-          Crear nueva mascota
+          📝 Crear nueva mascota
         </button>
       </Link>
     </div>

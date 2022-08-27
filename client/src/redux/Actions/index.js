@@ -180,7 +180,7 @@ export function patchPet(payload) {
 export function filterByQuery(filterParams) {
   return async function (dispatch) {
     let json = await axios.get(
-      `http://localhost:3001/home/filters?age=${filterParams.age}&creation_date=${filterParams.creation_date}&vaccinated=${filterParams.vaccinated}&castrated=${filterParams.castrated}&location=${filterParams.location}&pet_type=${filterParams.pet_type}&pet_size=${filterParams.pet_size}&gender=${filterParams.gender}`
+      `http://localhost:3001/home/filters?age=${filterParams.age}&creation_date=${filterParams.creation_date}&vaccinated=${filterParams.vaccinated}&castrated=${filterParams.castrated}&location=${filterParams.location}&pet_type=${filterParams.pet_type}&pet_size=${filterParams.pet_size}&gender=${filterParams.gender}&is_adopted=${filterParams.is_adopted}`
     );
     return dispatch({
       type: actions.FILTER_BY_QUERY,
@@ -260,16 +260,47 @@ export function tradePet(payload) {
   };
 }
 
+ export function patchInterestedUsers(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(`http://localhost:3001/home/interestedUsers`, payload);
+      return dispatch({
+        type: actions.INTERESTED_USERS,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+} 
+
 export function emailAdopt(payload){
   return async function (dispatch){
     try{
       let json = await axios.post(`http://localhost:3001/mail/sendemail`, payload)
-      return dispatch({
+       dispatch({
         type: actions.ADOPT_EMAIL,
         payload: json.data
       })
+      return "OK"
     } catch(error){
       console.log(error)
     }
   }
 }
+
+
+export function paymentMp(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.get(`http://localhost:3001/linkpayment/${payload}`);
+      return dispatch({
+        type: actions.PAYMENT_MP,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+

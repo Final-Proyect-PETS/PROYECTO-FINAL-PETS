@@ -5,6 +5,8 @@ import { postUser, getAllUsers, postImage } from "../redux/Actions/index.js";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { notificationSwal } from "../utils/notificationSwal.jsx";
+import MapboxAutocomplete from 'react-mapbox-autocomplete';
+
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -37,6 +39,7 @@ export default function Register() {
       ...input,
       [e.target.name]: e.target.value,
     });
+    console.log(input);
     setErrors(
       validate({
         ...input,
@@ -45,7 +48,7 @@ export default function Register() {
     );
   };
 
-    async function handleImage(e) {
+  async function handleImage(e) {
     const files = e.target.files;
     const data = new FormData();
     data.append("file", files[0]);
@@ -176,6 +179,17 @@ export default function Register() {
       "Cancel"
     );
   }
+  function _suggestionSelect(result, lat, long, text) {
+    console.log(result, lat, long, text);
+    setInput({
+      ...input, place: result
+    })
+    console.log(input)
+  }
+  const mapAccess = {
+    mapboxApiAccessToken:
+      "pk.eyJ1Ijoiam9uc2VuIiwiYSI6IkR6UU9oMDQifQ.dymRIgqv-UV6oz0-HCFx1w"
+  }
 
   return (
     <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
@@ -294,6 +308,16 @@ export default function Register() {
             ></textarea>
           </div>
           <div>
+            <label className="font-light text-white text-xl">Ubicación</label>
+            <MapboxAutocomplete
+              publicKey={mapAccess.mapboxApiAccessToken}
+              inputClass="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+              onSuggestionSelect={_suggestionSelect}
+              resetSearch={false}
+              placeholder="Escriba su ciudad"
+            />
+          </div>
+          <div>
             <label className="font-light text-white text-xl">Telefono</label>
             <input
               name="telephone"
@@ -301,16 +325,6 @@ export default function Register() {
               value={input.telephone}
               onChange={(e) => handleChange(e)}
               placeholder="Telefono"
-              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
-            ></input>
-          </div>
-          <div>
-            <label className="font-light text-white text-xl">Ubicación</label>
-            <input
-              name="place"
-              value={input.place}
-              onChange={(e) => handleChange(e)}
-              placeholder="Ubicación"
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             ></input>
           </div>

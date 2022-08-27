@@ -9,7 +9,8 @@ async function filtro(
   location,
   pet_type,
   pet_size,
-  gender
+  gender,
+  is_adopted,
 ) {
   connection();
   try {
@@ -65,6 +66,12 @@ async function filtro(
     }
     if (gender === "male") {
       all = all.filter((ev) => ev.gender === "male");
+    }
+    if (is_adopted === "yes") {
+      all = all.filter((ev) => ev.isAdopted === true);
+    }
+    if (is_adopted === "no") {
+      all = all.filter((ev) => ev.isAdopted === false);
     }
     if (creation_date === "asc") {
       all = all.sort((a, b) => b.createdAt - a.createdAt);

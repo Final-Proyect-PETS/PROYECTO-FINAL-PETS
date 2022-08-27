@@ -1,14 +1,13 @@
 import React from "react";
 import { useState } from "react";
-import { /* useParams */ useNavigate } from "react-router-dom";
-import { patchPet } from "../../redux/Actions/index";
+import { useNavigate } from "react-router-dom";
+import { patchPet, postImage } from "../../redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import { notificationSwal } from "../../utils/notificationSwal.jsx";
 import { Link } from "react-router-dom";
 
 function validateFrom(input) {
   let errors = {};
-
   if (input.name) {
     if (!/^[a-zA-Z]+$/.test(input.name)) {
       errors.name = "El nombre sólo puede tener letras!";
@@ -31,8 +30,6 @@ function validateFrom(input) {
   } else errors.age = "La edad es requerida!";
 
   if (input.place) {
-    //   if (!/^[a-zA-Z]+$/.test(input.place)) {
-    //   errors.place = "La ubicación sólo puede tener letras!";
     if (input.place.length > 30) {
       errors.place = "La ubicación no puede tener más de 30 caracteres!";
     }
@@ -42,17 +39,20 @@ function validateFrom(input) {
 }
 
 export default function UpdatePet() {
-  let navigate = useNavigate();
 
+  let navigate = useNavigate();
   const dispatch = useDispatch();
   const upDatePet = useSelector((state) => state.petDetail);
-
+  const [image, setImage] = useState("");
+  const [imagePool, setImagePool] = useState([]);
+  const [loadingImage, setLoadingImage] = useState(false);
+  const [loadingImagePool, setLoadingImagePool] = useState(false);
   const [errors, setErrors] = useState({});
-
   const [input, setInput] = useState({
     id: upDatePet._id,
     name: upDatePet.name,
     image: upDatePet.image,
+    imagePool:upDatePet.imagePool,
     type: upDatePet.type,
     description: upDatePet.description,
     size: upDatePet.size,
@@ -61,7 +61,6 @@ export default function UpdatePet() {
     castrated: upDatePet.castrated,
     place: upDatePet.place,
   });
-
 
   function handleChange(e) {
     setInput({
@@ -75,6 +74,7 @@ export default function UpdatePet() {
       })
     );
   }
+
   function handleChangeSelect(e) {
     setInput({
       ...input,
@@ -86,6 +86,52 @@ export default function UpdatePet() {
         [e.target.name]: e.target.value,
       })
     );
+  }
+
+  async function handleImage(e) {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "pretty");
+    data.append("folder", "Images");
+    setLoadingImage(true);
+    dispatch(postImage(data)).then((e) => {
+      setImage(e.payload);
+      setInput({
+        ...input,
+        image: e.payload,
+      });
+      setErrors(
+        validateFrom({
+          ...input,
+          image: e.payload,
+        })
+      );
+      setLoadingImage(false);
+    });
+  }
+
+  async function handleImagePool(e) {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "pretty");
+    data.append("folder", "Images");
+    setLoadingImagePool(true);
+    dispatch(postImage(data)).then((e) => {
+      setImagePool(e.payload);
+      setInput({
+        ...input,
+        imagePool: [...input.imagePool, e.payload],
+      });
+      setErrors(
+        validateFrom({
+          ...input,
+          imagePool: [...input.imagePool, e.payload],
+        })
+      );
+      setLoadingImagePool(false);
+    });
   }
 
   function handleUpDate(e) {
@@ -101,6 +147,7 @@ export default function UpdatePet() {
       id: upDatePet._id,
       name: upDatePet.name,
       image: upDatePet.image,
+      imagePool: UpdatePet.imagePool,
       type: upDatePet.type,
       description: upDatePet.description,
       size: upDatePet.size,
@@ -109,9 +156,27 @@ export default function UpdatePet() {
       castrated: upDatePet.castrated,
       place: upDatePet.place,
     });
-
     navigate(`/pet/${upDatePet._id}`, { replace: true });
   }
+
+  function handleDelete(event) {
+    setInput({
+      ...input,
+      imagePool: input.imagePool.filter((e) => e !== event),
+    });
+    setErrors(
+      validateFrom({
+        ...input,
+        imagePool: input.imagePool.filter((e) => e !== event),
+      })
+    );
+  }
+
+  let key = 0;
+  function addKey() {
+    return key++;
+  }
+
   return (
     <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
       <div className="self-center mb-6 text-xl font-normal text-gray-600 sm:text-2xl dark:text-white">
@@ -133,22 +198,68 @@ export default function UpdatePet() {
                 {errors.name}
               </p>
             )}
+            <div>
+            <label className="font-light text-white text-xl">
+              Imagen de perfil
+            </label>
 
-            <label className="font-light text-white text-xl">Imagen</label>
             <input
-              type="text"
+              type="file"
               name="image"
-              placeholder={input.image}
-              onChange={(e) => handleChange(e)}
-              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+              accept=".jpg, .png, .jpeg"
+              onChange={(e) => handleImage(e)}
+              className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
             />
+            {loadingImage ? (
+              <h3 className="font-light text-white text-xl">
+                Cargando imagen...
+              </h3>
+            ) : (
+              <img src={image || input.image} alt="" width="300px" />
+            )}
             {errors.image && (
               <p className="font-bold text-red-700 text-center p-2">
                 {errors.image}
               </p>
             )}
-
-            <label className="font-light text-white text-xl">Tipo</label>
+          </div>
+          <div>
+            <label className="font-light text-white text-xl">
+              Más imágenes
+            </label>
+            <input
+              type="file"
+              name="imagePool"
+              accept=".jpg, .png, .jpeg"
+              onChange={(e) => handleImagePool(e)}
+              className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
+            />
+            <div className="font-light text-white text-xl">
+              {loadingImagePool ? (
+                <h3>Cargando imagen...</h3>
+              ) : (
+                input.imagePool.map((el) => (
+                  <div key={addKey()}>
+                    <button
+                      key={el.id}
+                      type="button"
+                      onClick={() => handleDelete(el)}
+                      className="px-2 border-4 rounded-lg font-bold text-yellow-900 border-yellow-900"
+                    >
+                      x
+                    </button>
+                    <img src={el} alt="" width="300px" />
+                  </div>
+                ))
+              )}
+            </div>
+            {errors.imagePool && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.imagePool}
+              </p>
+            )}
+          </div>
+            <label className="font-light text-white text-xl">Tipo de mascota </label>
             <select name="type" onChange={(e) => handleChangeSelect(e)}>
               <option
                 value="dog"
@@ -174,6 +285,7 @@ export default function UpdatePet() {
                 {errors.type}
               </p>
             )}
+            <br/>
             <label className="font-light text-white text-xl">Descripción</label>
             <textarea
               type="text"
@@ -188,7 +300,7 @@ export default function UpdatePet() {
               </p>
             )}
 
-            <label className="font-light text-white text-xl">Tamaño</label>
+            <label className="font-light text-white text-xl">Tamaño </label>
             <select name="size" onChange={(e) => handleChangeSelect(e)}>
               <option
                 value="big"
@@ -214,6 +326,7 @@ export default function UpdatePet() {
                 {errors.size}
               </p>
             )}
+            <br/>
             <label className="font-light text-white text-xl">Edad</label>
             <input
               type="text"
@@ -227,7 +340,7 @@ export default function UpdatePet() {
                 {errors.age}
               </p>
             )}
-            <label className="font-light text-white text-xl">Vacunado</label>
+            <label className="font-light text-white text-xl">Vacunado </label>
             <select name="vaccination" onChange={(e) => handleChangeSelect(e)}>
               <option
                 value="yes"
@@ -253,7 +366,8 @@ export default function UpdatePet() {
                 {errors.vaccination}
               </p>
             )}
-            <label className="font-light text-white text-xl">Castrado</label>
+            <br/>
+            <label className="font-light text-white text-xl">Castrado </label>
             <select name="castrated" onChange={(e) => handleChangeSelect(e)}>
               <option
                 value="true"
@@ -273,6 +387,7 @@ export default function UpdatePet() {
                 {errors.castrated}
               </p>
             )}
+            <br/>
             <label className="font-light text-white text-xl">Ubicacion</label>
             <input
               type="text"

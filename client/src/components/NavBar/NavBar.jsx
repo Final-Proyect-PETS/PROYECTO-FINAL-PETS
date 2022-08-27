@@ -44,19 +44,26 @@ export default function NavBar() {
               data-dropdown-toggle="user-dropdown"
               data-dropdown-placement="bottom"
             >
-              <h4>
-                {user.first_name} {user.last_name}
-              </h4>
               <img
                 className="w-8 h-8 rounded-full"
                 src={user.image}
                 alt="foto perfil"
               />
+              <h4 className=" text-white font-bold">
+                {user.first_name} {user.last_name}
+              </h4>
+              <Link to="/notifications">
+                      <button className="bg-amber-800  hover:bg-green-900   text-white font-bold py-1 px-1 border border-yellow-700 rounded-full">
+                        <h2 className="font-semibold">{`🔔${user?.interestedUsers?.length}`}</h2>{/* OJO PROMESA */}
+                      </button>
+                    </Link>
             </button>
           </Link>
           <div>
             <button onClick={removeToken}>
-              <Link to="/">Logout</Link>
+              <Link to="/">
+                <h4 className="ml-3 text-white">Cerrar Sesión</h4>
+              </Link>
             </button>
           </div>
           {/* <!-- Dropdown menu --> */}
@@ -72,8 +79,7 @@ export default function NavBar() {
                 name@flowbite.com
               </span>
             </div>
-            <ul className="py-1" aria-labelledby="user-menu-button">
-            </ul>
+            <ul className="py-1" aria-labelledby="user-menu-button"></ul>
           </div>
           <button
             data-collapse-toggle="mobile-menu-2"
