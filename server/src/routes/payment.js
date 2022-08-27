@@ -30,7 +30,7 @@ router.get("/:email", verifyToken, (req, res, next) => {
     let preference = {
       items: items_ml,
       external_reference: `${id_orden}`, //`${new Date().valueOf()}`,
-      back_url: "https://locahost:3000/donations",
+      back_url: "http://localhost:3000/donations",
       /*payer: {
         id: 699750543,
         nickname: "TESTR7BARI7Y"

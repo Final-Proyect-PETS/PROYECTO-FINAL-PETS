@@ -13,7 +13,7 @@ export default function Donation() {
   const id = localStorage.getItem("id");
   const user = useSelector((state) => state.userProfile);
 
-  const payment = useSelector((state) => state.payment)
+  const payment = useSelector((state) => state.payment.id)
 
   useEffect(() => {
     dispatch(getUserProfile(id));
