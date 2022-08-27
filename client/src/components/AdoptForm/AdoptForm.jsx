@@ -45,6 +45,8 @@ export default function AdoptForm() {
     const petOwner = petDetail.user.email
  
       */
+     const ids = []
+     ids.push(loggedUser, petDetail)
      const [input, setInput] = useState({
         owner_email: petOwner,
         adopter_name: loggedUser.first_name + " " + loggedUser.last_name,   
@@ -56,6 +58,8 @@ export default function AdoptForm() {
         pet_name: petDetail.name,
         ownerId: petDetail.user._id,
         userId: loggedUser._id,
+        petAndUserLog: ids,
+        petId: petDetail._id
       }); 
       /*
       const [currentUser, setCurrentUser] = useState({

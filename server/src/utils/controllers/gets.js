@@ -43,6 +43,9 @@ const getUsers = async (name) => {
     const arrayUsers = await User.find({ deleted: false }).populate({
       path: "pets",
       match: { deleted: false },
+    }).populate({
+      path: "interestedUsers",
+      match: { deleted: false }
     });
     if (name) {
       let userFound = arrayUsers.filter(
@@ -74,7 +77,10 @@ const userId = async (id) => {
   try {
     const arrayUsers = await User.findOne({ _id: id, deleted: false }).populate(
       { path: "pets", match: { deleted: false } }
-    );
+    ).populate({
+      path: "interestedUsers",
+      match: { deleted: false }
+    });
     return arrayUsers;
   } catch (error) {
     console.error(error);
