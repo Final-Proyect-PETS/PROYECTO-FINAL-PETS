@@ -1,20 +1,21 @@
 import React from "react";
 
-export default function NotificationCard(
-  // _id,
-  // first_name,
-  // last_name,
-  // username,
-  // image,
-  // email,
-  // about,
-  // telephone,
-  // pets,
-  // place
-) {
-
-
-return(<div className="flex flex-col"><h1>{}aa</h1></div>)
+export default function NotificationCard() {
+// _id,
+// first_name,
+// last_name,
+// username,
+// image,
+// email,
+// about,
+// telephone,
+// pets,
+// place
+  return (
+    <div className="flex flex-col">
+     
+    </div>
+  );
   // return (<div
   //   id={_id}
   //   className="rounded overflow-hidden border border-[#B99782] w-full bg-white my-2 md:mx-0 lg:mx-0"

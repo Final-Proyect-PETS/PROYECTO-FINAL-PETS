@@ -11,7 +11,7 @@ router.post("/sendemail", async (req, res) => {
     message,
     adopter_username,
     adopter_name,
-    pet_name,
+    // pet_name,
     link,
   } = req.body;
 
@@ -31,7 +31,7 @@ router.post("/sendemail", async (req, res) => {
   let contentHTML = `
     <img src = "https://cdn-icons-png.flaticon.com/512/194/194279.png" style="width:100px;"/>
 
-    <h1>El usuario ${adopter_username} esta interesado en adoptar a ${pet_name}.
+    <h1>El usuario ${adopter_username} esta interesado en adoptar a NOMBRE DE PERRO.
                 La informacion del usuario es la siguiente:</h1> 
                 <ul>
                 <li>Nombre: ${adopter_name}</li>
