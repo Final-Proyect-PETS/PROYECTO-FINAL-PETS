@@ -1,58 +1,70 @@
 const mercadopago = require("mercadopago");
 const { Router } = require("express");
-const verifyToken = require("../utils/middlewares/validateToken")
+const verifyToken = require("../utils/middlewares/validateToken");
 const router = Router();
+const User = require("../models/users");
 
-router.get("/:email", verifyToken, (req, res, next) => {
-    // const id_compra = req.query.id
-    
-    const id_orden = 1;
-    // cargamos el carrito de la bd
-    const carrito = [
-      {
-        title: "Donación a Happy Tails",
-        description: "",
-        picture_url: "https://cdn-icons-png.flaticon.com/512/194/194279.png",
-        category_id: "category123",
-        quantity: 1,
-        //unidad de moneda dnd se encuentre la cuenta de MP asociada.
-        unit_price: 100,
-      },
-    ];
-  
-    // Agrega credenciales
-    mercadopago.configure({
-      access_token: process.env.ACCESS_TOKEN,
-    });
-  
-    const items_ml = carrito;
-    // Crea un objeto de preferencia
+router.get("/:idDonor/:donationAmount", verifyToken, async (req, res, next) => {
+  // const id_compra = req.query.id
+  const { idDonor, donationAmount } = req.params;
+
+  const id_orden = 1;
+
+  // Agrega credenciales
+  mercadopago.configure({
+    access_token: process.env.ACCESS_TOKEN,
+  });
+
+  try {
+    const oneUser = await User.findOne({ _id: idDonor });
+    console.log(oneUser);
     let preference = {
-      items: items_ml,
+      items: [
+        {
+          title: "Donación a Happy Tails",
+          description: "",
+          picture_url: "https://cdn-icons-png.flaticon.com/512/194/194279.png",
+          category_id: "category123",
+          quantity: 1,
+          unit_price: Number(donationAmount),
+        },
+      ],
       external_reference: `${id_orden}`, //`${new Date().valueOf()}`,
-      back_url: "http://localhost:3000/donations",
+      back_urls: {
+        success: `http://localhost:3001/feedback/${idDonor}/${donationAmount}`,
+        failure: `http://localhost:3001/feedback/${idDonor}/${donationAmount}`,
+        pending: `http://localhost:3001/feedback/${idDonor}/${donationAmount}`,
+      },
+      payer: {
+        name: oneUser.first_name,
+        surname: oneUser.last_name,
+        email: oneUser.email,
+      },
       /*payer: {
-        id: 699750543,
-        nickname: "TESTR7BARI7Y"
-      }*/
+          id: 699750543,
+          nickname: "TESTR7BARI7Y"
+        }*/
     };
     // console.info("preference:", preference);
-  
+
     mercadopago.preferences
       .create(preference)
       .then(function (response) {
         console.info("respondio");
         // Este valor reemplazará el string"<%= global.id %>" en tu HTML
         global.id = response.body.id;
-      
-        res.json({ 
-          id: global.id, 
-          init_point: response.body.init_point 
+
+        res.json({
+          id: global.id,
+          init_point: response.body.init_point,
         });
       })
       .catch(function (error) {
         console.log(error);
       });
-  });
-  
-  module.exports = router
+  } catch (error) {
+    next(error);
+  }
+});
+
+module.exports = router;
