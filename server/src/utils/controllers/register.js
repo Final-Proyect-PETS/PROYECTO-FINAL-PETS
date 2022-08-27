@@ -9,6 +9,7 @@ async function register(
   image,
   telephone,
   about,
+  place,
   interestedUsers,
 ) {
   try {
@@ -21,7 +22,8 @@ async function register(
       image,
       telephone,
       about,
-      interestedUsers,
+      place,
+      interestedUsers
     });
 
     await post.save();
