@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { notificationSwal } from "../../utils/notificationSwal.jsx";
-import { getUserDetail, patchUsuer } from "../../redux/Actions/index";
+import { getUserDetail, patchUsuer, postImage } from "../../redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 
 function validateFrom(input) {
@@ -37,14 +37,6 @@ function validateFrom(input) {
     } else errors.username = "";
   } else errors.username = "El nombre de usuario es requerido!";
 
-  // if (input.email) {
-  //   if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.email)) {
-  //     errors.email = "El email debe ser valido!";
-  //   } else if (users.find((u) => u.email === input.email.toLowerCase())) {
-  //     errors.email = "El email ya esta registrado!";
-  //   } else errors.email = "";
-  // } else errors.email = "El email es necesario!";
-
   return errors;
 }
 
@@ -52,6 +44,8 @@ export default function UpdateUser() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const upDateUser = useSelector((state) => state.userProfile);
+  const [image, setImage] = useState("");
+  const [loadingImage, setLoadingImage] = useState(false);
 
   const [errors, setErrors] = useState({});
 
@@ -61,7 +55,6 @@ export default function UpdateUser() {
     last_name: upDateUser.last_name,
     username: upDateUser.username,
     image: upDateUser.image,
-    // email: upDateUser.email,
     about: upDateUser.about,
     telephone: upDateUser.telephone,
     place: upDateUser.place,
@@ -84,48 +77,7 @@ export default function UpdateUser() {
       })
     );
   }
-  // function validateFrom(input) {
-  //   let errors = {};
 
-  //   if (input.first_name) {
-  //     if (!/^[a-zA-Z]+$/.test(input.first_name)) {
-  //       errors.first_name = "El nombre solo puede tener letras!";
-  //     } else if (input.first_name.length > 20) {
-  //       errors.first_name = "El nombre no puede tener más de 20 caracteres!";
-  //     } else errors.first_name = "";
-  //   } else errors.first_name = "El nombre es requerido!";
-
-  //   if (input.last_name) {
-  //     if (!/^[a-zA-Z]+$/.test(input.last_name)) {
-  //       errors.last_name = "El nombre solo puede tener letras!";
-  //     } else if (input.last_name.length > 20) {
-  //       errors.last_name = "El nombre no puede tener más de 20 caracteres!";
-  //     } else errors.last_name = "";
-  //   } else errors.last_name = "El nombre es requerido!";
-
-  //   if (input.username) {
-  //     if (!/^[A-Za-z0-9\s]+$/g.test(input.username)) {
-  //       errors.username = "El nombre de usuario debe tener letras y números!";
-  //     } else if (input.username.length > 20) {
-  //       errors.username =
-  //         "El nombre de usuario no puede tener más de 20 caracteres!";
-  //       // } else if if(
-  //       //   users.find((u) => u.username === input.username.toLowerCase())
-  //       // ) {
-  //       //   errors.username = "El usuario ya existe!";
-  //     } else errors.username = "";
-  //   } else errors.username = "El nombre de usuario es requerido!";
-
-  //   // if (input.email) {
-  //   //   if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.email)) {
-  //   //     errors.email = "El email debe ser valido!";
-  //   //   } else if (users.find((u) => u.email === input.email.toLowerCase())) {
-  //   //     errors.email = "El email ya esta registrado!";
-  //   //   } else errors.email = "";
-  //   // } else errors.email = "El email es necesario!";
-
-  //   return errors;
-  // }
   function handleUpDate(e) {
     e.preventDefault();
     dispatch(patchUsuer(input)).then(
@@ -142,7 +94,6 @@ export default function UpdateUser() {
       last_name: upDateUser.last_name,
       username: upDateUser.username,
       image: upDateUser.image,
-      email: upDateUser.email,
       about: upDateUser.about,
       telephone: upDateUser.telephone,
       place: upDateUser.place,
@@ -152,6 +103,29 @@ export default function UpdateUser() {
     //esto es porque en el estado userDetail me quedaba cargada
     //la frase "Datos Actualizados Exitosamente 👍", y preciso que se vuelva a cargar con el usuario para que al clickear el boton
     //para regresar, me tome bien sus datos y no aparezca como undefined.
+  }
+
+  async function handleImage(e) {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "pretty");
+    data.append("folder", "Images");
+    setLoadingImage(true);
+    dispatch(postImage(data)).then((e) => {
+      setImage(e.payload);
+      setInput({
+        ...input,
+        image: e.payload,
+      });
+      setErrors(
+        validateFrom({
+          ...input,
+          image: e.payload,
+        })
+      );
+      setLoadingImage(false);
+    });
   }
 
   return (
@@ -205,17 +179,26 @@ export default function UpdateUser() {
               </p>
             )}
 
+          <div>
             <label className="font-light text-white text-xl">
-              Imagen de perfil
+              Imagen de Perfil
             </label>
             <input
-              type="text"
+              type="file"
               name="image"
-              placeholder={input.image}
-              onChange={(e) => handleChange(e)}
-              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
-              // className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
-            />
+              accept=".jpg, .png, .jpeg"
+              onChange={(e) => handleImage(e)}
+              placeholder="Imagen de perfil"
+              className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
+            ></input>
+            {loadingImage ? (
+              <h3 className="font-light text-white text-xl">
+                Cargando imagen...
+              </h3>
+            ) : (
+              <img src={image || upDateUser.image} alt="" width="300px" />
+            )}
+          </div>
             <label className="font-light text-white text-xl">Sobre mí</label>
             <textarea
               type="text"
