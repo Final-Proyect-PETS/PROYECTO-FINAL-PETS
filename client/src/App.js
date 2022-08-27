@@ -43,8 +43,8 @@ function App() {
           <Route path={"/adopt/:id"} element={<AdoptForm />} />
           <Route path={"*"} element={<Error404 />} />
         </Route>
-          <Route path={"/admin"} element={<AdminView />} />
         <Route element={<PrivateAdmin />}>
+          <Route path={"/admin"} element={<AdminView />} />
         </Route>
       </Routes>
     </BrowserRouter>
