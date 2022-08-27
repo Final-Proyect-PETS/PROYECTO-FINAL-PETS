@@ -117,12 +117,13 @@ export default function OwnedPet({
       <div className=" flex border-2 border-yellow-700 rounded">
         <div className=" border-yellow-900 border-r-2  flex justify-between  border items-center rounded bg-gray-300">
           <div className=" column items-center mb-4 mr-4 ml-4 ">
-            <button
+            {loggedUser._id===userDetail._id?  <button
               onClick={(e) => deleteHandler(e)}
               className="bg-red-600 mt-4 hover:bg-red-700 text-white font-bold py- px-1 border border-yellow-700 rounded"
             >
               ✖️
-            </button>
+            </button>:<></>}
+          
             {/* <span className="text-2xl font-bold ">{namePet}</span> */}
             <div className="flex justify-center">
               <span className="text-2xl font-bold ">{namePet}</span>
@@ -133,17 +134,14 @@ export default function OwnedPet({
                 <div className="flex flex-col justify-content items-center">
                   <div className="flex  justify-content items-center">
                     <Link to="/interestedtraders">
-                      <button className="bg-green-600 mt-4 hover:bg-green-900 mr-1 mt-4  text-white font-bold py-2 px-2 border border-yellow-700 rounded">
-                        <h2 className="font-semibold">{`🔔${interestedUsers.length}`}</h2>
+                      <button className=" flex bg-green-600 mt-4 hover:bg-green-900 mr-1 mt-4  text-white font-bold py-2 px-2 border border-yellow-700 rounded">
+                        <h2 className="font-semibold">{`🔔 ${interestedUsers.length}`}</h2>
                       </button>
                     </Link>
 
                     <Link to="/tradepet">
                       <button className="bg-yellow-900 mr-1 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-2 border border-yellow-700 rounded">
-                        <h2 className="font-semibold">
-                          {" "}
-                      CAMBIAR DUEÑO
-                        </h2>
+                        <h2 className="font-semibold"> CAMBIAR DUEÑO</h2>
                       </button>
                     </Link>
                   </div>

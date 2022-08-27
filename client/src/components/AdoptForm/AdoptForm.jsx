@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
 
 
@@ -28,7 +28,7 @@ export default function AdoptForm() {
   const petOwner = petDetail.user.email;
 
 
-  const [input, setInput] = useState({
+  /* const [input, setInput] = useState({
     owner_email: petOwner,
     adopter_name: loggedUser.first_name + " " + loggedUser.last_name,
     adopter_username: loggedUser.username,
@@ -36,7 +36,7 @@ export default function AdoptForm() {
     adopter_telephone: loggedUser.telephone,
     message: "",
     link: `http://localhost:3000/users/${loggedUser._id}`,
-  });
+  }); */
   /* useEffect(
 
     const loggedUser = useSelector((state) => state.userProfile)
@@ -44,7 +44,7 @@ export default function AdoptForm() {
     const usersArray = useSelector((state) => state.users)
     const petOwner = petDetail.user.email
  
-
+      */
      const [input, setInput] = useState({
         owner_email: petOwner,
         adopter_name: loggedUser.first_name + " " + loggedUser.last_name,   
@@ -54,8 +54,10 @@ export default function AdoptForm() {
         message: "",
         link: `http://localhost:3000/users/${loggedUser._id}`,
         pet_name: petDetail.name,
+        ownerId: petDetail.user._id,
+        userId: loggedUser._id,
       }); 
-      
+      /*
       const [currentUser, setCurrentUser] = useState({
         id: petDetail.user._id,
         first_name: petDetail.user.first_name,
@@ -77,12 +79,12 @@ export default function AdoptForm() {
         dispatch(getPetDetail())
       ) */
 
-  function handleChange(e) {
+  /* function handleChange(e) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
-  }
+  } */
   // const sendPatch = {
   //     id: petDetail.user._id,
   //     interestedUsers: loggedUser,
@@ -102,11 +104,8 @@ export default function AdoptForm() {
         });
     }
 
-    const obj = {
-        ownerId: petDetail.user._id,
-        userId: loggedUser._id
-    }
-     function handlerSubmit(ev){
+  
+     /* function handlerSubmit(ev){
         ev.preventDefault()
         if (petDetail.user.interestedUsers !== loggedUser._id){
             dispatch(
@@ -114,7 +113,7 @@ export default function AdoptForm() {
                 patchInterestedUsers(obj)
                 )} 
                 alert("Ya se mando una solicitud de adopcion")
-        }   
+        }  */  
 
     // const sendPatch = {
     //     id: petDetail.user._id,
@@ -142,7 +141,7 @@ export default function AdoptForm() {
       })
         .then((result) => {
           if (result.isConfirmed) {
-            dispatch(emailAdopt(input)).then((e) => {
+            dispatch(patchInterestedUsers(input)).then((e) => {
               if (e === "OK") {
                 notificationSwal(
                   "¡Enhorabuena!",
@@ -153,7 +152,7 @@ export default function AdoptForm() {
               } else {
                 notificationSwal(
                   "¡Ooops!",
-                  "No se pudo eliminar la mascota, intente mas tarde",
+                  "Ya mandaste una solicitud de adopcion",
                   "error",
                   "Cancel"
                 );
@@ -238,7 +237,6 @@ export default function AdoptForm() {
               </button>
             </div>
           </form>
-
         </div>
       </div>
     </>

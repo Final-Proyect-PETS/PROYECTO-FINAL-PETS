@@ -29,7 +29,7 @@ export default function Notifications() {
         Tienes {loggedUser?.interestedUsers?.length} notificaciones sin leer
       </h1>
       <>
-        {" "}
+        
         {loggedUser?.interestedUsers ? (
           loggedUser?.interestedUsers?.map((iUser) => (
             <NotificationCard

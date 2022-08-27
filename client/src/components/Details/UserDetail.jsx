@@ -39,8 +39,8 @@ export default function UserDetail() {
                       {userDetail.first_name + " " + userDetail.last_name}
                     </h1>
                     <Link to="/notifications">
-                      <button className="bg-green-600  hover:bg-green-900   text-white font-bold py-1 px-1 border border-yellow-700 rounded">
-                        <h2 className="font-semibold">{`🔔${userDetail.interestedUsers.length}`}</h2>
+                      <button className="flex bg-green-600  hover:bg-green-900   text-white font-bold py-1 px-3 border border-yellow-700 rounded">
+                      🔔<h2 className="font-semibold">{`${userDetail.interestedUsers.length}`}</h2>
                       </button>
                     </Link>
                   </div>
@@ -90,6 +90,11 @@ export default function UserDetail() {
                   <></>
                 )} */}
               </div>
+              <div>
+                  {userDetail.isAdmin === true ? <Link to="/admin">
+                    <button>Vista de admin</button>
+                  </Link> : false}
+                </div>
             </div>
           </div>
           <div className="w-full mt-1 border-b  absolute  justify-center items-center bg-gray-100">

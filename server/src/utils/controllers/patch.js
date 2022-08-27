@@ -6,6 +6,7 @@ const patchPet = async (
   id,
   name,
   image,
+  imagePool,
   type,
   description,
   size,
@@ -24,6 +25,7 @@ const patchPet = async (
     await onePet.update({
       name,
       image,
+      imagePool,
       type,
       description,
       size,
