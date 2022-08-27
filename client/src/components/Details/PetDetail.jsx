@@ -29,7 +29,7 @@ export default function PetDetail() {
           {loggedUser._id === petDetail.user._id ? (
             <Link to="/updatepet">
               <button className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-600 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
-                Editar mascota
+              📝Editar mascota
               </button>
             </Link>
           ) : (
@@ -123,7 +123,7 @@ export default function PetDetail() {
                       </button>
                     </Link>
                     <Link to={`/adopt/${petDetail._id}`}>
-                      <button className="py-2 px-4 my-2 mb-5  w-full ml-2 bg-yellow-900 hover:bg-green-700 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                      <button className="py-2 px-4 my-2 mb-5  w-full ml-2 bg-green-900 hover:bg-green-600 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
                         LO QUIERO!
                       </button>
                     </Link>
@@ -141,7 +141,7 @@ export default function PetDetail() {
 
                 <Link to={`/users/${petDetail.user._id}`}>
                   <button className="py-2 px-3 my-4 mr-8  w-full bg-yellow-900 hover:bg-green-700 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
-                    CAMBIAR ESTADO
+                  📝 CAMBIAR ESTADO
                   </button>
                 </Link>
               </>
