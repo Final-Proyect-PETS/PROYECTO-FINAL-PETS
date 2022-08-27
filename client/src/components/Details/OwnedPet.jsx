@@ -3,6 +3,10 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { patchPet } from "../../redux/Actions";
+import { useNavigate } from "react-router-dom";
+import { notificationSwal } from "../../utils/notificationSwal.jsx";
+import Swal from "sweetalert2";
+import "../LandingPage.css";
 
 export default function OwnedPet({
   idUser,
@@ -10,23 +14,22 @@ export default function OwnedPet({
   namePet,
   imagePet,
   isAdopted,
-  pets,
+  isDeleted,
+  interestedUsers,
 }) {
   const dispatch = useDispatch();
-  const loggedUser = useSelector((state) => state.userProfile);
+  const navigate = useNavigate();
 
+  const loggedUser = useSelector((state) => state.userProfile);
+  const userDetail = useSelector((state) => state.userDetail);
+
+  //---------------------------------------------------handler Cambiar Botones-----------------------------------------
   const [adopt, setAdopt] = useState({
     id: idPet,
     name: namePet,
     isAdopted: isAdopted,
   });
-  const [changeId, setChangeId] = useState({
-    idPetFromUserSchema: idPet, //sacado de userDetail.pets._id//
-    idUserFromUserSchema: idUser, //sacado de userDetail._id
-    isAdopted: isAdopted, //sacado de userDetail.pets.isAdopted
-  });
 
-  //---------------------------------------------------handler Cambiar Botones-----------------------------------------
   var payload = {
     id: idPet,
     name: namePet,
@@ -45,86 +48,147 @@ export default function OwnedPet({
     dispatch(patchPet(payload));
   }
 
-  //-------------------------------------------------handler para cambiar mascota de usuario-------------------------------------------------------------------
-  var payload2 = {
-    id: idPet, //para patch de ruta /:id
+  //-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-DELETE-x-x-x-x-x-x-x--x-x-x-x--x-x
+
+  const [deleted, setDeleted] = useState({
+    id: idPet,
+    deleted: isDeleted,
+  });
+  var payloadDelete = {
+    id: idPet,
+    deleted: isDeleted,
   };
 
-  function changeIDHandler(e) {
-    // e.preventDefault();
-    let idAdoptante = "6304e6e4a3b3fc85c8b4feeb"; //Lautaro
-    //HACER NUEVA RUTA PATCH?????????????????
+  function deleteHandler(e) {
+    e.preventDefault();
+    setDeleted({
+      id: idPet,
+      deleted: true,
+    });
+    payloadDelete = {
+      id: idPet,
+      deleted: true,
+    };
+    // dispatch(patchPet(payloadDelete));
+
+    if (true) {
+      Swal.fire({
+        title: "¿Está seguro de que desea eliminar esta mascota?",
+        text: "Esta mascota se eliminará",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonText: "No",
+        confirmButtonText: "Sí",
+      })
+        .then((result) => {
+          if (result.isConfirmed) {
+            dispatch(patchPet(payloadDelete)).then((e) => {
+              if (e === "OK") {
+                notificationSwal(
+                  "¡Enhorabuena!",
+                  "Mascota eliminada con éxito",
+                  "success",
+                  "Ok"
+                );
+              } else {
+                notificationSwal(
+                  "¡Ooops!",
+                  "No se pudo eliminar la mascota, intente mas tarde",
+                  "error",
+                  "Cancel"
+                );
+              }
+            });
+          } else {
+            notificationSwal(
+              "Operación cancelada",
+              "Mascota no eliminada",
+              "error",
+              "Cancel"
+            );
+          }
+        })
+        .then(() => navigate(`/users/${idUser}`, { replace: true }));
+    } //oponer sweet
   }
 
-  const userDetail = useSelector((state) => state.userDetail);
   return (
-    <>
-      <div className="flex items-center py-4 px-5 ">
-        <div className=" flex border-2 border-yellow-700 rounded">
-          <div className=" border-yellow-900 border-r-2  flex justify-between p-3 border items-center rounded bg-gray-300">
-            <div className=" column items-center mb-4 mr-4 ml-4 ">
-              <div className="flex justify-center">
-                <span className="text-2xl font-bold ">{namePet}</span>
-              </div>
+    <div className="flex items-center py-4 px-5 ">
+      <div className=" flex border-2 border-yellow-700 rounded">
+        <div className=" border-yellow-900 border-r-2  flex justify-between  border items-center rounded bg-gray-300">
+          <div className=" column items-center mb-4 mr-4 ml-4 ">
+            {loggedUser._id===userDetail._id?  <button
+              onClick={(e) => deleteHandler(e)}
+              className="bg-red-600 mt-4 hover:bg-red-700 text-white font-bold py- px-1 border border-yellow-700 rounded"
+            >
+              ✖️
+            </button>:<></>}
+          
+            {/* <span className="text-2xl font-bold ">{namePet}</span> */}
+            <div className="flex justify-center">
+              <span className="text-2xl font-bold ">{namePet}</span>
+            </div>
 
-              {loggedUser._id === userDetail._id ? (
-                adopt.isAdopted === false ? (
-                  <div className="column items-center">
-                    {/* <Link to="/tradepet"> */}
-                    {/* link de mierda -------------------------------------------------------------------------*/}
-                    <button
-                      onClick={(e) => changeIDHandler(e)}
-                      className="bg-yellow-900 mr-4 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-4 border border-yellow-700 rounded"
-                    >
-                      TRASPASAR MASCOTA →
-                    </button>
-                    {/* </Link> */}
-                    {/* <Link to="/quitadopt/"> */}{" "}
-                    {/* link de mierda*------------------------------------------------------------------- */}
+            {loggedUser._id === userDetail._id ? (
+              adopt.isAdopted === false && deleted.deleted === false ? (
+                <div className="flex flex-col justify-content items-center">
+                  <div className="flex  justify-content items-center">
+                    <Link to="/interestedtraders">
+                      <button className=" flex bg-green-600 mt-4 hover:bg-green-900 mr-1 mt-4  text-white font-bold py-2 px-2 border border-yellow-700 rounded">
+                        <h2 className="font-semibold">{`🔔 ${interestedUsers.length}`}</h2>
+                      </button>
+                    </Link>
+
+                    <Link to="/tradepet">
+                      <button className="bg-yellow-900 mr-1 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-2 border border-yellow-700 rounded">
+                        <h2 className="font-semibold"> CAMBIAR DUEÑO</h2>
+                      </button>
+                    </Link>
+                  </div>
+                  <div className="flex">
                     <button
                       onClick={(e) => patchAdoptionHandler(e)}
-                      className="bg-yellow-900 mt-4 hover:bg-red-700 text-white font-bold py-2 px-4 border border-yellow-700 rounded"
+                      className="bg-red-900 mt-4 hover:bg-red-600 text-white font-bold py-1 px-1 border border-yellow-700 rounded"
                     >
-                      QUITAR DISPONIBILIDAD
+                      ⛔ PARAR ADOPCION
                     </button>
-                    {/* </Link> */}
                   </div>
-                ) : (
-                  <button
-                    onClick={(e) => patchAdoptionHandler(e)}
-                    className="bg-yellow-900 mt-4 hover:bg-green-900 text-white font-bold py-2 px-4 border border-yellow-700 rounded"
-                  >
-                    PUBLICAR EN ADOPCION
-                  </button>
-                )
-              ) : loggedUser._id !== userDetail._id &&
-                adopt.isAdopted === false ? (
-                <div className="column items-center">
-                  <Link to="/adopt/">
-                    {/* link de mierda -------------------------------------------------------------------------*/}
-                    <button className="bg-yellow-900 mr-4 mt-4 hover:bg-green-900 text-white font-bold py-2 px-4 border border-yellow-700 rounded">
-                      ADOPTAR
-                    </button>
-                  </Link>
                 </div>
               ) : (
-                <Link to="/home">
-                  <button className="bg-yellow-900 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-4 border border-yellow-700 rounded">
-                    TENGO DUEÑO
+                <div className="flex flex-col justify-content items-center">
+                  <button
+                    onClick={(e) => patchAdoptionHandler(e)}
+                    className="bg-green-900 mt-4 hover:bg-green-600 text-white font-bold py-4 px-1 border border-yellow-700 rounded"
+                  >
+                    ✔️ PONER EN ADOPCIÓN
+                  </button>
+                </div>
+              )
+            ) : loggedUser._id !== userDetail._id &&
+              adopt.isAdopted === false &&
+              deleted.deleted === false ? (
+              <div className="flex flex-col items-center">
+                <Link to={`/pet/${idPet}`}>
+                  {/* link de mierda -------------------------------------------------------------------------*/}
+                  <button className="bg-green-900 mr-4 mt-3 hover:bg-green-600 text-white font-bold  px-4 border border-yellow-700 rounded">
+                    <h2 className="font-semibold"> ¡Mascota en adopcion!</h2>
+                    <h2 className=""> VER PERFIL</h2>
                   </button>
                 </Link>
-              )}
-            </div>
+              </div>
+            ) : (
+              <Link to={`/pet/${idPet}`}>
+                <button className="bg-yellow-900 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-4 border border-yellow-700 rounded">
+                  VER PERFIL
+                </button>
+              </Link>
+            )}
           </div>
-          <Link to={"/pet/" + idPet}>
-            <img
-              className="w-60 h-40 bg-cover "
-              src={imagePet}
-              alt="imagepet"
-            />
-          </Link>
         </div>
+        <Link to={"/pet/" + idPet}>
+          <img className="w-60 h-40 bg-cover " src={imagePet} alt="imagepet" />
+        </Link>
       </div>
-    </>
+    </div>
   );
 }

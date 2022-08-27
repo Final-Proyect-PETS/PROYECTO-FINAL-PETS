@@ -15,7 +15,11 @@ const usersSchema = new Schema(
     },
 
     username: { type: String, unique: true },
-    image: { type: String, default: "https://assets.stickpng.com/images/585e4beacb11b227491c3399.png" },
+    image: {
+      type: String,
+      default:
+        "https://assets.stickpng.com/images/585e4beacb11b227491c3399.png",
+    },
     email: {
       type: String,
       lowercase: true,
@@ -30,9 +34,13 @@ const usersSchema = new Schema(
     about: String,
     telephone: String,
     place: String,
+    deleted: { type: Boolean, default: false },
     isAdmin: { type: Boolean, default: false },
     reviews: Number,
     pets: [{ type: mongoose.Schema.ObjectId, ref: "Pet" }],
+
+    interestedUsers: [{type: mongoose.Schema.ObjectId}]//ojo. AGREGUE REF USER....VER SI ANDA O SE VUELA
+
   },
   {
     timestamps: true,
@@ -52,7 +60,6 @@ usersSchema.pre("save", function (next) {
   });
 });
 
-
 usersSchema.methods.comparePassword = function (candidatePassword) {
   const currentPassword = this.password;
   return new Promise((resolve, reject) => {
@@ -60,9 +67,8 @@ usersSchema.methods.comparePassword = function (candidatePassword) {
       if (err) return reject(err);
       resolve(isMatch);
     });
-  })
+  });
 };
-
 
 const User = mongoose.model("User", usersSchema);
 

@@ -4,14 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { getPetDetail, clearStatePet } from "../../redux/Actions";
 import NavBar from "../NavBar/NavBar";
+import logo from "../../assets/images/2039031.png";
 
 export default function PetDetail() {
   let { id } = useParams();
   const dispatch = useDispatch();
   const petDetail = useSelector((state) => state.petDetail);
   const loggedUser = useSelector((state) => state.userProfile);
-
-  console.log(petDetail, "PETDETAIL");
 
   useEffect(() => {
     dispatch(clearStatePet());
@@ -30,7 +29,7 @@ export default function PetDetail() {
           {loggedUser._id === petDetail.user._id ? (
             <Link to="/updatepet">
               <button className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-600 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
-                Editar mascota
+              📝Editar mascota
               </button>
             </Link>
           ) : (
@@ -44,13 +43,21 @@ export default function PetDetail() {
             // width="500px"
             className="w-96"
           />
-          <h3 className="text-xs">Descripcion: {petDetail.description}</h3>
+          <h2 className="font-semibold">
+            Descripción: {petDetail.description}
+          </h2>
         </div>
+
         <div className="flex flex-col w-1/2">
           <div className="flex flex-col items-center w-full h-1/3 justify-center">
             <h2 className="font-semibold text-2xl">{petDetail.name}</h2>
-            <h2 className="font-semibold">En</h2>
-            <h3 className="font-semibold">{petDetail.place}</h3>
+            <h2 className="font-semibold">
+              Dueño:{" "}
+              {petDetail.user.first_name + " " + petDetail.user.last_name}
+            </h2>
+            <h3 className="font-semibold">
+              {"Vivo en " + `"${petDetail.place}"`}
+            </h3>
           </div>
           <div className="flex flex-wrap w-full h-1/2 justify-center items-center border-y border-black">
             <div className="w-1/2 h-1/2 flex justify-center items-center border-b">
@@ -73,22 +80,72 @@ export default function PetDetail() {
                   : "No se sabe"}
               </h3>
             </div>
-            <h1 className="absolute flex justify-center items-center">Datos</h1>
+            <h1 className="absolute flex justify-center items-center font-semibold ">
+              Mis Datos
+            </h1>
             <div className="w-1/2 h-1/2 flex justify-center items-center border-t">
               <h3 className="font-semibold">Edad: {petDetail.age} años</h3>
             </div>
             <div className="w-1/2 h-1/2 flex justify-center items-center border-t">
-              <h3 className="font-semibold">
+              <h3 className="font-semibold mr-10">
                 Castrado: {petDetail.castrated === true ? "Si" : "No"}
+              </h3>
+              <h3 className="font-semibold">
+                Género: {petDetail.gender === "female" ? "Hembra" : "Macho"}
               </h3>
             </div>
           </div>
           <div className="flex justify-center items-center h-1/5">
-            <Link to="/adopt/">
-              <button className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-green-700 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
-                ADOPTAR
-              </button>
-            </Link>
+            {loggedUser._id !== petDetail.user._id ? (
+              petDetail.isAdopted === true ? (
+                <div className="flex space-between">
+                  <Link to={`/users/${petDetail.user._id}`}>
+                    <button className="py-2 px-4 my-4 mr-2 w-full bg-yellow-900 hover:bg-yellow-700 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                      PERFIL DEL DUEÑO
+                    </button>
+                  </Link>
+                  {/* { <Link to={`/adopt/${petDetail._id}`}>
+                  <button className="py-2 px-4 my-4 w-full ml-2 bg-yellow-900 hover:bg-green-700 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                    LO QUIERO!
+                  </button>
+                </Link> } */}
+                </div>
+              ) : (
+                <div className="flex flex-col justify-center items-center">
+                  <h2 className="font-semibold text mt-5">
+                    {" "}
+                    "ESTA MASCOTA ESTA BUSCANDO NUEVO DUEÑO!"
+                  </h2>
+                  <div className="flex space-between">
+                    <Link to={`/users/${petDetail.user._id}`}>
+                      <button className="py-2 px-4 my-2 mb-5 mr-2 w-full bg-yellow-900 hover:bg-yellow-700 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                        PERFIL DEL DUEÑO
+                      </button>
+                    </Link>
+                    <Link to={`/adopt/${petDetail._id}`}>
+                      <button className="py-2 px-4 my-2 mb-5  w-full ml-2 bg-green-900 hover:bg-green-600 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                        LO QUIERO!
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              )
+            ) : (
+              <>
+                <h2 className="font-semibold text">
+                  ESTA MASCOTA TE PERTENECE! Quieres
+                  {petDetail.isAdopted === false
+                    ? " quitarla de adopción?"
+                    : " ponerla en adopción?"}
+                </h2>
+
+                <Link to={`/users/${petDetail.user._id}`}>
+                  <button className="py-2 px-3 my-4 mr-8  w-full bg-yellow-900 hover:bg-green-700 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                  📝 CAMBIAR ESTADO
+                  </button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

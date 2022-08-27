@@ -17,12 +17,15 @@ export default function UserDetail() {
   const loggedUser = useSelector((state) => state.userProfile);
   const userDetail = useSelector((state) => state.userDetail);
 
+  console.log("MI PERFIL", loggedUser);
+  console.log("USERdetail-", userDetail);
+
   return Object.keys(userDetail).length ? (
     <>
       <NavBar />
       <>
         <div className="rounded overflow-hidden border border-[#B99782] w-full bg-white my-12 md:mx-0 lg:mx-0">
-          <div className="w-full grid justify-between p-3 border-b items-center  bg-gray-300">
+          <div className="w-full grid grid-cols-3 justify-between p-3 border-b items-center  bg-gray-300">
             <div className="flex items-center">
               <img
                 src={userDetail.image}
@@ -30,10 +33,25 @@ export default function UserDetail() {
                 alt="imageuser"
               />
               <div className="grid m-4">
-                <h1 className="text-5xl font-bold">
-                  {userDetail.first_name + " " + userDetail.last_name}
-                </h1>
-                <h3 className="text-2xl ">{`"${userDetail.username}"`}</h3>
+                {loggedUser._id === userDetail._id ? (
+                  <div className="flex">
+                    <h1 className="text-5xl font-bold">
+                      {userDetail.first_name + " " + userDetail.last_name}
+                    </h1>
+                    <Link to="/notifications">
+                      <button className="flex bg-green-600  hover:bg-green-900   text-white font-bold py-1 px-3 border border-yellow-700 rounded">
+                      🔔<h2 className="font-semibold">{`${userDetail.interestedUsers.length}`}</h2>
+                      </button>
+                    </Link>
+                  </div>
+                ) : (
+                  <h1 className="text-5xl font-bold">
+                    {userDetail.first_name + " " + userDetail.last_name}
+                  </h1>
+                )}
+              
+
+                <h3 className="text-2xl">{`"${userDetail.username}"`}</h3>
                 <h3 className="text-2xl font-bold">
                   Tel:{userDetail.telephone}
                 </h3>
@@ -44,27 +62,39 @@ export default function UserDetail() {
                 <h3 className="text-2xl ">{userDetail.about}</h3>
                 <div>
                   {loggedUser._id === userDetail._id ? (
-                    <Link to="/petregister">
-                      <button className="py-2 mt-5 px-4 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
-                        Crear nueva mascota
-                      </button>
-                    </Link>
+                    <div className="flex">
+                      <Link to="/petregister">
+                        <button className="py-2 mt-5 px-4 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                          📝Crear nueva mascota
+                        </button>
+                      </Link>
+                      <Link to="/updateuser">
+                        <button className="py-2 mt-5 ml-5 px-4 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                          ✏️Editar Perfil
+                        </button>
+                      </Link>
+                    </div>
                   ) : (
                     <></>
                   )}
                 </div>
               </div>
               <div className="ml-3">
-                {loggedUser._id === userDetail._id ? (
+                {/* {loggedUser._id === userDetail._id ? (
                   <Link to="/updateuser">
                     <button className="py-2 mt-5 px-4 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
-                      🖍Editar
+                    ✏️Editar Perfil
                     </button>
                   </Link>
                 ) : (
                   <></>
-                )}
+                )} */}
               </div>
+              <div>
+                  {userDetail.isAdmin === true ? <Link to="/admin">
+                    <button>Vista de admin</button>
+                  </Link> : false}
+                </div>
             </div>
           </div>
           <div className="w-full mt-1 border-b  absolute  justify-center items-center bg-gray-100">
@@ -82,6 +112,8 @@ export default function UserDetail() {
                     imagePet={pets.image}
                     isAdopted={pets.isAdopted}
                     pets={userDetail.pets}
+                    isDeleted={pets.deleted}
+                    interestedUsers={userDetail.interestedUsers}
                   ></OwnedPet>
                 ))
               ) : (

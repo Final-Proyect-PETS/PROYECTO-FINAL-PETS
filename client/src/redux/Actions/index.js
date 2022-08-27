@@ -101,7 +101,6 @@ export function postPet(id, payload) {
   };
 }
 export function postUser(payload) {
-  console.log(payload, "payload arriba del dispatch");
   return async function (dispatch) {
     try {
       let json = await axios.post(`http://localhost:3001/register`, payload);
@@ -167,10 +166,11 @@ export function patchPet(payload) {
         `http://localhost:3001/home/pets/${payload.id}`,
         payload
       );
-      return dispatch({
+      dispatch({
         type: actions.PATCH_PET,
         payload: json.data,
       });
+      return "OK";
     } catch (error) {
       console.log(error);
     }
@@ -180,7 +180,7 @@ export function patchPet(payload) {
 export function filterByQuery(filterParams) {
   return async function (dispatch) {
     let json = await axios.get(
-      `http://localhost:3001/home/filters?age=${filterParams.age}&creation_date=${filterParams.creation_date}&vaccinated=${filterParams.vaccinated}&castrated=${filterParams.castrated}&location=${filterParams.location}&pet_type=${filterParams.pet_type}&pet_size=${filterParams.pet_size}&gender=${filterParams.gender}`
+      `http://localhost:3001/home/filters?age=${filterParams.age}&creation_date=${filterParams.creation_date}&vaccinated=${filterParams.vaccinated}&castrated=${filterParams.castrated}&location=${filterParams.location}&pet_type=${filterParams.pet_type}&pet_size=${filterParams.pet_size}&gender=${filterParams.gender}&is_adopted=${filterParams.is_adopted}`
     );
     return dispatch({
       type: actions.FILTER_BY_QUERY,
@@ -192,7 +192,6 @@ export function filterByQuery(filterParams) {
 //LOGIN//-----------------------------------------------------
 export function userLogin(payload) {
   return async function (dispatch) {
-    console.log(payload);
     try {
       let json = await axios
         .post("http://localhost:3001/login", payload)
@@ -205,34 +204,32 @@ export function userLogin(payload) {
         });
       return dispatch({
         type: actions.USER_LOGIN,
-        payload: json.data,
+        payload
       });
     } catch (error) {
       console.log(error);
     }
   };
-} 
+}
 
 export function userLoginGoogle(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.post("http://localhost:3001/logingoogle", payload)
-        .then(response => {
-          console.log(response)
+      let json = await axios
+        .post("http://localhost:3001/logingoogle", payload)
+        .then((response) => {
           const token = response.data.data.token;
           const id = response.data.id.id;
           localStorage.setItem("token", token);
           localStorage.setItem("id", id);
           setAuthToken(token);
-        })
+        });
       return dispatch({
         type: actions.USER_LOGIN_GOOGLE,
-        payload: json.data
-      })
-    } catch (error) {
-
-    }
-  }
+        payload: json.data,
+      });
+    } catch (error) {}
+  };
 }
 
 export function getUserProfile(id) {
@@ -248,3 +245,62 @@ export function getUserProfile(id) {
     }
   };
 }
+//ADOPT---------------
+export function tradePet(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(`http://localhost:3001/home/adopt`, payload);
+      return dispatch({
+        type: actions.ADOPT,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+ export function patchInterestedUsers(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(`http://localhost:3001/home/interestedUsers`, payload);
+      return dispatch({
+        type: actions.INTERESTED_USERS,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+} 
+
+export function emailAdopt(payload){
+  return async function (dispatch){
+    try{
+      let json = await axios.post(`http://localhost:3001/mail/sendemail`, payload)
+       dispatch({
+        type: actions.ADOPT_EMAIL,
+        payload: json.data
+      })
+      return "OK"
+    } catch(error){
+      console.log(error)
+    }
+  }
+}
+
+
+export function paymentMp(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.get(`http://localhost:3001/linkpayment/${payload}`);
+      return dispatch({
+        type: actions.PAYMENT_MP,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
