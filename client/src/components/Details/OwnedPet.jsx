@@ -137,13 +137,10 @@ export default function OwnedPet({
                         <h2 className="font-semibold">{`🔔${interestedUsers.length}`}</h2>
                       </button>
                     </Link>
-
+            
                     <Link to="/tradepet">
                       <button className="bg-yellow-900 mr-1 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-2 border border-yellow-700 rounded">
-                        <h2 className="font-semibold">
-                          {" "}
-                      CAMBIAR DUEÑO
-                        </h2>
+                        <h2 className="font-semibold"> CAMBIAR DUEÑO</h2>
                       </button>
                     </Link>
                   </div>
