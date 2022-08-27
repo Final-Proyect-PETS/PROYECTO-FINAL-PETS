@@ -30,10 +30,12 @@ router.use("/register", register);
 router.use("/login", login);
 router.use(errorHandler);
 
-router.get("/paymentsuccess", (req, res) => {
+router.get("/feedback/:idDonor/:donationAmount", (req, res) => {
   const { payment_id, status } = req.query;
-  console.log(status);
-  return res.redirect("http://localhost:3000/paymentsuccess");
+  const { idDonor, donationAmount } = req.params;
+  console.log("aca estaaaaaa: " + donationAmount); //tengo id del usuario, id del pago, cantidad donada.
+  console.log(status); //hacer que if status === approved, agregar los datos de la donacion a una propiedad del usuario
+  return res.redirect("http://localhost:3000/donations");
 });
 
 module.exports = router;

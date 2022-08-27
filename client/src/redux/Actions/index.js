@@ -215,10 +215,12 @@ export function getUserProfile(id) {
   };
 }
 
-export function paymentMp(payload) {
+export function paymentMp(idDonor, amountDonation) {
   return async function (dispatch) {
     try {
-      let json = await axios.get(`http://localhost:3001/linkpayment/${payload}`);
+      let json = await axios.get(
+        `http://localhost:3001/linkpayment/${idDonor}/${amountDonation}`
+      );
       return dispatch({
         type: actions.PAYMENT_MP,
         payload: json.data,
