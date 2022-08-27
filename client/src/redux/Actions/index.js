@@ -288,3 +288,19 @@ export function emailAdopt(payload){
     }
   }
 }
+
+
+export function paymentMp(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.get(`http://localhost:3001/linkpayment/${payload}`);
+      return dispatch({
+        type: actions.PAYMENT_MP,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
