@@ -115,8 +115,15 @@ export default function OwnedPet({
   return (
     <div className="flex items-center py-4 px-5 ">
       <div className=" flex border-2 border-yellow-700 rounded">
-        <div className=" border-yellow-900 border-r-2  flex justify-between p-3 border items-center rounded bg-gray-300">
+        <div className=" border-yellow-900 border-r-2  flex justify-between  border items-center rounded bg-gray-300">
           <div className=" column items-center mb-4 mr-4 ml-4 ">
+            <button
+              onClick={(e) => deleteHandler(e)}
+              className="bg-red-600 mt-4 hover:bg-red-700 text-white font-bold py- px-1 border border-yellow-700 rounded"
+            >
+              ✖️
+            </button>
+            {/* <span className="text-2xl font-bold ">{namePet}</span> */}
             <div className="flex justify-center">
               <span className="text-2xl font-bold ">{namePet}</span>
             </div>
@@ -127,7 +134,7 @@ export default function OwnedPet({
                   <div className="flex  justify-content items-center">
                     <Link to="/interestedtraders">
                       <button className="bg-green-600 mt-4 hover:bg-green-900 mr-1 mt-4  text-white font-bold py-2 px-2 border border-yellow-700 rounded">
-                        <h2 className="font-semibold">{`USUARIOS INTERESADOS  ( ${interestedUsers.length} )`}</h2>
+                        <h2 className="font-semibold">{`🔔${interestedUsers.length}`}</h2>
                       </button>
                     </Link>
 
@@ -135,7 +142,7 @@ export default function OwnedPet({
                       <button className="bg-yellow-900 mr-1 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-2 border border-yellow-700 rounded">
                         <h2 className="font-semibold">
                           {" "}
-                          TRASPASAR MASCOTA a otros usuarios
+                      CAMBIAR DUEÑO
                         </h2>
                       </button>
                     </Link>
@@ -145,13 +152,7 @@ export default function OwnedPet({
                       onClick={(e) => patchAdoptionHandler(e)}
                       className="bg-red-900 mt-4 hover:bg-red-600 text-white font-bold py-1 px-1 border border-yellow-700 rounded"
                     >
-                      ❌ QUITAR DE ADOPCIÓN
-                    </button>
-                    <button
-                      onClick={(e) => deleteHandler(e)}
-                      className="bg-red-600 ml-1 mt-4 hover:bg-red-700 text-white font-bold py-1 px-1 border border-yellow-700 rounded"
-                    >
-                      ⛔ ELIMINAR MASCOTA
+                      ⛔ PARAR ADOPCION
                     </button>
                   </div>
                 </div>
@@ -162,12 +163,6 @@ export default function OwnedPet({
                     className="bg-green-900 mt-4 hover:bg-green-600 text-white font-bold py-4 px-1 border border-yellow-700 rounded"
                   >
                     ✔️ PONER EN ADOPCIÓN
-                  </button>
-                  <button
-                    onClick={(e) => deleteHandler(e)}
-                    className="bg-red-600 mt-4 hover:bg-red-700 text-white font-bold py-4 px-2 border border-yellow-700 rounded"
-                  >
-                    ⛔ ELIMINAR MASCOTA
                   </button>
                 </div>
               )

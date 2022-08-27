@@ -25,7 +25,7 @@ export default function UserDetail() {
       <NavBar />
       <>
         <div className="rounded overflow-hidden border border-[#B99782] w-full bg-white my-12 md:mx-0 lg:mx-0">
-          <div className="w-full grid justify-between p-3 border-b items-center  bg-gray-300">
+          <div className="w-full grid grid-cols-3 justify-between p-3 border-b items-center  bg-gray-300">
             <div className="flex items-center">
               <img
                 src={userDetail.image}
@@ -33,9 +33,24 @@ export default function UserDetail() {
                 alt="imageuser"
               />
               <div className="grid m-4">
-                <h1 className="text-5xl font-bold">
-                  {userDetail.first_name + " " + userDetail.last_name}
-                </h1>
+                {loggedUser._id === userDetail._id ? (
+                  <div className="flex">
+                    <h1 className="text-5xl font-bold">
+                      {userDetail.first_name + " " + userDetail.last_name}
+                    </h1>
+                    <Link to="/notifications">
+                      <button className="bg-green-600  hover:bg-green-900   text-white font-bold py-1 px-1 border border-yellow-700 rounded">
+                        <h2 className="font-semibold">{`🔔${userDetail.interestedUsers.length}`}</h2>
+                      </button>
+                    </Link>
+                  </div>
+                ) : (
+                  <h1 className="text-5xl font-bold">
+                    {userDetail.first_name + " " + userDetail.last_name}
+                  </h1>
+                )}
+              
+
                 <h3 className="text-2xl">{`"${userDetail.username}"`}</h3>
                 <h3 className="text-2xl font-bold">
                   Tel:{userDetail.telephone}
