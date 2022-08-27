@@ -19,7 +19,7 @@ export default function AdminView() {
       </div>
       <div className="flex h-screen pt-20">
         <div className="w-1/2 overflow-hidden border border-r-black">
-          <div className="h-1/4 flex justify-center items-center flex-col border border-b-black">
+          <div className="h-1/4 bg-gray-200 flex justify-center items-center flex-col border border-b-black">
             <h3 className="text-6xl">HappyTails</h3>
             <h3 className="text-2xl">Admin View</h3>
           </div>
@@ -31,7 +31,7 @@ export default function AdminView() {
               <ol className="">
                 {getUsers.map((u) => (
                   <li className="flex border gap-3 border-b-black h-16 overflow-hidden items-center">
-                    {
+                    <div className="flex items-center bg-gray-200 h-8 w-3/5 flex-row overflow-hidden gap-3">{
                       <img
                         src={u.image}
                         alt=""
@@ -43,7 +43,7 @@ export default function AdminView() {
                         {u.first_name} {u.last_name}
                       </Link>
                     }{" "}
-                    | {u.username} | {u.email}{" "}
+                    | {u.username} | {u.email}{" "}</div> <div className="w-2/5 bg-gray-500 flex justify-center"><div><button>Info</button></div></div>
                   </li>
                 ))}
               </ol>
