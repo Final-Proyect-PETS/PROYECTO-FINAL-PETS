@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
+import { notificationSwal } from "../../utils/notificationSwal";
 // import { useNavigate } from "react-router-dom";
 
 export default function Donation() {
@@ -57,11 +58,37 @@ export default function Donation() {
           break;
 
         default:
-          document.getElementById("form0").appendChild(script);
           break;
       }
     }
     // setActive(false)
+  }
+
+  function handleInput(e) {
+    e.preventDefault();
+    console.log(input);
+    if (input.name && Number(input.name) > 0) {
+      dispatch(paymentMp(user._id, input.name));
+      //por alguna razon, no tengo el payment una vez completada la action, viene despues, y por eso hace boludeces
+      if (payment) {
+        const script = document.createElement("script");
+        const attr_data_preference =
+          document.createAttribute("data-preference-id");
+        attr_data_preference.value = payment;
+        script.src =
+          "https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
+        script.setAttributeNode(attr_data_preference);
+        document.getElementById("form0").appendChild(script);
+      }
+      // setActive(false)
+    } else {
+      notificationSwal(
+        "¡Ooops!",
+        "El monto a donar debe ser mayor a cero",
+        "error",
+        "Cancel"
+      );
+    }
   }
 
   //   const params = useLocation().search;
@@ -93,6 +120,7 @@ export default function Donation() {
           <h2 className="text-xl">
             Podes donar haciendo click en el siguiente botón:
           </h2>
+
           <input
             type="text"
             name="name"
@@ -100,6 +128,17 @@ export default function Donation() {
             onChange={(e) => handleChange(e)}
             placeholder="Cantidad a donar"
           />
+          <button
+            type="submit"
+            className="py-4 px-4 bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-600 focus:ring-offset-yellow-600 text-white w-44 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+            onClick={(e) => handleInput(e)}
+          >
+            Generar orden de pago
+          </button>
+
+          <div>
+            <form id="form0"></form>
+          </div>
           <button
             value="100"
             className="py-4 px-4 bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-600 focus:ring-offset-yellow-600 text-white w-44 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"

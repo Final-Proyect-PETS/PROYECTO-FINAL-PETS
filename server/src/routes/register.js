@@ -14,7 +14,8 @@ router.post("/", async (req, res, next) => {
     telephone,
     about,
     place,
-    interestedUsers
+    interestedUsers,
+    donations,
   } = req.body;
   try {
     const postUser = await register(
@@ -27,7 +28,8 @@ router.post("/", async (req, res, next) => {
       telephone,
       about,
       place,
-      interestedUsers
+      interestedUsers,
+      donations
     );
     res.status(201).send(postUser);
   } catch (err) {
