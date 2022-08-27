@@ -16,7 +16,11 @@ const usersSchema = new Schema(
       match: [/^[a-zA-Z\s]*$/, "Last name can only contain letters"],
     },
     username: { type: String, required: true, unique: true },
-    image: { type: String, default: "https://assets.stickpng.com/images/585e4beacb11b227491c3399.png" },
+    image: {
+      type: String,
+      default:
+        "https://assets.stickpng.com/images/585e4beacb11b227491c3399.png",
+    },
     email: {
       type: String,
       lowercase: true,
@@ -34,6 +38,7 @@ const usersSchema = new Schema(
     isAdmin: { type: Boolean, default: false },
     reviews: Number,
     pets: [{ type: mongoose.Schema.ObjectId, ref: "Pet" }],
+    donations: [{ type: mongoose.Schema.ObjectId, ref: "donation" }],
   },
   {
     timestamps: true,
@@ -53,7 +58,6 @@ usersSchema.pre("save", function (next) {
   });
 });
 
-
 usersSchema.methods.comparePassword = function (candidatePassword) {
   const currentPassword = this.password;
   return new Promise((resolve, reject) => {
@@ -61,9 +65,8 @@ usersSchema.methods.comparePassword = function (candidatePassword) {
       if (err) return reject(err);
       resolve(isMatch);
     });
-  })
+  });
 };
-
 
 const User = mongoose.model("User", usersSchema);
 
