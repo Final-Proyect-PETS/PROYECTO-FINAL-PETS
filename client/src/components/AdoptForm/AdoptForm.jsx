@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom"
 import { getUserProfile, getAllUsers, getPetDetail, emailAdopt } from "../../redux/Actions";
+import { patchPet, patchUsuer } from "../../redux/Actions";
 
 export default function AdoptForm(){
 
@@ -33,12 +34,15 @@ export default function AdoptForm(){
           [e.target.name]: e.target.value,
         });
     }
-    function handlerSubmit(ev){
+    const ownerId = loggedUser.id
+
+     function handlerSubmit(ev){
         ev.preventDefault()
         dispatch(
-            emailAdopt(input)
-        )
-    }
+            emailAdopt(input),
+            patchUsuer(ownerId)
+        )  
+    } 
       function aaa (){
         console.log(input)
     }  
