@@ -8,7 +8,9 @@ const initialState = {
   switchRender: [], //switch
   token: null,
   userProfile: [], //usuario loggeado
-  tradePet: [],
+  payment: {},
+  tradePet: [], //mascota que se vá
+  notification: [],//estado con notificaciones para traerme todo desde el id
 };
 
 export default function rootReducer(state = initialState, { type, payload }) {
@@ -111,22 +113,29 @@ export default function rootReducer(state = initialState, { type, payload }) {
         ...state,
         userProfile: payload,
       };
-      //ADOPT
-      case actions.ADOPT:
-        return{
-          ...state,
-          tradePet:payload
-        }
-      case actions.ADOPT_EMAIL:
-        return{
-          ...state,
-          userDetail:payload
-        }
-      case actions.INTERESTED_USERS:
-        return{
-          ...state,
-          userDetail:payload
-        }
+    //ADOPT
+    case actions.ADOPT:
+      return {
+        ...state,
+        tradePet: payload,
+      };
+    case actions.ADOPT_EMAIL:
+      return {
+        ...state,
+        userDetail: payload,
+      };
+
+    case actions.PAYMENT_MP:
+      return {
+        ...state,
+        payment: payload,
+      }
+    case actions.INTERESTED_USERS:
+      return {
+        ...state,
+        userDetail: payload,
+
+      };
 
     default:
       return state;

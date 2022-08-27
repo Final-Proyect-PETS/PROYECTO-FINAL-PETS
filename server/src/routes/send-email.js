@@ -30,6 +30,7 @@ router.post("/sendemail", async (req, res) => {
 
   let contentHTML = `
     <img src = "https://cdn-icons-png.flaticon.com/512/194/194279.png" style="width:100px;"/>
+
     <h1>El usuario ${adopter_username} esta interesado en adoptar a ${pet_name}.
                 La informacion del usuario es la siguiente:</h1> 
                 <ul>
@@ -43,10 +44,11 @@ router.post("/sendemail", async (req, res) => {
                                 Atentamente HT`
                     
 
+
   let info = await transporter.sendMail({
     from: "'HappyTails'<HAppYTAil5@hotmail.com>",
     to: owner_email,
-    subject: "Formulario de contacto adopcion",
+    subject: "Contacto de adopción",
     html: contentHTML,
   });
 

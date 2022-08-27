@@ -117,7 +117,7 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
     /* const newpet = await Pets.findOne({ _id: petId });
     const newuser = await User.findOne({ _id: userId }); */
 
-    res.status(200).send("ADOPTED SSUCCESS");
+    res.status(200).send("INTEREST SSUCCESS");
   } catch (error) {
     next(error);
   }
