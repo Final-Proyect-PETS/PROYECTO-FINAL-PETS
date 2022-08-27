@@ -10,6 +10,7 @@ router.patch("/pets/:id", verifyToken, async (req, res, next) => {
   const {
     name,
     image,
+    imagePool,
     type,
     description,
     size,
@@ -28,6 +29,7 @@ router.patch("/pets/:id", verifyToken, async (req, res, next) => {
       _id,
       name,
       image,
+      imagePool,
       type,
       description,
       size,
