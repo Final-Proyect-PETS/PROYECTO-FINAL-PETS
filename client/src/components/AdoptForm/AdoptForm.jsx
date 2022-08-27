@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
 
 
@@ -238,7 +238,6 @@ export default function AdoptForm() {
               </button>
             </div>
           </form>
-
         </div>
       </div>
     </>
