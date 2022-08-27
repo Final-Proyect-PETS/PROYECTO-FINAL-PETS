@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../NavBar/NavBar";
 import SearchTrade from "../SearchBars/SearchTrade";
-import { getAllUsers, tradePet } from "../../redux/Actions/index";
-import { useState } from "react";
+import { getAllUsers } from "../../redux/Actions/index";
+
 import { useNavigate } from "react-router-dom";
 import AdopterCard from "./AdopterCard";
 import InAdoptionCards from "./InAdoptionCards";
@@ -14,8 +14,14 @@ export default function Notifications() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch]);
+  const allUsers = useSelector((state) => state.users);
+  console.log(allUsers, "ALLUSER");
+
   const loggedUser = useSelector((state) => state.userProfile);
-console.log(loggedUser.interestedUsers)
+
   return (
     <div id="landing" className="w-full">
       <NavBar />
@@ -46,5 +52,4 @@ console.log(loggedUser.interestedUsers)
       </>
     </div>
   );
-
 }
