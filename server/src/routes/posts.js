@@ -33,7 +33,7 @@ router.post("/pets/:id", verifyToken, async (req, res, next) => {
       vaccination,
       castrated,
       place,
-      gender,
+      gender
     );
     res.status(201).send(newPet);
   } catch (error) {
