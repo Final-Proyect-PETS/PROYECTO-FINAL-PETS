@@ -2,19 +2,20 @@ import React from "react";
 import NavBar from "../NavBar/NavBar";
 import Cards from "./Cards";
 import SideBar from "../SideBar/SideBar";
+import "./../LandingPage.css"
 
 export default function Home() {
   return (
     <>
-      <section className="fixed">
+      <section className="fixed w-screen">
         <NavBar />
       </section>
       <div className="flex flex-col">
-        <div className="flex flex-row w-screen mt-4">
-          <section className="flex w-1/3 fixed mt-14">
+        <div className="flex flex-row w-screen">
+          <section className="flex w-1/3 fixed">
             <SideBar />
           </section>
-          <section className="flex w-full justify-center mt-6">
+          <section className="flex w-full bg-white justify-center mt-9">
             <Cards />
           </section>
         </div>

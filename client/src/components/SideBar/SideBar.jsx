@@ -124,7 +124,7 @@ export default function SideBar() {
     });
   }
   return (
-    <div className="flex bg-amber-800 border-x-2 border-white flex-col w-3/4 h-screen items-center gap-7 shadow-2xl">
+    <div className="flex bg-yellow-500 border-x-2 border-white flex-col w-3/4 h-screen items-center gap-7 shadow-2xl mt-20">
       <div className="border-y-2 border-white text-white text-xl w-full flex justify-center items-center h-12">
         <h1 className="font-normal italic">Menú</h1>
       </div>
