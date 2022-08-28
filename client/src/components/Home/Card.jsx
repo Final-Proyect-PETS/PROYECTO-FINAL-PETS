@@ -17,16 +17,16 @@ export default function Card({
   return (
     <>
       <div
-        id={idUser}
-        className="rounded overflow-hidden border border-[#B99782] w-full bg-white my-12 md:mx-0 lg:mx-0"
+        id={idUser} 
+        className="grid col-start-3 rounded overflow-hidden border border-[#B99782] w-full h-96 bg-white my-12 md:mx-0 lg:mx-0"
       >
         <Link to={"/users/" + idUser}>
-          <div className="w-full flex justify-between p-3 border-b items-center bg-[#B99782]">
+          <div className="flex justify-between p-3 border-b items-center bg-yellow-500">
             <div className="flex items-center">
               <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
                 <img src={imageUser} alt="profilepic" />
               </div>
-              <span className="ml-2 font-bold text-xs">
+              <span className="ml-2 font-bold text-xs text-white">
                 {first_name} {last_name}
               </span>
             </div>
@@ -45,22 +45,23 @@ export default function Card({
               src={imagePet}
               alt="imagepet"
             />
-            <div className="bg-gray-200 flex w-52 flex-col content-around gap-9 justify-center items-center">
+            <div className="bg-yellow-900 flex w-52 flex-col content-around gap-9 justify-center items-center">
               <div className="flex">
-                <span className="text-2xl font-bold">{namePet}</span>
+                <span className="text-2xl font-bold text-white">{namePet}</span>
               </div>
               <div className="text-sm flex">
-                <span className="font-bold text-lg text-gray-700">
-                  Size: {size}
+                <span className="font-bold text-lg text-white">
+                  Tamaño: {size === "big" ? "Grande" : size === "medium" ? "Mediano" : "Chico"}
                 </span>
               </div>
               <div>
-                <span className="text-2xl font-bold">{gender}</span>
+                <span className="text-2xl font-bold text-white">{gender === "female" ? "Hembra" : "Macho"}</span>
               </div>
             </div>
           </div>
         </Link>
-      </div>
-    </>
+      </div> 
+    </> 
+    
   );
 }

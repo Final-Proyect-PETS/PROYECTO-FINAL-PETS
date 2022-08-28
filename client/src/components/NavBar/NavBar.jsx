@@ -73,9 +73,9 @@ export default function NavBar() {
     //         <li>
 
     <Navbar
-      fluid={true}
-      rounded={true}
-      
+      fluid={false}
+      rounded={false}
+      class="text-white bg-yellow-500 p-3"
     >
       <Link to="/home">
         <Navbar.Brand>
@@ -90,8 +90,8 @@ export default function NavBar() {
         </Navbar.Brand>
       </Link>
       <div className="flex md:order-2">
-        <Link to="/notifications">
-          <button className="bg-amber-800  hover:bg-green-900   text-white font-normal py-1 px-1 border border-yellow-700 rounded-full">
+        <Link to="/notifications" className="m-1">
+          <button className="bg-amber-800 hover:bg-green-700  text-white font-normal py-1 px-1 border border-yellow-700 rounded-full">
             {`🔔${user?.interestedUsers?.length}`}{/* OJO PROMESA */}
           </button>
         </Link>
@@ -133,21 +133,21 @@ export default function NavBar() {
       </div>
       <Navbar.Collapse>
         <Navbar.Link>
-          <Link to="/home">
+          <Link to="/home" class="text-white hover:none">
             Inicio
           </Link>
         </Navbar.Link>
-        <Navbar.Link>
-          <Link to="/donations">
+        <Navbar.Link class="text-white hover:none" >
+          <Link to="/donations" >
             Donaciones
           </Link>
         </Navbar.Link>
-        <Navbar.Link>
+        <Navbar.Link class="text-white hover:none">
           <Link to="/about">
             Sobre Nosotros
           </Link>
         </Navbar.Link>
-        <Navbar.Link>
+        <Navbar.Link class="text-white hover:none">
           <Link to="/navbars">
             Centro de denuncias
           </Link>
