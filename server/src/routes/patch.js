@@ -110,15 +110,15 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
 
 router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
   try {
-<<<<<<< HEAD
+// <<<<<<< HEAD
     const { userId, ownerId, petAndUserLog, petId } = req.body;
-=======
-    const { userId, ownerId} = req.body
->>>>>>> f3559b81ce88aba04b10b66686771cfc484e2556
+// =======
+//     const { userId, ownerId} = req.body
+// >>>>>>> f3559b81ce88aba04b10b66686771cfc484e2556
 
     const user = await User.findOne({ _id: ownerId });
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
     if (
       user.interestedUsers.filter(
         (e) => e.includes(userId) && e.includes(petId)
@@ -149,25 +149,25 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
       /*        const variable = await User.findByIdAndUpdate(ownerId, {$push: {"interestedUsers" : }}) 
       await User.interestedUsers.push(petId) */
       /*      await User.updateOne({ _id: ownerId }, { $pull: { interestedUsers:  userId } });  */
-=======
-  if (user.interestedUsers.includes(userId)){
-    res.send("Ya mandaste la solicitud de adopcion")
+// =======
+//   if (user.interestedUsers.includes(userId)){
+//     res.send("Ya mandaste la solicitud de adopcion")
     
-  }else{
-    const {  owner_email,
-      adopter_email,
-      adopter_telephone,
-      message,
-      adopter_username,
-      adopter_name,
-      pet_name,
-      link, } = req.body;
-      console.log(req.body)
+//   }else{
+//     const {  owner_email,
+//       adopter_email,
+//       adopter_telephone,
+//       message,
+//       adopter_username,
+//       adopter_name,
+//       pet_name,
+//       link, } = req.body;
+//       console.log(req.body)
       
-/*      await User.updateOne({ _id: user }, { $set: { interestedUsers:  userId } });  */ 
-     await User.updateOne({ _id: user },  { $set: { interestedUsers:  [...user.interestedUsers, userId] } }); 
-/*      await User.updateOne({ _id: ownerId }, { $pull: { interestedUsers:  userId } });  */
->>>>>>> f3559b81ce88aba04b10b66686771cfc484e2556
+// /*      await User.updateOne({ _id: user }, { $set: { interestedUsers:  userId } });  */ 
+//      await User.updateOne({ _id: user },  { $set: { interestedUsers:  [...user.interestedUsers, userId] } }); 
+// /*      await User.updateOne({ _id: ownerId }, { $pull: { interestedUsers:  userId } });  */
+// >>>>>>> f3559b81ce88aba04b10b66686771cfc484e2556
 
       /* const newpet = await Pets.findOne({ _id: petId });
     const newuser = await User.findOne({ _id: userId }); */

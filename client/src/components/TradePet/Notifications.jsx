@@ -15,7 +15,7 @@ export default function Notifications() {
   const navigate = useNavigate();
   const loggedUser = useSelector((state) => state.userProfile);
   
-
+console.log(loggedUser,"LOOF")
 
 
   return (
