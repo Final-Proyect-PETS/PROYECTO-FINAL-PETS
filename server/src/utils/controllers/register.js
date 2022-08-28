@@ -23,12 +23,7 @@ async function register(
       telephone,
       about,
       place,
-<<<<<<< HEAD
-      interestedUsers,
-      donations
-=======
       interestedUsers
->>>>>>> f3559b81ce88aba04b10b66686771cfc484e2556
     });
 
     await post.save();
