@@ -73,7 +73,9 @@ async function patchUser(
       deleted,
       interestedUsers,
     });
-    const userActualizado = User.findOne({ _id: id }).populate("pets");
+    const userActualizado = User.findOne({ _id: id }).populate("pets").populate(
+      { path: "interestedUsers", match: { deleted: false } }
+    );
     return userActualizado;
   } catch (error) {
     console.error(error);

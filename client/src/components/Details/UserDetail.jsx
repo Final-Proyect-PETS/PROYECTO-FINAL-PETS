@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getUserDetail, clearState } from "../../redux/Actions";
@@ -16,7 +16,13 @@ export default function UserDetail() {
 
   const loggedUser = useSelector((state) => state.userProfile);
   const userDetail = useSelector((state) => state.userDetail);
+  const [campana, setCampana] = useState({
+    notificacion: loggedUser.interestedUsers.length
+  })
+  function handlerNoti(){
 
+      setCampana({notificacion: 0})
+  }
   console.log("MI PERFIL", loggedUser);
   console.log("USERdetail-", userDetail);
 
@@ -39,8 +45,8 @@ export default function UserDetail() {
                       {userDetail.first_name + " " + userDetail.last_name}
                     </h1>
                     <Link to="/notifications">
-                      <button className="flex bg-green-600  hover:bg-green-900   text-white font-bold py-1 px-3 border border-yellow-700 rounded">
-                      🔔<h2 className="font-semibold">{`${userDetail.interestedUsers.length}`}</h2>
+                      <button onClick={(ev) => handlerNoti(ev)} className="flex bg-green-600  hover:bg-green-900   text-white font-bold py-1 px-3 border border-yellow-700 rounded">
+                      🔔<h2  className="font-semibold">{campana.notificacion}</h2>
                       </button>
                     </Link>
                   </div>
