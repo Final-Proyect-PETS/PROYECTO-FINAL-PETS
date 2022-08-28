@@ -25,7 +25,7 @@ async function register(
       about,
       place,
       interestedUsers,
-      donations,
+      donations
     });
 
     await post.save();
