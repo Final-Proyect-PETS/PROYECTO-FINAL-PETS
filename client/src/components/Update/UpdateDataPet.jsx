@@ -5,6 +5,7 @@ import { patchPet, postImage } from "../../redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import { notificationSwal } from "../../utils/notificationSwal.jsx";
 import { Link } from "react-router-dom";
+import MapboxAutocomplete from 'react-mapbox-autocomplete';
 
 function validateFrom(input) {
   let errors = {};
@@ -52,7 +53,7 @@ export default function UpdatePet() {
     id: upDatePet._id,
     name: upDatePet.name,
     image: upDatePet.image,
-    imagePool:upDatePet.imagePool,
+    imagePool: upDatePet.imagePool,
     type: upDatePet.type,
     description: upDatePet.description,
     size: upDatePet.size,
@@ -177,6 +178,19 @@ export default function UpdatePet() {
     return key++;
   }
 
+
+  function _suggestionSelect(result, lat, long, text) {
+    console.log(result, lat, long, text);
+    setInput({
+      ...input, place: result
+    })
+    console.log(input)
+  }
+  const mapAccess = {
+    mapboxApiAccessToken:
+      "pk.eyJ1Ijoiam9uc2VuIiwiYSI6IkR6UU9oMDQifQ.dymRIgqv-UV6oz0-HCFx1w"
+  }
+
   return (
     <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
       <div className="self-center mb-6 text-xl font-normal text-gray-600 sm:text-2xl dark:text-white">
@@ -199,66 +213,66 @@ export default function UpdatePet() {
               </p>
             )}
             <div>
-            <label className="font-light text-white text-xl">
-              Imagen de perfil
-            </label>
+              <label className="font-light text-white text-xl">
+                Imagen de perfil
+              </label>
 
-            <input
-              type="file"
-              name="image"
-              accept=".jpg, .png, .jpeg"
-              onChange={(e) => handleImage(e)}
-              className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
-            />
-            {loadingImage ? (
-              <h3 className="font-light text-white text-xl">
-                Cargando imagen...
-              </h3>
-            ) : (
-              <img src={image || input.image} alt="" width="300px" />
-            )}
-            {errors.image && (
-              <p className="font-bold text-red-700 text-center p-2">
-                {errors.image}
-              </p>
-            )}
-          </div>
-          <div>
-            <label className="font-light text-white text-xl">
-              Más imágenes
-            </label>
-            <input
-              type="file"
-              name="imagePool"
-              accept=".jpg, .png, .jpeg"
-              onChange={(e) => handleImagePool(e)}
-              className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
-            />
-            <div className="font-light text-white text-xl">
-              {loadingImagePool ? (
-                <h3>Cargando imagen...</h3>
+              <input
+                type="file"
+                name="image"
+                accept=".jpg, .png, .jpeg"
+                onChange={(e) => handleImage(e)}
+                className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
+              />
+              {loadingImage ? (
+                <h3 className="font-light text-white text-xl">
+                  Cargando imagen...
+                </h3>
               ) : (
-                input.imagePool.map((el) => (
-                  <div key={addKey()}>
-                    <button
-                      key={el.id}
-                      type="button"
-                      onClick={() => handleDelete(el)}
-                      className="px-2 border-4 rounded-lg font-bold text-yellow-900 border-yellow-900"
-                    >
-                      x
-                    </button>
-                    <img src={el} alt="" width="300px" />
-                  </div>
-                ))
+                <img src={image || input.image} alt="" width="300px" />
+              )}
+              {errors.image && (
+                <p className="font-bold text-red-700 text-center p-2">
+                  {errors.image}
+                </p>
               )}
             </div>
-            {errors.imagePool && (
-              <p className="font-bold text-red-700 text-center p-2">
-                {errors.imagePool}
-              </p>
-            )}
-          </div>
+            <div>
+              <label className="font-light text-white text-xl">
+                Más imágenes
+              </label>
+              <input
+                type="file"
+                name="imagePool"
+                accept=".jpg, .png, .jpeg"
+                onChange={(e) => handleImagePool(e)}
+                className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
+              />
+              <div className="font-light text-white text-xl">
+                {loadingImagePool ? (
+                  <h3>Cargando imagen...</h3>
+                ) : (
+                  input.imagePool.map((el) => (
+                    <div key={addKey()}>
+                      <button
+                        key={el.id}
+                        type="button"
+                        onClick={() => handleDelete(el)}
+                        className="px-2 border-4 rounded-lg font-bold text-yellow-900 border-yellow-900"
+                      >
+                        x
+                      </button>
+                      <img src={el} alt="" width="300px" />
+                    </div>
+                  ))
+                )}
+              </div>
+              {errors.imagePool && (
+                <p className="font-bold text-red-700 text-center p-2">
+                  {errors.imagePool}
+                </p>
+              )}
+            </div>
             <label className="font-light text-white text-xl">Tipo de mascota </label>
             <select name="type" onChange={(e) => handleChangeSelect(e)}>
               <option
@@ -285,7 +299,7 @@ export default function UpdatePet() {
                 {errors.type}
               </p>
             )}
-            <br/>
+            <br />
             <label className="font-light text-white text-xl">Descripción</label>
             <textarea
               type="text"
@@ -326,7 +340,7 @@ export default function UpdatePet() {
                 {errors.size}
               </p>
             )}
-            <br/>
+            <br />
             <label className="font-light text-white text-xl">Edad</label>
             <input
               type="text"
@@ -366,7 +380,7 @@ export default function UpdatePet() {
                 {errors.vaccination}
               </p>
             )}
-            <br/>
+            <br />
             <label className="font-light text-white text-xl">Castrado </label>
             <select name="castrated" onChange={(e) => handleChangeSelect(e)}>
               <option
@@ -387,29 +401,26 @@ export default function UpdatePet() {
                 {errors.castrated}
               </p>
             )}
-            <br/>
-            <label className="font-light text-white text-xl">Ubicacion</label>
-            <input
-              type="text"
-              name="place"
-              placeholder={input.place}
-              onChange={(e) => handleChange(e)}
-              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
-            />
-            {errors.place && (
-              <p className="font-bold text-red-700 text-center p-2">
-                {errors.place}
-              </p>
-            )}
+            <br />
+            <div>
+              <label className="font-light text-white text-xl">Ubicación</label>
+              <MapboxAutocomplete
+                publicKey={mapAccess.mapboxApiAccessToken}
+                inputClass="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+                onSuggestionSelect={_suggestionSelect}
+                resetSearch={false}
+                placeholder={input.place}
+              />
+            </div>
           </div>
           {errors.name ||
-          errors.image ||
-          errors.type ||
-          errors.size ||
-          errors.age ||
-          errors.vaccination ||
-          errors.castrated ||
-          errors.place ? (
+            errors.image ||
+            errors.type ||
+            errors.size ||
+            errors.age ||
+            errors.vaccination ||
+            errors.castrated ||
+            errors.place ? (
             <h3>missing required fields</h3>
           ) : (
             <button

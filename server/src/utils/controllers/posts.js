@@ -15,6 +15,7 @@ const postPet = async (
   castrated,
   place,
   gender,
+  interestedUsers,
 ) => {
   try {
     connection();
@@ -36,6 +37,7 @@ const postPet = async (
       castrated,
       place,
       gender,
+      interestedUsers,
       user: foundUser._id,
     });
     await newPet.save();

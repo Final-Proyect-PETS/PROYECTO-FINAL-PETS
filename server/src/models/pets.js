@@ -22,6 +22,7 @@ const petsSchema = new Schema(
     deleted: { type: Boolean, default: false },
     user: { type: mongoose.Schema.ObjectId, ref: "User" },
     isAdopted: { type: Boolean, default: true },
+    interestedUsers: [[{type: mongoose.Schema.ObjectId, ref: "Pet"}]]
   },
   {
     timestamps: true,
