@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { notificationSwal } from "../../utils/notificationSwal.jsx";
 import { getUserDetail, patchUsuer, postImage } from "../../redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
+import MapboxAutocomplete from 'react-mapbox-autocomplete';
 
 function validateFrom(input) {
   let errors = {};
@@ -127,7 +128,15 @@ export default function UpdateUser() {
       setLoadingImage(false);
     });
   }
-
+  function _suggestionSelect(result, lat, long, text) {
+    setInput({
+      ...input, place: result
+    })
+  }
+  const mapAccess = {
+    mapboxApiAccessToken:
+      "pk.eyJ1Ijoiam9uc2VuIiwiYSI6IkR6UU9oMDQifQ.dymRIgqv-UV6oz0-HCFx1w"
+  }
   return (
     <div className="flex flex-col w-full mt-15 m-auto  py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
       <div className="self-center mb-6 text-xl font-normal text-gray-600 sm:text-2xl dark:text-white">
@@ -179,26 +188,36 @@ export default function UpdateUser() {
               </p>
             )}
 
-          <div>
-            <label className="font-light text-white text-xl">
-              Imagen de Perfil
-            </label>
-            <input
-              type="file"
-              name="image"
-              accept=".jpg, .png, .jpeg"
-              onChange={(e) => handleImage(e)}
-              placeholder="Imagen de perfil"
-              className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
-            ></input>
-            {loadingImage ? (
-              <h3 className="font-light text-white text-xl">
-                Cargando imagen...
-              </h3>
-            ) : (
-              <img src={image || upDateUser.image} alt="" width="300px" />
-            )}
-          </div>
+            <div>
+              <label className="font-light text-white text-xl">
+                Imagen de Perfil
+              </label>
+              <input
+                type="file"
+                name="image"
+                accept=".jpg, .png, .jpeg"
+                onChange={(e) => handleImage(e)}
+                placeholder="Imagen de perfil"
+                className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
+              ></input>
+              {loadingImage ? (
+                <h3 className="font-light text-white text-xl">
+                  Cargando imagen...
+                </h3>
+              ) : (
+                <img src={image || upDateUser.image} alt="" width="300px" />
+              )}
+            </div>
+            <div>
+              <label className="font-light text-white text-xl">Ubicación</label>
+              <MapboxAutocomplete
+                publicKey={mapAccess.mapboxApiAccessToken}
+                inputClass="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+                onSuggestionSelect={_suggestionSelect}
+                resetSearch={false}
+                placeholder={input.place}
+              />
+            </div>
             <label className="font-light text-white text-xl">Sobre mí</label>
             <textarea
               type="text"
@@ -217,11 +236,11 @@ export default function UpdateUser() {
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
             {errors.first_name ||
-            errors.last_name ||
-            errors.username ||
-            errors.image ||
-            errors.about ||
-            errors.telephone ? (
+              errors.last_name ||
+              errors.username ||
+              errors.image ||
+              errors.about ||
+              errors.telephone ? (
               <h3>missing required fields</h3>
             ) : (
               <button

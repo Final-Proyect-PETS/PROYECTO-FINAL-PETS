@@ -6,15 +6,13 @@ const petId = require("./gets");
 const filters = require("./filters");
 const register = require("./register");
 const login = require("./login");
-const loginGoogle = require("./googlelogin");
 const router = Router();
 const postPet = require("./posts");
 const patchPet = require("./patch");
 const patchUser = require("./patch");
-const adoptionMail = require("./send-email");
-const postImage = require("./posts");
 const payment = require("./payment");
 const errorHandler = require("../utils/middlewares/errorHandler");
+const User = require("../models/users");
 
 router.use(
   "/home",
@@ -25,17 +23,35 @@ router.use(
   filters,
   postPet,
   patchPet,
-  patchUser,
-  postImage
+  patchUser
 );
 
 router.use("/linkpayment", payment);
 router.use("/register", register);
 router.use("/login", login);
-router.use("/", loginGoogle);
-router.use("/mail", adoptionMail);
 router.use(errorHandler);
 
+<<<<<<< HEAD
+=======
+router.get("/feedback/:idDonor/:donationAmount", async (req, res, next) => {
+  const { payment_id, status } = req.query;
+  const { idDonor, donationAmount } = req.params;
+  if (status === "approved") {
+    try {
+      const oneUser = await User.findOne({ _id: idDonor });
+      oneUser.donations.push({
+        "Payment id": payment_id,
+        Status: status,
+        "Donation amount": donationAmount,
+      });
+      await oneUser.save();
+    } catch (error) {
+      next(error);
+    }
+  }
+  return res.redirect("http://localhost:3000/donations");
+});
+>>>>>>> 4eb47accbad378368ad91ee978bc40e69907304f
 
 module.exports = router;
 

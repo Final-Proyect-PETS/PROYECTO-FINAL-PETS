@@ -109,26 +109,30 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
 
 router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
   try {
-    const { userId, ownerId} = req.body
+    const { userId, ownerId, petAndUserLog, petId} = req.body
 
   const user = await User.findOne({ _id: ownerId });
 
-  if (user.interestedUsers.includes(userId)){
+      if (user.interestedUsers.filter(e => e.includes(userId) && e.includes(petId)).length) {
     res.send("Ya mandaste la solicitud de adopcion")
-    
-  }else{
+  }else   {
     const {  owner_email,
       adopter_email,
       adopter_telephone,
-      message,
+      message,            
       adopter_username,
       adopter_name,
       pet_name,
       link, } = req.body;
       console.log(req.body)
-      
+      /* const petId = await Pets.findOne({ _id: pet._id });
+      const userLogId = await User.findOne({ _id: petAndUserLog._id });
+      console.log(petId, userLogId) */
 /*      await User.updateOne({ _id: user }, { $set: { interestedUsers:  userId } });  */ 
-     await User.updateOne({ _id: user },  { $set: { interestedUsers:  [...user.interestedUsers, userId] } }); 
+      await User.updateOne({ _id: user },  { $push: { interestedUsers: petAndUserLog } }); 
+/*      await User.updateOne({ _id: user },  { $set: { pets:  [...user.interestedUsers.userId.pets, pets] } });  */
+/*        const variable = await User.findByIdAndUpdate(ownerId, {$push: {"interestedUsers" : }}) 
+      await User.interestedUsers.push(petId) */
 /*      await User.updateOne({ _id: ownerId }, { $pull: { interestedUsers:  userId } });  */
 
     /* const newpet = await Pets.findOne({ _id: petId });
