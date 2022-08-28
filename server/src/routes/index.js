@@ -31,8 +31,6 @@ router.use("/register", register);
 router.use("/login", login);
 router.use(errorHandler);
 
-<<<<<<< HEAD
-=======
 router.get("/feedback/:idDonor/:donationAmount", async (req, res, next) => {
   const { payment_id, status } = req.query;
   const { idDonor, donationAmount } = req.params;
@@ -51,7 +49,7 @@ router.get("/feedback/:idDonor/:donationAmount", async (req, res, next) => {
   }
   return res.redirect("http://localhost:3000/donations");
 });
->>>>>>> 4eb47accbad378368ad91ee978bc40e69907304f
+
 
 module.exports = router;
 
