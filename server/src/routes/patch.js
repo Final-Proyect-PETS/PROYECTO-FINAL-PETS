@@ -113,9 +113,9 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
 
   const user = await User.findOne({ _id: ownerId });
 
-      if (user.interestedUsers.filter(e => e.includes(userId) && e.includes(petId)).length) {
+   if (user.interestedUsers.filter(e => e.includes(userId)) &&(e => e.includes(petId)).length){
     res.send("Ya mandaste la solicitud de adopcion")
-  }else   {
+  }else {
     const {  owner_email,
       adopter_email,
       adopter_telephone,
