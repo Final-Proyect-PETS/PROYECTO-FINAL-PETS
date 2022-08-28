@@ -40,15 +40,22 @@ const getUsers = async (name) => {
     console.error(err);
   }
   try {
-    const arrayUsers = await User.find({ deleted: false })
-      .populate({
-        path: "pets",
-        match: { deleted: false },
-      })
-      .populate({
-        path: "interestedUsers",
-        match: { deleted: false },
-      });
+// <<<<<<< HEAD
+    // const arrayUsers = await User.find({ deleted: false })
+    //   .populate({
+    //     path: "pets",
+    //     match: { deleted: false },
+    //   })
+    //   .populate({
+    //     path: "interestedUsers",
+    //     match: { deleted: false },
+    //   });
+// =======
+    const arrayUsers = await User.find({ deleted: false }).populate({
+      path: "pets",
+      match: { deleted: false },
+    });
+// >>>>>>> f3559b81ce88aba04b10b66686771cfc484e2556
     if (name) {
       let userFound = arrayUsers.filter(
         (u) =>
@@ -77,12 +84,18 @@ const userId = async (id) => {
     console.error(err);
   }
   try {
-    const arrayUsers = await User.findOne({ _id: id, deleted: false })
-      .populate({ path: "pets", match: { deleted: false } })
-      .populate({
-        path: "interestedUsers",
-        match: { deleted: false },
-      });
+// // <<<<<<< HEAD
+//     const arrayUsers = await User.findOne({ _id: id, deleted: false })
+//       .populate({ path: "pets", match: { deleted: false } })
+//       .populate({
+//         path: "interestedUsers",
+//         match: { deleted: false },
+//       });
+// // =======
+    const arrayUsers = await User.findOne({ _id: id, deleted: false }).populate(
+      { path: "pets", match: { deleted: false } }
+    );
+// >>>>>>> f3559b81ce88aba04b10b66686771cfc484e2556
     return arrayUsers;
   } catch (error) {
     console.error(error);

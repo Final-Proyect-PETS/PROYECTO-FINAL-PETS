@@ -204,7 +204,7 @@ export function userLogin(payload) {
         });
       return dispatch({
         type: actions.USER_LOGIN,
-        payload,
+        payload
       });
     } catch (error) {
       console.log(error);
@@ -260,13 +260,10 @@ export function tradePet(payload) {
   };
 }
 
-export function patchInterestedUsers(payload) {
+ export function patchInterestedUsers(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.patch(
-        `http://localhost:3001/home/interestedUsers`,
-        payload
-      );
+      let json = await axios.patch(`http://localhost:3001/home/interestedUsers`, payload);
       return dispatch({
         type: actions.INTERESTED_USERS,
         payload: json.data,
@@ -275,32 +272,28 @@ export function patchInterestedUsers(payload) {
       console.log(error);
     }
   };
-}
+} 
 
-export function emailAdopt(payload) {
-  return async function (dispatch) {
-    try {
-      let json = await axios.post(
-        `http://localhost:3001/mail/sendemail`,
-        payload
-      );
-      dispatch({
+export function emailAdopt(payload){
+  return async function (dispatch){
+    try{
+      let json = await axios.post(`http://localhost:3001/mail/sendemail`, payload)
+       dispatch({
         type: actions.ADOPT_EMAIL,
-        payload: json.data,
-      });
-      return "OK";
-    } catch (error) {
-      console.log(error);
+        payload: json.data
+      })
+      return "OK"
+    } catch(error){
+      console.log(error)
     }
-  };
+  }
 }
 
-export function paymentMp(idDonor, amountDonation) {
+
+export function paymentMp(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.get(
-        `http://localhost:3001/linkpayment/${idDonor}/${amountDonation}`
-      );
+      let json = await axios.get(`http://localhost:3001/linkpayment/${payload}`);
       return dispatch({
         type: actions.PAYMENT_MP,
         payload: json.data,
@@ -310,6 +303,7 @@ export function paymentMp(idDonor, amountDonation) {
     }
   };
 }
+///////////////////////////laut
 export function sendNotification(payload) {
   return async function (dispatch) {
     try {
@@ -332,3 +326,4 @@ export function sendNotification(payload) {
     }
   };
 }
+
