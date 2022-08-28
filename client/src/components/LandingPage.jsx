@@ -88,7 +88,7 @@ export default function LandingPage() {
         </div>
 
         <div className="flex flex-col w-full max-w-md m-14 mr-24 py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
-          <div className="self-center mb-6 text-xl font-light text-gray-600 sm:text-2xl dark:text-white">
+          <div className="self-center mb-6 text-xl font-light sm:text-2xl text-white">
             Ingrese a su cuenta
           </div>
           <div className="mt-8">
@@ -116,8 +116,8 @@ export default function LandingPage() {
                     placeholder="Complete su email"
                     required
                   />
-                  {errors.email && <p>{errors.email}</p>}
-                </div>
+                  
+                </div>{errors.email && <p className="font-bold text-red-700 text-center p-2">{errors.email}</p>}
               </div>
               <div className="flex flex-col mb-6">
                 <div className="flex relative ">
@@ -142,12 +142,13 @@ export default function LandingPage() {
                     placeholder="Complete su contraseña"
                     required
                   />
-                  {errors.password && <p>{errors.password}</p>}
+                  
                 </div>
+                {errors.password && <p className="font-bold text-red-700 text-center p-2">{errors.password}</p>}
               </div>
               <div className="flex items-center mb-6 -mt-4">
                 <div className="flex ml-auto">
-                  <span className="inline-flex text-s font-thin text-gray-500 sm:text-sm dark:text-gray-100 hover:text-gray-700 dark:hover:text-yellow-900">
+                  <span className="inline-flex text-s font-thin text-white sm:text-sm  hover:text-yellow-900 ">
                     ¿Has olvidado tu contraseña? Ingresa aquí.
                   </span>
                 </div>
@@ -165,15 +166,14 @@ export default function LandingPage() {
                 <div className="flex bg-gray-200">
                   <button type="submit">  Log in    </button>
                 </div>
-                <div className="bg-gray-700">
-                </div>
+              
               </div>
             </form>
           </div>
           <div className="flex items-center justify-center mt-6">
             <Link
               to="/register"
-              className="inline-flex items-center text-s font-thin text-center text-gray-500 hover:text-gray-700 dark:text-gray-100 dark:hover:text-yellow-900">
+              className="inline-flex items-center text-s font-thin text-center text-white hover:text-yellow-900 ">
               <span className="ml-2">¿No tiene una cuenta? Ingrese aquí.</span>
             </Link>
           </div>
