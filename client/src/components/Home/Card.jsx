@@ -18,7 +18,7 @@ export default function Card({
     <>
       <div
         id={idUser} 
-        className="grid col-start-3 rounded overflow-hidden border border-[#B99782] w-full h-96 bg-white my-12 md:mx-0 lg:mx-0"
+        className="grid col-start-3 rounded overflow-hidden border border-[#B99782] w-full bg-white my-12 md:mx-0 lg:mx-0"
       >
         <Link to={"/users/" + idUser}>
           <div className="flex justify-between p-3 border-b items-center bg-yellow-500">

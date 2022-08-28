@@ -161,8 +161,10 @@ export default function LandingPage() {
                     onSuccess={responseGoogle}
                     onFailure={responseGoogle}
                     cookiePolicy={"single_host_origin"}
+                    className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
                   />{" "}
                 </div>
+                
                 <div className="flex bg-gray-200">
                   <button type="submit">  Log in    </button>
                 </div>
