@@ -35,7 +35,7 @@ export default function AdminView() {
 
       <div className="flex h-screen pt-20">
         <div className="w-1/2 overflow-hidden border border-r-black">
-          <div className="h-1/4 bg-gray-200 flex justify-center items-center flex-col border border-b-black">
+          <div className="h-1/4 flex justify-center items-center flex-col border border-b-black">
             <h3 className="text-6xl">HappyTails</h3>
             <h3 className="text-2xl">Admin View</h3>
           </div>
@@ -62,7 +62,7 @@ export default function AdminView() {
                       }{" "}
                       | {u.username} | {u.email}{" "}
                     </div>{" "}
-                    <div className="w-2/5 bg-gray-500 flex justify-center">
+                    <div className="w-2/5 flex justify-center">
                       <div>
                         <Button
                           onClick={() => {
@@ -96,8 +96,44 @@ export default function AdminView() {
                                         <div>{m.telephone}</div>
                                       </div>
                                     </div>
-                                    <div className="bg-gray-200 h-56">
-                                      <h3>asd</h3>
+                                    <div className="bg-gray-200 h-80">
+                                      <div className="border border-y-black h-1/4">
+                                        <div className="bg-gray-200 flex justify-center">
+                                          <h1>
+                                            Cuenta creada el:{" "}
+                                            {m.createdAt.slice(0, 10)} a las{" "}
+                                            {m.createdAt.slice(11, 19)}
+                                          </h1>
+                                        </div>
+                                        <div className="flex justify-center">
+                                          <h1>
+                                            Cuenta editada por ultima vez el:{" "}
+                                            {m.updatedAt.slice(0, 10)} a las{" "}
+                                            {m.updatedAt.slice(11, 19)}
+                                          </h1>
+                                        </div>
+                                      </div>
+                                      <div className="border border-b-black h-2/4 flex">
+                                        <div className="w-1/2 bg-gray-600 h-full">
+                                          <div className="bg-yellow-200 h-1/2 flex justify-center items-center">
+                                            <h3>Mascotas adoptadas: {m.pets.filter((m) => m.isAdopted === true).length}</h3>
+                                          </div>
+                                          <div className="bg-yellow-700 h-1/2 flex justify-center items-center">
+                                            <h3>Mascotas en adopción: {m.pets.filter((m) => m.isAdopted === false).length}</h3>
+                                          </div>
+                                        </div>
+                                        <div className="w-1/2 bg-gray-900 h-full">
+                                          <div className="bg-yellow-900 h-1/2 flex justify-center items-center">
+                                            <h3>Este usuario donó: {m.donations.length} veces!</h3>
+                                          </div>
+                                          <div className="bg-yellow-200 h-1/2 flex justify-center items-center">
+                                            <h3>Donado en total: </h3>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div className="bg-gray-300 h-1/4">
+
+                                      </div>
                                     </div>
                                   </div>
                                 ))}
