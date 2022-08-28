@@ -270,6 +270,7 @@ export default function Register() {
             </label>
             <input
               name="email"
+              type="email"
               value={input.email}
               onChange={(e) => handleChange(e)}
               placeholder="Email"
