@@ -19,7 +19,9 @@ export default function AdminView() {
 
   const userr = getUsers.filter((m) => m._id === user);
 
-  console.log(userr);
+  // const don = userr.map((d) => d.donations.map((m) => m.donations[0].map((e) => e.donations[1])))
+
+  // console.log(don);
 
   const onClick = () => {
     setShow(true);
@@ -80,7 +82,7 @@ export default function AdminView() {
                                 {userr.map((m) => (
                                   <div>
                                     <div className="bg-gray-200 flex">
-                                      <div className="bg-red-200 w-1/4">
+                                      <div className="w-1/4">
                                         <img
                                           src={m.image}
                                           alt=""
@@ -94,10 +96,11 @@ export default function AdminView() {
                                         <div>{m.username}</div>
                                         <div>{m.email}</div>
                                         <div>{m.telephone}</div>
+                                        <div>{m.place}</div>
                                       </div>
                                     </div>
                                     <div className="bg-gray-200 h-80">
-                                      <div className="border border-y-black h-1/4">
+                                      <div className="border border-y-black h-1/4 flex items-center justify-center flex-col">
                                         <div className="bg-gray-200 flex justify-center">
                                           <h1>
                                             Cuenta creada el:{" "}
@@ -114,25 +117,27 @@ export default function AdminView() {
                                         </div>
                                       </div>
                                       <div className="border border-b-black h-2/4 flex">
-                                        <div className="w-1/2 bg-gray-600 h-full">
-                                          <div className="bg-yellow-200 h-1/2 flex justify-center items-center">
+                                        <div className="w-1/2 h-full">
+                                          <div className="h-1/2 flex justify-center items-center">
                                             <h3>Mascotas adoptadas: {m.pets.filter((m) => m.isAdopted === true).length}</h3>
                                           </div>
-                                          <div className="bg-yellow-700 h-1/2 flex justify-center items-center">
+                                          <div className="h-1/2 flex justify-center items-center">
                                             <h3>Mascotas en adopción: {m.pets.filter((m) => m.isAdopted === false).length}</h3>
                                           </div>
                                         </div>
-                                        <div className="w-1/2 bg-gray-900 h-full">
-                                          <div className="bg-yellow-900 h-1/2 flex justify-center items-center">
+                                        <div className="w-1/2 h-full">
+                                          <div className="h-1/2 flex justify-center items-center">
                                             <h3>Este usuario donó: {m.donations.length} veces!</h3>
                                           </div>
-                                          <div className="bg-yellow-200 h-1/2 flex justify-center items-center">
+                                          <div className="h-1/2 flex justify-center items-center">
                                             <h3>Donado en total: </h3>
                                           </div>
                                         </div>
                                       </div>
-                                      <div className="bg-gray-300 h-1/4">
-
+                                      <div className="bg-gray-300 h-1/4 flex items-center justify-center justify-around">
+                                        <button class="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "><Link to={"/users/" + m._id}>Perfil del usuario</Link></button>
+                                        <button class="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">Editar usuario</button>
+                                        <button class="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">Eliminar usuario</button>
                                       </div>
                                     </div>
                                   </div>
