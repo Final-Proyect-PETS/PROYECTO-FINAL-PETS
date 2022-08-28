@@ -40,7 +40,34 @@ export default function TradePet() {
     dispatch(tradePet(data));
     navigate("/home", { replace: true });
   }
-  console.log(data, "PAYLOAD");
+  //----------------------------------------------------DROPCONFIG
+  // set the dropdown menu element
+const targetEl = document.getElementById('dropdownMenu');
+
+// set the element that trigger the dropdown menu on click
+const triggerEl = document.getElementById('dropdownButton');
+
+// options with default values
+const options = {
+  placement: 'bottom',
+  onHide: () => {
+      console.log('dropdown has been hidden');
+  },
+  onShow: () => {
+      console.log('dropdown has been shown');
+  }
+};
+
+/*
+* targetEl: required
+* triggerEl: required
+* options: optional
+*/
+const dropdown = new Dropdown(targetEl, triggerEl, options);
+
+
+
+
   return (
     <div id="landing" className="w-full">
       <NavBar />
@@ -57,6 +84,9 @@ export default function TradePet() {
               <div className="">
                 <SearchTrade />
               </div>
+
+    
+
               <div className=" mt-2 ">
                 <form>
                   {getUsers?.length > 0 ? (

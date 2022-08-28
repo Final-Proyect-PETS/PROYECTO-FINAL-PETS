@@ -40,7 +40,7 @@ export default function UserDetail() {
                     </h1>
                     <Link to="/notifications">
                       <button className="flex bg-green-600  hover:bg-green-900   text-white font-bold py-1 px-3 border border-yellow-700 rounded">
-                      🔔<h2 className="font-semibold">{`${userDetail.interestedUsers.length}`}</h2>
+                      🔔<h2 className="font-semibold">{`${userDetail?.interestedUsers?.length}`}</h2>
                       </button>
                     </Link>
                   </div>

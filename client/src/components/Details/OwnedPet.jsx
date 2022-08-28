@@ -135,7 +135,7 @@ export default function OwnedPet({
                   <div className="flex  justify-content items-center">
                     <Link to="/interestedtraders">
                       <button className=" flex bg-green-600 mt-4 hover:bg-green-900 mr-1 mt-4  text-white font-bold py-2 px-2 border border-yellow-700 rounded">
-                        <h2 className="font-semibold">{`🔔 ${interestedUsers.length}`}</h2>
+                        <h2 className="font-semibold">{`🔔 ${interestedUsers?.length}`}</h2>
                       </button>
                     </Link>
 
