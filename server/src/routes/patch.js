@@ -109,11 +109,11 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
 
 router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
   try {
-    const { userId, ownerId} = req.body
+    const { userId, ownerId, petAndUserIds, petId} = req.body
 
   const user = await User.findOne({ _id: ownerId });
 
-  if (user.interestedUsers.includes(userId)){
+  if (user.interestedUsers.filter(e => e.includes(userId) && e.includes(petId)).length){
     res.send("Ya mandaste la solicitud de adopcion")
     
   }else{
@@ -128,7 +128,7 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
       console.log(req.body)
       
 /*      await User.updateOne({ _id: user }, { $set: { interestedUsers:  userId } });  */ 
-     await User.updateOne({ _id: user },  { $set: { interestedUsers:  [...user.interestedUsers, userId] } }); 
+     await User.updateOne({ _id: user },  { $push: { interestedUsers:  petAndUserIds } }); 
 /*      await User.updateOne({ _id: ownerId }, { $pull: { interestedUsers:  userId } });  */
 
     /* const newpet = await Pets.findOne({ _id: petId });
