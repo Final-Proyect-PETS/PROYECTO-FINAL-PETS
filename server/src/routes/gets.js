@@ -46,16 +46,7 @@ router.get("/pets/:id", verifyToken, async (req, res, next) => {
   }
 });
 
-/////////////////////////////notificataions----------------------------------
 
-router.get("/sendnotification/", verifyToken, async (req, res, next) => {
-  try {
-    const notireceibed =
-    const notifcationData = await sendNotification(userId, petId);
-    res.status(200).send(notifcationData);
-  } catch (error) {
-    next(error);
-  }
-});
+
 
 module.exports = router;

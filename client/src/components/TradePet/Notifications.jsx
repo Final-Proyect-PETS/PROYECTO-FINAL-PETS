@@ -13,14 +13,10 @@ import NotificationCard from "./NotificationCard";
 export default function Notifications() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch]);
-  const allUsers = useSelector((state) => state.users);
-  console.log(allUsers, "ALLL");
   const loggedUser = useSelector((state) => state.userProfile);
-  console.log(loggedUser.interestedUsers);
+  
+
+
 
   return (
     <div id="landing" className="w-full">
@@ -28,22 +24,11 @@ export default function Notifications() {
       <h1>
         Tienes {loggedUser?.interestedUsers?.length} notificaciones sin leer
       </h1>
+      
       <>
         {loggedUser?.interestedUsers ? (
           loggedUser?.interestedUsers?.map((iUser) => (
-            <NotificationCard
-              key={iUser._id}
-              _id={iUser._id}
-              first_name={iUser.first_name}
-              last_name={iUser.last_name}
-              username={iUser.username}
-              image={iUser.image}
-              email={iUser.email}
-              about={iUser.about}
-              telephone={iUser.telephone}
-              pets={iUser.pets}
-              place={iUser.place}
-            />
+            <NotificationCard iUser={iUser} />
           ))
         ) : (
           <>nada</>

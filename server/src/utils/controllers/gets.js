@@ -109,39 +109,9 @@ const petId = async (id) => {
 ///notification---------------------------------
 
 
-
-const sendNotification = async (idInterested, idPet) => {
-  try {
-    connection();
-  } catch (err) {
-    console.error(err);
-  }
-  try {
-    const pet = await petId(idPet)
-
-    const interestedUser = await User.findOne({
-      _id: idInterested,
-      deleted: false,
-    })
-      .populate({ path: "pets", match: { deleted: false } })
-      .populate({
-        path: "interestedUsers",
-        match: { deleted: false },
-      });
-
-    const notification = [pet, interestedUser];
-    return notification;
-
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-
 module.exports = {
   getPets,
   getUsers,
   userId,
   petId,
-  sendNotification
-};
+  };

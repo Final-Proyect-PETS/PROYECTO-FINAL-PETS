@@ -310,3 +310,25 @@ export function paymentMp(idDonor, amountDonation) {
     }
   };
 }
+export function sendNotification(payload) {
+  return async function (dispatch) {
+    try {
+      let interestedUser = await axios.get(
+        `http://localhost:3001/home/users/${payload.interestedId}`
+      );
+      let petRequired = await axios.get(
+        `http://localhost:3001/home/pets/${payload.petId}`
+      );
+
+
+      let notification = [interestedUser.data, petRequired.data];
+
+      return dispatch({
+        type: actions.NOTIFICATION,
+        payload: [...notification],
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
