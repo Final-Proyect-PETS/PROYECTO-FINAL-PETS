@@ -9,23 +9,28 @@ export default function AdminView() {
 
   const getPets = useSelector((state) => state.pets);
 
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
 
   const petsAdopted = getPets.filter((p) => p.isAdopted === true);
 
   const petsNotAdopted = getPets.filter((p) => p.isAdopted === false);
 
-  const onClick = () =>{
-    setShow(true)
-  }
+  const [user, setUser] = useState("");
 
-  const onClose = () =>{
-    setShow(false)
-  }
+  const userr = getUsers.filter((m) => m._id === user);
+
+  console.log(userr);
+
+  const onClick = () => {
+    setShow(true);
+  };
+
+  const onClose = () => {
+    setShow(false);
+  };
 
   return (
     <div>
-
       <NavBar />
 
       <div className="flex h-screen pt-20">
@@ -42,37 +47,61 @@ export default function AdminView() {
               <ol className="">
                 {getUsers.map((u) => (
                   <li className="flex border gap-3 border-b-black h-16 overflow-hidden items-center">
-                    <div className="flex items-center bg-gray-200 h-8 w-3/5 flex-row overflow-hidden gap-3">{
-                      <img
-                        src={u.image}
-                        alt=""
-                        className="w-8 h-8 rounded-full"
-                      />
-                    }
+                    <div className="flex items-center bg-gray-200 h-8 w-3/5 flex-row overflow-hidden gap-3">
+                      {
+                        <img
+                          src={u.image}
+                          alt=""
+                          className="w-8 h-8 rounded-full"
+                        />
+                      }
                       {
                         <Link to={"/users/" + u._id}>
                           {u.first_name} {u.last_name}
                         </Link>
                       }{" "}
-                      | {u.username} | {u.email}{" "}</div> <div className="w-2/5 bg-gray-500 flex justify-center"><div>
-                        <Button onClick={onClick}>
+                      | {u.username} | {u.email}{" "}
+                    </div>{" "}
+                    <div className="w-2/5 bg-gray-500 flex justify-center">
+                      <div>
+                        <Button
+                          onClick={() => {
+                            onClick();
+                            setUser(u._id);
+                          }}
+                        >
                           Info
                         </Button>
-                        <Modal
-                          show={show}
-                          onClose={onClose}
-                        >
-                          <Modal.Header>
-                            Terms of Service
-                          </Modal.Header>
+                        <Modal show={show} onClose={onClose}>
+                          <Modal.Header>Datos del usuario</Modal.Header>
                           <Modal.Body>
                             <div className="space-y-6">
-                              <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                                With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.
-                              </p>
-                              <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                                The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
-                              </p>
+                              <div>
+                                {userr.map((m) => (
+                                  <div>
+                                    <div className="bg-gray-200 flex">
+                                      <div className="bg-red-200 w-1/4">
+                                        <img
+                                          src={m.image}
+                                          alt=""
+                                          className="w-36 h-36 rounded-full"
+                                        />
+                                      </div>
+                                      <div className="flex flex-col bg-gray-500 w-3/4 justify-center items-center">
+                                        <div className="text-2xl">
+                                          {m.first_name} {m.last_name}
+                                        </div>
+                                        <div>{m.username}</div>
+                                        <div>{m.email}</div>
+                                        <div>{m.telephone}</div>
+                                      </div>
+                                    </div>
+                                    <div className="bg-gray-200 h-56">
+                                      <h3>asd</h3>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
                             </div>
                           </Modal.Body>
                           {/* <Modal.Footer>
