@@ -46,7 +46,7 @@ router.get("/feedback/:idDonor/:donationAmount", async (req, res, next) => {
       oneUser.donations.push({
         paymentId: payment_id,
         status: status,
-        donationAmount: donationAmount,
+        donationAmount: Number(donationAmount),
       });
       await oneUser.save();
     } catch (error) {

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Modal, Button } from "flowbite-react/lib/esm/components";
 
 export default function AdminView() {
+  
   const getUsers = useSelector((state) => state.users);
 
   const getPets = useSelector((state) => state.pets);
@@ -19,9 +20,15 @@ export default function AdminView() {
 
   const userr = getUsers.filter((m) => m._id === user);
 
-  // const don = userr.map((d) => d.donations.map((m) => m.donations[0].map((e) => e.donations[1])))
+  const donatedUsers = getUsers.filter((m) => m.donations)
 
-  // console.log(don);
+  const don = userr.map((d) => d.donations.map((d) => d.donationAmount))
+
+  console.log(don);
+
+  // const amount = donatedUsers.map((m) => m.donations.map((d) => d.donationAmount).reduce((prev, curr) => prev + curr))
+
+  // console.log(amount)
 
   const onClick = () => {
     setShow(true);
@@ -127,10 +134,10 @@ export default function AdminView() {
                                         </div>
                                         <div className="w-1/2 h-full">
                                           <div className="h-1/2 flex justify-center items-center">
-                                            <h3>Este usuario donó: {m.donations.length} veces!</h3>
+                                            <h3>Este usuario donó: {m.donations ? m.donations.length : 0} veces!</h3>
                                           </div>
                                           <div className="h-1/2 flex justify-center items-center">
-                                            <h3>Donado en total: </h3>
+                                            <h3>Donado en total: ${m.donations ? m.donations.map((d) => d.donationAmount).reduce((prev, curr) => prev + curr) : 0}</h3>
                                           </div>
                                         </div>
                                       </div>
@@ -233,7 +240,7 @@ export default function AdminView() {
             <div className="w-1/2 flex justify-center items-center">
               <div className="flex h-3/4 w-3/4">
                 <div className="w-1/4 border border-b-black border-r-black flex justify-center items-center">
-                  <h3 className="text-2xl">83</h3>
+                  <h3 className="text-2xl">{donatedUsers.length}</h3>
                 </div>
                 <div className="w-3/4 border border-t-black flex justify-center items-center">
                   <h3>Personas donaron</h3>
