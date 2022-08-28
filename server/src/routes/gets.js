@@ -4,6 +4,7 @@ const {
   getUsers,
   userId,
   petId,
+  sendNotification,
 } = require("../utils/controllers/gets.js");
 const verifyToken = require("../utils/middlewares/validateToken");
 
@@ -42,6 +43,18 @@ router.get("/pets/:id", verifyToken, async (req, res, next) => {
     res.status(200).send(pet);
   } catch (err) {
     next(err);
+  }
+});
+
+/////////////////////////////notificataions----------------------------------
+
+router.get("/sendnotification/", verifyToken, async (req, res, next) => {
+  try {
+    const notireceibed =
+    const notifcationData = await sendNotification(userId, petId);
+    res.status(200).send(notifcationData);
+  } catch (error) {
+    next(error);
   }
 });
 

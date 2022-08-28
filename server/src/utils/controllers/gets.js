@@ -40,13 +40,15 @@ const getUsers = async (name) => {
     console.error(err);
   }
   try {
-    const arrayUsers = await User.find({ deleted: false }).populate({
-      path: "pets",
-      match: { deleted: false },
-    }).populate({
-      path: "interestedUsers",
-      match: { deleted: false }
-    });
+    const arrayUsers = await User.find({ deleted: false })
+      .populate({
+        path: "pets",
+        match: { deleted: false },
+      })
+      .populate({
+        path: "interestedUsers",
+        match: { deleted: false },
+      });
     if (name) {
       let userFound = arrayUsers.filter(
         (u) =>
@@ -75,12 +77,12 @@ const userId = async (id) => {
     console.error(err);
   }
   try {
-    const arrayUsers = await User.findOne({ _id: id, deleted: false }).populate(
-      { path: "pets", match: { deleted: false } }
-    ).populate({
-      path: "interestedUsers",
-      match: { deleted: false }
-    });
+    const arrayUsers = await User.findOne({ _id: id, deleted: false })
+      .populate({ path: "pets", match: { deleted: false } })
+      .populate({
+        path: "interestedUsers",
+        match: { deleted: false },
+      });
     return arrayUsers;
   } catch (error) {
     console.error(error);
@@ -103,9 +105,43 @@ const petId = async (id) => {
     console.error(error);
   }
 };
+
+///notification---------------------------------
+
+
+
+const sendNotification = async (idInterested, idPet) => {
+  try {
+    connection();
+  } catch (err) {
+    console.error(err);
+  }
+  try {
+    const pet = await petId(idPet)
+
+    const interestedUser = await User.findOne({
+      _id: idInterested,
+      deleted: false,
+    })
+      .populate({ path: "pets", match: { deleted: false } })
+      .populate({
+        path: "interestedUsers",
+        match: { deleted: false },
+      });
+
+    const notification = [pet, interestedUser];
+    return notification;
+
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
 module.exports = {
   getPets,
   getUsers,
   userId,
   petId,
+  sendNotification
 };

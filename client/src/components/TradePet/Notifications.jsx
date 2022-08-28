@@ -18,9 +18,9 @@ export default function Notifications() {
     dispatch(getAllUsers());
   }, [dispatch]);
   const allUsers = useSelector((state) => state.users);
-  console.log(allUsers, "ALLUSER");
-
+  console.log(allUsers, "ALLL");
   const loggedUser = useSelector((state) => state.userProfile);
+  console.log(loggedUser.interestedUsers);
 
   return (
     <div id="landing" className="w-full">
@@ -29,7 +29,6 @@ export default function Notifications() {
         Tienes {loggedUser?.interestedUsers?.length} notificaciones sin leer
       </h1>
       <>
-        
         {loggedUser?.interestedUsers ? (
           loggedUser?.interestedUsers?.map((iUser) => (
             <NotificationCard
