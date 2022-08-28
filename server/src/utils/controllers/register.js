@@ -11,7 +11,6 @@ async function register(
   about,
   place,
   interestedUsers,
-  donations
 ) {
   try {
     const post = new User({
@@ -24,8 +23,7 @@ async function register(
       telephone,
       about,
       place,
-      interestedUsers,
-      donations,
+      interestedUsers
     });
 
     await post.save();
