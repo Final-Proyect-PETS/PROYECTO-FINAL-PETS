@@ -110,7 +110,7 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
 
 router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
   try {
-    const { userId, ownerId, petAndUserIds, petId } = req.body;
+    const { userId, ownerId, petId } = req.body;
 
     const user = await User.findOne({ _id: ownerId });
 
@@ -121,17 +121,10 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
     ) {
       res.send("Ya mandaste la solicitud de adopcion");
     } else {
-      const {
-        owner_email,
-        adopter_email,
-        adopter_telephone,
-        message,
-        adopter_username,
-        adopter_name,
-        pet_name,
-        link,
-      } = req.body;
-      console.log(req.body);
+      const userPush = await User.findById({_id: userId})
+      const petPush = await Pets.findById({_id: petId})
+      let viewState = false
+      const petAndUserIds = [userPush, petPush, viewState]
 
       /*      await User.updateOne({ _id: user }, { $set: { interestedUsers:  userId } });  */
       await User.updateOne(
@@ -146,12 +139,12 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
 
       /* const newpet = await Pets.findOne({ _id: petId });
     const newuser = await User.findOne({ _id: userId }); */
-      let transporter = nodemailer.createTransport({
-        host: "smtp-mail.outlook.com",
+/*       let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
         port: 587,
         secure: false,
         auth: {
-          user: "HAppYTAil5@hotmail.com",
+          user: "happytailshp@gmail.com",
           pass: `${NMAILER_PASSWORD}`,
         },
         tls: {
@@ -161,28 +154,27 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
 
       let contentHTML = `
       <img src = "https://cdn-icons-png.flaticon.com/512/194/194279.png" style="width:100px;"/>
-  
-      <h1>El usuario ${adopter_username} esta interesado en adoptar a ${pet_name}.
+    
+      <h1>El usuario <a href="${link}">${adopter_username}</a> esta interesado en adoptar a ${pet_name}.
                   La informacion del usuario es la siguiente:</h1> 
                   <ul>
                   <li>Nombre: ${adopter_name}</li>
                   <li> Email: ${adopter_email}</li>
                   <li>Telefono: ${adopter_telephone}</li>
                   </ul>
-                  <h4>si desea saber mas de ${adopter_name} puede comunicarse <a href="${link}">aqui</a>.
                       ${adopter_username} decidio redactar un mensaje
                                   <p>${message}</p>
                                   Atentamente HT`;
 
       let info = await transporter.sendMail({
-        from: "'HappyTails'<HAppYTAil5@hotmail.com>",
+        from: "'HappyTails'<happytailshp@gmail.com>",
         to: owner_email,
         subject: "Contacto de adopciÃ³n",
         html: contentHTML,
       });
 
       console.log("message sent", info.messageId);
-      res.send("OK");
+      res.send("se envio correctamente"); */
     }
   } catch (error) {
     next(error);

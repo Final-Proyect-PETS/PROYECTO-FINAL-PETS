@@ -271,7 +271,7 @@ export function patchInterestedUsers(payload) {
         type: actions.INTERESTED_USERS,
         payload: json.data,
       });
-
+      
       if (json.data.includes("Ya mandaste la solicitud de adopcion")) {
         return "Ya mandaste la solicitud de adopcion";
       } else {
@@ -294,8 +294,11 @@ export function emailAdopt(payload) {
         type: actions.ADOPT_EMAIL,
         payload: json.data,
       });
-      return "OK";
-    } catch (error) {
+      if (json.data.includes("Ya mandaste la solicitud de adopcion")) {
+        return "Ya mandaste la solicitud de adopcion";
+      } else {
+        return "OK";
+      }} catch (error) {
       console.log(error);
     }
   };

@@ -44,8 +44,7 @@ export default function AdoptForm() {
     const usersArray = useSelector((state) => state.users)
     const petOwner = petDetail.user.email
  
-      */ const viewState = false
-     const ids = [loggedUser, petDetail, viewState]
+      */
      const [input, setInput] = useState({
         owner_email: petOwner,
         adopter_name: loggedUser.first_name + " " + loggedUser.last_name,   
@@ -57,7 +56,6 @@ export default function AdoptForm() {
         pet_name: petDetail.name,
         ownerId: petDetail.user._id,
         userId: loggedUser._id,
-        petAndUserIds: ids,
         petId: petDetail._id,
       }); 
       /*
@@ -130,7 +128,7 @@ export default function AdoptForm() {
     //     )  
     // }
 
-
+  
   function handlerSubmit(ev) {
     ev.preventDefault();
     if (true) {
@@ -144,7 +142,8 @@ export default function AdoptForm() {
       })
         .then((result) => {
           if (result.isConfirmed) {
-            dispatch(patchInterestedUsers(input)).then((e) => {
+            dispatch(emailAdopt(input),
+            patchInterestedUsers(input)).then((e) => {
               if (e === "OK") {
                 notificationSwal(
                   "¡Enhorabuena!",
