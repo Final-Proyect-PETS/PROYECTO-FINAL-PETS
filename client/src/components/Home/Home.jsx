@@ -11,7 +11,7 @@ export default function Home() {
         <NavBar />
       </section>
       <div className="flex flex-col">
-        <div className="flex flex-row w-screen">
+        <div className="flex flex-row">
           <section className="flex w-1/3 fixed">
             <SideBar />
           </section>

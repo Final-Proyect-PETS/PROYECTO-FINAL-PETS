@@ -105,8 +105,10 @@ export default function UserDetail() {
                   <></>
                 )} */}
               </div>
+
               <div>
               </div>
+
             </div>
           </div>
           <div className="w-full mt-1 border-b  absolute  justify-center items-center bg-gray-100">

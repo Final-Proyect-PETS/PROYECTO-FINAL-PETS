@@ -28,6 +28,7 @@ export default function NavBar() {
   }
 
   return (
+
     <Navbar fluid={false} rounded={false} class="text-white bg-yellow-500 p-3">
       <Link to="/home">
         <Navbar.Brand>
@@ -42,6 +43,7 @@ export default function NavBar() {
         </Navbar.Brand>
       </Link>
       <div className="flex md:order-2">
+
         <Dropdown
           class="bg-yellow-600 rounded-full mr-5 mt-1"
           label={`🔔${loggedUser?.interestedUsers?.length}`}
@@ -93,6 +95,7 @@ export default function NavBar() {
             <Dropdown.Item>Ver todas las notificaciones</Dropdown.Item>
           </Link>
         </Dropdown>
+
         <Dropdown
           arrowIcon={false}
           inline={true}
@@ -116,6 +119,14 @@ export default function NavBar() {
           </Link>
 
           <Dropdown.Item>Mis donaciones</Dropdown.Item>
+          {loggedUser.isAdmin === true ? (
+            <Link to="/admin">
+              <Dropdown.Item>Vista de admin</Dropdown.Item>
+            </Link>
+          ) : (
+            false
+          )}
+
           <Dropdown.Divider />
           <Link to="/" onClick={removeToken}>
             <Dropdown.Item>Cerrar Sesión</Dropdown.Item>
