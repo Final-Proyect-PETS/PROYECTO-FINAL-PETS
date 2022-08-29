@@ -18,9 +18,7 @@ export default function UserDetail() {
   const loggedUser = useSelector((state) => state.userProfile);
   const userDetail = useSelector((state) => state.userDetail);
 
-  const [campana, setCampana] = useState({
-    notificacion: loggedUser.interestedUsers.length
-  })
+  
   /* function handlerNoti(){
 
        setCampana({notificacion: 0}) 
@@ -49,15 +47,11 @@ export default function UserDetail() {
                       {userDetail.first_name + " " + userDetail.last_name}
                     </h1>
                     <Link to="/notifications">
-{/* <<<<<<< HEAD
 
                       <button className="flex bg-green-600  hover:bg-green-900   text-white font-bold py-1 px-3 border border-yellow-700 rounded">
                       🔔<h2 className="font-semibold">{`${userDetail?.interestedUsers?.length}`}</h2>
 
-======= */}
-                      <button className="flex bg-green-600  hover:bg-green-900   text-white font-bold py-1 px-3 border border-yellow-700 rounded">
-                      🔔<h2  className="font-semibold">{campana.notificacion}</h2>
-{/* >>>>>>> ec112a82ef1e70fede5a362ce88c3e4b48b5cb07 */}
+
                       </button>
                     </Link>
                   </div>

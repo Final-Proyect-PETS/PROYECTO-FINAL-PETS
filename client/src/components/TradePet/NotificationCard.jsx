@@ -1,30 +1,29 @@
 import React from "react";
-import { sendNotification } from "../../redux/Actions";
-import { useEffect } from "react";
+
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 
-export default function NotificationCard(iUser) {
+
+export default function NotificationCard(
+  first_name,
+  last_name,
+  pet_name,
+  viewed
+) {
   const dispatch = useDispatch();
-  const interestedId = iUser.iUser[0];
-  const idPet = iUser.iUser[1];
-  const payload = { interestedId  : interestedId, petId: idPet };
+  // const interestedId = iUser.iUser[0];
+  // const idPet = iUser.iUser[1];
+  // const payload = { interestedId  : interestedId, petId: idPet };
 
-  useEffect(() => {
-      dispatch(sendNotification(payload));
-    }, [dispatch]);
-    
-    const notistate = useSelector((state) => state.notification);
-    
+  // useEffect(() => {
+  //     dispatch(sendNotification(payload));
+  //   }, [dispatch]);
 
-
-
-
+  //   const notistate = useSelector((state) => state.notification);
 
   return (
     <div className="flex flex-col">
-      <h1>{idPet}</h1>
-      <h1>{interestedId}</h1>
+      <h1>{first_name}</h1>
+      <h1>{last_name}</h1>
     </div>
 
     // return (<div
