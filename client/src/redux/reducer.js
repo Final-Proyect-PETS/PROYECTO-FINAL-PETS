@@ -122,7 +122,6 @@ export default function rootReducer(state = initialState, { type, payload }) {
     case actions.ADOPT_EMAIL:
       return {
         ...state,
-        userDetail: payload,
       };
 
     case actions.PAYMENT_MP:
