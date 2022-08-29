@@ -267,11 +267,11 @@ export function patchInterestedUsers(payload) {
         `http://localhost:3001/home/interestedUsers`,
         payload
       );
-       dispatch({
+      dispatch({
         type: actions.INTERESTED_USERS,
         payload: json.data,
       });
-      return "OK"
+      return "OK";
     } catch (error) {
       console.log(error);
     }
@@ -316,24 +316,12 @@ export function paymentMp(idDonor, amountDonation) {
 export function sendNotification(payload) {
   return async function (dispatch) {
     try {
-      let interestedUser = await axios.get(
-        `http://localhost:3001/home/users/${payload.interestedId}`
-      );
-      let petRequired = await axios.get(
-        `http://localhost:3001/home/pets/${payload.petId}`
-      );
-
-
-      let notification = [interestedUser.data, petRequired.data];
-
       return dispatch({
         type: actions.NOTIFICATION,
-        payload: [...notification],
+        payload: payload,
       });
     } catch (error) {
       console.log(error);
     }
   };
 }
-
-

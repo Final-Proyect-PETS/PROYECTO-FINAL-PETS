@@ -2,75 +2,77 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../NavBar/NavBar";
 import SearchTrade from "../SearchBars/SearchTrade";
-import { getAllUsers } from "../../redux/Actions/index";
+import { getAllUsers, sendNotification } from "../../redux/Actions/index";
 
 import { Link, useNavigate } from "react-router-dom";
-import AdopterCard from "./AdopterCard";
-import InAdoptionCards from "./InAdoptionCards";
 import "../LandingPage.css";
-import NotificationCard from "./NotificationCard";
 import { Toast, Dropdown } from "flowbite-react";
+import { patchUsuer } from "../../redux/Actions/index";
+import { useState } from "react";
 
 export default function Notifications() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const loggedUser = useSelector((state) => state.userProfile);
 
-  function closeHandler(e) {
-    e.preventDefault();
-    console.log("click");
-  }
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch]);
+  // const navigate = useNavigate();
+  var notView = [];
+
+  const allUsers = useSelector((state) => state.users);
+  var matched = allUsers?.filter((user) => user._id === loggedUser._id);
+  matched[0]?.interestedUsers?.map((iUser) => {
+    if (iUser[2] === false) notView.push(iUser);
+  });
+
+  // const notinoti = useSelector((state) => state.notification);
+
+  // useEffect(() => {
+  //   dispatch(sendNotification(notView));
+  // }, [dispatch]);
+  console.log("NONOO", notView);
+
+  const [bell, setBell] = useState({ view: notView.length });
+
+  let payload = {};
+  function closeHandler(e) {}
 
   return (
     <div id="landing" className="w-full">
       <NavBar />
-      <h1>{`Tienes ${
-        loggedUser?.interestedUsers?.length === 1
-          ? `${loggedUser?.interestedUsers?.length} notificacion sin leer`
-          : `${loggedUser?.interestedUsers?.length} notificaciones sin leer`
-      } `}</h1>
+      <h1>COMPONENTE EN CONSTRUCCION{/* {`Tienes ${
+        bell.view === 1
+          ? `${bell.view} notificacion sin leer`
+          : `${bell.view} notificaciones sin leer`
+      } `} */}</h1>
 
-      <Dropdown class="bg-yellow-600 rounded-full" label={`🔔${loggedUser?.interestedUsers?.length}`}>
-        <Dropdown.Header>
-          <span className="block text-sm font-medium truncate">
-            Notificaciones
-          </span>
-        </Dropdown.Header>
-
-        {loggedUser?.interestedUsers?.length ? (
-          loggedUser?.interestedUsers?.map((iUser) => (
-            <Dropdown.Item>
-              <Toast>
-                <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-500 dark:bg-blue-800 dark:text-blue-200">
-                  <img
-                    src={iUser[0].image}
-                    className="h-10 w-10 rounded-full"
-                  />
-                </div>
-                <div className="ml-3 text-sm font-normal">
-                  <h1>
-                    {iUser[0].first_name} {iUser[0].last_name} esta interesado
-                    en {iUser[1].name}
-                  </h1>
-                </div>
-                <button
-                  className="text-yellow-500"
-                  onClick={(e) => closeHandler(e)}
-                >
-                  <Toast.Toggle onClick={(e) => closeHandler(e)} />
-                </button>
-              </Toast>
-            </Dropdown.Item>
-          ))
-        ) : (
-          <>SIN NOTI</>
-        )}
-
-        <Dropdown.Divider />
-        <Dropdown.Item>
-          <Link to={"/notifications"}> Ver Todas</Link>
-         </Dropdown.Item>
-      </Dropdown>
+      {loggedUser?.interestedUsers?.length ? (
+        notView?.map((iUser) => (
+          <Toast key={iUser[0]._id}>
+            <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-500 dark:bg-blue-800 dark:text-blue-200">
+              <img src={iUser[0].image} className="h-10 w-10 rounded-full" />
+            </div>
+            <div className="ml-3 text-sm font-normal">
+              {/* <h1>{iUser[2] === false ? "No leida" : "truew"}</h1> */}
+              <h1>
+                {iUser[0].first_name} {iUser[0].last_name} esta interesado en{" "}
+                {iUser[1].name}
+              </h1>
+            </div>
+            <button
+              value={iUser[1].name}
+              className="text-yellow-500"
+              onClick={(e) => closeHandler(e)}
+            >
+              marcar como leida
+            </button>
+            <Toast.Toggle />
+          </Toast>
+        ))
+      ) : (
+        <>SIN NOTI</>
+      )}
     </div>
   );
 }

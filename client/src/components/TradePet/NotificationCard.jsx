@@ -1,76 +1,34 @@
 import React from "react";
-
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { Toast, Dropdown } from "flowbite-react";
 
-
-export default function NotificationCard(
-  first_name,
-  last_name,
-  pet_name,
-  viewed
-) {
+export default function NotificationCard() {
   const dispatch = useDispatch();
-  // const interestedId = iUser.iUser[0];
-  // const idPet = iUser.iUser[1];
-  // const payload = { interestedId  : interestedId, petId: idPet };
-
-  // useEffect(() => {
-  //     dispatch(sendNotification(payload));
-  //   }, [dispatch]);
-
-  //   const notistate = useSelector((state) => state.notification);
+  const loggedUser = useSelector((state) => state.userProfile);
+  console.log(pet_name);
+  let user = {};
+  function closeHandler(e) {
+    e.preventDefault();
+    console.log("click");
+  }
 
   return (
-    <div className="flex flex-col">
-      <h1>{first_name}</h1>
-      <h1>{last_name}</h1>
-    </div>
-
-    // return (<div
-    //   id={_id}
-    //   className="rounded overflow-hidden border border-[#B99782] w-full bg-white my-2 md:mx-0 lg:mx-0"
-    // >
-    //   <div className="w-full flex justify-between p-3 border-b items-center bg-[#B99782]">
-    //     <div className="flex items-center">
-    //       <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
-    //         <img src={image} alt="profilepic" />
-    //       </div>
-    //       <span className="ml-2 font-bold text-xs">
-    //         {`${first_name} ${last_name} - otra card`}
-    //       </span>
-    //       <span className="ml-2 font-bold text-xs">({username})</span>
+    <>{pet_name}</>
+    // <Dropdown.Item>
+    //   <Toast>
+    //     <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-500 dark:bg-blue-800 dark:text-blue-200">
+    //       <img src={image} className="h-10 w-10 rounded-full" />
     //     </div>
-    //     <div className="flex items-center">
-    //       <div className="text-sm flex">
-    //         {/* <img src={ubicacion} alt="ubicacion" width="16px" /> */}
-    //         <span className="font-medium text-xs mx-3">{place}</span>
-    //       </div>
+    //     <div className="ml-3 text-sm font-normal">
+    //       <h1>
+    //         {first_name} {last_name} esta interesado en {pet_name}
+    //       </h1>
     //     </div>
-    //   </div>
-
-    //   <div className=" py-3 flex">
-    //     <div className=" bg-gray-200 flex w-52 flex-col content-around gap-9 justify-center items-center">
-    //       <div className="text-sm flex">
-    //         <div className="grid grid-cols-2 place-content-center">
-    //           <div className="flex items-center">
-    //             <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
-    //               <img src={image} alt="profilepic" />
-    //             </div>
-    //             <span className="ml-2 font-bold text-xs">
-    //               {`${first_name} ${last_name} - otra card`}
-    //             </span>
-    //             <span className="ml-2 font-bold text-xs">({username})</span>
-    //           </div>
-    //           <div className="flex items-center">
-    //             <div className="text-sm flex">
-    //               {/* <img src={ubicacion} alt="ubicacion" width="16px" /> */}
-    //               <span className="font-medium text-xs mx-3">{place}</span>
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
+    //     <button className="text-yellow-500" onClick={(e) => closeHandler(e)}>
+    //       <Toast.Toggle onClick={(e) => closeHandler(e)} />
+    //     </button>
+    //   </Toast>
+    // </Dropdown.Item>
   );
 }
