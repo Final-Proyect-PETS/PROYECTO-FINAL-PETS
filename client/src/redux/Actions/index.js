@@ -271,7 +271,11 @@ export function patchInterestedUsers(payload) {
         type: actions.INTERESTED_USERS,
         payload: json.data,
       });
-      return "OK"
+      if (json.data.includes("Ya mandaste la solicitud de adopcion")){
+        return "Ya mandaste la solicitud de adopcion"
+      }
+      else{
+      return "OK"}
     } catch (error) {
       console.log(error);
     }
