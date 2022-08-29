@@ -10,7 +10,7 @@ const initialState = {
   userProfile: [], //usuario loggeado
   payment: {},
   tradePet: [], //mascota que se vá
-  notification: [], //estado con notificaciones para traerme todo desde el id
+  notification: [], //campanita
 };
 
 export default function rootReducer(state = initialState, { type, payload }) {

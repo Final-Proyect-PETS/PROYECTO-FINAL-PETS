@@ -19,7 +19,7 @@ export default function Notifications() {
   }, [dispatch]);
   // const navigate = useNavigate();
   var notView = [];
-
+var view=[]
   const allUsers = useSelector((state) => state.users);
   var matched = allUsers?.filter((user) => user._id === loggedUser._id);
   matched[0]?.interestedUsers?.map((iUser) => {
@@ -31,21 +31,32 @@ export default function Notifications() {
   // useEffect(() => {
   //   dispatch(sendNotification(notView));
   // }, [dispatch]);
-  console.log("NONOO", notView);
+  console.log("INTERESTEDuSER", notView);
 
-  const [bell, setBell] = useState({ view: notView.length });
+  // const [bell, setBell] = useState({ view: notView.length });
 
-  let payload = {};
-  function closeHandler(e) {}
+  
+  function closeHandler(e) {
+    e.preventDefault();
+  //   let payload = {
+  // id:loggedUser._id,
+  // interestedUsers:
+  //   };
+    console.log(e.target.value, "click");
+  //  dispatch(patchUsuer(payload))
+  }
 
   return (
     <div id="landing" className="w-full">
       <NavBar />
-      <h1>COMPONENTE EN CONSTRUCCION{/* {`Tienes ${
-        bell.view === 1
-          ? `${bell.view} notificacion sin leer`
-          : `${bell.view} notificaciones sin leer`
-      } `} */}</h1>
+      <h1>
+
+        {`Tienes ${
+        notView.length <= 1
+          ? `${notView.length} notificacion sin leer`
+          : `${notView.length} notificaciones sin leer`
+      } `}
+      </h1>
 
       {loggedUser?.interestedUsers?.length ? (
         notView?.map((iUser) => (
@@ -61,7 +72,7 @@ export default function Notifications() {
               </h1>
             </div>
             <button
-              value={iUser[1].name}
+              value={iUser[0]._id}
               className="text-yellow-500"
               onClick={(e) => closeHandler(e)}
             >
