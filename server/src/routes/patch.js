@@ -157,7 +157,7 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
                   <li> Email: ${adopter_email}</li>
                   <li>Telefono: ${adopter_telephone}</li>
                   </ul>
-                  <h4>si desea saber mas de ${adopter_name} puede comunicarse aqui ${link}.
+                  <h4>si desea saber mas de ${adopter_name} puede comunicarse <a href="${link}">aqui</a>.
                       ${adopter_username} decidio redactar un mensaje
                                   <p>${message}</p>
                                   Atentamente HT`
@@ -173,7 +173,6 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
   
     console.log("message sent", info.messageId);
     res.send("se envio correctamente");
-    res.status(200).send("INTEREST SSUCCESS");
   }
  } catch (error) {
     next(error);

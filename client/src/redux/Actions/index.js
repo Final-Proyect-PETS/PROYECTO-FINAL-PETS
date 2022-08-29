@@ -267,10 +267,11 @@ export function patchInterestedUsers(payload) {
         `http://localhost:3001/home/interestedUsers`,
         payload
       );
-      return dispatch({
+       dispatch({
         type: actions.INTERESTED_USERS,
         payload: json.data,
       });
+      return "OK"
     } catch (error) {
       console.log(error);
     }
