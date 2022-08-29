@@ -18,8 +18,11 @@ import AdminView from "./components/AdminView/AdminView";
 import Donation from "./components/Donaciones/Donation";
 import TradePet from "./components/TradePet/TradePet";
 import AdoptForm from "./components/AdoptForm/AdoptForm";
-import InterestedTraders from "../src/components/TradePet/InterestedTraders"
+import InterestedTraders from "../src/components/TradePet/InterestedTraders";
 import Notifications from "./components/TradePet/Notifications";
+import DonationCancelled from "./components/DonationCancelled";
+import DonationPending from "./components/DonationPending";
+import DonationSuccessful from "./components/DonationSuccessful";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -45,6 +48,12 @@ function App() {
           <Route path={"/interestedtraders"} element={<InterestedTraders />} />
           <Route path={"/notifications"} element={<Notifications />} />
           <Route path={"/adopt/:id"} element={<AdoptForm />} />
+          <Route
+            path={"/donationsuccessful"}
+            element={<DonationSuccessful />}
+          />
+          <Route path={"/donationcancelled"} element={<DonationCancelled />} />
+          <Route path={"/donationpending"} element={<DonationPending />} />
           <Route path={"*"} element={<Error404 />} />
         </Route>
         <Route element={<PrivateAdmin />}>
