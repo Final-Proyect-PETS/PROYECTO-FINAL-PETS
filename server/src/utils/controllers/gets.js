@@ -10,13 +10,8 @@ const getPets = async (name) => {
   }
   try {
     const arrayPets = await Pets.find({ deleted: false }).populate({
-      path: "user",
-      match: { deleted: false },
-      populate:{
-        path:"interestedUsers",
-          select: {body : 2}
-      }
-    }) 
+      path: "user", match: {deleted: false}})
+     
     if (name) {
       let petFound = arrayPets.filter(
         (p) =>
@@ -45,13 +40,7 @@ const getUsers = async (name) => {
   }
   try {
     const arrayUsers = await User.find({ deleted: false }).populate({
-      path: "pets",
-      match: { deleted: false },
-      populate:{
-        path:"interestedUsers",
-
-      }
-    }) 
+      path: "pets", match: {deleted: false}})
     if (name) {
       let userFound = arrayUsers.filter(
         (u) =>
@@ -81,10 +70,8 @@ const userId = async (id) => {
   }
   try {
 
-    const arrayUsers = await User.findOne({ _id: id, deleted: false }).populate(
-      { path: "pets", match: { deleted: false }}).populate({
-          path:"interestedUsers",
-      })
+    const arrayUsers = await User.findOne({ _id: id, deleted: false }).populate({
+      path: "pets", match: {deleted: false}}).populate({path: "interestedUsers"})
   
     return arrayUsers;
   } catch (error) {
@@ -100,12 +87,7 @@ const petId = async (id) => {
   }
   try {
     const pet = await Pets.findOne({ _id: id, deleted: false }).populate({
-      path: "user",
-      match: { deleted: false },
-      populate:{
-        path:"interestedUsers",
-      }
-    }) 
+      path: "user", match: {deleted: false}})
     return pet;
   } catch (error) {
     console.error(error);

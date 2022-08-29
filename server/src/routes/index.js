@@ -26,7 +26,7 @@ router.use(
   postPet,
   patchPet,
   patchUser,
-  postImage
+  postImage,
 );
 
 router.use("/linkpayment", payment);
