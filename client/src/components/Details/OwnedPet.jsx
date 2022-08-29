@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { notificationSwal } from "../../utils/notificationSwal.jsx";
 import Swal from "sweetalert2";
 import "../LandingPage.css";
+import { Tooltip } from "flowbite-react/lib/esm/components";
 
 export default function OwnedPet({
   idUser,
@@ -23,6 +24,8 @@ export default function OwnedPet({
   const loggedUser = useSelector((state) => state.userProfile);
   const userDetail = useSelector((state) => state.userDetail);
 
+
+  console.log(loggedUser.interestedUsers,"IU")
   //---------------------------------------------------handler Cambiar Botones-----------------------------------------
   const [adopt, setAdopt] = useState({
     id: idPet,
@@ -48,7 +51,7 @@ export default function OwnedPet({
     dispatch(patchPet(payload));
   }
 
-  //-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-DELETE-x-x-x-x-x-x-x--x-x-x-x--x-x
+//-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-DELETE-x-x-x-x-x-x-x--x-x-x-x-x-x-x-x-x-x-x-x-x-
 
   const [deleted, setDeleted] = useState({
     id: idPet,
@@ -108,7 +111,7 @@ export default function OwnedPet({
             );
           }
         })
-        .then(() => navigate(`/users/${idUser}`, { replace: true }));
+        .then(() => navigate(`/home`, { replace: true }));
     } //oponer sweet
   }
 
@@ -117,12 +120,13 @@ export default function OwnedPet({
       <div className=" flex border-2 border-yellow-700 rounded">
         <div className=" border-yellow-900 border-r-2  flex justify-between  border items-center rounded bg-gray-300">
           <div className=" column items-center mb-4 mr-4 ml-4 ">
-            {loggedUser._id===userDetail._id?  <button
+            {loggedUser._id===userDetail._id? <Tooltip content="Borrar mascota" placement="bottom"> <button
               onClick={(e) => deleteHandler(e)}
               className="bg-red-600 mt-4 hover:bg-red-700 text-white font-bold py- px-1 border border-yellow-700 rounded"
             >
               ✖️
-            </button>:<></>}
+            </button>
+            </Tooltip>:<></>}
           
             {/* <span className="text-2xl font-bold ">{namePet}</span> */}
             <div className="flex justify-center">
@@ -135,7 +139,7 @@ export default function OwnedPet({
                   <div className="flex  justify-content items-center">
                     <Link to="/interestedtraders">
                       <button className=" flex bg-green-600 mt-4 hover:bg-green-900 mr-1 mt-4  text-white font-bold py-2 px-2 border border-yellow-700 rounded">
-                        <h2 className="font-semibold">{`🔔 ${interestedUsers.length}`}</h2>
+                        <h2 className="font-semibold">{`🔔 ${loggedUser?.interestedUsers?.length}`}</h2>
                       </button>
                     </Link>
 

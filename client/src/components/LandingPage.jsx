@@ -55,7 +55,7 @@ export default function LandingPage() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(userLogin(input)).then(()=> {
+    dispatch(userLogin(input)).then(() => {
       navigate("/home")
     })
   }
@@ -69,7 +69,7 @@ export default function LandingPage() {
   })
 
   const responseGoogle = (response) => {
-    dispatch(userLoginGoogle(response)).then(()=>{
+    dispatch(userLoginGoogle(response)).then(() => {
       navigate("/home")
     })
   };
@@ -88,7 +88,7 @@ export default function LandingPage() {
         </div>
 
         <div className="flex flex-col w-full max-w-md m-14 mr-24 py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
-          <div className="self-center mb-6 text-xl font-light text-gray-600 sm:text-2xl dark:text-white">
+          <div className="self-center mb-6 text-xl font-light sm:text-2xl text-white">
             Ingrese a su cuenta
           </div>
           <div className="mt-8">
@@ -116,8 +116,8 @@ export default function LandingPage() {
                     placeholder="Complete su email"
                     required
                   />
-                  {errors.email && <p>{errors.email}</p>}
-                </div>
+
+                </div>{errors.email && <p className="font-bold text-red-700 text-center p-2">{errors.email}</p>}
               </div>
               <div className="flex flex-col mb-6">
                 <div className="flex relative ">
@@ -142,38 +142,45 @@ export default function LandingPage() {
                     placeholder="Complete su contraseña"
                     required
                   />
-                  {errors.password && <p>{errors.password}</p>}
+
                 </div>
+                {errors.password && <p className="font-bold text-red-700 text-center p-2">{errors.password}</p>}
               </div>
               <div className="flex items-center mb-6 -mt-4">
                 <div className="flex ml-auto">
-                  <span className="inline-flex text-s font-thin text-gray-500 sm:text-sm dark:text-gray-100 hover:text-gray-700 dark:hover:text-yellow-900">
+                  <span className="inline-flex text-s font-thin text-white sm:text-sm  hover:text-yellow-900 ">
                     ¿Has olvidado tu contraseña? Ingresa aquí.
                   </span>
                 </div>
               </div>
-              <div className="flex flex-row justify-center gap-16">
-                <div>
-                  <GoogleLogin
-                    clientId={clientId}
-                    buttonText="Login"
-                    onSuccess={responseGoogle}
-                    onFailure={responseGoogle}
-                    cookiePolicy={"single_host_origin"}
-                  />{" "}
+              <div >
+                <div className="flex items-center mb-6 -mt-4 w-full">
+                  <button className="py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-800 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg" type="submit">
+                    Ingresar
+                  </button>
                 </div>
-                <div className="flex bg-gray-200">
-                  <button type="submit">  Log in    </button>
-                </div>
-                <div className="bg-gray-700">
-                </div>
+
+                <GoogleLogin
+                  clientId={clientId}
+                  render={renderProps => (
+                    <button type="button" onClick={renderProps.onClick} disabled={renderProps.disabled} className="text-white text-center items-center justify-center w-full bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex self-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2" >
+                      <svg className="mr-2 -ml-1 w-4 h-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg>
+                      Ingresa con tu cuenta de Google
+                    </button>
+                    // className="inline-flex self-center py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+                    
+                  )}
+                  onSuccess={responseGoogle}
+                  onFailure={responseGoogle}
+                  cookiePolicy={"single_host_origin"}
+                />{" "}
               </div>
             </form>
           </div>
           <div className="flex items-center justify-center mt-6">
             <Link
               to="/register"
-              className="inline-flex items-center text-s font-thin text-center text-gray-500 hover:text-gray-700 dark:text-gray-100 dark:hover:text-yellow-900">
+              className="inline-flex items-center text-s font-thin text-center text-white hover:text-yellow-900 ">
               <span className="ml-2">¿No tiene una cuenta? Ingrese aquí.</span>
             </Link>
           </div>

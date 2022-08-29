@@ -15,6 +15,7 @@ const adoptionMail = require("./send-email");
 const postImage = require("./posts");
 const payment = require("./payment");
 const errorHandler = require("../utils/middlewares/errorHandler");
+const User = require("../models/users");
 
 router.use(
   "/home",
@@ -26,7 +27,7 @@ router.use(
   postPet,
   patchPet,
   patchUser,
-  postImage
+  postImage,
 );
 
 router.use("/linkpayment", payment);
@@ -43,18 +44,22 @@ router.get("/feedback/:idDonor/:donationAmount", async (req, res, next) => {
     try {
       const oneUser = await User.findOne({ _id: idDonor });
       oneUser.donations.push({
-        "Payment id": payment_id,
-        Status: status,
-        "Donation amount": donationAmount,
+        paymentId: payment_id,
+        status: status,
+        donationAmount: Number(donationAmount),
       });
       await oneUser.save();
     } catch (error) {
       next(error);
     }
-  }
-  return res.redirect("http://localhost:3000/donations");
-});
 
+    return res.redirect("http://localhost:3000/donationsuccessful");
+  }
+  if (status === "in_process" || status === "pending")
+    return res.redirect("http://localhost:3000/donationpending");
+  if (status === "rejected")
+    return res.redirect("http://localhost:3000/donationcancelled");
+});
 
 module.exports = router;
 

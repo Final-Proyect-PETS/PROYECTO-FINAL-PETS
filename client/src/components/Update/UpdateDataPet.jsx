@@ -187,6 +187,19 @@ export default function UpdatePet() {
       "pk.eyJ1Ijoiam9uc2VuIiwiYSI6IkR6UU9oMDQifQ.dymRIgqv-UV6oz0-HCFx1w"
   }
 
+
+  function _suggestionSelect(result, lat, long, text) {
+    console.log(result, lat, long, text);
+    setInput({
+      ...input, place: result
+    })
+    console.log(input)
+  }
+  const mapAccess = {
+    mapboxApiAccessToken:
+      "pk.eyJ1Ijoiam9uc2VuIiwiYSI6IkR6UU9oMDQifQ.dymRIgqv-UV6oz0-HCFx1w"
+  }
+
   return (
     <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
       <div className="self-center mb-6 text-xl font-normal text-gray-600 sm:text-2xl dark:text-white">

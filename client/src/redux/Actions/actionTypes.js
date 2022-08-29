@@ -32,6 +32,6 @@ export const ADOPT = "ADOPT";
 export const ADOPT_EMAIL = "ADOPT_EMAIL";
 //PAYMENT -------------------
 export const PAYMENT_MP = "PAYMENT_MP";
-
-export const INTERESTED_USERS = "INTERESTED_USERS"
-
+//INTERESTED_USERS
+export const INTERESTED_USERS = "INTERESTED_USERS";
+export const NOTIFICATION = "NOTIFICATION";

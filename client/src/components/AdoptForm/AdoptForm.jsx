@@ -44,7 +44,8 @@ export default function AdoptForm() {
     const usersArray = useSelector((state) => state.users)
     const petOwner = petDetail.user.email
  
-      */
+      */ const viewState = false
+     const ids = [loggedUser, petDetail, viewState]
      const [input, setInput] = useState({
         owner_email: petOwner,
         adopter_name: loggedUser.first_name + " " + loggedUser.last_name,   
@@ -56,6 +57,8 @@ export default function AdoptForm() {
         pet_name: petDetail.name,
         ownerId: petDetail.user._id,
         userId: loggedUser._id,
+        petAndUserIds: ids,
+        petId: petDetail._id,
       }); 
       /*
       const [currentUser, setCurrentUser] = useState({
@@ -161,7 +164,7 @@ export default function AdoptForm() {
           } else {
             notificationSwal(
               "Operación cancelada",
-              "Mascota no Adoptada",
+              "La solicitud fue cancelada",
               "error",
               "Cancel"
             );

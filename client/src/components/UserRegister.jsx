@@ -193,7 +193,7 @@ export default function Register() {
 
   return (
     <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
-      <div className="self-center mb-6 text-xl font-normal text-gray-600 sm:text-2xl dark:text-white">
+      <div className="self-center mb-6 text-xl font-normal text-white sm:text-2xl dark:text-white">
         Registrate
       </div>
       <div className="mt-8 px-8 max-w-lg self-center">
@@ -270,6 +270,7 @@ export default function Register() {
             </label>
             <input
               name="email"
+              type="email"
               value={input.email}
               onChange={(e) => handleChange(e)}
               placeholder="Email"

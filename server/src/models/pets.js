@@ -10,13 +10,18 @@ const petsSchema = new Schema(
     size: { type: String, enum: ["small", "medium", "big"], lowercase: true },
     age: Number,
     gender: { type: String, enum: ["female", "male"], lowercase: true },
-    vaccination: { type: String, enum: ["yes", "no", "unknown"], lowercase: true },
+    vaccination: {
+      type: String,
+      enum: ["yes", "no", "unknown"],
+      lowercase: true
+    },
     castrated: Boolean,
     place: String,
     imagePool: [String],
     deleted: { type: Boolean, default: false },
     user: { type: mongoose.Schema.ObjectId, ref: "User" },
     isAdopted: { type: Boolean, default: true },
+    interestedUsers: Array
   },
   {
     timestamps: true,

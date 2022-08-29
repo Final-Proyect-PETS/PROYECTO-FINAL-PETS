@@ -5,7 +5,7 @@ import Home from "./components/Home/Home";
 import LandingPage from "./components/LandingPage";
 import UserDetail from "./components/Details/UserDetail";
 import PetDetail from "./components/Details/PetDetail";
-import Register from "./components/Register";
+import UserRegister from "./components/UserRegister";
 import PetRegister from "./components/PetRegister";
 import UpdateUser from "./components/Update/UpdateDataUsers";
 import UpdatePet from "./components/Update/UpdateDataPet";
@@ -15,11 +15,14 @@ import { history } from "./components/BrowserHistory/history";
 import PrivateRoutes from "./components/PrivateRoute.js/PrivateRoute";
 import PrivateAdmin from "./components/PrivateRoute.js/PrivateAdmin";
 import AdminView from "./components/AdminView/AdminView";
-import Donation from "./components/Donaciones/Donation";
+import Donation from "./components/Donations/Donation";
 import TradePet from "./components/TradePet/TradePet";
 import AdoptForm from "./components/AdoptForm/AdoptForm";
-import InterestedTraders from "../src/components/TradePet/InterestedTraders"
+import InterestedTraders from "../src/components/TradePet/InterestedTraders";
 import Notifications from "./components/TradePet/Notifications";
+import DonationCancelled from "./components/Donations/DonationCancelled";
+import DonationPending from "./components/Donations/DonationPending";
+import DonationSuccessful from "./components/Donations/DonationSuccessful";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -31,7 +34,7 @@ function App() {
     <BrowserRouter>
       <Routes history={history}>
         <Route path={"/"} element={<LandingPage />} />
-        <Route path={"/register"} element={<Register />} />
+        <Route path={"/register"} element={<UserRegister />} />
         <Route element={<PrivateRoutes />}>
           <Route path={"/home"} element={<Home />} />
           <Route path={"/users/:id"} element={<UserDetail />} />
@@ -45,6 +48,12 @@ function App() {
           <Route path={"/interestedtraders"} element={<InterestedTraders />} />
           <Route path={"/notifications"} element={<Notifications />} />
           <Route path={"/adopt/:id"} element={<AdoptForm />} />
+          <Route
+            path={"/donationsuccessful"}
+            element={<DonationSuccessful />}
+          />
+          <Route path={"/donationcancelled"} element={<DonationCancelled />} />
+          <Route path={"/donationpending"} element={<DonationPending />} />
           <Route path={"*"} element={<Error404 />} />
         </Route>
         <Route element={<PrivateAdmin />}>
