@@ -114,10 +114,13 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
 
     const user = await User.findOne({ _id: ownerId });
 
-    /*   if (user.interestedUsers.filter(e => e.includes(userId) && e.includes(petId))){
-    res.send("Ya mandaste la solicitud de adopcion")
-    
-  }else   */ {
+    if (
+      user.interestedUsers.filter(
+        (e) => e[0]._id === userId && e[1]._id === petId
+      ).length
+    ) {
+      res.send("Ya mandaste la solicitud de adopcion");
+    } else {
       const {
         owner_email,
         adopter_email,
@@ -179,7 +182,7 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
       });
 
       console.log("message sent", info.messageId);
-      res.send("se envio correctamente");
+      res.send("OK");
     }
   } catch (error) {
     next(error);
