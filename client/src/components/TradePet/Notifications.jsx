@@ -4,7 +4,7 @@ import NavBar from "../NavBar/NavBar";
 import SearchTrade from "../SearchBars/SearchTrade";
 import { getAllUsers } from "../../redux/Actions/index";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AdopterCard from "./AdopterCard";
 import InAdoptionCards from "./InAdoptionCards";
 import "../LandingPage.css";
@@ -30,27 +30,16 @@ export default function Notifications() {
           : `${loggedUser?.interestedUsers?.length} notificaciones sin leer`
       } `}</h1>
 
-      <Dropdown label="Dropdown">
+      <Dropdown class="bg-yellow-600 rounded-full" label={`🔔${loggedUser?.interestedUsers?.length}`}>
         <Dropdown.Header>
-         <span className="block text-sm font-medium truncate">
-         Notificaciones
+          <span className="block text-sm font-medium truncate">
+            Notificaciones
           </span>
         </Dropdown.Header>
 
-        <Dropdown.Item>
-          
-
-          
-        </Dropdown.Item>
-
-        <Dropdown.Divider />
-        <Dropdown.Item>Sign out</Dropdown.Item>
-      </Dropdown>
-
-      <button>
         {loggedUser?.interestedUsers?.length ? (
           loggedUser?.interestedUsers?.map((iUser) => (
-            <>
+            <Dropdown.Item>
               <Toast>
                 <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-500 dark:bg-blue-800 dark:text-blue-200">
                   <img
@@ -71,20 +60,17 @@ export default function Notifications() {
                   <Toast.Toggle onClick={(e) => closeHandler(e)} />
                 </button>
               </Toast>
-            </>
-
-            /*      <NotificationCard
-              key={iUser[0]._id}
-              first_name={iUser[0].first_name}
-              last_name={iUser[0].last_name}
-              pet_name={iUser[1].name}
-              // viewed={iUser[2]}
-            /> */
+            </Dropdown.Item>
           ))
         ) : (
           <>SIN NOTI</>
         )}
-      </button>
+
+        <Dropdown.Divider />
+        <Dropdown.Item>
+          <Link to={"/notifications"}> Ver Todas</Link>
+         </Dropdown.Item>
+      </Dropdown>
     </div>
   );
 }
