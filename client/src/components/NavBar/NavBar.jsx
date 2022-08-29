@@ -68,15 +68,11 @@ export default function NavBar() {
     //           </Link>
     //         </button>
     //       </div>
-    //      
+    //
     //       <ul className="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-amber-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-amber-800 dark:bg-amber-800 md:dark:bg-amber-800 dark:border-amber-700">
     //         <li>
 
-    <Navbar
-      fluid={false}
-      rounded={false}
-      class="text-white bg-yellow-500 p-3"
-    >
+    <Navbar fluid={false} rounded={false} class="text-white bg-yellow-500 p-3">
       <Link to="/home">
         <Navbar.Brand>
           <img
@@ -92,7 +88,8 @@ export default function NavBar() {
       <div className="flex md:order-2">
         <Link to="/notifications" className="m-1">
           <button className="bg-amber-800 hover:bg-green-700  text-white font-normal py-1 px-1 border border-yellow-700 rounded-full">
-            {`🔔${user?.interestedUsers?.length}`}{/* OJO PROMESA */}
+            {`🔔${user?.interestedUsers?.length}`}
+            {/* OJO PROMESA */}
           </button>
         </Link>
         <Dropdown
@@ -109,24 +106,24 @@ export default function NavBar() {
             </span>
           </Dropdown.Header>
           <Link to={"/users/" + id}>
-            <Dropdown.Item>
-              Perfil de Usuario
-            </Dropdown.Item>
+            <Dropdown.Item>Perfil de Usuario</Dropdown.Item>
           </Link>
           <Link to="/notifications">
             <Dropdown.Item>
               Notificaciones
             </Dropdown.Item>
           </Link>
-
-          <Dropdown.Item>
-            Mis donaciones
-          </Dropdown.Item>
+          <Dropdown.Item>Mis donaciones</Dropdown.Item>
+          {user.isAdmin === true ? (
+            <Link to="/admin">
+              <Dropdown.Item>Vista de admin</Dropdown.Item>
+            </Link>
+          ) : (
+            false
+          )}
           <Dropdown.Divider />
           <Link to="/" onClick={removeToken}>
-            <Dropdown.Item>
-              Cerrar Sesión
-            </Dropdown.Item>
+            <Dropdown.Item>Cerrar Sesión</Dropdown.Item>
           </Link>
         </Dropdown>
         <Navbar.Toggle />
@@ -137,20 +134,14 @@ export default function NavBar() {
             Inicio
           </Link>
         </Navbar.Link>
-        <Navbar.Link class="text-white hover:none" >
-          <Link to="/donations" >
-            Donaciones
-          </Link>
+        <Navbar.Link class="text-white hover:none">
+          <Link to="/donations">Donaciones</Link>
         </Navbar.Link>
         <Navbar.Link class="text-white hover:none">
-          <Link to="/about">
-            Sobre Nosotros
-          </Link>
+          <Link to="/about">Sobre Nosotros</Link>
         </Navbar.Link>
         <Navbar.Link class="text-white hover:none">
-          <Link to="/navbars">
-            Centro de denuncias
-          </Link>
+          <Link to="/navbars">Centro de denuncias</Link>
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
