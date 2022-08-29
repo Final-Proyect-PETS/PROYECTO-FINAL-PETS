@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { getUserDetail, clearState } from "../../redux/Actions";
+import { getUserDetail, clearState, getPetDetail } from "../../redux/Actions";
 import NavBar from "../NavBar/NavBar";
 import OwnedPet from "./OwnedPet";
 import "./userDetailStyle.css";
@@ -12,11 +12,23 @@ export default function UserDetail() {
   useEffect(() => {
     dispatch(clearState());
     dispatch(getUserDetail(id));
+    dispatch(getPetDetail(id))
   }, [dispatch, id]);
 
   const loggedUser = useSelector((state) => state.userProfile);
   const userDetail = useSelector((state) => state.userDetail);
-  
+
+  const [campana, setCampana] = useState({
+    notificacion: loggedUser.interestedUsers.length
+  })
+  /* function handlerNoti(){
+
+       setCampana({notificacion: 0}) 
+
+  } */
+/*   console.log("MI PERFIL", loggedUser);
+  console.log("USERdetail-", userDetail); */
+
 
   return Object.keys(userDetail).length ? (
     <>
@@ -37,10 +49,15 @@ export default function UserDetail() {
                       {userDetail.first_name + " " + userDetail.last_name}
                     </h1>
                     <Link to="/notifications">
+{/* <<<<<<< HEAD
 
                       <button className="flex bg-green-600  hover:bg-green-900   text-white font-bold py-1 px-3 border border-yellow-700 rounded">
                       🔔<h2 className="font-semibold">{`${userDetail?.interestedUsers?.length}`}</h2>
 
+======= */}
+                      <button className="flex bg-green-600  hover:bg-green-900   text-white font-bold py-1 px-3 border border-yellow-700 rounded">
+                      🔔<h2  className="font-semibold">{campana.notificacion}</h2>
+{/* >>>>>>> ec112a82ef1e70fede5a362ce88c3e4b48b5cb07 */}
                       </button>
                     </Link>
                   </div>

@@ -44,8 +44,8 @@ export default function AdoptForm() {
     const usersArray = useSelector((state) => state.users)
     const petOwner = petDetail.user.email
  
-      */
-     const ids = [loggedUser, petDetail]
+      */ const viewState = false
+     const ids = [loggedUser, petDetail, viewState]
      const [input, setInput] = useState({
         owner_email: petOwner,
         adopter_name: loggedUser.first_name + " " + loggedUser.last_name,   
