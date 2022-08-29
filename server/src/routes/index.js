@@ -52,8 +52,12 @@ router.get("/feedback/:idDonor/:donationAmount", async (req, res, next) => {
     } catch (error) {
       next(error);
     }
+    return res.redirect("http://localhost:3000/donationsuccessful");
   }
-  return res.redirect("http://localhost:3000/donations");
+  if (status === "in_process" || status === "pending")
+    return res.redirect("http://localhost:3000/donationpending");
+  if (status === "rejected")
+    return res.redirect("http://localhost:3000/donationcancelled");
 });
 
 module.exports = router;
