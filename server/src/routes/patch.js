@@ -113,10 +113,10 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
 
   const user = await User.findOne({ _id: ownerId });
 
-  if (user.interestedUsers.filter(e => e.includes(userId._id) && e.includes(petId._id)).length){
+  /*   if (user.interestedUsers.filter(e => e.includes(userId) && e.includes(petId))){
     res.send("Ya mandaste la solicitud de adopcion")
     
-  }else{
+  }else   */{
     const {  owner_email,
       adopter_email,
       adopter_telephone,
@@ -128,7 +128,8 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
       console.log(req.body)
       
 /*      await User.updateOne({ _id: user }, { $set: { interestedUsers:  userId } });  */ 
-     await User.updateOne({ _id: user },  { $push: { interestedUsers:  petAndUserIds } })
+     await User.updateOne({_id: ownerId },  {$push: {interestedUsers: petAndUserIds} })
+     await Pets.updateOne({_id: petId}, {$push: {interestedUsers: userId}})
 /*      await User.updateOne({ _id: ownerId }, { $pull: { interestedUsers:  userId } });  */
 
     /* const newpet = await Pets.findOne({ _id: petId });
@@ -156,7 +157,7 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
                   <li> Email: ${adopter_email}</li>
                   <li>Telefono: ${adopter_telephone}</li>
                   </ul>
-                  <h4>si desea saber mas de ${adopter_name} puede comunicarse aqui ${link}.
+                  <h4>si desea saber mas de ${adopter_name} puede comunicarse <a href="${link}">aqui</a>.
                       ${adopter_username} decidio redactar un mensaje
                                   <p>${message}</p>
                                   Atentamente HT`
@@ -172,7 +173,6 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
   
     console.log("message sent", info.messageId);
     res.send("se envio correctamente");
-    res.status(200).send("INTEREST SSUCCESS");
   }
  } catch (error) {
     next(error);

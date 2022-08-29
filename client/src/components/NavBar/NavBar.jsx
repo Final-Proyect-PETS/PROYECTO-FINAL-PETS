@@ -108,10 +108,11 @@ export default function NavBar() {
           <Link to={"/users/" + id}>
             <Dropdown.Item>Perfil de Usuario</Dropdown.Item>
           </Link>
-          <Link to={"/users/" + id}>
-            <Dropdown.Item>Notificaciones</Dropdown.Item>
+          <Link to="/notifications">
+            <Dropdown.Item>
+              Notificaciones
+            </Dropdown.Item>
           </Link>
-
           <Dropdown.Item>Mis donaciones</Dropdown.Item>
           {user.isAdmin === true ? (
             <Link to="/admin">

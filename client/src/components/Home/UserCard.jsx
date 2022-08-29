@@ -24,15 +24,15 @@ export default function UserCard({
       className="rounded overflow-hidden border border-[#B99782] w-full bg-white my-12 md:mx-0 lg:mx-0"
     >
       <Link to={"/users/" + _id}>
-        <div className="w-full flex justify-between p-3 border-b items-center bg-[#B99782]">
+        <div className="w-full flex justify-between p-3 border-b items-center bg-yellow-500">
           <div className="flex items-center">
             <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
               <img src={image} alt="profilepic" />
             </div>
-            <span className="ml-2 font-bold text-xs">
+            <span className="ml-2 font-bold text-xs text-white">
               {`${first_name} ${last_name} - `}
             </span>
-            <span className="ml-2 font-bold text-xs">({username})</span>
+            <span className="ml-2 font-bold text-xs text-white">({username})</span>
           </div>
           <div className="flex items-center">
             <div className="text-sm flex">
@@ -49,14 +49,14 @@ export default function UserCard({
           src={image}
           alt="ProfilePicture"
         />
-        <div className=" bg-gray-200 flex w-52 flex-col content-around gap-9 justify-center items-center">
+        <div className=" bg-yellow-900 flex w-52 flex-col content-around gap-9 justify-center items-center">
           {pettit?.length ? (
             <div className="flex">
-              <h3 className="text-2xl font-bold">MIS MASCOTAS</h3>
+              <h3 className="text-2xl font-normal text-white">Mis mascotas</h3>
             </div>
           ) : (
             <div className="flex">
-              <span className="text-2xl font-bold">BUSCO PETS</span>
+              <span className="text-2xl font-bold">En búsqueda</span>
             </div>
           )}
           <div className="text-sm flex">

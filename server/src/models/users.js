@@ -37,8 +37,12 @@ const usersSchema = new Schema(
     isAdmin: { type: Boolean, default: false },
     reviews: Number,
     pets: [{ type: mongoose.Schema.ObjectId, ref: "Pet" }],
+
+
+    interestedUsers:  Array,
+
     donations: Array,
-    interestedUsers: [[{ type: mongoose.Schema.ObjectId, ref: "User" }]], //ojo. AGREGUE REF USER....VER SI ANDA O SE VUELA
+
   },
   {
     timestamps: true,

@@ -21,7 +21,10 @@ const patchPet = async (
 ) => {
   try {
     connection();
-    const onePet = await Pets.findOne({ _id: id });
+    const onePet = await Pets.findOne({ _id: id }).populate({
+      path: "user",
+      match: { deleted: false },
+    });
     await onePet.update({
       name,
       image,
@@ -59,7 +62,10 @@ async function patchUser(
 ) {
   try {
     connection();
-    const oneUser = await User.findOne({ _id: id });
+    const oneUser = await User.findOne({ _id: id }).populate({
+      path: "pets",
+      match: { deleted: false },
+    });
     let userUpdate = oneUser;
     await userUpdate.update({
       first_name,
@@ -73,9 +79,10 @@ async function patchUser(
       deleted,
       interestedUsers,
     });
-    const userActualizado = User.findOne({ _id: id }).populate("pets").populate(
-      { path: "interestedUsers", match: { deleted: false } }
-    );
+    const userActualizado = User.findOne({ _id: id }).populate({
+      path: "pets",
+      match: { deleted: false },
+    });
     return userActualizado;
   } catch (error) {
     console.error(error);
