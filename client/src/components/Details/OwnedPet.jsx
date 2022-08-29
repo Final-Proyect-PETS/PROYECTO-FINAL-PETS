@@ -111,7 +111,7 @@ export default function OwnedPet({
             );
           }
         })
-        .then(() => navigate(`/users/${idUser}`, { replace: true }));
+        .then(() => navigate(`/home`, { replace: true }));
     } //oponer sweet
   }
 

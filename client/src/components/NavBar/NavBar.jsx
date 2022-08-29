@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Navbar, Dropdown, Avatar, Toast } from "flowbite-react";
-import { useState } from "react";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -23,18 +22,9 @@ export default function NavBar() {
     localStorage.removeItem("id");
   }
 
-  let bellNum = loggedUser?.interestedUsers?.length;
-  const[bell,setBell]=useState(bellNum)
-  console.log(bell,"BELLSTATE")
-  function clickHandler(e) {
-    e.preventDefault();
-  }
-
   function closeHandler(e) {
     e.preventDefault();
     console.log("click");
-    setBell (bell);
-    return bell
   }
 
   return (
@@ -53,9 +43,8 @@ export default function NavBar() {
       </Link>
       <div className="flex md:order-2">
         <Dropdown
-          onClick={(e) => clickHandler(e)}
-          class="bg-yellow-600 rounded-full"
-          label={`🔔${bell}`}
+          class="bg-yellow-600 rounded-full mr-5 mt-1"
+          label={`🔔${loggedUser?.interestedUsers?.length}`}
         >
           <Dropdown.Header>
             <span className="block text-sm font-medium truncate">
