@@ -17,9 +17,6 @@ export default function UserDetail() {
   const loggedUser = useSelector((state) => state.userProfile);
   const userDetail = useSelector((state) => state.userDetail);
   
- 
-  console.log("MI PERFIL", loggedUser);
-  console.log("USERdetail-", userDetail);
 
   return Object.keys(userDetail).length ? (
     <>
