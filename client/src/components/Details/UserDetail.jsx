@@ -59,7 +59,7 @@ export default function UserDetail() {
 
                 <h3 className="text-2xl">{`"${userDetail.username}"`}</h3>
                 <h3 className="text-2xl font-bold">
-                  Tel:{userDetail.telephone}
+                  Tel: {userDetail.telephone}
                 </h3>
                 <h3 className="text-2xl font-bold">
                   Email: {userDetail.email}
@@ -70,7 +70,7 @@ export default function UserDetail() {
                   {loggedUser._id === userDetail._id ? (
                     <div className="flex">
                       <Link to="/petregister">
-                      <button className=" mt-5 ml-5 p-2 w-32 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                        <button className=" mt-5 ml-5 p-2 w-32 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
                           📝Crear nueva mascota
                         </button>
                       </Link>
