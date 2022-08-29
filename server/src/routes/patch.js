@@ -113,10 +113,10 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
 
   const user = await User.findOne({ _id: ownerId });
 
-  if (user.interestedUsers.filter(e => e.includes(userId._id) && e.includes(petId._id)).length){
+  /*   if (user.interestedUsers.filter(e => e.includes(userId) && e.includes(petId))){
     res.send("Ya mandaste la solicitud de adopcion")
     
-  }else{
+  }else   */{
     const {  owner_email,
       adopter_email,
       adopter_telephone,
@@ -128,7 +128,8 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
       console.log(req.body)
       
 /*      await User.updateOne({ _id: user }, { $set: { interestedUsers:  userId } });  */ 
-     await User.updateOne({ _id: user },  { $push: { interestedUsers:  petAndUserIds } })
+     await User.updateOne({_id: ownerId },  {$push: {interestedUsers: petAndUserIds} })
+     await Pets.updateOne({_id: petId}, {$push: {interestedUsers: userId}})
 /*      await User.updateOne({ _id: ownerId }, { $pull: { interestedUsers:  userId } });  */
 
     /* const newpet = await Pets.findOne({ _id: petId });
