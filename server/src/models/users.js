@@ -38,7 +38,10 @@ const usersSchema = new Schema(
     reviews: Number,
     pets: [{ type: mongoose.Schema.ObjectId, ref: "Pet" }],
 
-    interestedUsers:  Array
+
+    interestedUsers:  Array,
+
+    donations: Array,
 
   },
   {
