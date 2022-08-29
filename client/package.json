@@ -9,6 +9,8 @@
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
+    "flowbite": "^1.5.2",
+    "flowbite-react": "^0.1.10",
     "gapi-script": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "mapbox-gl": "^2.10.0",
