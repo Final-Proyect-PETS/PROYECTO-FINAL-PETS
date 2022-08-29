@@ -5,7 +5,7 @@ import Home from "./components/Home/Home";
 import LandingPage from "./components/LandingPage";
 import UserDetail from "./components/Details/UserDetail";
 import PetDetail from "./components/Details/PetDetail";
-import Register from "./components/Register";
+import UserRegister from "./components/UserRegister";
 import PetRegister from "./components/PetRegister";
 import UpdateUser from "./components/Update/UpdateDataUsers";
 import UpdatePet from "./components/Update/UpdateDataPet";
@@ -34,7 +34,7 @@ function App() {
     <BrowserRouter>
       <Routes history={history}>
         <Route path={"/"} element={<LandingPage />} />
-        <Route path={"/register"} element={<Register />} />
+        <Route path={"/register"} element={<UserRegister />} />
         <Route element={<PrivateRoutes />}>
           <Route path={"/home"} element={<Home />} />
           <Route path={"/users/:id"} element={<UserDetail />} />
@@ -56,9 +56,8 @@ function App() {
           <Route path={"/donationpending"} element={<DonationPending />} />
           <Route path={"*"} element={<Error404 />} />
         </Route>
-          <Route path={"/admin"} element={<AdminView />} />
-        <Route element={<PrivateAdmin />}>
-        </Route>
+        <Route path={"/admin"} element={<AdminView />} />
+        <Route element={<PrivateAdmin />}></Route>
       </Routes>
     </BrowserRouter>
   );
