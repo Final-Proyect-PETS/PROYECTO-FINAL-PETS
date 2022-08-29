@@ -23,6 +23,10 @@ import Notifications from "./components/TradePet/Notifications";
 import DonationCancelled from "./components/Donations/DonationCancelled";
 import DonationPending from "./components/Donations/DonationPending";
 import DonationSuccessful from "./components/Donations/DonationSuccessful";
+import io from "socket.io-client"
+
+const socket = io("http://localhost:3001")
+
 
 function App() {
   const token = localStorage.getItem("token");
