@@ -153,22 +153,20 @@ export default function LandingPage() {
                   </span>
                 </div>
               </div>
-              <div className="flex flex-row justify-center gap-16">
-                <div>
+              <div className="flex flex-col justify-center gap-8">
+              <div className="flex justify-center">
+                  <button type="submit" class="py-2 px-4 bg-amber-900 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-40 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">Log in</button>
+                </div>
+                <div className="flex justify-center">
                   <GoogleLogin
                     clientId={clientId}
                     buttonText="Login"
                     onSuccess={responseGoogle}
                     onFailure={responseGoogle}
                     cookiePolicy={"single_host_origin"}
-                    className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+                    className="py-2 px-4 my-4 w-40 bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
                   />{" "}
-                </div>
-                
-                <div className="flex bg-gray-200">
-                  <button type="submit">  Log in    </button>
-                </div>
-              
+                </div> 
               </div>
             </form>
           </div>
