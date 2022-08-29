@@ -5,7 +5,7 @@ import Home from "./components/Home/Home";
 import LandingPage from "./components/LandingPage";
 import UserDetail from "./components/Details/UserDetail";
 import PetDetail from "./components/Details/PetDetail";
-import Register from "./components/Register";
+import Register from "./components/UserRegister";
 import PetRegister from "./components/PetRegister";
 import UpdateUser from "./components/Update/UpdateDataUsers";
 import UpdatePet from "./components/Update/UpdateDataPet";
@@ -56,8 +56,8 @@ function App() {
           <Route path={"/donationpending"} element={<DonationPending />} />
           <Route path={"*"} element={<Error404 />} />
         </Route>
-          <Route path={"/admin"} element={<AdminView />} />
         <Route element={<PrivateAdmin />}>
+          <Route path={"/admin"} element={<AdminView />} />
         </Route>
       </Routes>
     </BrowserRouter>

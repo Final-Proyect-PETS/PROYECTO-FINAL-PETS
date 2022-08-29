@@ -80,18 +80,15 @@ export default function PetDetail() {
                   : "No se sabe"}
               </h3>
             </div>
-            <h1 className="absolute flex justify-center items-center font-semibold ">
-              Mis Datos
-            </h1>
+            <h3 className="absolute flex justify-center items-center font-semibold">
+                Género: {petDetail.gender === "female" ? "Hembra" : "Macho"}
+              </h3>
             <div className="w-1/2 h-1/2 flex justify-center items-center border-t">
               <h3 className="font-semibold">Edad: {petDetail.age} años</h3>
             </div>
             <div className="w-1/2 h-1/2 flex justify-center items-center border-t">
               <h3 className="font-semibold mr-10">
                 Castrado: {petDetail.castrated === true ? "Si" : "No"}
-              </h3>
-              <h3 className="font-semibold">
-                Género: {petDetail.gender === "female" ? "Hembra" : "Macho"}
               </h3>
             </div>
           </div>
