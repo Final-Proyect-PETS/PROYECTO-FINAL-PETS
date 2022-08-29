@@ -4,7 +4,7 @@ import { getUserProfile } from "../../redux/Actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { Navbar, Dropdown, Avatar } from "flowbite-react";
+  import { Navbar, Dropdown, Avatar } from "flowbite-react";
 
 export default function NavBar() {
   const dispatch = useDispatch();

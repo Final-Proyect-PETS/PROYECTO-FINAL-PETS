@@ -16,8 +16,7 @@ export default function NotificationCard(iUser) {
     
     const notistate = useSelector((state) => state.notification);
     
-    // console.log(notistate)
-    // console.log(payload,"payload")
+
 
 
 

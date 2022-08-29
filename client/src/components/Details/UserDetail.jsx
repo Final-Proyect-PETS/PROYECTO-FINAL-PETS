@@ -16,13 +16,8 @@ export default function UserDetail() {
 
   const loggedUser = useSelector((state) => state.userProfile);
   const userDetail = useSelector((state) => state.userDetail);
-  const [campana, setCampana] = useState({
-    notificacion: loggedUser.interestedUsers.length
-  })
-  function handlerNoti(){
-
-      setCampana({notificacion: 0})
-  }
+  
+ 
   console.log("MI PERFIL", loggedUser);
   console.log("USERdetail-", userDetail);
 
