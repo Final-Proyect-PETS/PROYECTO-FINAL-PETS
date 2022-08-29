@@ -164,7 +164,7 @@ export default function AdoptForm() {
           } else {
             notificationSwal(
               "Operación cancelada",
-              "Mascota no Adoptada",
+              "La solicitud fue cancelada",
               "error",
               "Cancel"
             );

@@ -4,6 +4,7 @@ const {
   getUsers,
   userId,
   petId,
+  sendNotification,
 } = require("../utils/controllers/gets.js");
 const verifyToken = require("../utils/middlewares/validateToken");
 
@@ -44,5 +45,8 @@ router.get("/pets/:id", verifyToken, async (req, res, next) => {
     next(err);
   }
 });
+
+
+
 
 module.exports = router;

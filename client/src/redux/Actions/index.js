@@ -267,15 +267,16 @@ export function patchInterestedUsers(payload) {
         `http://localhost:3001/home/interestedUsers`,
         payload
       );
-       dispatch({
+      dispatch({
         type: actions.INTERESTED_USERS,
         payload: json.data,
       });
-      if (json.data.includes("Ya mandaste la solicitud de adopcion")){
-        return "Ya mandaste la solicitud de adopcion"
+
+      if (json.data.includes("Ya mandaste la solicitud de adopcion")) {
+        return "Ya mandaste la solicitud de adopcion";
+      } else {
+        return "OK";
       }
-      else{
-      return "OK"}
     } catch (error) {
       console.log(error);
     }
@@ -309,6 +310,20 @@ export function paymentMp(idDonor, amountDonation) {
       return dispatch({
         type: actions.PAYMENT_MP,
         payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+///////////////////////////laut
+export function sendNotification(payload) {
+  return async function (dispatch) {
+    try {
+      return dispatch({
+        type: actions.NOTIFICATION,
+        payload: payload,
       });
     } catch (error) {
       console.log(error);

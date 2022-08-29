@@ -24,6 +24,8 @@ export default function OwnedPet({
   const loggedUser = useSelector((state) => state.userProfile);
   const userDetail = useSelector((state) => state.userDetail);
 
+
+  console.log(loggedUser.interestedUsers,"IU")
   //---------------------------------------------------handler Cambiar Botones-----------------------------------------
   const [adopt, setAdopt] = useState({
     id: idPet,
@@ -49,7 +51,7 @@ export default function OwnedPet({
     dispatch(patchPet(payload));
   }
 
-  //-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-DELETE-x-x-x-x-x-x-x--x-x-x-x--x-x
+//-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-DELETE-x-x-x-x-x-x-x--x-x-x-x-x-x-x-x-x-x-x-x-x-
 
   const [deleted, setDeleted] = useState({
     id: idPet,
@@ -109,7 +111,7 @@ export default function OwnedPet({
             );
           }
         })
-        .then(() => navigate(`/users/${idUser}`, { replace: true }));
+        .then(() => navigate(`/home`, { replace: true }));
     } //oponer sweet
   }
 
@@ -137,7 +139,7 @@ export default function OwnedPet({
                   <div className="flex  justify-content items-center">
                     <Link to="/interestedtraders">
                       <button className=" flex bg-green-600 mt-4 hover:bg-green-900 mr-1 mt-4  text-white font-bold py-2 px-2 border border-yellow-700 rounded">
-                        <h2 className="font-semibold">{`🔔 ${interestedUsers.length}`}</h2>
+                        <h2 className="font-semibold">{`🔔 ${loggedUser?.interestedUsers?.length}`}</h2>
                       </button>
                     </Link>
 

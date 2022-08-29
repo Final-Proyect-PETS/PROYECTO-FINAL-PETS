@@ -12,20 +12,18 @@ export default function UserDetail() {
   useEffect(() => {
     dispatch(clearState());
     dispatch(getUserDetail(id));
-    dispatch(getPetDetail(id))
+    dispatch(getPetDetail(id));
   }, [dispatch, id]);
 
   const loggedUser = useSelector((state) => state.userProfile);
   const userDetail = useSelector((state) => state.userDetail);
-  const [campana, setCampana] = useState({
-    notificacion: loggedUser.interestedUsers.length
-  })
+
   /* function handlerNoti(){
 
        setCampana({notificacion: 0}) 
 
   } */
-/*   console.log("MI PERFIL", loggedUser);
+  /*   console.log("MI PERFIL", loggedUser);
   console.log("USERdetail-", userDetail); */
 
   return Object.keys(userDetail).length ? (
@@ -48,7 +46,8 @@ export default function UserDetail() {
                     </h1>
                     <Link to="/notifications">
                       <button className="flex bg-green-600  hover:bg-green-900   text-white font-bold py-1 px-3 border border-yellow-700 rounded">
-                      🔔<h2  className="font-semibold">{campana.notificacion}</h2>
+                        🔔
+                        <h2 className="font-semibold">{`${userDetail?.interestedUsers?.length}`}</h2>
                       </button>
                     </Link>
                   </div>
@@ -57,7 +56,6 @@ export default function UserDetail() {
                     {userDetail.first_name + " " + userDetail.last_name}
                   </h1>
                 )}
-              
 
                 <h3 className="text-2xl">{`"${userDetail.username}"`}</h3>
                 <h3 className="text-2xl font-bold">
@@ -72,7 +70,7 @@ export default function UserDetail() {
                   {loggedUser._id === userDetail._id ? (
                     <div className="flex">
                       <Link to="/petregister">
-                        <button className="py-2 mt-5 px-4 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                      <button className=" mt-5 ml-5 p-2 w-32 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
                           📝Crear nueva mascota
                         </button>
                       </Link>
@@ -81,6 +79,15 @@ export default function UserDetail() {
                           ✏️Editar Perfil
                         </button>
                       </Link>
+                      {userDetail.isAdmin === true ? (
+                        <Link to="/admin">
+                          <button className=" mt-5 ml-5 p-2  w-28 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                            Vista de administrador
+                          </button>
+                        </Link>
+                      ) : (
+                        false
+                      )}
                     </div>
                   ) : (
                     <></>
@@ -98,6 +105,10 @@ export default function UserDetail() {
                   <></>
                 )} */}
               </div>
+
+              <div>
+              </div>
+
             </div>
           </div>
           <div className="w-full mt-1 border-b  absolute  justify-center items-center bg-gray-100">
