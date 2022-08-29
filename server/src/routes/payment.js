@@ -38,6 +38,7 @@ router.get("/:idDonor/:donationAmount", verifyToken, async (req, res, next) => {
       payer: {
         name: oneUser.first_name,
         surname: oneUser.last_name,
+        //email: oneUser.email,
         email: "test_user_80969189@testuser.com"
       },
     };

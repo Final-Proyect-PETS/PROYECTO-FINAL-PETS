@@ -52,6 +52,8 @@ export default function Donation() {
       case "500":
         setGenerating3(true);
         break;
+      default:
+        return null
     }
     dispatch(paymentMp(user._id, e.target.value)).then((payment) => {
       const script = document.createElement("script");
@@ -132,100 +134,105 @@ export default function Donation() {
   // const { token } = JSON.parse(window.localStorage.getItem('user'));
 
   return (
-    <div id="landing" className="w-full">
-      <div>
-        <NavBar />
-      </div>
-      <div className="h-screen flex justify-center items-center flex-col pb-36 gap-24 backdrop-blur-sm">
-        <div className="flex flex-col justify-center items-center">
-          <div className="flex justify-center items-center flex-col gap-5">
-            <h1 className="text-6xl flex justify-center font-semibold">
+    <>
+      <NavBar />
+      <div id="landing" className="w-full">
+        <div className="h-screen flex justify-center items-center flex-col backdrop-blur-sm">
+          <div className="flex flex-col justify-center items-center">
+            <h3 className="text-6xl italic text-gray-800 flex justify-center font-semibold mb-3">
               Hola {user.first_name} {user.last_name}!
-            </h1>
-            <h2 className="text-3xl font-semibold">
+            </h3>
+            <h2 className="text-center text-gray-800 text-2xl font-normal sm:text-2xl">
               Nosotros somos HappyTails!, una organización con la iniciativa de
               poder cuidar a nuestros amigos de 4 patas.
-            </h2>
-            <h2 className="text-2xl font-semibold">
+              <br />
               Cualquier donación hecha será aceptada con mucho amor y será
               destinada a mejorar la calidad de vida de los animales.
             </h2>
           </div>
-        </div>
-        <div className="flex justify-center items-center gap-4">
-          <h2 className="text-xl">
-            Podés donar haciendo click en el siguiente botón:
-          </h2>
 
-          <input
-            type="text"
-            name="name"
-            value={input.name}
-            onChange={(e) => handleChange(e)}
-            placeholder="Cantidad a donar"
-          />
-          <button
-            type="submit"
-            className="py-4 px-4 bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-600 focus:ring-offset-yellow-600 text-white w-44 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
-            onClick={(e) => handleInput(e)}
-          >
-            Generar orden de pago
-          </button>
-          <div className="text-xl">
-            {generating0 ? "Generando orden..." : null}
-          </div>
-          <div>
-            <form id="form0"></form>
-          </div>
+          <div className="flex flex-col w-full max-w-md m-14">
+            <div className="text-center mb-3">
+              <h2 className="text-2xl text-gray-800">
+                Podrás donar la cantidad que desees
+                colocando el monto aquí:
+              </h2>
+            </div>
+            <input
+              type="text"
+              name="name"
+              value={input.name}
+              onChange={(e) => handleChange(e)}
+              placeholder="Cantidad a donar"
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent mb-8"
+            />
+            <div>
 
-          <button
-            value="100"
-            className="py-4 px-4 bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-600 focus:ring-offset-yellow-600 text-white w-44 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
-            onClick={(e) => handleClick(e)}
-            disabled={disable1}
-          >
-            Generar orden de pago por 100 pesos
-          </button>
-          <div className="text-xl">
-            {generating1 ? "Generando orden..." : null}
-          </div>
-          <div>
-            <form id="form1"></form>
-          </div>
+              <div className="flex items-center mb-6 -mt-4 w-full">
+                <button
+                  type="submit"
+                  className="py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-800 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+                  onClick={(e) => handleInput(e)}
+                >
+                  Generar orden de pago
+                </button>
+                <p className="text-xl text-gray-800 font-normal text-center p-2">
+                  {generating0 ? "Generando orden..." : null}
+                </p>
+                <form id="form0" className="place-self-center"></form>
+              </div>
 
-          <button
-            value="200"
-            className="py-4 px-4 bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-600 focus:ring-offset-yellow-600 text-white w-44 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
-            onClick={(e) => handleClick(e)}
-            disabled={disable2}
-          >
-            Generar orden de pago por 200 pesos
-          </button>
-          <div className="text-xl">
-            {generating2 ? "Generando orden..." : null}
-          </div>
-          <div>
-            <form id="form2"></form>
-          </div>
 
-          <button
-            value="500"
-            className="py-4 px-4 bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-600 focus:ring-offset-yellow-600 text-white w-44 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
-            onClick={(e) => handleClick(e)}
-            disabled={disable3}
-          >
-            Generar orden de pago por 500 pesos
-          </button>
-          <div className="text-xl">
-            {generating3 ? "Generando orden..." : null}
-          </div>
-          <div>
-            <form id="form3"></form>
-          </div>
+              <div className="flex items-center mb-6 -mt-4 w-full">
+                <button
+                  value="100"
+                  className="py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-800 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+                  onClick={(e) => handleClick(e)}
+                  disabled={disable1}
+                >
+                  Generar orden de pago por 100 pesos
+                </button>
+                <p className="text-xl text-gray-800 font-normal text-center p-2">
+                  {generating1 ? "Generando orden..." : null}
+                </p>
+                <form id="form1"></form>
+              </div>
+            </div>
 
-          {/* {payment ? <Comprar data={payment} /> : null} */}
+            <div className="flex items-center mb-6 -mt-4 w-full">
+              <button
+                value="200"
+                className="py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-800 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+                onClick={(e) => handleClick(e)}
+                disabled={disable2}
+              >
+                Generar orden de pago por 200 pesos
+              </button>
+              <p className="text-xl text-gray-800 font-normal text-center p-2">
+                {generating2 ? "Generando orden..." : null}
+              </p>
+              <form id="form2"></form>
+            </div>
+            <div className="flex items-center mb-6 -mt-4 w-full">
+              <button
+                value="500"
+                className="py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-800 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+                onClick={(e) => handleClick(e)}
+                disabled={disable3}
+              >
+                Generar orden de pago por 500 pesos
+              </button>
+              <p className="text-xl text-gray-800 font-normal text-center p-2">
+                {generating3 ? "Generando orden..." : null}
+              </p>
+
+              <form id="form3"></form>
+
+            </div>
+            {/* {payment ? <Comprar data={payment} /> : null} */}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

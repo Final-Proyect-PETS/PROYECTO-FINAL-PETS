@@ -113,7 +113,7 @@ export default function NavBar() {
               Perfil de Usuario
             </Dropdown.Item>
           </Link>
-          <Link to={"/users/" + id}>
+          <Link to="/notifications">
             <Dropdown.Item>
               Notificaciones
             </Dropdown.Item>
