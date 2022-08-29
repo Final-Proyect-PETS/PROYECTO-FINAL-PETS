@@ -3,9 +3,9 @@ const { Router } = require("express");
 const verifyToken = require("../utils/middlewares/validateToken");
 const router = Router();
 const User = require("../models/users");
+const axios = require("axios");
 
 router.get("/:idDonor/:donationAmount", verifyToken, async (req, res, next) => {
-  // const id_compra = req.query.id
   const { idDonor, donationAmount } = req.params;
 
   const id_orden = 1;
@@ -17,7 +17,6 @@ router.get("/:idDonor/:donationAmount", verifyToken, async (req, res, next) => {
 
   try {
     const oneUser = await User.findOne({ _id: idDonor });
-    console.log(oneUser);
     let preference = {
       items: [
         {
@@ -31,18 +30,17 @@ router.get("/:idDonor/:donationAmount", verifyToken, async (req, res, next) => {
       ],
       external_reference: `${id_orden}`, //`${new Date().valueOf()}`,
       back_urls: {
-        success: `http://localhost:3001/feedback/${idDonor}/${donationAmount}`,
-        failure: `http://localhost:3001/feedback/${idDonor}/${donationAmount}`,
-        pending: `http://localhost:3001/feedback/${idDonor}/${donationAmount}`,
+        success: `http://localhost:3001/linkpayment/feedback/${idDonor}/${donationAmount}`,
+        failure: `http://localhost:3001/linkpayment/feedback/${idDonor}/${donationAmount}`,
+        pending: `http://localhost:3001/linkpayment/feedback/${idDonor}/${donationAmount}`,
       },
       payer: {
         name: oneUser.first_name,
         surname: oneUser.last_name,
-        //email: oneUser.email,
-        email: "test_user_80969189@testuser.com"
+        //email: oneUser.email,                     no olvidarse de descomentar este email, el de abajo esta hardcodeado
+        email: "test_user_80969189@testuser.com",
       },
     };
-    // console.info("preference:", preference);
 
     mercadopago.preferences
       .create(preference)
@@ -59,6 +57,36 @@ router.get("/:idDonor/:donationAmount", verifyToken, async (req, res, next) => {
       .catch(function (error) {
         console.log(error);
       });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/feedback/:idDonor/:donationAmount", async (req, res, next) => {
+  const { payment_id } = req.query;
+  const { idDonor } = req.params; //el donationAmount que traigo por params en esta ruta no lo estoy usando, pero si se lo saco, se rompe todo y no se por qué
+  try {
+    let donationDetail = await axios.get(
+      `https://api.mercadopago.com/v1/payments/${payment_id}/?access_token=${process.env.ACCESS_TOKEN}`
+    );
+    const { date_approved, status, status_detail, transaction_amount } =
+      donationDetail.data;
+    if (status === "approved" && status_detail === "accredited") {
+      const oneUser = await User.findOne({ _id: idDonor });
+      oneUser.donations.push({
+        paymentId: payment_id,
+        date: date_approved,
+        status: status,
+        statusDetail: status_detail,
+        donationAmount: transaction_amount,
+      });
+      await oneUser.save();
+      return res.redirect("http://localhost:3000/donationsuccessful");
+    }
+    if (status === "in_process" || status === "pending")
+      return res.redirect("http://localhost:3000/donationpending");
+    if (status === "rejected")
+      return res.redirect("http://localhost:3000/donationcancelled");
   } catch (error) {
     next(error);
   }
