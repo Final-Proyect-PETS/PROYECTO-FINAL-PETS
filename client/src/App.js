@@ -15,14 +15,14 @@ import { history } from "./components/BrowserHistory/history";
 import PrivateRoutes from "./components/PrivateRoute.js/PrivateRoute";
 import PrivateAdmin from "./components/PrivateRoute.js/PrivateAdmin";
 import AdminView from "./components/AdminView/AdminView";
-import Donation from "./components/Donaciones/Donation";
+import Donation from "./components/Donations/Donation";
 import TradePet from "./components/TradePet/TradePet";
 import AdoptForm from "./components/AdoptForm/AdoptForm";
 import InterestedTraders from "../src/components/TradePet/InterestedTraders";
 import Notifications from "./components/TradePet/Notifications";
-import DonationCancelled from "./components/DonationCancelled";
-import DonationPending from "./components/DonationPending";
-import DonationSuccessful from "./components/DonationSuccessful";
+import DonationCancelled from "./components/Donations/DonationCancelled";
+import DonationPending from "./components/Donations/DonationPending";
+import DonationSuccessful from "./components/Donations/DonationSuccessful";
 
 function App() {
   const token = localStorage.getItem("token");
