@@ -271,35 +271,19 @@ export function patchInterestedUsers(payload) {
         type: actions.INTERESTED_USERS,
         payload: json.data,
       });
-
-      if (json.data.includes("Ya mandaste la solicitud de adopcion")) {
-        return "Ya mandaste la solicitud de adopcion";
-      } else {
-        return "OK";
-      }
+      return "OK"
     } catch (error) {
       console.log(error);
+    }   
     }
-  };
-}
+  }
 
-export function emailAdopt(payload) {
+/* export function emailAdopt(payload) {
   return async function (dispatch) {
-    try {
-      let json = await axios.post(
-        `http://localhost:3001/mail/sendemail`,
-        payload
-      );
-      dispatch({
-        type: actions.ADOPT_EMAIL,
-        payload: json.data,
-      });
-      return "OK";
-    } catch (error) {
       console.log(error);
     }
   };
-}
+} */
 
 export function paymentMp(idDonor, amountDonation) {
   return async function (dispatch) {
