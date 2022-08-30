@@ -5,7 +5,7 @@ import { patchPet, postImage } from "../../redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import { notificationSwal } from "../../utils/notificationSwal.jsx";
 import { Link } from "react-router-dom";
-import MapboxAutocomplete from 'react-mapbox-autocomplete';
+import MapboxAutocomplete from "react-mapbox-autocomplete";
 
 function validateFrom(input) {
   let errors = {};
@@ -40,7 +40,6 @@ function validateFrom(input) {
 }
 
 export default function UpdatePet() {
-
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const upDatePet = useSelector((state) => state.petDetail);
@@ -178,18 +177,18 @@ export default function UpdatePet() {
     return key++;
   }
 
-
   function _suggestionSelect(result, lat, long, text) {
     console.log(result, lat, long, text);
     setInput({
-      ...input, place: result
-    })
-    console.log(input)
+      ...input,
+      place: result,
+    });
+    console.log(input);
   }
   const mapAccess = {
     mapboxApiAccessToken:
-      "pk.eyJ1Ijoiam9uc2VuIiwiYSI6IkR6UU9oMDQifQ.dymRIgqv-UV6oz0-HCFx1w"
-  }
+      "pk.eyJ1Ijoiam9uc2VuIiwiYSI6IkR6UU9oMDQifQ.dymRIgqv-UV6oz0-HCFx1w",
+  };
 
   return (
     <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
@@ -273,7 +272,9 @@ export default function UpdatePet() {
                 </p>
               )}
             </div>
-            <label className="font-light text-white text-xl">Tipo de mascota </label>
+            <label className="font-light text-white text-xl">
+              Tipo de mascota{" "}
+            </label>
             <select name="type" onChange={(e) => handleChangeSelect(e)}>
               <option
                 value="dog"
@@ -413,23 +414,14 @@ export default function UpdatePet() {
               />
             </div>
           </div>
-          {errors.name ||
-            errors.image ||
-            errors.type ||
-            errors.size ||
-            errors.age ||
-            errors.vaccination ||
-            errors.castrated ||
-            errors.place ? (
-            <h3>missing required fields</h3>
-          ) : (
+          {
             <button
               type="submit"
               className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
             >
               Actualizar
             </button>
-          )}
+          }
         </form>
         <div>
           <Link to={`/pet/${upDatePet._id}`}>
