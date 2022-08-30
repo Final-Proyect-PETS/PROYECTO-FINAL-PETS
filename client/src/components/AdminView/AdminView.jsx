@@ -147,7 +147,7 @@ export default function AdminView() {
       <div id="view-admin">
         <div className="w-full text-center p-5">
           <h3 className="text-6xl font-semibold italic text-gray-800">
-            Happy Tails
+            Happy Tails 
           </h3>
           <h3 className="text-2xl p-3 text-gray-800">
             Vista de administrador
