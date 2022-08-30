@@ -57,6 +57,7 @@ export default function AdoptForm() {
         ownerId: petDetail.user._id,
         userId: loggedUser._id,
         petId: petDetail._id,
+        pet_interesed: petDetail.user.interestedUsers
       }); 
       /*
       const [currentUser, setCurrentUser] = useState({
@@ -73,7 +74,7 @@ export default function AdoptForm() {
         deleted: petDetail.user.deleted,
         interestedUsers: petDetail.user.interestedUsers,
       })
-      /* useEffect(
+       useEffect(
 
         dispatch(getAllUsers()),
         dispatch(getUserProfile()),
@@ -142,8 +143,7 @@ export default function AdoptForm() {
       })
         .then((result) => {
           if (result.isConfirmed) {
-            dispatch(emailAdopt(input),
-            patchInterestedUsers(input)).then((e) => {
+            dispatch(patchInterestedUsers(input)).then((e) => {
               if (e === "OK") {
                 notificationSwal(
                   "¡Enhorabuena!",
@@ -173,13 +173,16 @@ export default function AdoptForm() {
     }
 
   }
-  //   function aaa (){
-  //     console.log(input)
-  // }
+   /*   function aaa (){
+      console.log(petDetail.user.interestedUsers.filter(
+        (e) => e[0]._id === loggedUser._id && e[1]._id === petDetail._id
+      ).length)
+   } */
   return (
     <>
       <NavBar />
       <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 shadow sm:px-6 md:px-8 lg:px-10">
+{/*       <button onClick={aaa}>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</button> */}
         <div className="flex items-center mt-8 px-18 max-w-lg self-center">
           <form
             className="flex flex-col justift-content"

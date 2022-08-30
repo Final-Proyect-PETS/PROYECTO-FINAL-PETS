@@ -110,15 +110,13 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
 
 router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
   try {
-    const { userId, ownerId, petId } = req.body;
-
-    const user = await User.findOne({ _id: ownerId });
+    const { userId, ownerId, petId, pet_interesed } = req.body;
 
     if (
-      user.interestedUsers.map(
+      pet_interesed.filter(
         (e) => e[0]._id === userId && e[1]._id === petId
       ).length
-    ) { console.log(user.interestedUsers.map(
+    ) { console.log(pet_interesed.interestedUsers.filter(
       (e) => e[0]._id === userId && e[1]._id === petId
     ).length)
       res.send("Ya mandaste la solicitud de adopcion");
@@ -135,52 +133,66 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
       );
       await Pets.updateOne(
         { _id: petId },
-        { $push: { interestedUsers: userId } }
+        { $push: { interestedUsers: petAndUserIds } }
       );
       /*      await User.updateOne({ _id: ownerId }, { $pull: { interestedUsers:  userId } });  */
 
       /* const newpet = await Pets.findOne({ _id: petId });
     const newuser = await User.findOne({ _id: userId }); */
-/*       let transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false,
-        auth: {
-          user: "happytailshp@gmail.com",
-          pass: `${NMAILER_PASSWORD}`,
-        },
-        tls: {
-          rejectUnauthorized: false,
-        },
-      });
 
-      let contentHTML = `
-      <img src = "https://cdn-icons-png.flaticon.com/512/194/194279.png" style="width:100px;"/>
+      
+  const {
+    owner_email,
+    adopter_email,
+    adopter_telephone,
+    message,
+    adopter_username,
+    adopter_name,
+    pet_name,
+    link,
+  } = req.body;
+
+  let transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: "happytailshp@gmail.com",
+      pass: `${NMAILER_PASSWORD}`,
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+
+  let contentHTML = `
+  <img src = "https://cdn-icons-png.flaticon.com/512/194/194279.png" style="width:100px;"/>
+
+  <h1>El usuario <a href="${link}">${adopter_username}</a> esta interesado en adoptar a ${pet_name}.
+              La informacion del usuario es la siguiente:</h1> 
+              <ul>
+              <li>Nombre: ${adopter_name}</li>
+              <li> Email: ${adopter_email}</li>
+              <li>Telefono: ${adopter_telephone}</li>
+              </ul>
+                              <p>${message}</p>
+                              Atentamente HT`;
+                  
+
+
+  let info = await transporter.sendMail({
+    from: "'HappyTails'<happytailshp@gmail.com>",
+    to: owner_email,
+    subject: "Contacto de adopción",
+    html: contentHTML,
+  });
+
+  console.log("message sent", info.messageId);
+  res.send("OK");
+}
     
-      <h1>El usuario <a href="${link}">${adopter_username}</a> esta interesado en adoptar a ${pet_name}.
-                  La informacion del usuario es la siguiente:</h1> 
-                  <ul>
-                  <li>Nombre: ${adopter_name}</li>
-                  <li> Email: ${adopter_email}</li>
-                  <li>Telefono: ${adopter_telephone}</li>
-                  </ul>
-                      ${adopter_username} decidio redactar un mensaje
-                                  <p>${message}</p>
-                                  Atentamente HT`;
-
-      let info = await transporter.sendMail({
-        from: "'HappyTails'<happytailshp@gmail.com>",
-        to: owner_email,
-        subject: "Contacto de adopciÃ³n",
-        html: contentHTML,
-      });
-
-      console.log("message sent", info.messageId);
-      res.send("se envio correctamente"); */
-    }
-  } catch (error) {
+} catch (error) {
     next(error);
-  }
-});
-
+  };
+})
 module.exports = router;
