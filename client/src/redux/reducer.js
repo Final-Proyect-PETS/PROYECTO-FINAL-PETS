@@ -145,10 +145,21 @@ export default function rootReducer(state = initialState, { type, payload }) {
         ...state,
         viewedNotification:payload
       };
+
     case actions.VIEWING_NOTIFICATION:
       return{
         ...state
       }
+
+    case actions.FORGOT_PASSWORD:
+      return {
+        ...state
+      };
+    case actions.RESET_PASSWORD:
+      return {
+        ...state
+      };
+
 
     default:
       return state;

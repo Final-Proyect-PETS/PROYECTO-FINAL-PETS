@@ -5,7 +5,7 @@ import "./Donations.css"
 export default function DonationsCancelled(){
   return (
     <>
-      <div id="sucess-pay" className="fixed">
+      <div id="fail-pay" className="fixed">
         <NavBar />
       </div>
     </>

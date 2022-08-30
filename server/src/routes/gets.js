@@ -19,7 +19,7 @@ router.get("/pets", verifyToken, async (req, res, next) => {
   }
 });
 
-router.get("/users", async (req, res, next) => {
+router.get("/users", verifyToken, async (req, res, next) => {
   try {
     const users = await getUsers(req.query.name);
     res.status(200).send(users);

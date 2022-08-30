@@ -5,7 +5,7 @@ const User = require("../models/users");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(
-  "841685042609-24rmh0gcg16vvfl3j8cgrll1nr23pi04.apps.googleusercontent.com"
+  process.env.O_AUTH_CLIENT
 );
 
 router.post("/logingoogle", async (req, res, next) => {
@@ -15,17 +15,14 @@ router.post("/logingoogle", async (req, res, next) => {
       .verifyIdToken({
         idToken: tokenId,
         audience:
-          "841685042609-24rmh0gcg16vvfl3j8cgrll1nr23pi04.apps.googleusercontent.com",
+          process.env.O_AUTH_CLIENT,
       })
       .then((response) => {
         const { email_verified, given_name, family_name, email, name } =
           response.payload;
-        console.log(response.payload);
-        console.log(email_verified);
         if (email_verified) {
           User.findOne({ email }).exec(async (err, user) => {
             if (err) {
-              console.log("entro al error");
               return res.status(400).json({
                 error:
                   "Algo salio mal en el user.findOne linea 16 controllers/googlelogin",
@@ -33,10 +30,8 @@ router.post("/logingoogle", async (req, res, next) => {
               });
             } else {
               if (user) {
-                console.log("entro al ifuser");
                 let id = user._id;
                 const token = jwt.sign({ id: id }, process.env.SECRET_KEY);
-                console.log(token);
                 res
                   .header("token", token)
                   .json({ error: null, data: { token }, id: { id } });

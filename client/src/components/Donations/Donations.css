@@ -1,7 +1,41 @@
+#donations{
+    background-image: url("./../../../public/images/Background2.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+}
+
 #sucess-pay{
     background-image: url("./../../../public/images/Pago\ sucess.png");
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
     width: 100vw;
+}
+
+#pending-pay{
+    background-image: url("./../../../public/images/Pay\ Fail.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+}
+
+#fail-pay{
+    background-image: url("./../../../public/images/Pay\ Fail.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+}
+
+#my-donations{
+    background-image: url("./../../../public/images/Background2.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    position:fixed
 }

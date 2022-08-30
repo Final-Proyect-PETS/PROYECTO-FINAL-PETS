@@ -19,7 +19,10 @@ export default function InterestedTraders() {
 
   const getUsers = useSelector((state) => state.users);
   const loggedUser = useSelector((state) => state.userProfile);
-
+  const usersIntersted = loggedUser.interestedUsers.filter((e) => e[0] === getUsers._id)
+  function log (){
+    console.log(usersIntersted)
+  }
   const [data, setData] = useState({
     petId: "",
     userId: "",
@@ -43,8 +46,8 @@ export default function InterestedTraders() {
   console.log(data, "PAYLOAD");
   return (
     <div id="landing" className="w-full">
-      <NavBar />
 
+      <NavBar />
       <div className="grid grid-cols-3  opacity-90 h- mt-5 place-content-center ">
         <div className="px-1">
           <div className="bg-gray-600 mt-2">
@@ -59,7 +62,7 @@ export default function InterestedTraders() {
               </div>
               <div className=" mt-2 ">
                 <form>
-                  {getUsers?.length > 0 ? (
+                  {getUsers.filter((e) => e.interestedUsers)?.length > 0 ? (
                     getUsers.map((user) => (
                       <div className="flex bg-gray-600 mt-2">
                         ACA VAN LOS USUARIOS INTERESADOS
