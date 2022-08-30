@@ -1,8 +1,8 @@
 import ubicacion from "../../assets/images/ubicacion.png";
 import { Link } from "react-router-dom";
-import blackpaw from "../../assets/images/blackpaw.png";
-import diamantepaw from "../../assets/images/diamantepaw.png";
-import goldenpaw from "../../assets/images/goldenpaw.png";
+// import blackpaw from "../../assets/images/blackpaw.png";
+// import diamantepaw from "../../assets/images/diamantepaw.png";
+// import goldenpaw from "../../assets/images/goldenpaw.png";
 import goldenblack from "../../assets/images/goldenblackgif.gif";
 import { React } from "react";
 
