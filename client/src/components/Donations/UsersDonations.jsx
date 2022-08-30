@@ -49,24 +49,24 @@ export default function UserDonations() {
                         </Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
-                        {user.donations?.length > 0 ? user.donations?.map((e) => 
-                         <Table.Row id={e.paymentId} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                {e.date.slice(0, 10)}
-                            </Table.Cell>
-                            <Table.Cell>
-                                {e.paymentId}
-                            </Table.Cell>
-                            <Table.Cell>
-                                {e.status[0].toUpperCase() + e.status.slice(1).toLowerCase()}
-                            </Table.Cell>
-                            <Table.Cell>
-                            {e.statusDetail[0].toUpperCase() + e.statusDetail.slice(1).toLowerCase()}
-                            </Table.Cell>
-                            <Table.Cell>
-                                {e.donationAmount}
-                            </Table.Cell>
-                        </Table.Row> ) : <Table.Row className="bg-white">
+                        {user.donations?.length > 0 ? user.donations?.map((e) =>
+                            <Table.Row id={e.paymentId} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                                    {e.date.slice(0, 10)}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    {e.paymentId}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    {e.status === "approved" ? "Aprobado" : null}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    {e.statusDetail === "accredited" ? "Acreditado" : null}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    ${e.donationAmount}
+                                </Table.Cell>
+                            </Table.Row>) : <Table.Row className="bg-white">
                             <Table.Cell>
                                 No tenés donaciones registradas
                             </Table.Cell>
@@ -74,7 +74,7 @@ export default function UserDonations() {
                             <Table.Cell></Table.Cell>
                             <Table.Cell></Table.Cell>
                             <Table.Cell></Table.Cell>
-                        </Table.Row> }
+                        </Table.Row>}
                     </Table.Body>
                 </Table>
             </div>
