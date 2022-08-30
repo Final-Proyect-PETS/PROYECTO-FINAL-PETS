@@ -72,6 +72,7 @@ export default function Cards() {
               vaccination={pets.vaccination}
               castrated={pets.castrated}
               gender={pets.gender}
+            
             />
           ))
         ) : (
@@ -88,6 +89,8 @@ export default function Cards() {
               telephone={user.telephone}
               pets={user.pets}
               place={user.place}
+              interestedUsers={user.interestedUsers}
+              donations={user.donations}
             />
           ))
         )
