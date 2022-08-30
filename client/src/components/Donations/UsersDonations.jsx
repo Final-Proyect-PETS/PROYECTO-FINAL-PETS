@@ -17,7 +17,6 @@ export default function UserDonations() {
     }, [dispatch, id])
 
     const user = useSelector((state) => state.userDetail);
-    console.log(user?.donations)
 
     return <>
         <NavBar />
