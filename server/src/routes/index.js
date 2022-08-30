@@ -41,30 +41,6 @@ router.use("/", forgotPassword, resetPassword)
 router.use(errorHandler);
 
 
-router.get("/feedback/:idDonor/:donationAmount", async (req, res, next) => {
-  const { payment_id, status } = req.query;
-  const { idDonor, donationAmount } = req.params;
-  if (status === "approved") {
-    try {
-      const oneUser = await User.findOne({ _id: idDonor });
-      oneUser.donations.push({
-        paymentId: payment_id,
-        status: status,
-        donationAmount: Number(donationAmount),
-      });
-      await oneUser.save();
-    } catch (error) {
-      next(error);
-    }
-
-    return res.redirect("http://localhost:3000/donationsuccessful");
-  }
-  if (status === "in_process" || status === "pending")
-    return res.redirect("http://localhost:3000/donationpending");
-  if (status === "rejected")
-    return res.redirect("http://localhost:3000/donationcancelled");
-});
-
 
 module.exports = router;
 
