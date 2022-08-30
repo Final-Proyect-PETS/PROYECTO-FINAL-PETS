@@ -10,12 +10,12 @@ export default function NavBar() {
   const dispatch = useDispatch();
 
   const id = localStorage.getItem("id");
-
-  const loggedUser = useSelector((state) => state.userProfile);
-
+ 
   useEffect(() => {
     dispatch(getUserProfile(id));
   }, [dispatch, id]);
+
+  const loggedUser = useSelector((state) => state.userProfile);//el loggeduser5 estaba arriba del useEFF, lo puse abajio
 
   function removeToken(ev) {
     localStorage.removeItem("token");
