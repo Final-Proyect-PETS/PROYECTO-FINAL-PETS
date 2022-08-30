@@ -25,6 +25,7 @@ import Notifications from "./components/TradePet/Notifications";
 import DonationCancelled from "./components/Donations/DonationCancelled";
 import DonationPending from "./components/Donations/DonationPending";
 import DonationSuccessful from "./components/Donations/DonationSuccessful";
+import UserDonations from "./components/Donations/UsersDonations";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -44,7 +45,6 @@ function App() {
           <Route path={"/users/:id"} element={<UserDetail />} />
           <Route path={"/pet/:id"} element={<PetDetail />} />
           <Route path={"/about"} element={<About />} />
-          <Route path={"/donations"} element={<Donation />} />
           <Route path={"/petregister"} element={<PetRegister />} />
           <Route path={"/updateuser"} element={<UpdateUser />} />
           <Route path={"/updatepet"} element={<UpdatePet />} />
@@ -52,13 +52,12 @@ function App() {
           <Route path={"/interestedtraders"} element={<InterestedTraders />} />
           <Route path={"/notifications"} element={<Notifications />} />
           <Route path={"/adopt/:id"} element={<AdoptForm />} />
-          <Route
-            path={"/donationsuccessful"}
-            element={<DonationSuccessful />}
-          />
+          <Route path={"/donations"} element={<Donation />} />
+          <Route path={"/donationsuccessful"} element={<DonationSuccessful />} />
           <Route path={"/donationcancelled"} element={<DonationCancelled />} />
           <Route path={"/donationpending"} element={<DonationPending />} />
           <Route path={"*"} element={<Error404 />} />
+          <Route path={"/mydonations/:id"} element={<UserDonations />}/>
         </Route>
         <Route element={<PrivateAdmin />}>
           <Route path={"/admin"} element={<AdminView />} />
