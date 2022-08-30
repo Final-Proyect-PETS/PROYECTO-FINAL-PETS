@@ -14,8 +14,8 @@ const patchUser = require("./patch");
 const adoptionMail = require("./send-email");
 const postImage = require("./posts");
 const payment = require("./payment");
+const responsePayment = require("./payment");
 const errorHandler = require("../utils/middlewares/errorHandler");
-const User = require("../models/users");
 
 router.use(
   "/home",
@@ -27,16 +27,17 @@ router.use(
   postPet,
   patchPet,
   patchUser,
-  postImage,
+  postImage
 );
 
-router.use("/linkpayment", payment);
+router.use("/linkpayment", payment, responsePayment);
 router.use("/register", register);
 router.use("/login", login);
 router.use("/", loginGoogle);
 router.use("/mail", adoptionMail);
 router.use(errorHandler);
 
+<<<<<<< HEAD
 router.get("/feedback/:idDonor/:donationAmount", async (req, res, next) => {
   const { payment_id, status } = req.query;
   const { idDonor, donationAmount } = req.params;
@@ -61,5 +62,7 @@ router.get("/feedback/:idDonor/:donationAmount", async (req, res, next) => {
     return res.redirect("http://localhost:3000/donationcancelled");
 });
 
+=======
+>>>>>>> 61c8539aa3c10d8628a10bd2ef04cb7c87630a57
 module.exports = router;
 
