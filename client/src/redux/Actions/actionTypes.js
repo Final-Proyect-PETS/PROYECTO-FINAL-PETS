@@ -27,6 +27,8 @@ export const FILTER_BY_QUERY = "FILTER_BY_QUERY";
 export const USER_LOGIN = "USER_LOGIN";
 export const GET_USER_PROFILE = "GET_USER_PROFILE";
 export const USER_LOGIN_GOOGLE = "USER_LOGIN_GOOGLE";
+export const FORGOT_PASSWORD = "FORGOT_PASSWORD"
+export const RESET_PASSWORD = "RESET_PASSWORD"
 //ADOPT ------------------
 export const ADOPT = "ADOPT";
 export const ADOPT_EMAIL = "ADOPT_EMAIL";

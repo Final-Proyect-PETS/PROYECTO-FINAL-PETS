@@ -37,7 +37,7 @@ router.get("/:idDonor/:donationAmount", verifyToken, async (req, res, next) => {
       payer: {
         name: oneUser.first_name,
         surname: oneUser.last_name,
-        //email: oneUser.email,                     no olvidarse de descomentar este email, el de abajo esta hardcodeado
+        // email: oneUser.email,           // no olvidarse de descomentar este email, el de abajo esta hardcodeado
         email: "test_user_80969189@testuser.com",
       },
     };
