@@ -260,6 +260,22 @@ export function forgotPassword(payload) {
     }
   }
 }
+
+export function resetPassword(payload) {
+  return async function (dispatch) {
+    console.log(payload)
+    console.log(payload.password);
+    try {
+      let json = await axios.patch(`http://localhost:3001/resetpassword/${payload.id}/${payload.auth}`, payload)
+      return dispatch({
+        type: actions.RESET_PASSWORD,
+        payload: json.data
+      })
+    } catch (err) {
+      console.error(err);
+    }
+  }
+}
 //ADOPT---------------
 export function tradePet(payload) {
   return async function (dispatch) {

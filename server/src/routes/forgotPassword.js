@@ -23,9 +23,7 @@ router.post("/forgotpassword", async (req, res, next) => {
 
         let id = user._id;
         const token = jwt.sign({ id: id }, process.env.SECRET_KEY, { expiresIn: "1h" });
-        res
-            .header("token", token)
-            .json({ error: null, data: { token }, id: { id } });
+        res.json({ error: null, data: { token }, id: { id } });
         const transporter = nodemailer.createTransport({
             service: "hotmail",
             auth: {
