@@ -36,11 +36,20 @@ export default function Notifications() {
 
   function closeHandler(e) {
     e.preventDefault();
+    let viewedNoti = notView.filter((iUser)=> iUser[0]._id===e.target.value && iUser[1].name === e.target.name)
+    
+    notView[notView.length]= viewedNoti
+    
+    view.unshift(viewedNoti.flat(1))
+
+    console.log(viewedNoti,"VIEWEDNOYI")
+
+    
     //   let payload = {
     // id:loggedUser._id,
     // interestedUsers:
     //   };
-    // console.log(e.target.value, "click");
+    console.log(e.target.value, "click");
     //  dispatch(patchUsuer(payload))
   }
 
@@ -71,6 +80,7 @@ export default function Notifications() {
                 </h1>
                 <button
                   value={iUser[0]._id}
+                  name={iUser[1].name}
                   className="text-yellow-500"
                   onClick={(e) => closeHandler(e)}
                 >
