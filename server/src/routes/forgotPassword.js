@@ -7,7 +7,7 @@ require("dotenv").config()
 const { NMAILER_PASSWORD } = process.env
 
 
-router.post("/a", async (req, res, next) => {
+router.post("/forgotpassword", async (req, res, next) => {
     if (req.body.email == "") {
         res.status(400).send({
             message: "El email es requerido"

@@ -3,7 +3,7 @@ const router = Router();
 const User = require("../models/users")
 const bcrypt = require("bcrypt")
 
-router.post("/resetpassword/:id", async (req, res, next) => {
+router.patch("/resetpassword/:id", async (req, res, next) => {
     try {
         req.body.password = await bcrypt.hash(req.body.password, 10)
         const userResetPassword = await User.findOne({ _id: req.params.id })
