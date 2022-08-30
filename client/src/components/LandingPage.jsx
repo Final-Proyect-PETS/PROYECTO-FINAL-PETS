@@ -148,9 +148,11 @@ export default function LandingPage() {
               </div>
               <div className="flex items-center mb-6 -mt-4">
                 <div className="flex ml-auto">
-                  <span className="inline-flex text-s font-thin text-white sm:text-sm  hover:text-yellow-900 ">
-                    ¿Has olvidado tu contraseña? Ingresa aquí.
-                  </span>
+                  <Link to="/forgotpassword">
+                    <span className="inline-flex text-s font-thin text-white sm:text-sm  hover:text-yellow-900 ">
+                      ¿Has olvidado tu contraseña? Ingresa aquí.
+                    </span>
+                  </Link>
                 </div>
               </div>
               <div >

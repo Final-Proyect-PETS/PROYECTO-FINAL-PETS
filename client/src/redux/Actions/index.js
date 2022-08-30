@@ -228,7 +228,7 @@ export function userLoginGoogle(payload) {
         type: actions.USER_LOGIN_GOOGLE,
         payload: json.data,
       });
-    } catch (error) {}
+    } catch (error) { }
   };
 }
 
@@ -244,6 +244,37 @@ export function getUserProfile(id) {
       console.log(error);
     }
   };
+}
+
+export function forgotPassword(payload) {
+  console.log(payload);
+  return async function (dispatch) {
+    try {
+      let json = await axios.post("http://localhost:3001/forgotpassword", payload)
+      return dispatch({
+        type: actions.FORGOT_PASSWORD,
+        payload: json.data
+      })
+    } catch (err) {
+      console.log(err);
+    }
+  }
+}
+
+export function resetPassword(payload) {
+  return async function (dispatch) {
+    console.log(payload)
+    console.log(payload.password);
+    try {
+      let json = await axios.patch(`http://localhost:3001/resetpassword/${payload.id}/${payload.auth}`, payload)
+      return dispatch({
+        type: actions.RESET_PASSWORD,
+        payload: json.data
+      })
+    } catch (err) {
+      console.error(err);
+    }
+  }
 }
 //ADOPT---------------
 export function tradePet(payload) {
@@ -271,35 +302,19 @@ export function patchInterestedUsers(payload) {
         type: actions.INTERESTED_USERS,
         payload: json.data,
       });
-
-      if (json.data.includes("Ya mandaste la solicitud de adopcion")) {
-        return "Ya mandaste la solicitud de adopcion";
-      } else {
-        return "OK";
-      }
+      return "OK"
     } catch (error) {
       console.log(error);
+    }   
     }
-  };
-}
+  }
 
-export function emailAdopt(payload) {
+/* export function emailAdopt(payload) {
   return async function (dispatch) {
-    try {
-      let json = await axios.post(
-        `http://localhost:3001/mail/sendemail`,
-        payload
-      );
-      dispatch({
-        type: actions.ADOPT_EMAIL,
-        payload: json.data,
-      });
-      return "OK";
-    } catch (error) {
       console.log(error);
     }
   };
-}
+} */
 
 export function paymentMp(idDonor, amountDonation) {
   return async function (dispatch) {

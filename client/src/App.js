@@ -19,6 +19,8 @@ import Donation from "./components/Donations/Donation";
 import TradePet from "./components/TradePet/TradePet";
 import AdoptForm from "./components/AdoptForm/AdoptForm";
 import InterestedTraders from "../src/components/TradePet/InterestedTraders";
+import ForgotPassword from "./components/ForgotPassword"
+import ResetPassword from "./components/ResetPassword"
 import Notifications from "./components/TradePet/Notifications";
 import DonationCancelled from "./components/Donations/DonationCancelled";
 import DonationPending from "./components/Donations/DonationPending";
@@ -36,6 +38,8 @@ function App() {
       <Routes history={history}>
         <Route path={"/"} element={<LandingPage />} />
         <Route path={"/register"} element={<UserRegister />} />
+        <Route path={"/forgotpassword"} element={<ForgotPassword />} />
+        <Route path={"/587/resetpassword/:id/:token"} element={<ResetPassword />} />
         <Route element={<PrivateRoutes />}>
           <Route path={"/home"} element={<Home />} />
           <Route path={"/users/:id"} element={<UserDetail />} />
