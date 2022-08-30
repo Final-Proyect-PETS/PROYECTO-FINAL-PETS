@@ -115,10 +115,12 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
     const user = await User.findOne({ _id: ownerId });
 
     if (
-      user.interestedUsers.filter(
+      user.interestedUsers.map(
         (e) => e[0]._id === userId && e[1]._id === petId
       ).length
-    ) {
+    ) { console.log(user.interestedUsers.map(
+      (e) => e[0]._id === userId && e[1]._id === petId
+    ).length)
       res.send("Ya mandaste la solicitud de adopcion");
     } else {
       const userPush = await User.findById({_id: userId})
