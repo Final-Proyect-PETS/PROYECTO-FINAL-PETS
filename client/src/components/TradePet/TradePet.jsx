@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../NavBar/NavBar";
 import SearchTrade from "../SearchBars/SearchTrade";
-import { getAllUsers, tradePet } from "../../redux/Actions/index";
+import { getAllUsers, patchUsuer, tradePet } from "../../redux/Actions/index";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdopterCard from "./AdopterCard";
@@ -19,20 +19,32 @@ export default function TradePet() {
   useEffect(() => {
     dispatch(getAllUsers());
   }, [dispatch]);
-
   const getUsers = useSelector((state) => state.users);
   const loggedUser = useSelector((state) => state.userProfile);
   console.log(loggedUser.pets);
   const [data, setData] = useState({
-    petId: "",
     userId: "",
+    petId: "",
     ownerId: loggedUser._id,
   });
-
+  
+  const iUser = loggedUser.interestedUsers 
+  const futuresPets = []
   function adopterHandler(e) {
     console.log(e.target.value, "ADOPTER");
     setData({ ...data, userId: e.target.value });
   }
+  for (let i = 0; i < iUser.length; i++){
+    for(let x = 0; x < iUser[i].length; x++){
+      if(iUser[i][x]._id === data.userId){
+            futuresPets.push(iUser[i][x + 1])
+            /*  for (let z = 0; z < i.length; z++){
+              if (iUser[i][x] !== iUser[i][x + 1] || iUser[i][x + 1] !== iUser[i][x])
+             } */
+           }
+          }
+          
+        }
 
   function petHandler(e) {
     console.log(e.target.value, "PET");
@@ -93,7 +105,50 @@ export default function TradePet() {
         .then(() => navigate(`/users/${loggedUser._id}`, { replace: true }));
     } //oponer sweet
   }
-
+   
+   let interesados = []
+   for (let i = 0; i < iUser.length; i++){
+     for(let j = 0; j < getUsers.length; j++){ 
+       for(let x = 0; x < iUser[i].length; x++){
+         if(iUser[i][x]._id === getUsers[j]._id){
+           interesados.push(iUser[i][x])
+           /*  for (let z = 0; z < i.length; z++){
+             if (iUser[i][x] !== iUser[i][x + 1] || iUser[i][x + 1] !== iUser[i][x])
+            } */
+          }
+        }
+      } 
+    }
+    const petsInteresados = []
+    for (let i = 0; i < iUser.length; i++){
+     for(let j = 0; j < loggedUser.pets.length; j++){ 
+       for(let x = 0; x < iUser[i].length; x++){
+         if(iUser[i][x]._id === loggedUser.pets[j]._id){
+           petsInteresados.push(iUser[i][x])
+           /*  for (let z = 0; z < i.length; z++){
+             if (iUser[i][x] !== iUser[i][x + 1] || iUser[i][x + 1] !== iUser[i][x])
+            } */
+          }
+        }
+      } 
+    }
+    
+  /*         function handlerDeleted (){
+            for (let i = 0; i < iUser.length; i++){
+              for(let j = 0; j < interesados.length; j++){ 
+                for(let x = 0; x < iUser[i].length; x++){
+                  if(iUser[i][x]._id === data.userId){
+                    let deleteData = iUser[i].filter((e => e[x] !== data.userId))
+                      dispatch(patchUsuer(deleteData))
+                    /*  for (let z = 0; z < i.length; z++){
+                      if (iUser[i][x] !== iUser[i][x + 1] || iUser[i][x + 1] !== iUser[i][x])
+                     } 
+                   }
+                 }
+               } 
+             }
+        }
+   */
   return (
     <div id="landing" className="w-full">
       <NavBar />
@@ -122,8 +177,8 @@ export default function TradePet() {
                       <div className="overflow-auto">
                         <ol className="h-52">
                           <form className=" ">
-                            {getUsers?.length > 0 ? (
-                              getUsers.map((user) => (
+                            {interesados?.length > 0 ? (
+                              interesados.map((user) => (
                                 <li className="flex flex-col-2  gap-3 h-18 w-98 mr-2 py-1 overflow-hidden items-center rounded">
                                   {/* <div className="flex items-center bg-gray-200 h-8 w-3/5 flex-row overflow-hidden gap-3"> */}
                                   <input
@@ -149,26 +204,13 @@ export default function TradePet() {
                                     pets={user.pets}
                                     place={user.place}
                                   />
+                                    <button>X</button>
                                   {/* </div> */}
                                 </li>
                               ))
                             ) : (
-                              <div role="status">
-                                <svg
-                                  className="inline mr-2 w-10 h-10 m-12 text-gray-200 animate-spin dark:text-gray-600 fill-yellow-700"
-                                  viewBox="0 0 100 101"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                                    fill="currentColor"
-                                  />
-                                  <path
-                                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                                    fill="currentFill"
-                                  />
-                                </svg>
+                              <div>
+                              Todavia no hay adoptadores.... Puedes buscarlos
                               </div>
                             )}
                           </form>
@@ -191,8 +233,8 @@ export default function TradePet() {
                       <div className="overflow-auto">
                         <ol className="h-52">
                           <form action="">
-                            {loggedUser.pets?.length ? (
-                              loggedUser.pets.map((pets) => (
+                            {futuresPets?.length ? (
+                              futuresPets.map((pets) => (
                                 <li className="flex flex-col-2  gap-3 h-18 w-98 mr-2 py-1 overflow-hidden items-center rounded">
                                   <input
                                     key={pets._id + "1"}
@@ -221,22 +263,8 @@ export default function TradePet() {
                                 </li>
                               ))
                             ) : (
-                              <div role="status">
-                                <svg
-                                  className="inline mr-2 w-10 h-10 m-12 text-gray-200 animate-spin dark:text-gray-600 fill-yellow-700"
-                                  viewBox="0 0 100 101"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                                    fill="currentColor"
-                                  />
-                                  <path
-                                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                                    fill="currentFill"
-                                  />
-                                </svg>
+                              <div>
+                              Paso 2 incompleto :C
                               </div>
                             )}
                           </form>
