@@ -6,6 +6,12 @@ import { getPetDetail, clearStatePet } from "../../redux/Actions";
 import NavBar from "../NavBar/NavBar";
 import logo from "../../assets/images/2039031.png";
 import { Carousel } from "flowbite-react";
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  EmailShareButton,
+  EmailIcon,
+} from "react-share";
 
 export default function PetDetail() {
   let { id } = useParams();
@@ -26,6 +32,23 @@ export default function PetDetail() {
       </h1>
 
       <div className="flex w-2/3 my-10 ml-60 flex-row border-2 border-black">
+        <div>
+          <FacebookShareButton
+            url={`https://www.happytails.com/pet/${petDetail._id}`}
+            quote={"Adoptame"}
+            hashtag={"#happytails"}
+          >
+            <FacebookIcon size={40} />
+          </FacebookShareButton>
+        </div>
+        <div>
+          <EmailShareButton
+            subject="Quiero que me adoptes"
+            body={`Adoptame en https://www.happytails.com/pet/${petDetail._id}`}
+          >
+            <EmailIcon size={40} />
+          </EmailShareButton>
+        </div>
         <div className="flex flex-col w-1/2 m-3 items-center gap-3">
           {loggedUser._id === petDetail.user._id ? (
             <Link to="/updatepet">
