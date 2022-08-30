@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import blackpaw from "../../assets/images/blackpaw.png";
 import diamantepaw from "../../assets/images/diamantepaw.png";
 import goldenpaw from "../../assets/images/goldenpaw.png";
-import silverpaw from "../../assets/images/silverpaw.png";
+import goldenblack from "../../assets/images/goldenblackgif.gif";
 import { React } from "react";
 
 export default function UserCard({
@@ -48,21 +48,21 @@ export default function UserCard({
           </div>
           {donations.length === 1 ? (
             <div className="rounded-full h-14 w-14 flex items-center justify-center overflow-hidden mr-2">
-              <img className="rounded-full" src={diamantepaw} alt="" />
+              <img className="rounded-full" src={goldenblack} alt="" />
             </div>
           ) : (
             false
           )}
           {donations.length === 2 ? (
             <div className="rounded-full h-14 w-14 flex items-center justify-center overflow-hidden mr-2">
-              <img className="rounded-full h-12 w-1/2" src={goldenpaw} alt="" />
+              <img className="rounded-full h-12 w-1/2" src={goldenblack} alt="" />
             </div>
           ) : (
             false
           )}
           {donations.length >= 3 ? (
             <div className="rounded-full h-14 w-14 flex items-center justify-center overflow-hidden mr-2">
-              <img className="rounded-full" src={blackpaw} alt="" />
+              <img className="rounded-full" src={goldenblack} alt="" />
             </div>
           ) : (
             false
