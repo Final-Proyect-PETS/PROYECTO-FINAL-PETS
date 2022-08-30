@@ -3,12 +3,11 @@ const router = Router();
 const User = require("../models/users")
 const nodemailer = require("nodemailer")
 const jwt = require("jsonwebtoken")
-const router = require("./send-email")
 require("dotenv").config()
 const { NMAILER_PASSWORD } = process.env
 
 
-router.post("/resetpassword", async (req, res, next) => {
+router.post("/a", async (req, res, next) => {
     if (req.body.email == "") {
         res.status(400).send({
             message: "El email es requerido"
@@ -23,7 +22,7 @@ router.post("/resetpassword", async (req, res, next) => {
         }
 
         let id = user._id;
-        const token = jwt.sign({ id: id }, process.env.SECRET_KEY);
+        const token = jwt.sign({ id: id }, process.env.SECRET_KEY, { expiresIn: "1h" });
         res
             .header("token", token)
             .json({ error: null, data: { token }, id: { id } });
@@ -39,7 +38,7 @@ router.post("/resetpassword", async (req, res, next) => {
             from: "'HappyTails'<HAppYTAil5@hotmail.com>",
             to: `${user.email}`,
             subject: "Recuperar contraseña en Happy Tails",
-            text: `${emailPort}/resetpassword/${id}/${token}`
+            text: `http://localhost:3000/${emailPort}/resetpassword/${id}/${token}`
         }
         transporter.sendMail(mailOptions, (err, response) => {
             if (err) {

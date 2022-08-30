@@ -15,6 +15,8 @@ const adoptionMail = require("./send-email");
 const postImage = require("./posts");
 const payment = require("./payment");
 const responsePayment = require("./payment");
+const forgotPassword = require("./forgotPassword")
+const resetPassword = require("./resetPassword")
 const errorHandler = require("../utils/middlewares/errorHandler");
 
 router.use(
@@ -35,6 +37,7 @@ router.use("/register", register);
 router.use("/login", login);
 router.use("/", loginGoogle);
 router.use("/mail", adoptionMail);
+router.use("/", forgotPassword, resetPassword)
 router.use(errorHandler);
 
 
