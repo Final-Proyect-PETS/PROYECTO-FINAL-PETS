@@ -37,7 +37,7 @@ router.use("/", loginGoogle);
 router.use("/mail", adoptionMail);
 router.use(errorHandler);
 
-<<<<<<< HEAD
+
 router.get("/feedback/:idDonor/:donationAmount", async (req, res, next) => {
   const { payment_id, status } = req.query;
   const { idDonor, donationAmount } = req.params;
@@ -62,7 +62,6 @@ router.get("/feedback/:idDonor/:donationAmount", async (req, res, next) => {
     return res.redirect("http://localhost:3000/donationcancelled");
 });
 
-=======
->>>>>>> 61c8539aa3c10d8628a10bd2ef04cb7c87630a57
+
 module.exports = router;
 
