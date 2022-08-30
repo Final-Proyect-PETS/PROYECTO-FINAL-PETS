@@ -5,6 +5,7 @@ import { useParams, Link } from "react-router-dom";
 import { getPetDetail, clearStatePet } from "../../redux/Actions";
 import NavBar from "../NavBar/NavBar";
 import logo from "../../assets/images/2039031.png";
+import { Carousel } from "flowbite-react";
 
 export default function PetDetail() {
   let { id } = useParams();
@@ -29,20 +30,25 @@ export default function PetDetail() {
           {loggedUser._id === petDetail.user._id ? (
             <Link to="/updatepet">
               <button className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-600 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
-              📝Editar mascota
+                📝Editar mascota
               </button>
             </Link>
           ) : (
             <></>
           )}
-
-          {/* faltaria agregar el pool de images q viene como array */}
-          <img
-            src={petDetail.image}
-            alt="imagen mascota"
-            // width="500px"
-            className="w-96"
-          />
+          <div className="h-56 w-72 bg-yellow-900 rounded ">
+            <Carousel className="rounded">
+              <img
+                src={petDetail.image}
+                alt="imagen mascota"
+                // width="500px"
+                className="w-96"
+              />
+              {petDetail?.imagePool?.map((image) => (
+                <img alt={image} src={image} className="w-96 rounded" />
+              ))}
+            </Carousel>
+          </div>
           <h2 className="font-semibold">
             Descripción: {petDetail.description}
           </h2>
@@ -81,8 +87,8 @@ export default function PetDetail() {
               </h3>
             </div>
             <h3 className="absolute flex justify-center items-center font-semibold">
-                Género: {petDetail.gender === "female" ? "Hembra" : "Macho"}
-              </h3>
+              Género: {petDetail.gender === "female" ? "Hembra" : "Macho"}
+            </h3>
             <div className="w-1/2 h-1/2 flex justify-center items-center border-t">
               <h3 className="font-semibold">Edad: {petDetail.age} años</h3>
             </div>
@@ -138,7 +144,7 @@ export default function PetDetail() {
 
                 <Link to={`/users/${petDetail.user._id}`}>
                   <button className="py-2 px-3 my-4 mr-8  w-full bg-yellow-900 hover:bg-green-700 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
-                  📝 CAMBIAR ESTADO
+                    📝 CAMBIAR ESTADO
                   </button>
                 </Link>
               </>
