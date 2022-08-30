@@ -37,7 +37,7 @@ export default function PetDetail() {
             <></>
           )}
           <div className="h-56 w-72 bg-yellow-900 rounded ">
-            <Carousel className="">
+            <Carousel className="rounded">
               <img
                 src={petDetail.image}
                 alt="imagen mascota"
@@ -45,7 +45,7 @@ export default function PetDetail() {
                 className="w-96"
               />
               {petDetail?.imagePool?.map((image) => (
-                <img alt={image} src={image} className="w-96" />
+                <img alt={image} src={image} className="w-96 rounded" />
               ))}
             </Carousel>
           </div>
