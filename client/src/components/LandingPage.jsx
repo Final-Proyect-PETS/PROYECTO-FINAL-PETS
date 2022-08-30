@@ -9,7 +9,7 @@ import { gapi } from "gapi-script"
 import { useEffect } from "react";
 import { userLoginGoogle } from "../redux/Actions/index"
 
-async function validate(input) {
+function validate(input) {
   let errors = {};
   if (!input.email) {
     errors.email = "El email es necesario";
