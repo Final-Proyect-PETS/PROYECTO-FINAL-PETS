@@ -139,6 +139,14 @@ export default function rootReducer(state = initialState, { type, payload }) {
         ...state,
         notification: payload,
       };
+    case actions.FORGOT_PASSWORD:
+      return {
+        ...state
+      };
+    case actions.RESET_PASSWORD:
+      return {
+        ...state
+      };
 
     default:
       return state;

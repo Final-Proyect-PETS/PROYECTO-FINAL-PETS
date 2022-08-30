@@ -326,7 +326,7 @@ export default function Register() {
           </div>
           <div>
             <label className="font-light text-white text-xl">
-              Repetir contraseña
+              Confirmar contraseña
             </label>
             <input
               type="password"

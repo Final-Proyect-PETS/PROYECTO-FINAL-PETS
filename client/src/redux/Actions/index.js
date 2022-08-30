@@ -228,7 +228,7 @@ export function userLoginGoogle(payload) {
         type: actions.USER_LOGIN_GOOGLE,
         payload: json.data,
       });
-    } catch (error) {}
+    } catch (error) { }
   };
 }
 
@@ -244,6 +244,37 @@ export function getUserProfile(id) {
       console.log(error);
     }
   };
+}
+
+export function forgotPassword(payload) {
+  console.log(payload);
+  return async function (dispatch) {
+    try {
+      let json = await axios.post("http://localhost:3001/forgotpassword", payload)
+      return dispatch({
+        type: actions.FORGOT_PASSWORD,
+        payload: json.data
+      })
+    } catch (err) {
+      console.log(err);
+    }
+  }
+}
+
+export function resetPassword(payload) {
+  return async function (dispatch) {
+    console.log(payload)
+    console.log(payload.password);
+    try {
+      let json = await axios.patch(`http://localhost:3001/resetpassword/${payload.id}/${payload.auth}`, payload)
+      return dispatch({
+        type: actions.RESET_PASSWORD,
+        payload: json.data
+      })
+    } catch (err) {
+      console.error(err);
+    }
+  }
 }
 //ADOPT---------------
 export function tradePet(payload) {
