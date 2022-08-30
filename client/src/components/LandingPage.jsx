@@ -86,7 +86,7 @@ export default function LandingPage() {
             encontrar un hogar feliz para nuestros amigos de 4 patas...
           </p>
         </div>
-
+        
         <div className="flex flex-col w-full max-w-md m-14 mr-24 py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
           <div className="self-center mb-6 text-xl font-light sm:text-2xl text-white">
             Ingrese a su cuenta
@@ -168,7 +168,7 @@ export default function LandingPage() {
                       Ingresa con tu cuenta de Google
                     </button>
                     // className="inline-flex self-center py-2 px-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
-                    
+
                   )}
                   onSuccess={responseGoogle}
                   onFailure={responseGoogle}
