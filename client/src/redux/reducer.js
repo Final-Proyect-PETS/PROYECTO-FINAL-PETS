@@ -10,9 +10,11 @@ const initialState = {
   userProfile: [], //usuario loggeado
   payment: {},
   tradePet: [], //mascota que se vá
-  notViewedNotification: [],//no vistas SIN USO TODAVIA
-  viewedNotification: [], //vistas SIN USO TODAVIA
-  like:[]
+  notification: [], //campanita
+  conversations: [],
+  messages: [],
+  notViewedNotification: [],//no vistas
+  viewedNotification: [], //vistas
 };
 
 export default function rootReducer(state = initialState, { type, payload }) {
@@ -47,6 +49,21 @@ export default function rootReducer(state = initialState, { type, payload }) {
         ...state,
         pets: payload,
       };
+    //CHAT
+    case actions.GET_CONVERSATIONS:
+      return {
+        ...state,
+        conversations: payload
+      }
+    case actions.GET_MESSAGES:
+      return {
+        ...state,
+        messages: payload
+      }
+    case actions.SEND_MESSAGE:
+      return {
+        ...state
+      }
 
     //GET DETAIL
     case actions.GET_USER_DETAIL:
@@ -95,10 +112,6 @@ export default function rootReducer(state = initialState, { type, payload }) {
         ...state,
         petDetail: payload,
       };
-    case actions.PATCH_LIKES:
-      return {
-        ...state
-      }
     //FILTROS
     case actions.FILTER_BY_QUERY:
       return {

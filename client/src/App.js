@@ -25,8 +25,10 @@ import Notifications from "./components/TradePet/Notifications";
 import DonationCancelled from "./components/Donations/DonationCancelled";
 import DonationPending from "./components/Donations/DonationPending";
 import DonationSuccessful from "./components/Donations/DonationSuccessful";
+import Chat from "./components/Chat/Chat";
 import UserDonations from "./components/Donations/UsersDonations";
 import Blog from "./components/Blogsito/Blog.jsx";
+
 
 function App() {
   const token = localStorage.getItem("token");
@@ -53,6 +55,8 @@ function App() {
           <Route path={"/interestedtraders"} element={<InterestedTraders />} />
           <Route path={"/notifications"} element={<Notifications />} />
           <Route path={"/adopt/:id"} element={<AdoptForm />} />
+
+          <Route path={"/chat"} element={<Chat />} />
           <Route path={"/donations"} element={<Donation />} />
           <Route path={"/donationsuccessful"} element={<DonationSuccessful />} />
           <Route path={"/donationcancelled"} element={<DonationCancelled />} />

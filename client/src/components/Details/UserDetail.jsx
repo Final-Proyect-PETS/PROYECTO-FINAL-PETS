@@ -8,6 +8,7 @@ import Loader from "./../Loaders/Loader";
 import "./userDetailStyle.css";
 
 export default function UserDetail() {
+
   let { id } = useParams();
   const dispatch = useDispatch();
 
@@ -92,18 +93,14 @@ export default function UserDetail() {
           </div>
           <div className="w-full mt-1 border-b  absolute  justify-center items-center bg-gray-100">
             <div className="w-full mt-1 border-b  absolute flex justify-center items-center bg-gray-500">
-              {loggedUser?._id === userDetail?._id ? (
-                <Link to="/tradepet">
-                  <button className="bg-green-900  hover:bg-green-500 text-white font-bold py-2 px-36 border border-yellow-700 rounded">
-                    <h2 className="font-semibold">
-                      {" "}
-                      {`🔔 Tienes ${loggedUser?.interestedUsers?.length} usuarios interesados en tus mascotas`}
-                    </h2>
-                  </button>
-                </Link>
-              ) : (
-                <>Mis Mascotas</>
-              )}
+              <Link to="/tradepet">
+                <button className="bg-green-900  hover:bg-green-500 text-white font-bold py-2 px-36 border border-yellow-700 rounded">
+                  <h2 className="font-semibold">
+                    {" "}
+                    {`🔔 Tienes ${loggedUser?.interestedUsers?.length} usuarios interesados en tus mascotas`}
+                  </h2>
+                </button>
+              </Link>
             </div>
             <div className="grid grid-cols-3 mt-10 place-content-center ">
               {userDetail.pets?.length ? (
