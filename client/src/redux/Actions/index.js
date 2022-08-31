@@ -193,7 +193,7 @@ export function filterByQuery(filterParams) {
 export function userLogin(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios
+      await axios
         .post("http://localhost:3001/login", payload)
         .then((response) => {
           const token = response.data.data.token;
