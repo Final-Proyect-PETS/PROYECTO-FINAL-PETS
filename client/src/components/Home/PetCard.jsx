@@ -14,7 +14,26 @@ export default function Card({
   size,
   gender,
 }) {
-  return (
+
+  //likes***----de aca
+  const dispatch = useDispatch();
+  const loggedUser = useSelector((state) => state.userProfile);
+
+  function likeHandler(e) {
+    e.preventDefault();
+
+    let payload = {
+      petId: idPet,//el likeado
+      userId: loggedUser._id,//el que da like
+      ownerId: idUser,//al que le llega el like
+      likes: likes,//array
+    };
+    dispatch(patchLikes(payload));
+  }
+  //likes--hasta aca , casi te vas
+
+    return (
+
     <>
       <div
         id={idUser} 

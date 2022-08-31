@@ -405,6 +405,7 @@ export function viewed(view) {
 }
 
 
+
 //VIEWED --------------------------JUANMA SOS VOS------------
 export function viewing(payload){
 
@@ -415,7 +416,7 @@ export function viewing(payload){
         payload
       );
       return dispatch({
-        type: actions.PATCH_USER,
+        type: actions.VIEWING_NOTIFICATION,
         payload: json.data,
       });
     } catch (error) {

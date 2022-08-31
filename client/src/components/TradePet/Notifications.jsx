@@ -23,7 +23,7 @@ export default function Notifications() {
     let payload = {
       id: loggedUser._id, //dueño
       interestedId: e.target.value,
-      petId: e.target.name, // interestedUsers: [{usuariointeresado}{mascotaquequiero},],
+      petId: e.target.name, // interestedUsers: [{usuariointeresado}{mascotaquequiero},FALSO],
     };
     dispatch(viewing(payload))
     dispatch(getUserProfile(loggedUser._id))
