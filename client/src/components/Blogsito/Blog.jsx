@@ -51,7 +51,7 @@ export default function Blog() {
         </div>
         <hr className="border" />
         <div>
-          <h1>COMPARTI TU EXPERIENCIA CON NOSOTROS</h1>
+          <h1>COMPARTI TU EXPERIENCIA CON NOSOTROS perrito malvado</h1>
         </div>
 
         <hr className="border" />
