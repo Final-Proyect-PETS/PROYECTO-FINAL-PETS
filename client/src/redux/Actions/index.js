@@ -411,7 +411,7 @@ export function viewing(payload){
   return async function (dispatch) {
     try {
       let json = await axios.patch(
-        `http://localhost:3001/home/rutajuanmanotivista`,
+        `http://localhost:3001/home/viewing`,
         payload
       );
       return dispatch({
