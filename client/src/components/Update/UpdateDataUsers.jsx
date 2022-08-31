@@ -130,11 +130,9 @@ export default function UpdateUser() {
   }
 
   function _suggestionSelect(result, lat, long, text) {
-    console.log(result, lat, long, text);
     setInput({
       ...input, place: result
     })
-    console.log(input)
   }
   const mapAccess = {
     mapboxApiAccessToken:

@@ -4,7 +4,7 @@ import "./Donations.css"
 
 export default function DonationPending() {
   return <>
-  <div id="sucess-pay" className="fixed">
+  <div id="pending-pay" className="fixed">
     <NavBar />
   </div>
 </>

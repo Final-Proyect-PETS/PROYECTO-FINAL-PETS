@@ -60,6 +60,6 @@ io.on('connection', (socket) => {
 
 //ver forma de hacer un force true para mongoose
 
-
 connection();
 serverr.listen(3001, () => console.log("listening at port 3001 "));
+

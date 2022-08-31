@@ -193,7 +193,7 @@ export function filterByQuery(filterParams) {
 export function userLogin(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios
+      await axios
         .post("http://localhost:3001/login", payload)
         .then((response) => {
           const token = response.data.data.token;
@@ -228,7 +228,7 @@ export function userLoginGoogle(payload) {
         type: actions.USER_LOGIN_GOOGLE,
         payload: json.data,
       });
-    } catch (error) {}
+    } catch (error) { }
   };
 }
 
@@ -244,6 +244,37 @@ export function getUserProfile(id) {
       console.log(error);
     }
   };
+}
+
+export function forgotPassword(payload) {
+  console.log(payload);
+  return async function (dispatch) {
+    try {
+      let json = await axios.post("http://localhost:3001/forgotpassword", payload)
+      return dispatch({
+        type: actions.FORGOT_PASSWORD,
+        payload: json.data
+      })
+    } catch (err) {
+      console.log(err);
+    }
+  }
+}
+
+export function resetPassword(payload) {
+  return async function (dispatch) {
+    console.log(payload)
+    console.log(payload.password);
+    try {
+      let json = await axios.patch(`http://localhost:3001/resetpassword/${payload.id}/${payload.auth}`, payload)
+      return dispatch({
+        type: actions.RESET_PASSWORD,
+        payload: json.data
+      })
+    } catch (err) {
+      console.error(err);
+    }
+  }
 }
 //ADOPT---------------
 export function tradePet(payload) {
@@ -271,35 +302,19 @@ export function patchInterestedUsers(payload) {
         type: actions.INTERESTED_USERS,
         payload: json.data,
       });
-
-      if (json.data.includes("Ya mandaste la solicitud de adopcion")) {
-        return "Ya mandaste la solicitud de adopcion";
-      } else {
-        return "OK";
-      }
+      return "OK"
     } catch (error) {
       console.log(error);
+    }   
     }
-  };
-}
+  }
 
-export function emailAdopt(payload) {
+/* export function emailAdopt(payload) {
   return async function (dispatch) {
-    try {
-      let json = await axios.post(
-        `http://localhost:3001/mail/sendemail`,
-        payload
-      );
-      dispatch({
-        type: actions.ADOPT_EMAIL,
-        payload: json.data,
-      });
-      return "OK";
-    } catch (error) {
       console.log(error);
     }
   };
-}
+} */
 
 export function paymentMp(idDonor, amountDonation) {
   return async function (dispatch) {
@@ -317,12 +332,12 @@ export function paymentMp(idDonor, amountDonation) {
   };
 }
 
-///////////////////////////laut
-export function sendNotification(payload) {
+///////////////////////////NOTIFICATIONS-------------------
+export function notViewed(payload) {
   return async function (dispatch) {
     try {
       return dispatch({
-        type: actions.NOTIFICATION,
+        type: actions.NOT_VIEWED_NOTIFICATION,
         payload: payload,
       });
     } catch (error) {
@@ -330,6 +345,7 @@ export function sendNotification(payload) {
     }
   };
 }
+
 
 ////////////////////////////////chat
 export function getConversations (id) {
@@ -373,3 +389,38 @@ export function sendMessage (message) {
     }
   }
 }
+
+export function viewed(view) {
+  
+  return async function (dispatch) {
+    try {
+      return dispatch({
+        type: actions.VIEWED_NOTIFICATION,
+        payload: view,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+
+//VIEWED --------------------------JUANMA SOS VOS------------
+export function viewing(payload){
+
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(
+        `http://localhost:3001/home/rutajuanmanotivista`,
+        payload
+      );
+      return dispatch({
+        type: actions.PATCH_USER,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
