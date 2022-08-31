@@ -10,8 +10,9 @@ const initialState = {
   userProfile: [], //usuario loggeado
   payment: {},
   tradePet: [], //mascota que se vá
-  notViewedNotification: [],//no vistas
-  viewedNotification: [], //vistas
+  notViewedNotification: [],//no vistas SIN USO TODAVIA
+  viewedNotification: [], //vistas SIN USO TODAVIA
+  like:[]
 };
 
 export default function rootReducer(state = initialState, { type, payload }) {
@@ -94,6 +95,10 @@ export default function rootReducer(state = initialState, { type, payload }) {
         ...state,
         petDetail: payload,
       };
+    case actions.PATCH_LIKES:
+      return {
+        ...state
+      }
     //FILTROS
     case actions.FILTER_BY_QUERY:
       return {

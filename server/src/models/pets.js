@@ -13,7 +13,7 @@ const petsSchema = new Schema(
     vaccination: {
       type: String,
       enum: ["yes", "no", "unknown"],
-      lowercase: true
+      lowercase: true,
     },
     castrated: Boolean,
     place: String,
@@ -21,7 +21,8 @@ const petsSchema = new Schema(
     deleted: { type: Boolean, default: false },
     user: { type: mongoose.Schema.ObjectId, ref: "User" },
     isAdopted: { type: Boolean, default: true },
-    interestedUsers: Array
+    interestedUsers: Array,
+    likes: Array, //reviews for life
   },
   {
     timestamps: true,
