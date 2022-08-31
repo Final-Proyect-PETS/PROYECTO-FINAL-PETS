@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { getPetDetail, clearStatePet } from "../../redux/Actions";
 import NavBar from "../NavBar/NavBar";
-import logo from "../../assets/images/2039031.png";
 import { Carousel } from "flowbite-react";
 import {
   FacebookShareButton,
@@ -85,7 +84,7 @@ export default function PetDetail() {
               {petDetail.user.first_name + " " + petDetail.user.last_name}
             </h2>
             <h3 className="font-semibold">
-              {"Vivo en " + `"${petDetail.place}"`}
+              {`Vivo en ${petDetail.place}`}
             </h3>
           </div>
           <div className="flex flex-wrap w-full h-1/2 justify-center items-center border-y border-black">
