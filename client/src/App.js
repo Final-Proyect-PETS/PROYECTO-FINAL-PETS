@@ -26,6 +26,7 @@ import DonationCancelled from "./components/Donations/DonationCancelled";
 import DonationPending from "./components/Donations/DonationPending";
 import DonationSuccessful from "./components/Donations/DonationSuccessful";
 import UserDonations from "./components/Donations/UsersDonations";
+import Blog from "./components/Blogsito/Blog.jsx";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -58,6 +59,7 @@ function App() {
           <Route path={"/donationpending"} element={<DonationPending />} />
           <Route path={"*"} element={<Error404 />} />
           <Route path={"/mydonations/:id"} element={<UserDonations />}/>
+          <Route path={"/blog"} element={<Blog />}/>
         </Route>
         <Route element={<PrivateAdmin />}>
           <Route path={"/admin"} element={<AdminView />} />

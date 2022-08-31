@@ -263,6 +263,8 @@ router.patch("/likes", verifyToken, async (req, res, next) => {
       const userPush = await User.findById({ _id: userId });
       const petPush = await Pets.findById({ _id: petId });
       let support = false;
+     
+     
       const petAndUserIds = [userPush, petPush, support];
       await User.updateOne(
         { _id: ownerId },

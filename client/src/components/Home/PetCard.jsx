@@ -35,10 +35,10 @@ export default function Card({
     e.preventDefault();
 
     let payload = {
-      petId: idPet,
-      userId: loggedUser._id,
-      ownerId: idUser,
-      likes: likes,
+      petId: idPet,//el likeado
+      userId: loggedUser._id,//el que da like
+      ownerId: idUser,//al que le llega el like
+      likes: likes,//array
     };
     dispatch(patchLikes(payload));
   }

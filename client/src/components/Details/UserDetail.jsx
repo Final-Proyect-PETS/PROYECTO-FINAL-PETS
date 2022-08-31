@@ -122,7 +122,7 @@ export default function UserDetail() {
                 ))
               ) : (
                 <h3 className="text-2xl font-bold">
-                  No hay mascotas que mostar...
+                  No hay mascotas que mostrar...
                 </h3>
               )}
             </div>

@@ -375,7 +375,7 @@ export function viewed(view) {
   };
 }
 
-//VIEWED --------------------------JUANMA SOS VOS------------
+//VIEWing ------------------------------------------------------------------------
 export function viewing(payload) {
   return async function (dispatch) {
     try {
@@ -384,7 +384,7 @@ export function viewing(payload) {
         payload
       );
       return dispatch({
-        type: actions.PATCH_USER,
+        type: actions.VIEWING_NOTIFICATION,
         payload: json.data,
       });
     } catch (error) {

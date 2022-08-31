@@ -35,7 +35,7 @@ export default function Notifications() {
     var payload = {
       id: loggedUser._id, //dueño
       interestedId: e.target.value,
-      petId: e.target.name, // interestedUsers: [{usuariointeresado}{mascotaquequiero},],
+      petId: e.target.name, // interestedUsers: [{usuariointeresado}{mascotaquequiero},FALSO],
     };
 
     console.log(payload)
