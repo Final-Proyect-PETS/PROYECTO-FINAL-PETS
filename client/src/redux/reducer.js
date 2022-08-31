@@ -10,8 +10,12 @@ const initialState = {
   userProfile: [], //usuario loggeado
   payment: {},
   tradePet: [], //mascota que se vá
+  notification: [], //campanita
+  conversations: [],
+  messages: [],
   notViewedNotification: [],//no vistas
   viewedNotification: [], //vistas
+
 };
 
 export default function rootReducer(state = initialState, { type, payload }) {
@@ -46,6 +50,21 @@ export default function rootReducer(state = initialState, { type, payload }) {
         ...state,
         pets: payload,
       };
+    //CHAT
+    case actions.GET_CONVERSATIONS:
+      return {
+        ...state,
+        conversations: payload
+      }
+    case actions.GET_MESSAGES:
+      return {
+        ...state,
+        messages: payload
+      }
+    case actions.SEND_MESSAGE:
+      return {
+        ...state
+      }
 
     //GET DETAIL
     case actions.GET_USER_DETAIL:
