@@ -12,6 +12,8 @@ const postPet = require("./posts");
 const patchPet = require("./patch");
 const patchUser = require("./patch");
 const adoptionMail = require("./send-email");
+const conversations = require("./conversations")
+const messages = require("./messages")
 const postImage = require("./posts");
 const payment = require("./payment");
 const errorHandler = require("../utils/middlewares/errorHandler");
@@ -28,6 +30,8 @@ router.use(
   patchPet,
   patchUser,
   postImage,
+  conversations,
+  messages
 );
 
 router.use("/linkpayment", payment);

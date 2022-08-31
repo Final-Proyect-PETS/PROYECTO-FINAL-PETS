@@ -23,9 +23,10 @@ import Notifications from "./components/TradePet/Notifications";
 import DonationCancelled from "./components/Donations/DonationCancelled";
 import DonationPending from "./components/Donations/DonationPending";
 import DonationSuccessful from "./components/Donations/DonationSuccessful";
-import io from "socket.io-client"
+// import io from "socket.io-client"
+import Chat from "./components/Chat/Chat";
 
-const socket = io("http://localhost:3001")
+// const socket = io("http://localhost:3001")
 
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
           <Route path={"/interestedtraders"} element={<InterestedTraders />} />
           <Route path={"/notifications"} element={<Notifications />} />
           <Route path={"/adopt/:id"} element={<AdoptForm />} />
+          <Route path={"/chat"} element={<Chat />} />
           <Route
             path={"/donationsuccessful"}
             element={<DonationSuccessful />}
