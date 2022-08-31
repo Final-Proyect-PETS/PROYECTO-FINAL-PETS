@@ -10,7 +10,7 @@ export default function NavBar() {
   const dispatch = useDispatch();
 
   const id = localStorage.getItem("id");
- 
+
   useEffect(() => {
     dispatch(getUserProfile(id));
   }, [dispatch, id]);

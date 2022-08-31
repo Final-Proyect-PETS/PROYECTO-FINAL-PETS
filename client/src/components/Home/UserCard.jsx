@@ -136,7 +136,7 @@ export default function UserCard({
                   ))
                 : ""}
             </div>
-          </div>{" "}
+          </div>
         </div>
       </div>
     </div>

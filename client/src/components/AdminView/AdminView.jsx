@@ -75,15 +75,15 @@ export default function AdminView() {
                     <div className=" h-1/4 flex items-center justify-center flex-col">
                       <div className="bg-white flex justify-center">
                         <h1>
-                          Cuenta creada el:{" "}
-                          {m.createdAt.slice(0, 10)} a las{" "}
+                          Cuenta creada el:
+                          {m.createdAt.slice(0, 10)} a las
                           {m.createdAt.slice(11, 19)}
                         </h1>
                       </div>
                       <div className="flex justify-center">
                         <h1>
-                          Cuenta editada por ultima vez el:{" "}
-                          {m.updatedAt.slice(0, 10)} a las{" "}
+                          Cuenta editada por ultima vez el:
+                          {m.updatedAt.slice(0, 10)} a las
                           {m.updatedAt.slice(11, 19)}
                         </h1>
                       </div>
@@ -117,11 +117,12 @@ export default function AdminView() {
             </div>
           </div>
         </Modal.Body>
-      </Modal >
+      </Modal>
+
       <div id="view-admin">
         <div className="w-full text-center p-5">
           <h3 className="text-6xl font-semibold italic text-gray-800">
-            Happy Tails 
+            Happy Tails
           </h3>
           <h3 className="text-2xl p-3 text-gray-800">
             Vista de administrador
@@ -150,9 +151,9 @@ export default function AdminView() {
                           <Link to={"/users/" + u._id}>
                             {u.first_name} {u.last_name}
                           </Link>
-                        }{" "}
-                        | Username: {u.username} | {u.email}{" "}
-                      </div>{" "}
+                        }
+                        | Username: {u.username} | {u.email}
+                      </div>
                       <div className="w-2/5 flex justify-center">
                         <div>
                           <Button
@@ -162,7 +163,7 @@ export default function AdminView() {
                             }}
                             class="w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
                           >
-                           Más información
+                            Más información
                           </Button>
                         </div>
                       </div>
