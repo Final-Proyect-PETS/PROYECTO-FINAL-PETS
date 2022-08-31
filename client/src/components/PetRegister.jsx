@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postPet, postImage } from "../redux/Actions/index.js";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { notificationSwal } from "../utils/notificationSwal.jsx";
-import MapboxAutocomplete from 'react-mapbox-autocomplete';
+import MapboxAutocomplete from "react-mapbox-autocomplete";
+import mapboxgl from "mapbox-gl";
 
 export default function RegisterPet() {
   const dispatch = useDispatch();
@@ -18,6 +19,11 @@ export default function RegisterPet() {
   const [imagePool, setImagePool] = useState([]);
   const [loadingImage, setLoadingImage] = useState(false);
   const [loadingImagePool, setLoadingImagePool] = useState(false);
+  const [placeSelect, setPlaceSelect] = useState(false);
+  const [lat, setLat] = useState(null);
+  const [long, setLong] = useState(null);
+
+  const mapDiv = useRef(null);
 
   const [input, setInput] = useState({
     id: id,
@@ -94,6 +100,7 @@ export default function RegisterPet() {
   }
 
   function validate(input) {
+    console.log(input);
     let errors = {};
 
     if (!input.id) errors.id = "El id es requerido!";
@@ -204,7 +211,7 @@ export default function RegisterPet() {
                 "success",
                 "Ok"
               );
-              navigate("/home")
+              navigate("/home");
             } else {
               notificationSwal(
                 "¡Ooops!",
@@ -275,15 +282,47 @@ export default function RegisterPet() {
 
   function _suggestionSelect(result, lat, long, text) {
     console.log(result, lat, long, text);
+    //setPlaceSelect(false);
     setInput({
-      ...input, place: result
-    })
-    console.log(input)
+      ...input,
+      place: result,
+    });
+    setLat(lat);
+    setLong(long);
+    setPlaceSelect(true);
+    if (placeSelect) {
+      const map = new mapboxgl.Map({
+        container: mapDiv.current, // container ID
+        style: "mapbox://styles/mapbox/streets-v11", // style URL
+        center: [long, lat], // starting position [lng, lat]
+        zoom: 12, // starting zoom
+        projection: "globe", // display the map as a 3D globe
+      });
+    }
   }
   const mapAccess = {
     mapboxApiAccessToken:
-      "pk.eyJ1Ijoiam9uc2VuIiwiYSI6IkR6UU9oMDQifQ.dymRIgqv-UV6oz0-HCFx1w"
-  }
+      "pk.eyJ1Ijoiam9uc2VuIiwiYSI6IkR6UU9oMDQifQ.dymRIgqv-UV6oz0-HCFx1w",
+  };
+
+  useLayoutEffect(() => {
+    if (placeSelect) {
+      const map = new mapboxgl.Map({
+        container: mapDiv.current, // container ID
+        style: "mapbox://styles/mapbox/streets-v11", // style URL
+        center: [long, lat], // starting position [lng, lat]
+        zoom: 12, // starting zoom
+        projection: "globe", // display the map as a 3D globe
+      });
+    }
+    // return () => {
+    //   setPlaceSelect(false);
+    // };
+  }, [placeSelect]);
+
+  mapboxgl.accessToken =
+    "pk.eyJ1IjoicG9saW5vIiwiYSI6ImNsN2FtdWNybTB0bmk0MHNqZXZxMzM0OTYifQ.O2Y9sZnF-K1k_KhC8MzJbA";
+
   return (
     <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
       <div className="self-center mb-6 text-xl font-normal text-gray-600 sm:text-2xl dark:text-white">
@@ -554,14 +593,29 @@ export default function RegisterPet() {
               inputClass="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
               onSuggestionSelect={_suggestionSelect}
               resetSearch={false}
-              placeholder="Escriba su ciudad"
+              placeholder={
+                !input.place ? "Escriba su ciudad" : "Modifique ciudad"
+              }
             />
+            {input.place && (
+              <p className="font-light text-white text-xl">{input.place}</p>
+            )}
             {errors.place && (
               <p className="font-bold text-red-700 text-center p-2">
                 {errors.place}
               </p>
             )}
           </div>
+          {input.place ? (
+            <div
+              ref={mapDiv}
+              style={{
+                block: "w-full",
+                height: "15vw",
+                borderRadius: "10px",
+              }}
+            />
+          ) : null}
           <div>
             <button
               type="submit"
