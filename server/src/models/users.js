@@ -43,7 +43,7 @@ const usersSchema = new Schema(
     interestedUsers:  Array,
 
     donations: Array,
-    likesPets: Array,
+
   },
   {
     timestamps: true,

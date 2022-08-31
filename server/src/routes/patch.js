@@ -100,32 +100,32 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
     await User.updateOne({ _id: ownerId }, { $pull: { pets: petId } });
 
     const newpet = await Pets.findOne({ _id: petId });
-    const oldOwner = await User.findOne({ _id: ownerId });
+    const oldOwner = await User.findOne({ _id: ownerId })
     const newOwner = await User.findOne({ _id: userId });
-    console.log(oldOwner.email);
-    console.log(newOwner.email);
+    console.log(oldOwner.email)
+    console.log(newOwner.email)
     try {
       const transporter = nodemailer.createTransport({
         service: "hotmail",
         auth: {
           user: "HAppYTAil5@hotmail.com",
-          pass: `${NMAILER_PASSWORD}`,
+          pass: `${NMAILER_PASSWORD}`
         },
-      });
+      })
       const mailOptions = {
         from: "'HappyTails'<HAppYTAil5@hotmail.com>",
         to: `${newOwner.email}`,
         subject: "Felicitaciones!",
-        text: `Has adoptado correctamente a ${newpet.name}`,
-      };
+        text: `Has adoptado correctamente a ${newpet.name}`
+      }
       transporter.sendMail(mailOptions, (err, response) => {
         if (err) {
           console.error("Ha ocurrido un error", err);
         } else {
           console.error("Response", response);
-          res.status(200).json("El email para la adopcion ha sido enviado");
+          res.status(200).json("El email para la adopcion ha sido enviado")
         }
-      });
+      })
     } catch (err) {
       console.error(err);
     }
@@ -134,23 +134,23 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
         service: "hotmail",
         auth: {
           user: "HAppYTAil5@hotmail.com",
-          pass: `${NMAILER_PASSWORD}`,
+          pass: `${NMAILER_PASSWORD}`
         },
-      });
+      })
       const mailOptions2 = {
         from: "'HappyTails'<HAppYTAil5@hotmail.com>",
         to: `${oldOwner.email}`,
         subject: "Felicitaciones!",
-        text: `Han adoptado correctamente a ${newpet.name}`,
-      };
+        text: `Han adoptado correctamente a ${newpet.name}`
+      }
       transporter2.sendMail(mailOptions2, (err, response) => {
         if (err) {
           console.error("Ha ocurrido un error", err);
         } else {
           console.error("Response", response);
-          res.status(200).json("El email para la adopcion ha sido enviado");
+          res.status(200).json("El email para la adopcion ha sido enviado")
         }
-      });
+      })
     } catch (err) {
       console.error(err);
     }
@@ -236,7 +236,7 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
       let info = await transporter.sendMail({
         from: "'HappyTails'<happytailshp@gmail.com>",
         to: owner_email,
-        subject: "Contacto de adopciÃ³n",
+        subject: "Contacto de adopción",
         html: contentHTML,
       });
 
@@ -248,6 +248,8 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
     next(error);
   };
 })
+
+
 router.patch("/likes", verifyToken, async (req, res, next) => {
   try {
     const { petId, userId, ownerId, likes } = req.body;
@@ -274,4 +276,5 @@ router.patch("/likes", verifyToken, async (req, res, next) => {
     next(error);
   }
 });
+
 module.exports = router;
