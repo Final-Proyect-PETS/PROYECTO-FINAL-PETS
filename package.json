@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@headlessui/react": "^1.6.6"
+    "@headlessui/react": "^1.6.6",
+    "react-hot-toast": "^2.3.0"
   }
 }

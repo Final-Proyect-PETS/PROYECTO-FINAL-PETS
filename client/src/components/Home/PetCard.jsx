@@ -11,6 +11,8 @@ import {
   EmailShareButton,
   EmailIcon,
 } from "react-share";
+import { Toast } from "flowbite-react";
+import { ToastContext } from "flowbite-react/lib/esm/components/Toast/ToastContext";
 
 export default function Card({
   idUser,
@@ -28,10 +30,10 @@ export default function Card({
   //likes***----de aca
   const dispatch = useDispatch();
   const loggedUser = useSelector((state) => state.userProfile);
-  const [like, setLike] = useState();
 
   function likeHandler(e) {
     e.preventDefault();
+
     let payload = {
       petId: idPet,
       userId: loggedUser._id,
@@ -40,8 +42,8 @@ export default function Card({
     };
     dispatch(patchLikes(payload));
   }
-
   //likes--hasta aca
+
   return (
     <>
       <div
@@ -93,7 +95,9 @@ export default function Card({
                 </span>
               </div>
               <div className="flex">
-                  <h1 className="text-white font-bold text-2x1">{likes.length}</h1>
+                <h1 className="text-white font-bold text-2x1">
+                  {likes.length}
+                </h1>
                 <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
                   <button onClick={(e) => likeHandler(e)}>
                     <img src={likeim} alt="" />

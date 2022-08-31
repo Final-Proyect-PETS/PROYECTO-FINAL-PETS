@@ -10,8 +10,9 @@ const initialState = {
   userProfile: [], //usuario loggeado
   payment: {},
   tradePet: [], //mascota que se vá
-  notViewedNotification: [],//no vistas
-  viewedNotification: [], //vistas
+  notViewedNotification: [],//no vistas SIN USO TODAVIA
+  viewedNotification: [], //vistas SIN USO TODAVIA
+  like:[]
 };
 
 export default function rootReducer(state = initialState, { type, payload }) {
