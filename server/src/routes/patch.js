@@ -100,32 +100,32 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
     await User.updateOne({ _id: ownerId }, { $pull: { pets: petId } });
 
     const newpet = await Pets.findOne({ _id: petId });
-    const oldOwner = await User.findOne({ _id: ownerId });
+    const oldOwner = await User.findOne({ _id: ownerId })
     const newOwner = await User.findOne({ _id: userId });
-    console.log(oldOwner.email);
-    console.log(newOwner.email);
+    console.log(oldOwner.email)
+    console.log(newOwner.email)
     try {
       const transporter = nodemailer.createTransport({
         service: "hotmail",
         auth: {
           user: "HAppYTAil5@hotmail.com",
-          pass: `${NMAILER_PASSWORD}`,
+          pass: `${NMAILER_PASSWORD}`
         },
-      });
+      })
       const mailOptions = {
         from: "'HappyTails'<HAppYTAil5@hotmail.com>",
         to: `${newOwner.email}`,
         subject: "Felicitaciones!",
-        text: `Has adoptado correctamente a ${newpet.name}`,
-      };
+        text: `Has adoptado correctamente a ${newpet.name}`
+      }
       transporter.sendMail(mailOptions, (err, response) => {
         if (err) {
           console.error("Ha ocurrido un error", err);
         } else {
           console.error("Response", response);
-          res.status(200).json("El email para la adopcion ha sido enviado");
+          res.status(200).json("El email para la adopcion ha sido enviado")
         }
-      });
+      })
     } catch (err) {
       console.error(err);
     }
@@ -134,23 +134,23 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
         service: "hotmail",
         auth: {
           user: "HAppYTAil5@hotmail.com",
-          pass: `${NMAILER_PASSWORD}`,
+          pass: `${NMAILER_PASSWORD}`
         },
-      });
+      })
       const mailOptions2 = {
         from: "'HappyTails'<HAppYTAil5@hotmail.com>",
         to: `${oldOwner.email}`,
         subject: "Felicitaciones!",
-        text: `Han adoptado correctamente a ${newpet.name}`,
-      };
+        text: `Han adoptado correctamente a ${newpet.name}`
+      }
       transporter2.sendMail(mailOptions2, (err, response) => {
         if (err) {
           console.error("Ha ocurrido un error", err);
         } else {
           console.error("Response", response);
-          res.status(200).json("El email para la adopcion ha sido enviado");
+          res.status(200).json("El email para la adopcion ha sido enviado")
         }
-      });
+      })
     } catch (err) {
       console.error(err);
     }
@@ -162,48 +162,40 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
 
 router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
   try {
-    const { userId, ownerId, petId, pet_interesed } = req.body;
+    const {
+      userId,
+      ownerId,
+      petId,
+      owner_email,
+      adopter_email,
+      adopter_telephone,
+      message,
+      adopter_username,
+      adopter_name,
+      pet_name,
+      link,
+    } = req.body;
+
+    const user = await User.findById({ _id: ownerId });
 
     if (
-      pet_interesed.filter(
-        (e) => e[0]._id === userId && e[1]._id === petId
+      user.interestedUsers.filter(
+        (e) => e.interestedUser === userId && e.petId === petId
       ).length
     ) {
-      console.log(pet_interesed.interestedUsers.filter(
-        (e) => e[0]._id === userId && e[1]._id === petId
-      ).length)
       res.send("Ya mandaste la solicitud de adopcion");
-    } else {
-      const userPush = await User.findById({ _id: userId })
-      const petPush = await Pets.findById({ _id: petId })
-      let viewState = false
-      const petAndUserIds = [userPush, petPush, viewState]
 
-      /*      await User.updateOne({ _id: user }, { $set: { interestedUsers:  userId } });  */
+    } else {
+
+      const petAndUserIds = {
+        interestedUser: userId,
+        petId,
+        viewState: false,
+      };
       await User.updateOne(
         { _id: ownerId },
         { $push: { interestedUsers: petAndUserIds } }
       );
-      await Pets.updateOne(
-        { _id: petId },
-        { $push: { interestedUsers: petAndUserIds } }
-      );
-      /*      await User.updateOne({ _id: ownerId }, { $pull: { interestedUsers:  userId } });  */
-
-      /* const newpet = await Pets.findOne({ _id: petId });
-    const newuser = await User.findOne({ _id: userId }); */
-
-
-      const {
-        owner_email,
-        adopter_email,
-        adopter_telephone,
-        message,
-        adopter_username,
-        adopter_name,
-        pet_name,
-        link,
-      } = req.body;
 
       let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -231,23 +223,37 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
                               <p>${message}</p>
                               Atentamente HT`;
 
-
-
       let info = await transporter.sendMail({
         from: "'HappyTails'<happytailshp@gmail.com>",
         to: owner_email,
-        subject: "Contacto de adopciÃ³n",
+        subject: "Contacto de adopción",
         html: contentHTML,
       });
-
-      console.log("message sent", info.messageId);
       res.send("OK");
     }
-
   } catch (error) {
     next(error);
-  };
-})
+  }
+});
+
+router.patch("/viewing", async (req, res, next) => {
+  const { id, interestedId, petId } = req.body;
+
+  const user = await User.findOne({ _id: id });
+
+  let loquecambia = user.interestedUsers.filter(e => e.interestedUser === interestedId && e.petId === petId)
+  loquecambia[0].viewState = true
+  let el_resto = user.interestedUsers.filter(e => e.interestedUser !== interestedId || e.petId !== petId).concat(loquecambia)
+
+  await User.updateOne(
+    { _id: id },
+    { $set: { interestedUsers: el_resto } }
+  )
+
+  res.status(200).send("notification viewed");
+});
+
+
 router.patch("/likes", verifyToken, async (req, res, next) => {
   try {
     const { petId, userId, ownerId, likes } = req.body;
@@ -275,4 +281,6 @@ router.patch("/likes", verifyToken, async (req, res, next) => {
   }
 });
 
+
 module.exports = router;
+
