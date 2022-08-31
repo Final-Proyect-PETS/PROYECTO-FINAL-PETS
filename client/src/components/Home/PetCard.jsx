@@ -42,9 +42,9 @@ export default function Card({
     };
     dispatch(patchLikes(payload));
   }
-  //likes--hasta aca
+  //likes--hasta aca , casi te vas
 
-  return (
+    return (
     <>
       <div
         id={idUser}
