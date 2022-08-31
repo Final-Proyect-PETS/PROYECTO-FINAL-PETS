@@ -260,10 +260,10 @@ router.patch("/likes", verifyToken, async (req, res, next) => {
       // );
       res.send("Ya mandaste la solicitud de adopcion");
     } else {
-      const userPush = await User.findById({ _id: userId });
-      const petPush = await Pets.findById({ _id: petId });
+      // const userPush = await User.findById({ _id: userId });
+      // const petPush = await Pets.findById({ _id: petId });
       let support = false;
-      const petAndUserIds = [userPush, petPush, support];
+      const petAndUserIds = { userId, petId, support };
       await User.updateOne(
         { _id: ownerId },
         { $push: { likesPets: petAndUserIds } }
@@ -274,4 +274,5 @@ router.patch("/likes", verifyToken, async (req, res, next) => {
     next(error);
   }
 });
+
 module.exports = router;
