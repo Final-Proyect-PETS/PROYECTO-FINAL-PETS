@@ -25,15 +25,9 @@ import Notifications from "./components/TradePet/Notifications";
 import DonationCancelled from "./components/Donations/DonationCancelled";
 import DonationPending from "./components/Donations/DonationPending";
 import DonationSuccessful from "./components/Donations/DonationSuccessful";
-<<<<<<< HEAD
-// import io from "socket.io-client"
 import Chat from "./components/Chat/Chat";
-
-// const socket = io("http://localhost:3001")
-
-=======
 import UserDonations from "./components/Donations/UsersDonations";
->>>>>>> 2e725fee5b98e1d0fde61fa61d7abff5ad988ecb
+
 
 function App() {
   const token = localStorage.getItem("token");
