@@ -248,33 +248,4 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
     next(error);
   };
 })
-
-
-router.patch("/likes", verifyToken, async (req, res, next) => {
-  try {
-    const { petId, userId, ownerId, likes } = req.body;
-
-    if (likes.filter((e) => e[0]._id === userId && e[1]._id === petId).length) {
-      // console.log(
-      //   pet_interesed.interestedUsers.filter(
-      //     (e) => e[0]._id === userId && e[1]._id === petId
-      //   ).length
-      // );
-      res.send("Ya mandaste la solicitud de adopcion");
-    } else {
-      const userPush = await User.findById({ _id: userId });
-      const petPush = await Pets.findById({ _id: petId });
-      let support = false;
-      const petAndUserIds = [userPush, petPush, support];
-      await User.updateOne(
-        { _id: ownerId },
-        { $push: { likesPets: petAndUserIds } }
-      );
-      await Pets.updateOne({ _id: petId }, { $push: { likes: petAndUserIds } });
-    }
-  } catch (error) {
-    next(error);
-  }
-});
-
 module.exports = router;
