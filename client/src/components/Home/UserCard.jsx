@@ -43,7 +43,7 @@ export default function UserCard({
           <div className="flex items-center">
             <div className="text-sm flex">
               <img src={ubicacion} alt="ubicacion" width="16px" />
-              <span className="font-medium text-xs mx-3">{place}</span>
+              <span className="font-medium text-xs mx-3">{place?.length<=25?place:`${place?.slice(0,25)}...`}</span>
             </div>
           </div>
           {donations.length === 1 ? (
