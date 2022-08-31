@@ -26,24 +26,24 @@ export default function TradePet() {
     petId: "",
     ownerId: loggedUser._id,
   });
-  
-  const iUser = loggedUser.interestedUsers 
+
+  const iUser = loggedUser.interestedUsers
   const futuresPets = []
   function adopterHandler(e) {
     console.log(e.target.value, "ADOPTER");
     setData({ ...data, userId: e.target.value });
   }
-  for (let i = 0; i < iUser.length; i++){
-    for(let x = 0; x < iUser[i].length; x++){
-      if(iUser[i][x]._id === data.userId){
-            futuresPets.push(iUser[i][x + 1])
-            /*  for (let z = 0; z < i.length; z++){
-              if (iUser[i][x] !== iUser[i][x + 1] || iUser[i][x + 1] !== iUser[i][x])
-             } */
-           }
-          }
-          
-        }
+  for (let i = 0; i < iUser.length; i++) {
+    for (let x = 0; x < iUser[i].length; x++) {
+      if (iUser[i][x]._id === data.userId) {
+        futuresPets.push(iUser[i][x + 1])
+        /*  for (let z = 0; z < i.length; z++){
+          if (iUser[i][x] !== iUser[i][x + 1] || iUser[i][x + 1] !== iUser[i][x])
+         } */
+      }
+    }
+
+  }
 
   function petHandler(e) {
     console.log(e.target.value, "PET");
@@ -104,34 +104,34 @@ export default function TradePet() {
         .then(() => navigate(`/users/${loggedUser._id}`, { replace: true }));
     } //oponer sweet
   }
-   
-   let interesados = []
-   for (let i = 0; i < iUser.length; i++){
-     for(let j = 0; j < getUsers.length; j++){ 
-       for(let x = 0; x < iUser[i].length; x++){
-         if(iUser[i][x]._id === getUsers[j]._id){
-           interesados.push(iUser[i][x])
-           /*  for (let z = 0; z < i.length; z++){
-             if (iUser[i][x] !== iUser[i][x + 1] || iUser[i][x + 1] !== iUser[i][x])
-            } */
-          }
+
+  let interesados = []
+  for (let i = 0; i < iUser.length; i++) {
+    for (let j = 0; j < getUsers.length; j++) {
+      for (let x = 0; x < iUser[i].length; x++) {
+        if (iUser[i][x]._id === getUsers[j]._id) {
+          interesados.push(iUser[i][x])
+          /*  for (let z = 0; z < i.length; z++){
+            if (iUser[i][x] !== iUser[i][x + 1] || iUser[i][x + 1] !== iUser[i][x])
+           } */
         }
-      } 
+      }
     }
-    const petsInteresados = []
-    for (let i = 0; i < iUser.length; i++){
-     for(let j = 0; j < loggedUser.pets.length; j++){ 
-       for(let x = 0; x < iUser[i].length; x++){
-         if(iUser[i][x]._id === loggedUser.pets[j]._id){
-           petsInteresados.push(iUser[i][x])
-           /*  for (let z = 0; z < i.length; z++){
-             if (iUser[i][x] !== iUser[i][x + 1] || iUser[i][x + 1] !== iUser[i][x])
-            } */
-          }
+  }
+  const petsInteresados = []
+  for (let i = 0; i < iUser.length; i++) {
+    for (let j = 0; j < loggedUser.pets.length; j++) {
+      for (let x = 0; x < iUser[i].length; x++) {
+        if (iUser[i][x]._id === loggedUser.pets[j]._id) {
+          petsInteresados.push(iUser[i][x])
+          /*  for (let z = 0; z < i.length; z++){
+            if (iUser[i][x] !== iUser[i][x + 1] || iUser[i][x + 1] !== iUser[i][x])
+           } */
         }
-      } 
+      }
     }
-    
+  }
+
   /*         function handlerDeleted (){
             for (let i = 0; i < iUser.length; i++){
               for(let j = 0; j < interesados.length; j++){ 
@@ -203,13 +203,13 @@ export default function TradePet() {
                                     pets={user.pets}
                                     place={user.place}
                                   />
-                                    <button>X</button>
+                                  <button>X</button>
                                   {/* </div> */}
                                 </li>
                               ))
                             ) : (
                               <div>
-                              Todavia no hay adoptadores.... Puedes buscarlos
+                                Todavia no hay adoptadores.... Puedes buscarlos
                               </div>
                             )}
                           </form>
@@ -263,7 +263,7 @@ export default function TradePet() {
                               ))
                             ) : (
                               <div>
-                              Paso 2 incompleto :C
+                                Paso 2 incompleto :C
                               </div>
                             )}
                           </form>
@@ -306,7 +306,6 @@ export default function TradePet() {
                           value={user._id}
                           onChange={(e) => adopterHandler(e)}
                         />
-
                         <AdopterCard
                           key={user._id}
                           _id={user._id}
@@ -338,4 +337,3 @@ export default function TradePet() {
     </div>
   );
 }
-
