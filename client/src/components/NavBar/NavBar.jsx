@@ -25,7 +25,6 @@ export default function NavBar() {
     localStorage.removeItem("token");
     localStorage.removeItem("id");
   }
-
   function closeHandler(e) {
     e.preventDefault();
     let payload = {
@@ -37,7 +36,7 @@ export default function NavBar() {
     dispatch(getUserProfile(loggedUser._id))
   }
 
-  let algo = loggedUser.interestedUsers.map(e => {
+  let algo = loggedUser?.interestedUsers?.map(e => {
     return {
       user : allUsers.filter(a => a._id === e.interestedUser)[0],
       pet : allPets.filter(a => a._id === e.petId)[0],
