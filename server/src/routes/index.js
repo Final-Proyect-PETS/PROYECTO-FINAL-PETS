@@ -13,6 +13,8 @@ const patchPet = require("./patch");
 const patchUser = require("./patch");
 const adopt = require("./patch");
 const adoptionMail = require("./send-email");
+const conversations = require("./conversations")
+const messages = require("./messages")
 const postImage = require("./posts");
 const payment = require("./payment");
 const responsePayment = require("./payment");
@@ -31,6 +33,8 @@ router.use(
   patchPet,
   patchUser,
   postImage,
+  conversations,
+  messages,
   adopt
 );
 
