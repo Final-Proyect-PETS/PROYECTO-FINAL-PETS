@@ -10,7 +10,8 @@ const initialState = {
   userProfile: [], //usuario loggeado
   payment: {},
   tradePet: [], //mascota que se vá
-  notification: [], //campanita
+  notViewedNotification: [],//no vistas
+  viewedNotification: [], //vistas
 };
 
 export default function rootReducer(state = initialState, { type, payload }) {
@@ -134,11 +135,22 @@ export default function rootReducer(state = initialState, { type, payload }) {
         ...state,
         userDetail: payload,
       };
-    case actions.NOTIFICATION:
+      case actions.NOT_VIEWED_NOTIFICATION:
+        return {
+          ...state,
+          notViewedNotification: payload
+        };
+    case actions.VIEWED_NOTIFICATION:
       return {
         ...state,
-        notification: payload,
+        viewedNotification:payload
       };
+
+    case actions.VIEWING_NOTIFICATION:
+      return{
+        ...state
+      }
+
     case actions.FORGOT_PASSWORD:
       return {
         ...state
@@ -147,6 +159,7 @@ export default function rootReducer(state = initialState, { type, payload }) {
       return {
         ...state
       };
+
 
     default:
       return state;

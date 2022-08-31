@@ -193,7 +193,7 @@ export function filterByQuery(filterParams) {
 export function userLogin(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios
+      await axios
         .post("http://localhost:3001/login", payload)
         .then((response) => {
           const token = response.data.data.token;
@@ -332,13 +332,46 @@ export function paymentMp(idDonor, amountDonation) {
   };
 }
 
-///////////////////////////laut
-export function sendNotification(payload) {
+///////////////////////////NOTIFICATIONS-------------------
+export function notViewed(payload) {
   return async function (dispatch) {
     try {
       return dispatch({
-        type: actions.NOTIFICATION,
+        type: actions.NOT_VIEWED_NOTIFICATION,
         payload: payload,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+export function viewed(view) {
+  
+  return async function (dispatch) {
+    try {
+      return dispatch({
+        type: actions.VIEWED_NOTIFICATION,
+        payload: view,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+
+//VIEWED --------------------------JUANMA SOS VOS------------
+export function viewing(payload){
+
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(
+        `http://localhost:3001/home/rutajuanmanotivista`,
+        payload
+      );
+      return dispatch({
+        type: actions.PATCH_USER,
+        payload: json.data,
       });
     } catch (error) {
       console.log(error);

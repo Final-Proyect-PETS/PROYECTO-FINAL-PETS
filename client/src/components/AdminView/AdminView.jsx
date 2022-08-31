@@ -42,32 +42,6 @@ export default function AdminView() {
   return (
     <div>
       <NavBar />
-      {/* <div id="modal-component-container" className="fixed inset-0">
-        <div className="modal-flex-container flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-          <div id="toogle" className="modal-bg-container fixed inset-0 bg-gray-800 bg-opacity-75">
-
-          </div>
-          <div className="modal-space-container hidden sm:inline-block sm:align-middle sm:h-screen"></div>
-
-          <div className="modal-container inline-block align-bottom bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm: max-w-lg">
-            <div className="modal-wrapper bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-              <div className="modal-wrapper-flex sm:flex sm:items-start">
-                <div className="modal-icon mx-auto flex-shrink-0 items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"></div>
-                <div className="modal-content text-center mt-3 sm:mt-0 sm:ml-4 sm:text-left">
-                  <h3 className="text-lg font-medium text-gray-900">Eliminar elemento</h3>
-                  <div className="modal-text mt-2">
-                    <p className="text-gray-500 text-sm">Seguro?</p>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-            <div className="modal-actions bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-              <button className="w-full inline-flex justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm ">Aceptar</button>
-            </div>
-          </div>
-        </div>
-      </div> */}
       <Modal show={show} popup={true} onClose={onClose} class="bg-gray-800 bg-opacity-100">
         <div className="pl-2 p-3 bg-yellow-600 rounded-md">
           <Modal.Header>
@@ -101,15 +75,15 @@ export default function AdminView() {
                     <div className=" h-1/4 flex items-center justify-center flex-col">
                       <div className="bg-white flex justify-center">
                         <h1>
-                          Cuenta creada el:{" "}
-                          {m.createdAt.slice(0, 10)} a las{" "}
+                          Cuenta creada el:
+                          {m.createdAt.slice(0, 10)} a las
                           {m.createdAt.slice(11, 19)}
                         </h1>
                       </div>
                       <div className="flex justify-center">
                         <h1>
-                          Cuenta editada por ultima vez el:{" "}
-                          {m.updatedAt.slice(0, 10)} a las{" "}
+                          Cuenta editada por ultima vez el:
+                          {m.updatedAt.slice(0, 10)} a las
                           {m.updatedAt.slice(11, 19)}
                         </h1>
                       </div>
@@ -143,11 +117,12 @@ export default function AdminView() {
             </div>
           </div>
         </Modal.Body>
-      </Modal >
+      </Modal>
+
       <div id="view-admin">
         <div className="w-full text-center p-5">
           <h3 className="text-6xl font-semibold italic text-gray-800">
-            Happy Tails 
+            Happy Tails
           </h3>
           <h3 className="text-2xl p-3 text-gray-800">
             Vista de administrador
@@ -176,9 +151,9 @@ export default function AdminView() {
                           <Link to={"/users/" + u._id}>
                             {u.first_name} {u.last_name}
                           </Link>
-                        }{" "}
-                        | Username: {u.username} | {u.email}{" "}
-                      </div>{" "}
+                        }
+                        | Username: {u.username} | {u.email}
+                      </div>
                       <div className="w-2/5 flex justify-center">
                         <div>
                           <Button
@@ -188,7 +163,7 @@ export default function AdminView() {
                             }}
                             class="w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
                           >
-                           Más información
+                            Más información
                           </Button>
                         </div>
                       </div>

@@ -1,10 +1,9 @@
 import React from "react";
 import NavBar from "../NavBar/NavBar";
-import "../LandingPage.css";
+import "./Donations.css";
 import { useSelector } from "react-redux";
 import { getUserProfile, paymentMp } from "../../redux/Actions";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import { notificationSwal } from "../../utils/notificationSwal";
@@ -12,17 +11,16 @@ import { notificationSwal } from "../../utils/notificationSwal";
 
 export default function Donation() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const id = localStorage.getItem("id");
   const user = useSelector((state) => state.userProfile);
-  const payment = useSelector((state) => state.payment.id);
+
   const [input, setInput] = useState("");
   const [generating0, setGenerating0] = useState(false);
   const [generating1, setGenerating1] = useState(false);
   const [generating2, setGenerating2] = useState(false);
   const [generating3, setGenerating3] = useState(false);
-  const [disable0, setDisable0] = useState(false);
+  // const [disable0, setDisable0] = useState(false);
   const [disable1, setDisable1] = useState(false);
   const [disable2, setDisable2] = useState(false);
   const [disable3, setDisable3] = useState(false);
@@ -30,8 +28,6 @@ export default function Donation() {
   useEffect(() => {
     dispatch(getUserProfile(id));
   }, [dispatch, id]);
-
-  const [activeButton, setActive] = useState(true);
 
   function handleChange(e) {
     setInput({
@@ -136,7 +132,7 @@ export default function Donation() {
   return (
     <>
       <NavBar />
-      <div id="landing" className="w-full">
+      <div id="donations" className="w-full">
         <div className="h-screen flex justify-center items-center flex-col backdrop-blur-sm">
           <div className="flex flex-col justify-center items-center">
             <h3 className="text-6xl italic text-gray-800 flex justify-center font-semibold mb-3">

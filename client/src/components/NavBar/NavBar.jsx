@@ -11,11 +11,11 @@ export default function NavBar() {
 
   const id = localStorage.getItem("id");
 
-  const loggedUser = useSelector((state) => state.userProfile);
-
   useEffect(() => {
     dispatch(getUserProfile(id));
   }, [dispatch, id]);
+
+  const loggedUser = useSelector((state) => state.userProfile);//el loggeduser5 estaba arriba del useEFF, lo puse abajio
 
   function removeToken(ev) {
     localStorage.removeItem("token");
@@ -63,6 +63,7 @@ export default function NavBar() {
                       <img
                         src={iUser[0].image}
                         className="h-10 w-10 rounded-full"
+                        alt="imagen de usuario"
                       />
                     </div>
                     <div className="ml-3 text-sm font-normal">
@@ -117,8 +118,9 @@ export default function NavBar() {
           <Link to="/notifications">
             <Dropdown.Item>Notificaciones</Dropdown.Item>
           </Link>
-
-          <Dropdown.Item>Mis donaciones</Dropdown.Item>
+          <Link to={"/mydonations/" + id}>
+            <Dropdown.Item>Mis donaciones</Dropdown.Item>
+          </Link>
           {loggedUser.isAdmin === true ? (
             <Link to="/admin">
               <Dropdown.Item>Vista de admin</Dropdown.Item>
