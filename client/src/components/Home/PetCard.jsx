@@ -96,7 +96,7 @@ export default function Card({
               </div>
               <div className="flex">
                 <h1 className="text-white font-bold text-2x1">
-     {/* aACA VA EL NUMERITO DE LIKES */}{likes?.length}{/* aACA VA EL NUMERITO DE LIKES */}
+     {/* aACA VA EL NUMERITO DEEEE LIKES */}{likes?.length}{/* aACA VA EL NUMERITO DE LIKES */}
                 </h1>
                 <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
                   <button onClick={(e) => likeHandler(e)}>

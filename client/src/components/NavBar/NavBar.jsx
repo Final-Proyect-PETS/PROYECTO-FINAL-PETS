@@ -147,9 +147,12 @@ export default function NavBar() {
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
+        <Navbar.Link class="text-white hover:none">
+          <Link to="/blog">Blog</Link>
+        </Navbar.Link>
         <Navbar.Link>
           <Link to="/home" class="text-white hover:none">
-            Inicio
+       Comunidad
           </Link>
         </Navbar.Link>
         <Navbar.Link class="text-white hover:none">
