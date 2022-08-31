@@ -162,48 +162,40 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
 
 router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
   try {
-    const { userId, ownerId, petId, pet_interesed } = req.body;
+    const {
+      userId,
+      ownerId,
+      petId,
+      owner_email,
+      adopter_email,
+      adopter_telephone,
+      message,
+      adopter_username,
+      adopter_name,
+      pet_name,
+      link,
+    } = req.body;
+
+    const user = await User.findById({ _id: ownerId });
 
     if (
-      pet_interesed.filter(
-        (e) => e[0]._id === userId && e[1]._id === petId
+      user.interestedUsers.filter(
+        (e) => e.interestedUser === userId && e.petId === petId
       ).length
     ) {
-      console.log(pet_interesed.interestedUsers.filter(
-        (e) => e[0]._id === userId && e[1]._id === petId
-      ).length)
       res.send("Ya mandaste la solicitud de adopcion");
-    } else {
-      const userPush = await User.findById({ _id: userId })
-      const petPush = await Pets.findById({ _id: petId })
-      let viewState = false
-      const petAndUserIds = [userPush, petPush, viewState]
 
-      /*      await User.updateOne({ _id: user }, { $set: { interestedUsers:  userId } });  */
+    } else {
+
+      const petAndUserIds = {
+        interestedUser: userId,
+        petId,
+        viewState: false,
+      };
       await User.updateOne(
         { _id: ownerId },
         { $push: { interestedUsers: petAndUserIds } }
       );
-      await Pets.updateOne(
-        { _id: petId },
-        { $push: { interestedUsers: petAndUserIds } }
-      );
-      /*      await User.updateOne({ _id: ownerId }, { $pull: { interestedUsers:  userId } });  */
-
-      /* const newpet = await Pets.findOne({ _id: petId });
-    const newuser = await User.findOne({ _id: userId }); */
-
-
-      const {
-        owner_email,
-        adopter_email,
-        adopter_telephone,
-        message,
-        adopter_username,
-        adopter_name,
-        pet_name,
-        link,
-      } = req.body;
 
       let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -231,21 +223,62 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
                               <p>${message}</p>
                               Atentamente HT`;
 
-
-
       let info = await transporter.sendMail({
         from: "'HappyTails'<happytailshp@gmail.com>",
         to: owner_email,
         subject: "Contacto de adopción",
         html: contentHTML,
       });
-
-      console.log("message sent", info.messageId);
       res.send("OK");
     }
-
   } catch (error) {
     next(error);
-  };
-})
+  }
+});
+
+router.patch("/viewing", async (req, res, next) => {
+  const { id, interestedId, petId } = req.body;
+
+  const user = await User.findOne({ _id : id });
+
+  let loquecambia = user.interestedUsers.filter(e => e.interestedUser === interestedId && e.petId === petId)
+  loquecambia[0].viewState = true
+  let el_resto = user.interestedUsers.filter(e => e.interestedUser !== interestedId || e.petId !== petId).concat(loquecambia)
+
+  await User.updateOne(
+    {_id : id},
+    {$set: { interestedUsers : el_resto}}
+  )
+
+  res.status(200).send("notification viewed");
+});
+
+
+router.patch("/likes", verifyToken, async (req, res, next) => {
+  try {
+    const { petId, userId, ownerId, likes } = req.body;
+
+    if (likes.filter((e) => e[0]._id === userId && e[1]._id === petId).length) {
+      // console.log(
+      //   pet_interesed.interestedUsers.filter(
+      //     (e) => e[0]._id === userId && e[1]._id === petId
+      //   ).length
+      // );
+      res.send("Ya mandaste la solicitud de adopcion");
+    } else {
+      const userPush = await User.findById({ _id: userId });
+      const petPush = await Pets.findById({ _id: petId });
+      let support = false;
+      const petAndUserIds = [userPush, petPush, support];
+      await User.updateOne(
+        { _id: ownerId },
+        { $push: { likesPets: petAndUserIds } }
+      );
+      await Pets.updateOne({ _id: petId }, { $push: { likes: petAndUserIds } });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
