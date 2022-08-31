@@ -36,8 +36,6 @@ export default function Chat() {
 
   const iddd = idd[0]
 
-  console.log(messages)
-
   // const users = useSelector((state) => state.users);
   
   const user = useSelector((state) => state.userProfile)
@@ -80,7 +78,7 @@ export default function Chat() {
   useEffect(() => {
     const getMessages = async () => {
       try {
-        const res = await axios.get("http://localhost:3001/home/message/" + iddd)
+        const res = await axios.get("http://localhost:3001/home/message/" + currentChat?._id)
         setMessages(res.data)
       } catch (error) {
         console.log(error)
@@ -96,7 +94,7 @@ export default function Chat() {
       text: newMessage,
       conversationId: iddd
     }
-    const receiverId = currentChat?.members.find((m) => m !== id)
+    const receiverId = currentChat.members?.find((m) => m !== id)
 
   socket.current.emit("sendMessage", {
     senderId: id,
@@ -112,6 +110,8 @@ export default function Chat() {
     scrollRef.current?.scrollIntoView({behavior: "smooth"})
   }, [messages])
 
+  console.log(currentChat, "ACa chat")
+
 
   return (
     <>
@@ -123,7 +123,7 @@ export default function Chat() {
           </div>
           <div className="h-screen overflow-y-scroll">
             <ol className="gap-3">
-              {conversations?.map((u) => (
+              {conversations.map((u) => (
                 <li onClick={() => setCurrentChat(u)} className="flex items-center gap-3 h-32 border border-black">
                     <Conversations conversation={u} currentUser={id}/>
                 </li>
@@ -132,7 +132,7 @@ export default function Chat() {
           </div>
         </div>
         <div className="w-2/4">
-          {currentChat?
+          {currentChat?(
           <>
           <div className="h-screen overflow-y-scroll pr-1">
             {messages.map((m) => (
@@ -144,7 +144,7 @@ export default function Chat() {
           <div className="mt-5 flex items-center justify-between">
             <textarea onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="w-3/4 h-24 p-2.5" placeholder="Escribe algo..."></textarea>
             <button onClick={handleSubmit} className="w-16 h-10 border-none bg-gray-400 text-white">Enviar</button>
-          </div></> : <span className="flex justify-center items-center text-3xl">Abrí un chat</span>}
+          </div></> ): (<span className="flex justify-center items-center text-3xl">Abrí un chat</span>)}
         </div>
         <div className="w-1/4 p-10">
           <Online />

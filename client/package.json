@@ -28,6 +28,7 @@
     "redux-toolkit": "^1.1.2",
     "socket.io-client": "^4.5.1",
     "sweetalert2": "^11.4.28",
+    "timeago.js": "^4.0.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
