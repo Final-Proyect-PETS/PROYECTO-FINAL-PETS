@@ -67,13 +67,9 @@ export default function UserDonations() {
                                     ${e.donationAmount}
                                 </Table.Cell>
                             </Table.Row>) : <Table.Row className="bg-white">
-                            <Table.Cell>
+                            
                                 No tenés donaciones registradas
-                            </Table.Cell>
-                            <Table.Cell></Table.Cell>
-                            <Table.Cell></Table.Cell>
-                            <Table.Cell></Table.Cell>
-                            <Table.Cell></Table.Cell>
+                            
                         </Table.Row>}
                     </Table.Body>
                 </Table>

@@ -100,8 +100,60 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
     await User.updateOne({ _id: ownerId }, { $pull: { pets: petId } });
 
     const newpet = await Pets.findOne({ _id: petId });
-    const newuser = await User.findOne({ _id: userId });
-
+    const oldOwner = await User.findOne({ _id: ownerId });
+    const newOwner = await User.findOne({ _id: userId });
+    console.log(oldOwner.email);
+    console.log(newOwner.email);
+    try {
+      const transporter = nodemailer.createTransport({
+        service: "hotmail",
+        auth: {
+          user: "HAppYTAil5@hotmail.com",
+          pass: `${NMAILER_PASSWORD}`,
+        },
+      });
+      const mailOptions = {
+        from: "'HappyTails'<HAppYTAil5@hotmail.com>",
+        to: `${newOwner.email}`,
+        subject: "Felicitaciones!",
+        text: `Has adoptado correctamente a ${newpet.name}`,
+      };
+      transporter.sendMail(mailOptions, (err, response) => {
+        if (err) {
+          console.error("Ha ocurrido un error", err);
+        } else {
+          console.error("Response", response);
+          res.status(200).json("El email para la adopcion ha sido enviado");
+        }
+      });
+    } catch (err) {
+      console.error(err);
+    }
+    try {
+      const transporter2 = nodemailer.createTransport({
+        service: "hotmail",
+        auth: {
+          user: "HAppYTAil5@hotmail.com",
+          pass: `${NMAILER_PASSWORD}`,
+        },
+      });
+      const mailOptions2 = {
+        from: "'HappyTails'<HAppYTAil5@hotmail.com>",
+        to: `${oldOwner.email}`,
+        subject: "Felicitaciones!",
+        text: `Han adoptado correctamente a ${newpet.name}`,
+      };
+      transporter2.sendMail(mailOptions2, (err, response) => {
+        if (err) {
+          console.error("Ha ocurrido un error", err);
+        } else {
+          console.error("Response", response);
+          res.status(200).json("El email para la adopcion ha sido enviado");
+        }
+      });
+    } catch (err) {
+      console.error(err);
+    }
     res.status(200).send("ADOPTED SSUCCESS");
   } catch (error) {
     next(error);
@@ -113,20 +165,19 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
     const { userId, ownerId, petId, pet_interesed } = req.body;
 
     if (
-      pet_interesed.filter((e) => e[0]._id === userId && e[1]._id === petId)
-        .length
+      pet_interesed.filter(
+        (e) => e[0]._id === userId && e[1]._id === petId
+      ).length
     ) {
-      console.log(
-        pet_interesed.interestedUsers.filter(
-          (e) => e[0]._id === userId && e[1]._id === petId
-        ).length
-      );
+      console.log(pet_interesed.interestedUsers.filter(
+        (e) => e[0]._id === userId && e[1]._id === petId
+      ).length)
       res.send("Ya mandaste la solicitud de adopcion");
     } else {
-      const userPush = await User.findById({ _id: userId });
-      const petPush = await Pets.findById({ _id: petId });
-      let viewState = false;
-      const petAndUserIds = [userPush, petPush, viewState];
+      const userPush = await User.findById({ _id: userId })
+      const petPush = await Pets.findById({ _id: petId })
+      let viewState = false
+      const petAndUserIds = [userPush, petPush, viewState]
 
       /*      await User.updateOne({ _id: user }, { $set: { interestedUsers:  userId } });  */
       await User.updateOne(
@@ -141,6 +192,7 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
 
       /* const newpet = await Pets.findOne({ _id: petId });
     const newuser = await User.findOne({ _id: userId }); */
+
 
       const {
         owner_email,
@@ -179,29 +231,28 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
                               <p>${message}</p>
                               Atentamente HT`;
 
+
+
       let info = await transporter.sendMail({
         from: "'HappyTails'<happytailshp@gmail.com>",
         to: owner_email,
-        subject: "Contacto de adopción",
+        subject: "Contacto de adopciÃ³n",
         html: contentHTML,
       });
 
       console.log("message sent", info.messageId);
       res.send("OK");
     }
+
   } catch (error) {
     next(error);
-  }
-});
-
+  };
+})
 router.patch("/likes", verifyToken, async (req, res, next) => {
   try {
     const { petId, userId, ownerId, likes } = req.body;
 
-    if (
-      likes.filter((e) => e[0]._id === userId && e[1]._id === petId)
-        .length
-    ) {
+    if (likes.filter((e) => e[0]._id === userId && e[1]._id === petId).length) {
       // console.log(
       //   pet_interesed.interestedUsers.filter(
       //     (e) => e[0]._id === userId && e[1]._id === petId
@@ -217,10 +268,7 @@ router.patch("/likes", verifyToken, async (req, res, next) => {
         { _id: ownerId },
         { $push: { likesPets: petAndUserIds } }
       );
-      await Pets.updateOne(
-        { _id: petId },
-        { $push: { likes: petAndUserIds } }
-      );
+      await Pets.updateOne({ _id: petId }, { $push: { likes: petAndUserIds } });
     }
   } catch (error) {
     next(error);
