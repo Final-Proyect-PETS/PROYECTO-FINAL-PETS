@@ -94,6 +94,10 @@ export default function rootReducer(state = initialState, { type, payload }) {
         ...state,
         petDetail: payload,
       };
+    case actions.PATCH_LIKES:
+      return {
+        ...state
+      }
     //FILTROS
     case actions.FILTER_BY_QUERY:
       return {
