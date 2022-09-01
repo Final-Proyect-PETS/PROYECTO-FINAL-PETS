@@ -55,7 +55,7 @@ export default function LandingPage() {
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(userLogin(input)).then(() => {
-      navigate("/home")
+      navigate("/blog")//cambie /home por /blog.... fijense
     })
   }
 
@@ -69,7 +69,7 @@ export default function LandingPage() {
 
   const responseGoogle = (response) => {
     dispatch(userLoginGoogle(response)).then(() => {
-      navigate("/home")
+      navigate("/blog")//cambie /home por /blog.... fijense
     })
   };
 
