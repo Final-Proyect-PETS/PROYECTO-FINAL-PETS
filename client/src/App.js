@@ -41,20 +41,23 @@ function App() {
   }
   const dispatch = useDispatch();
   const id = localStorage.getItem("id");
-  
-  useEffect(() => {
-    dispatch(getUserProfile(id));
-  }, [dispatch, id]);
-  
-  // const loggedUser = useSelector((state) => state.userProfile);
-  //ME TRAJE LOS USE EFFECT ACA PARA MEJORAR UN POQUITO EL RENDIMIENTO. A PRUEBA
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getAllPets());
-  }, [dispatch]);
+    dispatch(getUserProfile(id))//logged 
+    dispatch(getAllUsers())
+    dispatch(getAllPets())
+  },[]);
+
+  // const loggedUser = useSelector((state) => state.userProfile);
+  //ME TRAJE LOS USE EFFECT ACA PARA MEJORAR UN POQUITO EL RENDIMIENTO. A PRUEBA
+  //PROBARPORBARPROBAR
+  // useEffect(() => {
+  //   dispatch(getAllUsers());
+  // }, [dispatch]);
+
+  // useEffect(() => {
+  //   dispatch(getAllPets());
+  // }, [dispatch]);
   return (
     <BrowserRouter>
       <Routes history={history}>
