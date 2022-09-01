@@ -63,6 +63,7 @@ router.patch("/users/:id", verifyToken, async (req, res, next) => {
     about,
     deleted,
     interestedUsers,
+    blogmessage
   } = req.body;
   try {
     const userPatch = await patchUser(
@@ -76,7 +77,8 @@ router.patch("/users/:id", verifyToken, async (req, res, next) => {
       telephone,
       about,
       deleted,
-      interestedUsers
+      interestedUsers,
+      blogmessage
     );
     res.status(201).send(userPatch);
   } catch (error) {

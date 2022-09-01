@@ -17,9 +17,11 @@ export default function NavBar() {
   //   dispatch(getUserProfile(id));
   // }, [dispatch, id]);
 
-  const loggedUser = useSelector((state) => state.userProfile);//el loggeduser5 estaba arriba del useEFF, lo puse abajio
+  const loggedUser = useSelector((state) => state.userProfile); //el loggeduser5 estaba arriba del useEFF, lo puse abajio
 
-  let bell = loggedUser?.interestedUsers?.filter(e => e.viewState === false).length
+  let bell = loggedUser?.interestedUsers?.filter(
+    (e) => e.viewState === false
+  ).length;
 
   function removeToken(ev) {
     localStorage.removeItem("token");
@@ -32,21 +34,19 @@ export default function NavBar() {
       interestedId: e.target.value,
       petId: e.target.name, // interestedUsers: [{usuariointeresado}{mascotaquequiero},],
     };
-    dispatch(viewing(payload))
-    dispatch(getUserProfile(loggedUser._id))
+    dispatch(viewing(payload));
+    dispatch(getUserProfile(loggedUser._id));
   }
 
-  let algo = loggedUser?.interestedUsers?.map(e => {
+  let algo = loggedUser?.interestedUsers?.map((e) => {
     return {
-      user : allUsers.filter(a => a._id === e.interestedUser)[0],
-      pet : allPets.filter(a => a._id === e.petId)[0],
-      viewState : e.viewState
-    }
-  }
-)
+      user: allUsers.filter((a) => a._id === e.interestedUser)[0],
+      pet: allPets.filter((a) => a._id === e.petId)[0],
+      viewState: e.viewState,
+    };
+  });
 
   return (
-
     <Navbar fluid={false} rounded={false} class="text-white bg-yellow-500 p-3">
       <Link to="/home">
         <Navbar.Brand>
@@ -61,7 +61,6 @@ export default function NavBar() {
         </Navbar.Brand>
       </Link>
       <div className="flex md:order-2">
-
         <Dropdown
           class="bg-yellow-600 rounded-full mr-5 mt-1"
           label={`🔔${bell}`}
@@ -73,33 +72,38 @@ export default function NavBar() {
           </Dropdown.Header>
 
           {loggedUser?.interestedUsers?.length ? (
-          algo.map((iUser) => (
-            iUser.viewState === false ? 
-            <Toast key={iUser?.user?._id}>
-              <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-500 dark:bg-blue-800 dark:text-blue-200">
-                <img src={iUser?.user?.image} className="h-10 w-10 rounded-full" />
-              </div>
-              <div className="ml-3 text-sm font-normal">
-                <h1>{`${iUser.user.first_name} ${iUser.user.last_name} esta interesado en ${iUser.pet.name}`}</h1>
-                <button
-                  value={iUser?.user?._id}
-                  name={iUser?.pet?._id}
-                  className="text-yellow-500"
-                  onClick={(e) => closeHandler(e)}
-                >
-                Marcar como leida
-                </button>
-                <Link to={`/users/${iUser.user._id}`}>
-                  <h1 className="text-yellow-500">Ver Perfil</h1>
-                </Link>
-              </div>
-              <Toast.Toggle/>
-            </Toast>
-             : <></>
-          ))
-        ) : (
-          <>SIN NOTI</>
-        )}
+            algo.map((iUser) =>
+              iUser.viewState === false ? (
+                <Toast key={iUser?.user?._id}>
+                  <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-500 dark:bg-blue-800 dark:text-blue-200">
+                    <img
+                      src={iUser?.user?.image}
+                      className="h-10 w-10 rounded-full"
+                    />
+                  </div>
+                  <div className="ml-3 text-sm font-normal">
+                    <h1>{`${iUser.user.first_name} ${iUser.user.last_name} esta interesado en ${iUser.pet.name}`}</h1>
+                    <button
+                      value={iUser?.user?._id}
+                      name={iUser?.pet?._id}
+                      className="text-yellow-500"
+                      onClick={(e) => closeHandler(e)}
+                    >
+                      Marcar como leida
+                    </button>
+                    <Link to={`/users/${iUser.user._id}`}>
+                      <h1 className="text-yellow-500">Ver Perfil</h1>
+                    </Link>
+                  </div>
+                  <Toast.Toggle />
+                </Toast>
+              ) : (
+                <></>
+              )
+            )
+          ) : (
+            <>SIN NOTI</>
+          )}
 
           <Dropdown.Divider />
           <Link to={"/notifications"}>
@@ -152,7 +156,7 @@ export default function NavBar() {
         </Navbar.Link>
         <Navbar.Link>
           <Link to="/home" class="text-white hover:none">
-       Comunidad
+            Comunidad
           </Link>
         </Navbar.Link>
         <Navbar.Link class="text-white hover:none">

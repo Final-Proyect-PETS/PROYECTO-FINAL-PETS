@@ -59,6 +59,7 @@ async function patchUser(
   about,
   deleted,
   interestedUsers,
+  blogmessage
 ) {
   try {
     connection();
@@ -78,6 +79,7 @@ async function patchUser(
       about,
       deleted,
       interestedUsers,
+      blogmessage
     });
     const userActualizado = User.findOne({ _id: id }).populate({
       path: "pets",
