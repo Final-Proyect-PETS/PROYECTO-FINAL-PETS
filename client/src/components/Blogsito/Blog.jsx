@@ -20,9 +20,9 @@ import perronaranja from "../../assets/images/perronaranja.png";
 import cachita from "../../assets/images/carpi.png";
 import paradonar from "../../assets/images/paradonar.jpg";
 import carpi from "../../assets/images/cachita.png";
-import goldenpaw from "../../assets/images/goldenpaw.png";
+import goldenpaw from "../../assets/images/goldenpaw.gif";
 import goldenblackgif from "../../assets/images/goldenblackgif.gif";
-import diamantepaw from "../../assets/images/diamantepaw.png";
+import diamantepaw from "../../assets/images/diamantepaw.gif";
 import amarillobaño from "../../assets/images/amarillobaño.png";
 import { useState } from "react";
 
@@ -40,22 +40,22 @@ export default function Blog() {
   var donator = allUsers.filter((user) => user?.donations?.length >= 1);
   var adopted = allPets.filter((pet) => pet?.isAdopted === true);
   var blogger = allUsers.filter((user) => user?.blogmessage?.length >= 1);
- 
- const [input,setInput]= useState()
- 
- function handleChange(e){
-  setInput(e.target.value)
-  console.log(input)
- }
+
+  const [input, setInput] = useState();
+
+  function handleChange(e) {
+    setInput(e.target.value);
+    console.log(input);
+  }
   function onSubmitHandler(e) {
-    e.preventDefault()
+    e.preventDefault();
     let payload = {
       id: loggedUser._id,
       blogmessage: input,
     };
- dispatch(patchUsuer(payload))
+    dispatch(patchUsuer(payload));
 
-console.log(payload)
+    console.log(payload);
   }
 
   return (
@@ -146,7 +146,10 @@ console.log(payload)
           <div className="flex max-w-sm m-2">
             {/* CARD DE INPUT MENSAJE */}
             <Card>
-              <form  onSubmit={e=>onSubmitHandler(e)} className="flex flex-col gap-4">
+              <form
+                onSubmit={(e) => onSubmitHandler(e)}
+                className="flex flex-col gap-4"
+              >
                 <div>
                   <div className="mb-2 block">
                     <p className="font-normal text-black dark:text-gray-100">
@@ -171,7 +174,6 @@ console.log(payload)
                 <Button
                   class="flex justify-center bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
                   type="submit"
-                 
                 >
                   Postear
                 </Button>
@@ -185,11 +187,12 @@ console.log(payload)
                   Comentarios de la comunidad 💌
                 </h5>
 
+               
                 <Link
-                  to={`/mydonations/${loggedUser._id}`}
-                  className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+                  to={`/home`}
+                  className="text-sm font-medium text-yellow-600 hover:underline dark:text-yellow-500"
                 >
-                  Ver Todos
+                Ver Todos
                 </Link>
               </div>
               <div className="flow-root">
@@ -198,16 +201,26 @@ console.log(payload)
                     <li className="py-3 sm:py-4">
                       <div className="flex items-center space-x-4">
                         <div className="shrink-0">
-                          <img
-                            className="h-8 w-8 rounded-full"
-                            src={user.image}
-                            alt="Neil image"
-                          />
+                          <Link
+                            to={`/users/${user._id}`}
+                            className="group flex items-center rounded-full"
+                          >
+                            <img
+                              className="h-8 w-8 rounded-full"
+                              src={user.image}
+                              alt="Neil image"
+                            />
+                          </Link>
                         </div>
                         <div className="min-w-0 flex-1">
-                          <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                            {user.username}
-                          </p>
+                          <Link
+                            to={`/users/${user._id}`}
+                            className="group flex items-center rounded-full"
+                          >
+                            <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                              {user.username}
+                            </p>
+                          </Link>
                           <p className="truncate text-sm text-gray-500 dark:text-gray-400">
                             {user.blogmessage}
                           </p>
@@ -235,11 +248,16 @@ console.log(payload)
             </div>
             <Carousel className="rounded">
               {adopted?.map((adopt) => (
-                <img
-                  alt="adoptedPet"
-                  src={adopt.image}
-                  className="w-96 rounded"
-                />
+                <Link
+                  to={`/pet/${adopt._id}`}
+                  className="group flex items-center rounded-full"
+                >
+                  <img
+                    alt="adoptedPet"
+                    src={adopt.image}
+                    className="w-96 rounded"
+                  />
+                </Link>
               ))}
             </Carousel>
           </div>
@@ -256,7 +274,7 @@ console.log(payload)
 
                 <Link
                   to={`/mydonations/${loggedUser._id}`}
-                  className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+                  className="text-sm font-medium text-yellow-600 hover:underline dark:text-yellow-500"
                 >
                   Ver mis donaciones
                 </Link>
@@ -266,21 +284,32 @@ console.log(payload)
                   {donator?.map((don) => (
                     <li className="py-3 sm:py-4">
                       <div className="flex items-center space-x-4">
-                        <div className="shrink-0">
-                          <img
-                            className="h-8 w-8 rounded-full"
-                            src={don.image}
-                            alt="Neil image"
-                          />
-                        </div>
+                        <Link
+                          to={`/users/${don._id}`}
+                          className="group flex items-center rounded-full"
+                        >
+                          <div className="shrink-0">
+                            <img
+                              className="h-8 w-8 rounded-full"
+                              src={don.image}
+                              alt="Neil image"
+                            />
+                          </div>
+                        </Link>
                         <div className="min-w-0 flex-1">
-                          <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                            {don.username}
-                          </p>
+                          <Link
+                            to={`/users/${don._id}`}
+                            className="group flex items-center rounded-full"
+                          >
+                            <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                              {don.username}
+                            </p>
+                          </Link>
                           <p className="truncate text-sm text-gray-500 dark:text-gray-400">
                             {don.place}
                           </p>
                         </div>
+
                         <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
                           {`$ ${
                             don?.donations[don?.donations?.length - 1]
@@ -301,20 +330,20 @@ console.log(payload)
                 <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
                   🔥Usuarios destacados
                 </h5>
-                <a
-                  href="#"
-                  className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+                <Link
+                  to="/home"
+                  className="text-sm font-medium text-yellow-600 hover:underline dark:text-yellow-500"
                 >
                   Ver Todos
-                </a>
+                </Link>
               </div>
 
               <ul className="my-4 space-y-2   ">
                 {donator?.map((don) =>
                   don?.donations?.length > 3 ? (
                     <li>
-                      <a
-                        href="#"
+                      <Link
+                        to={`/users/${don._id}`}
                         className="group flex items-center rounded-lg bg-gray-50 p-3 text-base font-bold text-gray-900 hover:bg-gray-100 hover:shadow dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500"
                       >
                         <img
@@ -331,9 +360,9 @@ console.log(payload)
                         <img
                           className="h-8 w-8 rounded-full"
                           src={goldenblackgif}
-                          alt="Neil image"
+                          alt="paw"
                         />
-                      </a>
+                      </Link>
                     </li>
                   ) : (
                     false
@@ -343,8 +372,8 @@ console.log(payload)
                 {donator?.map((don) =>
                   don?.donations?.length > 1 && don?.donations?.length < 3 ? (
                     <li>
-                      <a
-                        href="#"
+                      <Link
+                        to={`/users/${don._id}`}
                         className="group flex items-center rounded-lg bg-gray-50 p-3 text-base font-bold text-gray-900 hover:bg-gray-100 hover:shadow dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500"
                       >
                         <img
@@ -361,9 +390,9 @@ console.log(payload)
                         <img
                           className="h-8 w-8 rounded-full"
                           src={diamantepaw}
-                          alt="Neil image"
+                          alt="paw"
                         />
-                      </a>
+                      </Link>
                     </li>
                   ) : (
                     false
@@ -372,8 +401,8 @@ console.log(payload)
                 {donator?.map((don) =>
                   don?.donations?.length === 1 ? (
                     <li>
-                      <a
-                        href="#"
+                      <Link
+                        to={`/users/${don._id}`}
                         className="group flex items-center rounded-lg bg-gray-50 p-3 text-base font-bold text-gray-900 hover:bg-gray-100 hover:shadow dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500"
                       >
                         <img
@@ -392,7 +421,7 @@ console.log(payload)
                           src={goldenpaw}
                           alt="goldenpaw"
                         />
-                      </a>
+                      </Link>
                     </li>
                   ) : (
                     false
