@@ -251,20 +251,29 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
 });
 
 router.patch("/viewing", async (req, res, next) => {
+
   const { id, interestedId, petId } = req.body;
+  const { petId2, userId, ownerId } = req.body;
 
-  const user = await User.findOne({ _id: id });
+  if (interestedId) {
+    const user = await User.findOne({ _id: id });
+    let loquecambia = user.interestedUsers.filter(
+      (e) => e.interestedUser === interestedId && e.petId === petId
+    );
+    loquecambia[0].viewState = true;
+    let el_resto = user.interestedUsers
+      .filter((e) => e.interestedUser !== interestedId || e.petId !== petId)
+      .concat(loquecambia);
 
-  let loquecambia = user.interestedUsers.filter(
-    (e) => e.interestedUser === interestedId && e.petId === petId
-  );
-  loquecambia[0].viewState = true;
-  let el_resto = user.interestedUsers
-    .filter((e) => e.interestedUser !== interestedId || e.petId !== petId)
-    .concat(loquecambia);
-
-  await User.updateOne({ _id: id }, { $set: { interestedUsers: el_resto } });
-
+    await User.updateOne({ _id: id }, { $set: { interestedUsers: el_resto } });
+  }
+  if (ownerId) {
+    const owner = await User.findOne({ _id: ownerId })
+    let cambia = owner.likesPets.filter(e => e.likesPets === userId && e.petId2 === petId2)
+    cambia[0].support = true
+    let resto = owner.likesPets.filter(e => e.likesPets !== userId || e.petId2 !== petId2).concat(cambia)
+    await User.updateOne({ _id: ownerId }, { $set: { likesPets: resto } })
+  }
   res.status(200).send("notification viewed");
 });
 
