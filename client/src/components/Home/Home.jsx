@@ -24,7 +24,7 @@ export default function Home() {
 
 function handley(e){
   setTimeout(verifyData(),5000);
-
+///FUNCION DE CHRIS
 }
   return (
     <section onClick={e=>handley(e)}>
