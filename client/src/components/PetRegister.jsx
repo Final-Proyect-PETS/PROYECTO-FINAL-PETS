@@ -286,7 +286,7 @@ export default function RegisterPet() {
   }
   return (
     <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
-      <div className="self-center mb-6 text-xl font-normal text-gray-600 sm:text-2xl dark:text-white">
+      <div className="self-center mb-6 text-xl font-normal text-white sm:text-2xl">
         Registra tu mascota para adoptar
       </div>
 
@@ -300,25 +300,25 @@ export default function RegisterPet() {
               value={input.name}
               onChange={(e) => handleChange(e)}
               placeholder="Nombre de la mascota"
-              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-white placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
             {errors.name && (
               <p className="font-bold text-red-700 text-center p-2">
                 {errors.name}
               </p>
             )}
+
           </div>
           <div>
             <label className="font-light text-white text-xl">
               Imagen de perfil
             </label>
-            <input
+            <input 
               type="file"
               name="image"
               accept=".jpg, .png, .jpeg"
-              onChange={(e) => handleImage(e)}
-              className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
-            />
+              onChange={(e) => handleImage(e)} 
+              className="w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" />
             {loadingImage ? (
               <h3 className="font-light text-white text-xl self-center">
                 Cargando imagen...
@@ -341,8 +341,9 @@ export default function RegisterPet() {
               name="imagePool"
               accept=".jpg, .png, .jpeg"
               onChange={(e) => handleImagePool(e)}
-              className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
+              className="w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             />
+          
             <div className="font-light text-white text-xl">
               {loadingImagePool ? (
                 <h3>Cargando imagen...</h3>
@@ -491,7 +492,7 @@ export default function RegisterPet() {
                   type="radio"
                   name="castrated"
                   value={true}
-                  className="w-4 h-4 mx-4 accent-yellow-900"
+                  className="w-4 h-4 mx-4 text-yellow-600 bg-white ring-1 ring-yellow-900  focus:ring-yellow-900"
                 />
                 <label className="font-light text-white text-xl">Sí</label>
               </span>
@@ -500,7 +501,7 @@ export default function RegisterPet() {
                   type="radio"
                   name="castrated"
                   value={false}
-                  className="w-4 h-4 mx-4 accent-yellow-900"
+                  className="w-4 h-4 mx-4 text-yellow-600 bg-white ring-1 ring-yellow-900  focus:ring-yellow-900"
                 />
                 <label className="font-light text-white text-xl">No</label>
               </span>
@@ -519,7 +520,7 @@ export default function RegisterPet() {
                   type="radio"
                   name="gender"
                   value="female"
-                  className="w-4 h-4 mx-4 accent-yellow-900"
+                  className="w-4 h-4 mx-4 text-yellow-600 bg-white ring-1 ring-yellow-900  focus:ring-yellow-900"
                 />
                 <label className="font-light text-white text-xl">Hembra</label>
               </span>
@@ -528,10 +529,11 @@ export default function RegisterPet() {
                   type="radio"
                   name="gender"
                   value="male"
-                  className="w-4 h-4 mx-4 accent-yellow-900"
+                  className="w-4 h-4 mx-4 text-yellow-600 bg-white ring-1 ring-yellow-900  focus:ring-yellow-900"
                 />
                 <label className="font-light text-white text-xl">Macho</label>
               </span>
+
             </fieldset>
             {errors.gender && (
               <p className="font-bold text-red-700 text-center p-2">

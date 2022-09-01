@@ -19,8 +19,8 @@ export default function UserDonations() {
     const user = useSelector((state) => state.userDetail);
 
     return <>
-    <div id="my-donations" >
-        <NavBar />
+        <div id="my-donations" >
+            <NavBar />
             <div className="w-full text-center p-5">
                 <h3 className="text-6xl font-semibold italic text-gray-800">
                     Mis donaciones
@@ -33,19 +33,19 @@ export default function UserDonations() {
                 <Table>
                     <Table.Head>
                         <Table.HeadCell>
-                            Fecha
+                            <span className="text-base">Fecha</span>
                         </Table.HeadCell>
                         <Table.HeadCell>
-                            Número de operación
+                            <span className="text-base">Número de operación</span>
                         </Table.HeadCell>
                         <Table.HeadCell>
-                            Estado
+                            <span className="text-base">Estado</span>
                         </Table.HeadCell>
                         <Table.HeadCell>
-                            Detalle de estado
+                            <span className="text-base">Detalle de estado</span>
                         </Table.HeadCell>
                         <Table.HeadCell>
-                            Monto
+                            <span className="text-base">Monto</span>
                         </Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
@@ -67,9 +67,13 @@ export default function UserDonations() {
                                     ${e.donationAmount}
                                 </Table.Cell>
                             </Table.Row>) : <Table.Row className="bg-white">
-                            
+                            <Table.Cell>
                                 No tenés donaciones registradas
-                            
+                            </Table.Cell>
+                            <Table.Cell></Table.Cell>
+                            <Table.Cell></Table.Cell>
+                            <Table.Cell></Table.Cell>
+                            <Table.Cell></Table.Cell>
                         </Table.Row>}
                     </Table.Body>
                 </Table>

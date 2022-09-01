@@ -1,79 +1,52 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import NavBar from "../NavBar/NavBar";
-import SearchTrade from "../SearchBars/SearchTrade";
-import { getUserProfile ,viewing} from "../../redux/Actions/index";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../LandingPage.css";
-import { Toast, Dropdown } from "flowbite-react";
-import { patchUsuer } from "../../redux/Actions/index";
-import { useState } from "react";
+import "./Notification.css";
 
 export default function Notifications() {
 
-  const dispatch = useDispatch();
   const loggedUser = useSelector((state) => state.userProfile);
   const allUsers = useSelector((state) => state.users);
   const allPets = useSelector((state) => state.pets);
-  
-  let bell = loggedUser?.interestedUsers?.filter(e => e.viewState === false).length;
-
-  function closeHandler(e) {
-    e.preventDefault();
-    let payload = {
-      id: loggedUser._id, //dueño
-      interestedId: e.target.value,
-      petId: e.target.name, // interestedUsers: [{usuariointeresado}{mascotaquequiero},FALSO],
-    };
-    dispatch(viewing(payload))
-    dispatch(getUserProfile(loggedUser._id))
-  }
 
   let algo = loggedUser.interestedUsers.map(e => {
     return {
-      user : allUsers.filter(a => a._id === e.interestedUser)[0],
-      pet : allPets.filter(a => a._id === e.petId)[0],
-      viewState : e.viewState
+      user: allUsers.filter(a => a._id === e.interestedUser)[0],
+      pet: allPets.filter(a => a._id === e.petId)[0],
+      viewState: e.viewState
     }
-  }
-)
+  })
 
   return (
-
-    <div id="landing" className="w-full">
+    <div className="w-full">
       <NavBar />
-      <div className="flex flex-col items-center">
-        <h2>Componente en construccion</h2>
-        <h1>
-            { bell > 1 ? `tienes ${bell} notificaciones sin leer` : bell === 1 ? `tienes 1 notificacion sin leer` : `sin notificaciones`}
-        </h1>
+      <div id="notification-component" className="flex flex-col items-center">
+        <span className="font-semibold text-2xl text-white py-5">Mis Notificaciones</span>
+
         {loggedUser?.interestedUsers?.length ? (
-          algo.map((iUser) => (
-            iUser.viewState === false ? 
-            <Toast key={iUser.user._id}>
-              <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-500 dark:bg-blue-800 dark:text-blue-200">
-                <img src={iUser.user.image} className="h-10 w-10 rounded-full" />
-              </div>
-              <div className="ml-3 text-sm font-normal">
-                <h1>{`${iUser.user.first_name} ${iUser.user.last_name} esta interesado en ${iUser.pet.name}`}</h1>
-                <button
-                  value={iUser.user._id}
-                  name={iUser.pet._id}
-                  className="text-yellow-500"
-                  onClick={(e) => closeHandler(e)}
-                >
-                Marcar como leida
-                </button>
-                <Link to={`/users/${iUser.user._id}`}>
-                  <h1 className="text-yellow-500">Ver Perfil</h1>
+          algo?.map((iUser) => (
+            iUser.viewState === false ?
+              <div className="flex w-full p-8 my-2 items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 ">
+                <div className="flex justify-between p-3 items-center">
+                  <div className="flex items-center">
+                    <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
+                      <img src={iUser?.user?.image} alt="profilepic" />
+                    </div>
+                  </div>
+                </div>
+                <div className="font-normal text-gray-700 dark:text-gray-400">
+                  {`${iUser?.user?.first_name} ${iUser?.user?.last_name} esta interesado en ${iUser?.pet?.name}`}
+                </div>
+                <Link to={`/users/${iUser?.user?._id}`} className="px-5">
+                  <h3 className="font-semibold text-yellow-500 hover:text-yellow-800">Ver Perfil</h3>
                 </Link>
               </div>
-              <Toast.Toggle/>
-            </Toast>
-             : <></>
+              : <></>
           ))
         ) : (
-          <>SIN NOTI</>
+          <span className="text-2xl text-white mt-3">Sin notificaciones</span>
         )}
       </div>
     </div>

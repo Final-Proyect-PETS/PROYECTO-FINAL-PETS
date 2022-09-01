@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getUserProfile, viewing } from "../../redux/Actions";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-// import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Navbar, Dropdown, Avatar, Toast } from "flowbite-react";
 
 export default function NavBar() {
@@ -27,6 +25,7 @@ export default function NavBar() {
     localStorage.removeItem("token");
     localStorage.removeItem("id");
   }
+
   function closeHandler(e) {
     e.preventDefault();
     let payload = {
@@ -45,6 +44,7 @@ export default function NavBar() {
       viewState: e.viewState,
     };
   });
+
 
   return (
     <Navbar fluid={false} rounded={false} class="text-white bg-yellow-500 p-3">
@@ -72,37 +72,38 @@ export default function NavBar() {
           </Dropdown.Header>
 
           {loggedUser?.interestedUsers?.length ? (
-            algo.map((iUser) =>
-              iUser.viewState === false ? (
+
+            algo?.map((iUser) => (
+              iUser?.viewState === false ?
                 <Toast key={iUser?.user?._id}>
                   <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-500 dark:bg-blue-800 dark:text-blue-200">
-                    <img
-                      src={iUser?.user?.image}
-                      className="h-10 w-10 rounded-full"
-                    />
+                    <img src={iUser?.user?.image} className="h-10 w-10 rounded-full" alt="imagen de usuario" />
                   </div>
                   <div className="ml-3 text-sm font-normal">
-                    <h1>{`${iUser.user.first_name} ${iUser.user.last_name} esta interesado en ${iUser.pet.name}`}</h1>
+                    <h2>{`${iUser?.user?.first_name} ${iUser?.user?.last_name} esta interesado en ${iUser?.pet?.name}`}</h2>
                     <button
                       value={iUser?.user?._id}
                       name={iUser?.pet?._id}
-                      className="text-yellow-500"
+                      className="text-yellow-500 py-1"
+
                       onClick={(e) => closeHandler(e)}
                     >
                       Marcar como leida
                     </button>
-                    <Link to={`/users/${iUser.user._id}`}>
-                      <h1 className="text-yellow-500">Ver Perfil</h1>
+
+                    <Link to={`/users/${iUser?.user?._id}`}>
+                      <h2 className="text-yellow-500">Ver Perfil</h2>
+
                     </Link>
                   </div>
                   <Toast.Toggle />
                 </Toast>
-              ) : (
-                <></>
-              )
-            )
+
+                : <></>
+            ))
           ) : (
-            <>SIN NOTI</>
+            <Dropdown.Item>Sin notificaciones nuevas</Dropdown.Item>
+
           )}
 
           <Dropdown.Divider />
@@ -114,9 +115,7 @@ export default function NavBar() {
         <Dropdown
           arrowIcon={false}
           inline={true}
-          label={
-            <Avatar alt="User settings" img={loggedUser.image} rounded={true} />
-          }
+          label={<Avatar alt="User settings" img={loggedUser.image} rounded={true} />}
         >
           <Dropdown.Header>
             <span className="block text-sm">
@@ -155,8 +154,10 @@ export default function NavBar() {
           <Link to="/blog">Blog</Link>
         </Navbar.Link>
         <Navbar.Link>
+
           <Link to="/home" class="text-white hover:none">
-            Comunidad
+            Comunidad/Adopcion
+
           </Link>
         </Navbar.Link>
         <Navbar.Link class="text-white hover:none">
