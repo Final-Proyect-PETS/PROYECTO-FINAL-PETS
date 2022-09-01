@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getUserProfile, viewing } from "../../redux/Actions";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Navbar, Dropdown, Avatar, Toast } from "flowbite-react";
 
 export default function NavBar() {
@@ -13,10 +11,9 @@ export default function NavBar() {
 
   const id = localStorage.getItem("id");
 
-  useEffect(() => {
-    dispatch(getUserProfile(id));
-
-  }, [dispatch, id]);
+  // useEffect(() => {
+  //   dispatch(getUserProfile(id));
+  // }, [dispatch, id]);
 
   const loggedUser = useSelector((state) => state.userProfile);//el loggeduser5 estaba arriba del useEFF, lo puse abajio
 
@@ -75,22 +72,22 @@ export default function NavBar() {
 
           {loggedUser?.interestedUsers?.length ? (
             algo?.map((iUser) => (
-              iUser.viewState === false ?
-                <Toast key={iUser.user._id}>
+              iUser?.viewState === false ?
+                <Toast key={iUser?.user?._id}>
                   <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-500 dark:bg-blue-800 dark:text-blue-200">
-                    <img src={iUser.user.image} className="h-10 w-10 rounded-full" alt="imagen de usuario" />
+                    <img src={iUser?.user?.image} className="h-10 w-10 rounded-full" alt="imagen de usuario" />
                   </div>
                   <div className="ml-3 text-sm font-normal">
-                    <h2>{`${iUser.user.first_name} ${iUser.user.last_name} esta interesado en ${iUser.pet.name}`}</h2>
+                    <h2>{`${iUser?.user?.first_name} ${iUser?.user?.last_name} esta interesado en ${iUser?.pet?.name}`}</h2>
                     <button
-                      value={iUser.user._id}
-                      name={iUser.pet._id}
+                      value={iUser?.user?._id}
+                      name={iUser?.pet?._id}
                       className="text-yellow-500 py-1"
                       onClick={(e) => closeHandler(e)}
                     >
                       Marcar como leida
                     </button>
-                    <Link to={`/users/${iUser.user._id}`}>
+                    <Link to={`/users/${iUser?.user?._id}`}>
                       <h2 className="text-yellow-500">Ver Perfil</h2>
                     </Link>
                   </div>
