@@ -27,13 +27,26 @@ import DonationPending from "./components/Donations/DonationPending";
 import DonationSuccessful from "./components/Donations/DonationSuccessful";
 import Chat from "./components/Chat/Chat";
 import UserDonations from "./components/Donations/UsersDonations";
-
+import Blog from "./components/Blogsito/Blog.jsx";
+import MissingDataRequired from "./components/MissingDataRequired"
+import { getUserProfile} from "./redux/Actions/index";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 function App() {
   const token = localStorage.getItem("token");
   if (token) {
     setAuthToken(token);
   }
+  const dispatch = useDispatch();
+  const id = localStorage.getItem("id");
+
+  useEffect(() => {
+    dispatch(getUserProfile(id));
+  }, [dispatch, id]);
+
+  const loggedUser = useSelector((state) => state.userProfile);
 
   return (
     <BrowserRouter>
@@ -43,6 +56,7 @@ function App() {
         <Route path={"/forgotpassword"} element={<ForgotPassword />} />
         <Route path={"/587/resetpassword/:id/:token"} element={<ResetPassword />} />
         <Route element={<PrivateRoutes />}>
+          <Route path={"/missingdata"} element={<MissingDataRequired/>}/>
           <Route path={"/home"} element={<Home />} />
           <Route path={"/users/:id"} element={<UserDetail />} />
           <Route path={"/pet/:id"} element={<PetDetail />} />
@@ -62,6 +76,7 @@ function App() {
           <Route path={"/donationpending"} element={<DonationPending />} />
           <Route path={"*"} element={<Error404 />} />
           <Route path={"/mydonations/:id"} element={<UserDonations />}/>
+          <Route path={"/blog"} element={<Blog />}/>
         </Route>
         <Route element={<PrivateAdmin />}>
           <Route path={"/admin"} element={<AdminView />} />

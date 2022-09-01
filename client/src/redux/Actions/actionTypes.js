@@ -21,6 +21,7 @@ export const POST_ADOPTION = "POST_ADOPTION"; //OK
 //THE UPDATE----------------
 export const PATCH_USER = "PATCH_USER";
 export const PATCH_PET = "PATCH_PET";
+export const PATCH_LIKES= "PATCH_LIKES"
 //FILTERS -----------------
 export const FILTER_BY_QUERY = "FILTER_BY_QUERY";
 //LOGIN -----------------

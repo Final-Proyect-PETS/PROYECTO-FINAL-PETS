@@ -123,12 +123,7 @@ export default function Donation() {
       );
     }
   }
-
-  //const params = useLocation().search;
-  //console.log(params);
-  //   const purchaseId = params.slice(params.indexOf('=') + 1, params.indexOf('&'));
-  // const { token } = JSON.parse(window.localStorage.getItem('user'));
-
+  
   return (
     <>
       <NavBar />
