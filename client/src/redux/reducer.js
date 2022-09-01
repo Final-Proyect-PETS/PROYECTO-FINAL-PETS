@@ -15,7 +15,6 @@ const initialState = {
   messages: [],
   notViewedNotification: [],//no vistas
   viewedNotification: [], //vistas
-
 };
 
 export default function rootReducer(state = initialState, { type, payload }) {
