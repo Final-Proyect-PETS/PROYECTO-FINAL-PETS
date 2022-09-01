@@ -28,7 +28,7 @@ export default function Notifications() {
         {loggedUser?.interestedUsers?.length ? (
           algo?.map((iUser) => (
             iUser.viewState === false ?
-              <div className="flex w-full p-10 my-2 items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 ">
+              <div className="flex w-full p-8 my-2 items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 ">
                 <div className="flex justify-between p-3 items-center">
                   <div className="flex items-center">
                     <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
