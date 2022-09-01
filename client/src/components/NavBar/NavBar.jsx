@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { getUserProfile, viewing } from "../../redux/Actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { Navbar, Dropdown, Avatar, Toast } from "flowbite-react";
 
 export default function NavBar() {
@@ -13,9 +13,9 @@ export default function NavBar() {
 
   const id = localStorage.getItem("id");
 
-  useEffect(() => {
-    dispatch(getUserProfile(id));
-  }, [dispatch, id]);
+  // useEffect(() => {
+  //   dispatch(getUserProfile(id));
+  // }, [dispatch, id]);
 
   const loggedUser = useSelector((state) => state.userProfile);//el loggeduser5 estaba arriba del useEFF, lo puse abajio
 
