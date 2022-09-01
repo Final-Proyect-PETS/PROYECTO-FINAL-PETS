@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { patchPet, postImage } from "../../redux/Actions/index";
+import { patchPet, postImage, getPetDetail } from "../../redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import { notificationSwal } from "../../utils/notificationSwal.jsx";
 import { Link } from "react-router-dom";
 import MapboxAutocomplete from "react-mapbox-autocomplete";
+import mapboxgl from "mapbox-gl";
 
 function validateFrom(input) {
   let errors = {};
@@ -48,6 +49,8 @@ export default function UpdatePet() {
   const [loadingImage, setLoadingImage] = useState(false);
   const [loadingImagePool, setLoadingImagePool] = useState(false);
   const [errors, setErrors] = useState({});
+  const [placeSelect, setPlaceSelect] = useState(true);
+  const mapDiv = useRef(null);
   const [input, setInput] = useState({
     id: upDatePet._id,
     name: upDatePet.name,
@@ -60,6 +63,8 @@ export default function UpdatePet() {
     vaccination: upDatePet.vaccination,
     castrated: upDatePet.castrated,
     place: upDatePet.place,
+    place_longitude: upDatePet.place_longitude,
+    place_latitude: upDatePet.place_longitude,
   });
 
   function handleChange(e) {
@@ -147,7 +152,7 @@ export default function UpdatePet() {
       id: upDatePet._id,
       name: upDatePet.name,
       image: upDatePet.image,
-      imagePool: UpdatePet.imagePool,
+      imagePool: upDatePet.imagePool,
       type: upDatePet.type,
       description: upDatePet.description,
       size: upDatePet.size,
@@ -155,6 +160,8 @@ export default function UpdatePet() {
       vaccination: upDatePet.vaccination,
       castrated: upDatePet.castrated,
       place: upDatePet.place,
+      place_longitude: upDatePet.place_longitude,
+      place_latitude: upDatePet.place_longitude,
     });
     navigate(`/pet/${upDatePet._id}`, { replace: true });
   }
@@ -178,15 +185,42 @@ export default function UpdatePet() {
   }
 
   function _suggestionSelect(result, lat, long, text) {
+    console.log(result, lat, long, text);
     setInput({
-      ...input, place: result
-    })
+      ...input,
+      place: result,
+      place_longitude: long,
+      place_latitude: lat,
+    });
+    setPlaceSelect(true);
+    //if (placeSelect)
+    createNewMap(long, lat);
   }
   const mapAccess = {
     mapboxApiAccessToken:
       "pk.eyJ1Ijoiam9uc2VuIiwiYSI6IkR6UU9oMDQifQ.dymRIgqv-UV6oz0-HCFx1w",
   };
 
+  useLayoutEffect(() => {
+    //if (placeSelect)
+    createNewMap(upDatePet.place_longitude, upDatePet.place_latitude);
+  }, [placeSelect]);
+
+  function createNewMap(long, lat) {
+    if (placeSelect) {
+      console.log(mapDiv);
+      new mapboxgl.Map({
+        container: mapDiv.current, // container ID
+        style: "mapbox://styles/mapbox/streets-v11", // style URL
+        center: [long, lat], // starting position [lng, lat]
+        zoom: 12, // starting zoom
+        projection: "globe", // display the map as a 3D globe
+      });
+    }
+  }
+
+  mapboxgl.accessToken =
+    "pk.eyJ1IjoicG9saW5vIiwiYSI6ImNsN2FtdWNybTB0bmk0MHNqZXZxMzM0OTYifQ.O2Y9sZnF-K1k_KhC8MzJbA";
 
   return (
     <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
@@ -408,9 +442,22 @@ export default function UpdatePet() {
                 inputClass="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
                 onSuggestionSelect={_suggestionSelect}
                 resetSearch={false}
-                placeholder={input.place}
+                placeholder={"Modifique ciudad"}
               />
+              {input.place && (
+                <p className="font-light text-white text-xl">{input.place}</p>
+              )}
             </div>
+            {upDatePet.place ? (
+              <div
+                ref={mapDiv}
+                style={{
+                  block: "w-full",
+                  height: "15vw",
+                  borderRadius: "10px",
+                }}
+              />
+            ) : null}
           </div>
           {
             <button

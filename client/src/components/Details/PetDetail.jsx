@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
@@ -11,21 +11,43 @@ import {
   EmailShareButton,
   EmailIcon,
 } from "react-share";
+import mapboxgl from "mapbox-gl";
 
 export default function PetDetail() {
   let { id } = useParams();
   const dispatch = useDispatch();
   const petDetail = useSelector((state) => state.petDetail);
   const loggedUser = useSelector((state) => state.userProfile);
+  const mapDiv = useRef(null);
 
   useEffect(() => {
     dispatch(clearStatePet());
     dispatch(getPetDetail(id));
   }, [dispatch, id]);
 
+  useLayoutEffect(() => {
+    createNewMap(petDetail.place_longitude, petDetail.place_latitude);
+  }, [petDetail.place_latitude, petDetail.place_longitude]);
+
+  function createNewMap(long, lat) {
+    if (petDetail.place_latitude && petDetail.place_longitude) {
+      new mapboxgl.Map({
+        container: mapDiv.current, // container ID
+        style: "mapbox://styles/mapbox/streets-v11", // style URL
+        center: [long, lat], // starting position [lng, lat]
+        zoom: 12, // starting zoom
+        projection: "globe", // display the map as a 3D globe
+      });
+    }
+  }
+
+  mapboxgl.accessToken =
+    "pk.eyJ1IjoicG9saW5vIiwiYSI6ImNsN2FtdWNybTB0bmk0MHNqZXZxMzM0OTYifQ.O2Y9sZnF-K1k_KhC8MzJbA";
+
   return Object.keys(petDetail).length ? (
     <div>
       <NavBar />
+
       <h1 className="flex justify-center font-semibold text-3xl mt-3">
         Detalles 🐶
       </h1>
@@ -48,6 +70,7 @@ export default function PetDetail() {
             <EmailIcon size={40} />
           </EmailShareButton>
         </div>
+
         <div className="flex flex-col w-1/2 m-3 items-center gap-3">
           {loggedUser._id === petDetail.user._id ? (
             <Link to="/updatepet">
@@ -83,9 +106,18 @@ export default function PetDetail() {
               Dueño:{" "}
               {petDetail.user.first_name + " " + petDetail.user.last_name}
             </h2>
-            <h3 className="font-semibold">
-              {`Vivo en ${petDetail.place}`}
-            </h3>
+            <h3 className="font-semibold">{`Vivo en ${petDetail.place}`}</h3>
+            {petDetail.place_latitude && petDetail.place_longitude ? (
+              <div
+                ref={mapDiv}
+                style={{
+                  //block: "w-full",
+                  height: "40vw",
+                  width: "28vw",
+                  borderRadius: "10px",
+                }}
+              />
+            ) : null}
           </div>
           <div className="flex flex-wrap w-full h-1/2 justify-center items-center border-y border-black">
             <div className="w-1/2 h-1/2 flex justify-center items-center border-b">

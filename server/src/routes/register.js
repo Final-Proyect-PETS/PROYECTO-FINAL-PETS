@@ -16,6 +16,8 @@ router.post("/", async (req, res, next) => {
     telephone,
     about,
     place,
+    place_longitude,
+    place_latitude,
     donations,
     interestedUsers,
   } = req.body;
@@ -30,6 +32,8 @@ router.post("/", async (req, res, next) => {
       telephone,
       about,
       place,
+      place_longitude,
+      place_latitude,
       donations,
       interestedUsers
     );
@@ -46,7 +50,7 @@ router.post("/", async (req, res, next) => {
         rejectUnauthorized: false,
       },
     });
-  
+
     let contentHTML = `
     <img src = "https://cdn-icons-png.flaticon.com/512/194/194279.png" style="width:100px;"/>
   
@@ -54,19 +58,16 @@ router.post("/", async (req, res, next) => {
     🐻 Gracias por haber elegido Happy Tails para tus compañeros animales.🐵
           🐈‍⬛Deseamos que todas tus mascotas encuentren su cola feliz.🐶 
     Atentamente HT`;
-                    
-  
-  
+
     let info = await transporter.sendMail({
       from: "'HappyTails'<happytailshp@gmail.com>",
       to: email,
       subject: "Contacto de adopción",
       html: contentHTML,
     });
-  
+
     console.log("message sent", info.messageId);
     res.send(postUser);
-  
   } catch (err) {
     next(err);
   }

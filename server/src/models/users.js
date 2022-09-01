@@ -34,16 +34,16 @@ const usersSchema = new Schema(
     about: String,
     telephone: String,
     place: String,
+    place_longitude: String,
+    place_latitude: String,
     deleted: { type: Boolean, default: false },
     isAdmin: { type: Boolean, default: false },
     reviews: Number,
     pets: [{ type: mongoose.Schema.ObjectId, ref: "Pet" }],
 
-
-    interestedUsers:  Array,
+    interestedUsers: Array,
 
     donations: Array,
-
   },
   {
     timestamps: true,

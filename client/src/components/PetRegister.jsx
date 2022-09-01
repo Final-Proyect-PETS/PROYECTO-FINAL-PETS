@@ -20,8 +20,6 @@ export default function RegisterPet() {
   const [loadingImage, setLoadingImage] = useState(false);
   const [loadingImagePool, setLoadingImagePool] = useState(false);
   const [placeSelect, setPlaceSelect] = useState(false);
-  const [lat, setLat] = useState(null);
-  const [long, setLong] = useState(null);
 
   const mapDiv = useRef(null);
 
@@ -38,6 +36,8 @@ export default function RegisterPet() {
     castrated: false,
     gender: "",
     place: "",
+    place_longitude: "",
+    place_latitude: "",
   });
 
   function handleChange(e) {
@@ -191,6 +191,7 @@ export default function RegisterPet() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log(input);
     if (have() === false) {
       Swal.fire({
         title: "¿Está seguro de que desea crear esta mascota?",
@@ -244,6 +245,8 @@ export default function RegisterPet() {
         castrated: false,
         gender: "",
         place: "",
+        place_longitude: "",
+        place_latitude: "",
       });
       setImage("");
     } else if (have() === "e") {
@@ -282,16 +285,30 @@ export default function RegisterPet() {
 
   function _suggestionSelect(result, lat, long, text) {
     console.log(result, lat, long, text);
-    //setPlaceSelect(false);
     setInput({
       ...input,
       place: result,
+      place_longitude: long,
+      place_latitude: lat,
     });
-    setLat(lat);
-    setLong(long);
     setPlaceSelect(true);
+    //if (placeSelect)
+    createNewMap(long, lat);
+  }
+  const mapAccess = {
+    mapboxApiAccessToken:
+      "pk.eyJ1Ijoiam9uc2VuIiwiYSI6IkR6UU9oMDQifQ.dymRIgqv-UV6oz0-HCFx1w",
+  };
+
+  useLayoutEffect(() => {
+    //if (placeSelect)
+    createNewMap(input.place_longitude, input.place_latitude);
+  }, [placeSelect]);
+
+  function createNewMap(long, lat) {
     if (placeSelect) {
-      const map = new mapboxgl.Map({
+      console.log(mapDiv);
+      new mapboxgl.Map({
         container: mapDiv.current, // container ID
         style: "mapbox://styles/mapbox/streets-v11", // style URL
         center: [long, lat], // starting position [lng, lat]
@@ -300,25 +317,6 @@ export default function RegisterPet() {
       });
     }
   }
-  const mapAccess = {
-    mapboxApiAccessToken:
-      "pk.eyJ1Ijoiam9uc2VuIiwiYSI6IkR6UU9oMDQifQ.dymRIgqv-UV6oz0-HCFx1w",
-  };
-
-  useLayoutEffect(() => {
-    if (placeSelect) {
-      const map = new mapboxgl.Map({
-        container: mapDiv.current, // container ID
-        style: "mapbox://styles/mapbox/streets-v11", // style URL
-        center: [long, lat], // starting position [lng, lat]
-        zoom: 12, // starting zoom
-        projection: "globe", // display the map as a 3D globe
-      });
-    }
-    // return () => {
-    //   setPlaceSelect(false);
-    // };
-  }, [placeSelect]);
 
   mapboxgl.accessToken =
     "pk.eyJ1IjoicG9saW5vIiwiYSI6ImNsN2FtdWNybTB0bmk0MHNqZXZxMzM0OTYifQ.O2Y9sZnF-K1k_KhC8MzJbA";
