@@ -63,7 +63,6 @@ router.patch("/users/:id", verifyToken, async (req, res, next) => {
     about,
     deleted,
     interestedUsers,
-    blogmessage
   } = req.body;
   try {
     const userPatch = await patchUser(
@@ -77,8 +76,7 @@ router.patch("/users/:id", verifyToken, async (req, res, next) => {
       telephone,
       about,
       deleted,
-      interestedUsers,
-      blogmessage
+      interestedUsers
     );
     res.status(201).send(userPatch);
   } catch (error) {
@@ -241,15 +239,15 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
 router.patch("/viewing", async (req, res, next) => {
   const { id, interestedId, petId } = req.body;
 
-  const user = await User.findOne({ _id : id });
+  const user = await User.findOne({ _id: id });
 
   let loquecambia = user.interestedUsers.filter(e => e.interestedUser === interestedId && e.petId === petId)
   loquecambia[0].viewState = true
   let el_resto = user.interestedUsers.filter(e => e.interestedUser !== interestedId || e.petId !== petId).concat(loquecambia)
 
   await User.updateOne(
-    {_id : id},
-    {$set: { interestedUsers : el_resto}}
+    { _id: id },
+    { $set: { interestedUsers: el_resto } }
   )
 
   res.status(200).send("notification viewed");
@@ -258,26 +256,22 @@ router.patch("/viewing", async (req, res, next) => {
 
 router.patch("/likes", verifyToken, async (req, res, next) => {
   try {
-    const { petId, userId, ownerId, likes } = req.body;
-
-    if (likes.filter((e) => e[0]._id === userId && e[1]._id === petId).length) {
-      // console.log(
-      //   pet_interesed.interestedUsers.filter(
-      //     (e) => e[0]._id === userId && e[1]._id === petId
-      //   ).length
-      // );
-      res.send("Ya mandaste la solicitud de adopcion");
+    const { petId, userId, ownerId } = req.body;
+    console.log(req.body);
+    let user = await User.findOne({ _id: ownerId })
+    console.log(user);
+    if (user.likesPets.filter((e) => e[0]._id === userId && e[1]._id === petId).length) {
+      res.send("Ya mandaste un like perro");
     } else {
-      const userPush = await User.findById({ _id: userId });
-      const petPush = await Pets.findById({ _id: petId });
       let support = false;
-     
-     
-      const petAndUserIds = [userPush, petPush, support];
+      const petAndUserIds = { userId, petId, support };
+      console.log(petAndUserIds);
       await User.updateOne(
         { _id: ownerId },
         { $push: { likesPets: petAndUserIds } }
       );
+      let user2 = await User.findOne({ _id: ownerId })
+      console.log(user2);
       await Pets.updateOne({ _id: petId }, { $push: { likes: petAndUserIds } });
     }
   } catch (error) {
@@ -285,4 +279,7 @@ router.patch("/likes", verifyToken, async (req, res, next) => {
   }
 });
 
+
+
 module.exports = router;
+
