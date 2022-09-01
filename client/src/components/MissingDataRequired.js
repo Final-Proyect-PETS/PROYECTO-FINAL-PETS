@@ -77,8 +77,9 @@ export default function MissingDataRequired() {
         "Ok"
       )
     );
+  
     setInput({
-      id: upDateUser._id,
+      id: id,
       username: upDateUser.username,
       image: upDateUser.image,
       about: upDateUser.about,
@@ -86,7 +87,7 @@ export default function MissingDataRequired() {
       place: upDateUser.place,
     });
     dispatch(getUserDetail(upDateUser._id));
-    navigate(`/users/${upDateUser._id}`, { replace: true });
+    navigate("/blog");
     //esto es porque en el estado userDetail me quedaba cargada
     //la frase "Datos Actualizados Exitosamente 👍", y preciso que se vuelva a cargar con el usuario para que al clickear el boton
     //para regresar, me tome bien sus datos y no aparezca como undefined.

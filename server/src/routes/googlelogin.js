@@ -32,7 +32,6 @@ router.post("/logingoogle", async (req, res, next) => {
               if (user) {
                 let id = user._id;
                 const token = jwt.sign({ id: id }, process.env.SECRET_KEY);
-                console.log(token);
                 res
                   .header("token", token)
                   .json({ error: null, data: { token }, id: { id } });

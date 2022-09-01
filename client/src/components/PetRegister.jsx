@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useRef } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { postPet, postImage } from "../redux/Actions/index.js";
+import { getAllPets, postPet, postImage } from "../redux/Actions/index.js";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { notificationSwal } from "../utils/notificationSwal.jsx";
@@ -12,8 +12,13 @@ export default function RegisterPet() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const id = localStorage.getItem("id");
+  useEffect(() => {
+    return () => {
+      dispatch(getAllPets());
+    };
+  });
 
+  const id = localStorage.getItem("id");
   const [errors, setErrors] = useState({});
   const [image, setImage] = useState("");
   const [imagePool, setImagePool] = useState([]);

@@ -18,7 +18,7 @@ export default function Home() {
         title: "DATOS",
         icon: "question",
         text: "Por favor completa tus datos",
-      }).then(() => navigate("/", { replace: true }));
+      }).then(() => navigate("/missingdata", { replace: true }));
     }
   };
 
