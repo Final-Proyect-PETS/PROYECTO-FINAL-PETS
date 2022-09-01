@@ -27,9 +27,7 @@ export default function Card({
   gender,
   likes,
 }) {
-<<<<<<< HEAD
-  return (
-=======
+
   //likes***----de aca
   const dispatch = useDispatch();
   const loggedUser = useSelector((state) => state.userProfile);
@@ -47,8 +45,8 @@ export default function Card({
   }
   //likes--hasta aca , casi te vas
 
-    return (
->>>>>>> db159490dedd04300d079e173b5e59930ba68c48
+  return (
+
     <>
       <div
         id={idUser}
@@ -67,7 +65,7 @@ export default function Card({
             <div className="flex items-center">
               <div className="text-sm flex">
                 <img src={ubicacion} alt="ubicacion" width="16px" />
-                <span className="font-medium text-xs mx-3">{place?.length<=25?place:`${place?.slice(0,25)}...`}</span>
+                <span className="font-medium text-xs mx-3">{place?.length <= 25 ? place : `${place?.slice(0, 25)}...`}</span>
               </div>
             </div>
           </div>
@@ -89,8 +87,8 @@ export default function Card({
                   {size === "big"
                     ? "Grande"
                     : size === "medium"
-                    ? "Mediano"
-                    : "Chico"}
+                      ? "Mediano"
+                      : "Chico"}
                 </span>
               </div>
               <div>
@@ -100,14 +98,14 @@ export default function Card({
               </div>
               <div className="flex">
                 <h1 className="text-white font-bold text-2x1">
-     {/* aACA VA EL NUMERITO DEEEE LIKES */}{likes?.length}{/* aACA VA EL NUMERITO DE LIKES */}
+                  {/* aACA VA EL NUMERITO DEEEE LIKES */}{likes?.length}{/* aACA VA EL NUMERITO DE LIKES */}
                 </h1>
                 <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
                   <button onClick={(e) => likeHandler(e)}>
                     <img src={likeim} alt="" />
                   </button>
                 </div>
-      
+
                 <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
                   <FacebookShareButton
                     url={`https://www.happytails.com/pet/${idPet}`}
@@ -125,16 +123,13 @@ export default function Card({
                     <EmailIcon size={40} />
                   </EmailShareButton>
                 </div>
-             
+
               </div>
             </div>
           </div>
         </Link>
       </div>
     </>
-<<<<<<< HEAD
 
-=======
->>>>>>> db159490dedd04300d079e173b5e59930ba68c48
   );
 }
