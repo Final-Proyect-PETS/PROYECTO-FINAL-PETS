@@ -24,7 +24,7 @@ export default function MissingDataRequired() {
   }, [dispatch,id]);
 
   const upDateUser = useSelector((state) => state.userProfile);
-
+console.log(upDateUser,"LOGGG")
   const [input, setInput] = useState({
     id: upDateUser._id,
     username: upDateUser.username,

@@ -1,5 +1,5 @@
 import React from "react";
-import { format } from "timeago.js";
+// import { format } from "timeago.js";
 
 
 export default function Messages ({message,own}) {
@@ -11,7 +11,7 @@ export default function Messages ({message,own}) {
                 <p className="p-10 bg-sky-600 text-white rounded-r-lg max-w-sm">{message.text}</p>
             </div>
             <div>
-                <p className="text-gray-500">{format(message.createdAt)}</p>
+                <p className="text-gray-500">{/* {message.createdAt} */}</p>
             </div>
         </div>
     )
