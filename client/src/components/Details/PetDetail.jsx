@@ -62,7 +62,7 @@ export default function PetDetail() {
           <div className="h-56 w-72 bg-yellow-900 rounded ">
             <Carousel className="rounded">
               <img
-                src={petDetail.image}
+                src={petDetail?.image}
                 alt="imagen mascota"
                 // width="500px"
                 className="w-96"

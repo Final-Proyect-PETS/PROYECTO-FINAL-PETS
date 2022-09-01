@@ -22,7 +22,7 @@ export default function SearchBar() {
     } else {
       setInput("mascota");
     }
-    dispatch(switchRenderAction(input));
+    if (input.length >= 3) dispatch(switchRenderAction(input));
   }
 
   function handleInputChange(e) {
@@ -44,7 +44,6 @@ export default function SearchBar() {
           htmlFor="small-toggle"
           className="inline-flex relative items-center mt-2 mx-4 cursor-pointer"
         >
-          
           <input
             type="checkbox"
             value={input}
