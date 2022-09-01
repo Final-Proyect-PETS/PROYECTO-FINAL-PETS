@@ -11,10 +11,6 @@ export default function NavBar() {
 
   const id = localStorage.getItem("id");
 
-  // useEffect(() => {
-  //   dispatch(getUserProfile(id));
-  // }, [dispatch, id]);
-
   const loggedUser = useSelector((state) => state.userProfile); //el loggeduser5 estaba arriba del useEFF, lo puse abajio
 
   let bell = loggedUser?.interestedUsers?.filter(

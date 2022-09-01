@@ -25,10 +25,6 @@ export default function Donation() {
   const [disable2, setDisable2] = useState(false);
   const [disable3, setDisable3] = useState(false);
 
-  useEffect(() => {
-    dispatch(getUserProfile(id));
-  }, [dispatch, id]);
-
   function handleChange(e) {
     setInput({
       ...input,

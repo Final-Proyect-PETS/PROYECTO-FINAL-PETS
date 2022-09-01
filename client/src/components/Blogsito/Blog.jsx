@@ -2,7 +2,7 @@ import React from "react";
 import NavBar from "../NavBar/NavBar";
 import "./Blog.css";
 import { useSelector } from "react-redux";
-import { getAllUsers, getAllPets, patchUsuer } from "../../redux/Actions";
+import { getAllUsers, getAllPets, getUserProfile, patchUsuer } from "../../redux/Actions";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -27,21 +27,25 @@ import amarillobaño from "../../assets/images/amarillobaño.png";
 import { useState } from "react";
 
 export default function Blog() {
+
   const dispatch = useDispatch();
   const loggedUser = useSelector((state) => state.userProfile);
-
   const allUsers = useSelector((state) => state.users);
-
   const allPets = useSelector((state) => state.pets);
   var donator = allUsers.filter((user) => user?.donations?.length >= 1);
   var adopted = allPets.filter((pet) => pet?.isAdopted === true);
   var blogger = allUsers.filter((user) => user?.blogmessage?.length >= 1);
-
   const [input, setInput] = useState();
+  const id = localStorage.getItem("id");
+
+  useEffect(() => {
+    dispatch(getAllUsers())
+    dispatch(getAllPets())
+    dispatch(getUserProfile(id));
+  }, [dispatch, id]);
 
   function handleChange(e) {
     setInput(e.target.value);
-    console.log(input);
   }
   function onSubmitHandler(e) {
     e.preventDefault();
@@ -50,8 +54,6 @@ export default function Blog() {
       blogmessage: input,
     };
     dispatch(patchUsuer(payload));
-
-    console.log(payload);
   }
 
   return (

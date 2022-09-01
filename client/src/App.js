@@ -31,7 +31,6 @@ import Blog from "./components/Blogsito/Blog.jsx";
 import MissingDataRequired from "./components/MissingDataRequired";
 import { getUserProfile, getAllUsers, getAllPets } from "./redux/Actions/index";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
 function App() {
@@ -43,31 +42,20 @@ function App() {
   const id = localStorage.getItem("id");
 
   useEffect(() => {
-    dispatch(getUserProfile(id))//logged 
-    dispatch(getAllUsers())
-    dispatch(getAllPets())
-  },[]);
+    if(token){
+      dispatch(getUserProfile(id));
+      dispatch(getAllUsers())
+      dispatch(getAllPets())
+    }
+  },[dispatch]);
 
-  // const loggedUser = useSelector((state) => state.userProfile);
-  //ME TRAJE LOS USE EFFECT ACA PARA MEJORAR UN POQUITO EL RENDIMIENTO. A PRUEBA
-  //PROBARPORBARPROBAR
-  // useEffect(() => {
-  //   dispatch(getAllUsers());
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(getAllPets());
-  // }, [dispatch]);
   return (
     <BrowserRouter>
       <Routes history={history}>
         <Route path={"/"} element={<LandingPage />} />
         <Route path={"/register"} element={<UserRegister />} />
         <Route path={"/forgotpassword"} element={<ForgotPassword />} />
-        <Route
-          path={"/587/resetpassword/:id/:token"}
-          element={<ResetPassword />}
-        />
+        <Route path={"/587/resetpassword/:id/:token"} element={<ResetPassword />} />
         <Route element={<PrivateRoutes />}>
           <Route path={"/missingdata"} element={<MissingDataRequired />} />
           <Route path={"/home"} element={<Home />} />
@@ -81,13 +69,9 @@ function App() {
           <Route path={"/interestedtraders"} element={<InterestedTraders />} />
           <Route path={"/notifications"} element={<Notifications />} />
           <Route path={"/adopt/:id"} element={<AdoptForm />} />
-
           <Route path={"/chat"} element={<Chat />} />
           <Route path={"/donations"} element={<Donation />} />
-          <Route
-            path={"/donationsuccessful"}
-            element={<DonationSuccessful />}
-          />
+          <Route path={"/donationsuccessful"} element={<DonationSuccessful />} />
           <Route path={"/donationcancelled"} element={<DonationCancelled />} />
           <Route path={"/donationpending"} element={<DonationPending />} />
           <Route path={"*"} element={<Error404 />} />
@@ -95,7 +79,7 @@ function App() {
           <Route path={"/blog"} element={<Blog />} />
         </Route>
         <Route element={<PrivateAdmin />}>
-          <Route path={"/admin"} element={<AdminView />} />
+        <Route path={"/admin"} element={<AdminView />} />
         </Route>
       </Routes>
     </BrowserRouter>
