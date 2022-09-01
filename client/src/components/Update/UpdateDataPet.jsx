@@ -224,7 +224,7 @@ export default function UpdatePet() {
 
   return (
     <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
-      <div className="self-center mb-6 text-xl font-normal text-gray-600 sm:text-2xl dark:text-white">
+      <div className="self-center mb-6 text-xl font-normal text-white sm:text-2xl dark:text-white">
         Edita los datos de tu mascota
       </div>
       <div className="mt-8 px-8 max-w-lg self-center">
@@ -277,7 +277,7 @@ export default function UpdatePet() {
                 name="imagePool"
                 accept=".jpg, .png, .jpeg"
                 onChange={(e) => handleImagePool(e)}
-                className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
+                className="self-center rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
               />
               <div className="font-light text-white text-xl">
                 {loadingImagePool ? (
@@ -307,7 +307,7 @@ export default function UpdatePet() {
             <label className="font-light text-white text-xl">
               Tipo de mascota{" "}
             </label>
-            <select name="type" onChange={(e) => handleChangeSelect(e)}>
+            <select name="type" onChange={(e) => handleChangeSelect(e)} className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent">
               <option
                 value="dog"
                 selected={input.type === "dog" ? true : false}
@@ -348,7 +348,7 @@ export default function UpdatePet() {
             )}
 
             <label className="font-light text-white text-xl">Tamaño </label>
-            <select name="size" onChange={(e) => handleChangeSelect(e)}>
+            <select name="size" onChange={(e) => handleChangeSelect(e)} className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent">
               <option
                 value="big"
                 selected={input.size === "big" ? true : false}
@@ -388,7 +388,7 @@ export default function UpdatePet() {
               </p>
             )}
             <label className="font-light text-white text-xl">Vacunado </label>
-            <select name="vaccination" onChange={(e) => handleChangeSelect(e)}>
+            <select name="vaccination" onChange={(e) => handleChangeSelect(e)} className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent">
               <option
                 value="yes"
                 selected={input.vaccination === "yes" ? true : false}
@@ -415,7 +415,7 @@ export default function UpdatePet() {
             )}
             <br />
             <label className="font-light text-white text-xl">Castrado </label>
-            <select name="castrated" onChange={(e) => handleChangeSelect(e)}>
+            <select name="castrated" onChange={(e) => handleChangeSelect(e)} className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent">
               <option
                 value="true"
                 selected={input.castrated === "true" ? true : false}

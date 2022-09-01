@@ -270,24 +270,25 @@ router.patch("/viewing", async (req, res, next) => {
 
 router.patch("/likes", verifyToken, async (req, res, next) => {
   try {
-    const { petId, userId, ownerId, likes } = req.body;
-
-    if (likes.filter((e) => e[0]._id === userId && e[1]._id === petId).length) {
-      // console.log(
-      //   pet_interesed.interestedUsers.filter(
-      //     (e) => e[0]._id === userId && e[1]._id === petId
-      //   ).length
-      // );
-      res.send("Ya mandaste la solicitud de adopcion");
+    const { petId, userId, ownerId } = req.body;
+    console.log(req.body);
+    let user = await User.findOne({ _id: ownerId });
+    console.log(user);
+    if (
+      user.likesPets.filter((e) => e[0]._id === userId && e[1]._id === petId)
+        .length
+    ) {
+      res.send("Ya mandaste un like perro");
     } else {
-      const userPush = await User.findById({ _id: userId });
-      const petPush = await Pets.findById({ _id: petId });
       let support = false;
-      const petAndUserIds = [userPush, petPush, support];
+      const petAndUserIds = { userId, petId, support };
+      console.log(petAndUserIds);
       await User.updateOne(
         { _id: ownerId },
         { $push: { likesPets: petAndUserIds } }
       );
+      let user2 = await User.findOne({ _id: ownerId });
+      console.log(user2);
       await Pets.updateOne({ _id: petId }, { $push: { likes: petAndUserIds } });
     }
   } catch (error) {

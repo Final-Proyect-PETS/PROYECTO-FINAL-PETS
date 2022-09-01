@@ -8,19 +8,17 @@ import UserCard from "./UserCard";
 import Loader from "../Loaders/Loader";
 
 export default function Cards() {
-  
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();  //ME LO LLEVE AL APP.JS
 
-  useEffect(() => {
-    dispatch(getAllPets());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getAllPets());
+  // }, [dispatch]);
+
+  // useEffect(() => {
+  //   dispatch(getAllUsers());
+  // }, [dispatch]);
 
   const getPets = useSelector((state) => state.pets);
-
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch]);
-
   const getUsers = useSelector((state) => state.users);
 
   const switchRender = useSelector((state) => state.switchRender);
@@ -74,7 +72,6 @@ export default function Cards() {
               vaccination={pets.vaccination}
               castrated={pets.castrated}
               gender={pets.gender}
-            
             />
           ))
         ) : (
@@ -97,7 +94,6 @@ export default function Cards() {
           ))
         )
       ) : (
-        
         <>
           <Loader />
         </>

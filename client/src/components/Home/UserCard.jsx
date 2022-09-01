@@ -43,7 +43,9 @@ export default function UserCard({
           <div className="flex items-center">
             <div className="text-sm flex">
               <img src={ubicacion} alt="ubicacion" width="16px" />
-              <span className="font-medium text-xs mx-3">{place}</span>
+              <span className="font-medium text-xs mx-3">
+                {place?.length <= 25 ? place : `${place?.slice(0, 25)}...`}
+              </span>
             </div>
           </div>
           {donations.length === 1 ? (
@@ -55,7 +57,11 @@ export default function UserCard({
           )}
           {donations.length === 2 ? (
             <div className="rounded-full h-14 w-14 flex items-center justify-center overflow-hidden mr-2">
-              <img className="rounded-full h-12 w-1/2" src={goldenblack} alt="" />
+              <img
+                className="rounded-full h-12 w-1/2"
+                src={goldenblack}
+                alt=""
+              />
             </div>
           ) : (
             false
@@ -83,7 +89,7 @@ export default function UserCard({
                 src={huellabronce}
                 
                 alt=""
-              />
+              />   
             </div>
           ) : (
             false

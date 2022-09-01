@@ -55,7 +55,7 @@ export default function LandingPage() {
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(userLogin(input)).then(() => {
-      navigate("/home")
+      navigate("/blog")//cambie /home por /blog.... fijense
     })
   }
 
@@ -69,7 +69,7 @@ export default function LandingPage() {
 
   const responseGoogle = (response) => {
     dispatch(userLoginGoogle(response)).then(() => {
-      navigate("/home")
+      navigate("/blog")//cambie /home por /blog.... fijense
     })
   };
 
@@ -145,11 +145,11 @@ export default function LandingPage() {
                   Enviar email
                 </button>
               </div>
-
             </div>
           </Modal.Body>
         </div>
       </Modal>
+
       <div className="flex flex-col-6 m-5 mx-9 mt-8 w-screen items-center">
         <div className="text-gray-800 m-14 p-14">
           <h1 className="text-6xl font-semibold">Bienvenidos a </h1>

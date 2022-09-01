@@ -322,6 +322,17 @@ export function patchInterestedUsers(payload) {
     }
   };
 } */
+export function patchLikes(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(`http://localhost:3001/home/likes`, payload);
+      dispatch({ type: actions.PATCH_LIKES, payload: json.data });
+      return "OKA";
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 
 export function paymentMp(idDonor, amountDonation) {
   return async function (dispatch) {
@@ -419,11 +430,11 @@ export function viewing(payload) {
   return async function (dispatch) {
     try {
       let json = await axios.patch(
-        `http://localhost:3001/home/rutajuanmanotivista`,
+        `http://localhost:3001/home/viewing`,
         payload
       );
       return dispatch({
-        type: actions.PATCH_USER,
+        type: actions.VIEWING_NOTIFICATION,
         payload: json.data,
       });
     } catch (error) {

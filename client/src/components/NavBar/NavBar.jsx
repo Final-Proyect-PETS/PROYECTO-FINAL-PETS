@@ -1,21 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getUserProfile } from "../../redux/Actions";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { getUserProfile, viewing } from "../../redux/Actions";
+import { useSelector, useDispatch } from "react-redux";
 import { Navbar, Dropdown, Avatar, Toast } from "flowbite-react";
 
 export default function NavBar() {
   const dispatch = useDispatch();
+  const allUsers = useSelector((state) => state.users);
+  const allPets = useSelector((state) => state.pets);
 
   const id = localStorage.getItem("id");
 
-  useEffect(() => {
-    dispatch(getUserProfile(id));
-  }, [dispatch, id]);
+  // useEffect(() => {
+  //   dispatch(getUserProfile(id));
+  // }, [dispatch, id]);
 
-  const loggedUser = useSelector((state) => state.userProfile);//el loggeduser5 estaba arriba del useEFF, lo puse abajio
+  const loggedUser = useSelector((state) => state.userProfile); //el loggeduser5 estaba arriba del useEFF, lo puse abajio
+
+  let bell = loggedUser?.interestedUsers?.filter(
+    (e) => e.viewState === false
+  ).length;
 
   function removeToken(ev) {
     localStorage.removeItem("token");
@@ -24,11 +28,25 @@ export default function NavBar() {
 
   function closeHandler(e) {
     e.preventDefault();
-    console.log("click");
+    let payload = {
+      id: loggedUser._id, //dueño
+      interestedId: e.target.value,
+      petId: e.target.name, // interestedUsers: [{usuariointeresado}{mascotaquequiero},],
+    };
+    dispatch(viewing(payload));
+    dispatch(getUserProfile(loggedUser._id));
   }
 
-  return (
+  let algo = loggedUser?.interestedUsers?.map((e) => {
+    return {
+      user: allUsers.filter((a) => a._id === e.interestedUser)[0],
+      pet: allPets.filter((a) => a._id === e.petId)[0],
+      viewState: e.viewState,
+    };
+  });
 
+
+  return (
     <Navbar fluid={false} rounded={false} class="text-white bg-yellow-500 p-3">
       <Link to="/home">
         <Navbar.Brand>
@@ -43,10 +61,9 @@ export default function NavBar() {
         </Navbar.Brand>
       </Link>
       <div className="flex md:order-2">
-
         <Dropdown
           class="bg-yellow-600 rounded-full mr-5 mt-1"
-          label={`🔔${loggedUser?.interestedUsers?.length}`}
+          label={`🔔${bell}`}
         >
           <Dropdown.Header>
             <span className="block text-sm font-medium truncate">
@@ -55,40 +72,38 @@ export default function NavBar() {
           </Dropdown.Header>
 
           {loggedUser?.interestedUsers?.length ? (
-            loggedUser?.interestedUsers?.map((iUser) =>
-              iUser[2] === false ? (
-                <Dropdown.Item>
-                  <Toast>
-                    <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-500 dark:bg-blue-800 dark:text-blue-200">
-                      <img
-                        src={iUser[0].image}
-                        className="h-10 w-10 rounded-full"
-                        alt="imagen de usuario"
-                      />
-                    </div>
-                    <div className="ml-3 text-sm font-normal">
-                      <h1>
-                        {iUser[0].first_name} {iUser[0].last_name} esta
-                        interesado en {iUser[1].name}
-                      </h1>
-                      <Link to={`/users/${iUser[0]._id}`}>
-                        <h1 className="text-yellow-500">Ver Perfil</h1>
-                      </Link>
-                    </div>
+
+            algo?.map((iUser) => (
+              iUser?.viewState === false ?
+                <Toast key={iUser?.user?._id}>
+                  <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-500 dark:bg-blue-800 dark:text-blue-200">
+                    <img src={iUser?.user?.image} className="h-10 w-10 rounded-full" alt="imagen de usuario" />
+                  </div>
+                  <div className="ml-3 text-sm font-normal">
+                    <h2>{`${iUser?.user?.first_name} ${iUser?.user?.last_name} esta interesado en ${iUser?.pet?.name}`}</h2>
                     <button
-                      className="text-yellow-500"
+                      value={iUser?.user?._id}
+                      name={iUser?.pet?._id}
+                      className="text-yellow-500 py-1"
+
                       onClick={(e) => closeHandler(e)}
                     >
-                      <Toast.Toggle onClick={(e) => closeHandler(e)} />
+                      Marcar como leida
                     </button>
-                  </Toast>
-                </Dropdown.Item>
-              ) : (
-                <></>
-              )
-            )
+
+                    <Link to={`/users/${iUser?.user?._id}`}>
+                      <h2 className="text-yellow-500">Ver Perfil</h2>
+
+                    </Link>
+                  </div>
+                  <Toast.Toggle />
+                </Toast>
+
+                : <></>
+            ))
           ) : (
-            <></>
+            <Dropdown.Item>Sin notificaciones nuevas</Dropdown.Item>
+
           )}
 
           <Dropdown.Divider />
@@ -100,9 +115,7 @@ export default function NavBar() {
         <Dropdown
           arrowIcon={false}
           inline={true}
-          label={
-            <Avatar alt="User settings" img={loggedUser.image} rounded={true} />
-          }
+          label={<Avatar alt="User settings" img={loggedUser.image} rounded={true} />}
         >
           <Dropdown.Header>
             <span className="block text-sm">
@@ -137,9 +150,14 @@ export default function NavBar() {
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
+        <Navbar.Link class="text-white hover:none">
+          <Link to="/blog">Blog</Link>
+        </Navbar.Link>
         <Navbar.Link>
+
           <Link to="/home" class="text-white hover:none">
-            Inicio
+            Comunidad/Adopcion
+
           </Link>
         </Navbar.Link>
         <Navbar.Link class="text-white hover:none">

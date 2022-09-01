@@ -7,6 +7,7 @@ const filters = require("./filters");
 const register = require("./register");
 const login = require("./login");
 const loginGoogle = require("./googlelogin");
+const likes = require("./patch")
 const router = Router();
 const postPet = require("./posts");
 const patchPet = require("./patch");
@@ -35,7 +36,8 @@ router.use(
   postImage,
   conversations,
   messages,
-  adopt
+  adopt,
+  likes
 );
 
 router.use("/linkpayment", payment, responsePayment);
