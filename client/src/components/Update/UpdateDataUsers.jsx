@@ -67,7 +67,7 @@ export default function UpdateUser() {
     telephone: upDateUser.telephone,
     place: upDateUser.place,
     place_longitude: upDateUser.place_longitude,
-    place_latitude: upDateUser.place_longitude,
+    place_latitude: upDateUser.place_latitude,
   });
 
   // useEffect(() => {
@@ -109,7 +109,7 @@ export default function UpdateUser() {
       telephone: upDateUser.telephone,
       place: upDateUser.place,
       place_longitude: upDateUser.place_longitude,
-      place_latitude: upDateUser.place_longitude,
+      place_latitude: upDateUser.place_latitude,
     });
     dispatch(getUserDetail(upDateUser._id));
     navigate(`/users/${upDateUser._id}`, { replace: true });
