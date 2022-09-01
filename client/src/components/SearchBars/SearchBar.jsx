@@ -22,7 +22,7 @@ export default function SearchBar() {
     } else {
       setInput("mascota");
     }
-    if (input.length >= 3) dispatch(switchRenderAction(input));
+    dispatch(switchRenderAction(input));
   }
 
   function handleInputChange(e) {
