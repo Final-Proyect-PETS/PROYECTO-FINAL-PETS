@@ -5,7 +5,7 @@ const { patchPet, patchUser } = require("../utils/controllers/patch.js");
 const { send_mail } = require("../routes/send-email");
 const verifyToken = require("../utils/middlewares/validateToken");
 const nodemailer = require("nodemailer");
-const { NMAILER_PASSWORD } = process.env;
+const { NMAILER_PASSWORD2 } = process.env;
 const router = Router();
 
 router.patch("/pets/:id", verifyToken, async (req, res, next) => {
@@ -122,14 +122,14 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
     console.log(newOwner.email);
     try {
       const transporter = nodemailer.createTransport({
-        service: "hotmail",
+        service: "gmail",
         auth: {
-          user: "HAppYTAil5@hotmail.com",
-          pass: `${NMAILER_PASSWORD}`,
+          user: "happytailshp@gmail.com",
+          pass: `${NMAILER_PASSWORD2}`,
         },
       });
       const mailOptions = {
-        from: "'HappyTails'<HAppYTAil5@hotmail.com>",
+        from: "'HappyTails'<happytailshp@gmail.com>",
         to: `${newOwner.email}`,
         subject: "Felicitaciones!",
         text: `Has adoptado correctamente a ${newpet.name}`,
@@ -147,14 +147,14 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
     }
     try {
       const transporter2 = nodemailer.createTransport({
-        service: "hotmail",
+        service: "gmail",
         auth: {
-          user: "HAppYTAil5@hotmail.com",
-          pass: `${NMAILER_PASSWORD}`,
+          user: "happytailshp@gmail.com",
+          pass: `bmkymaiygycduxmw`,
         },
       });
       const mailOptions2 = {
-        from: "'HappyTails'<HAppYTAil5@hotmail.com>",
+        from: "'HappyTails'<happytailshp@gmail.com>",
         to: `${oldOwner.email}`,
         subject: "Felicitaciones!",
         text: `Han adoptado correctamente a ${newpet.name}`,
@@ -217,7 +217,7 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
         secure: false,
         auth: {
           user: "happytailshp@gmail.com",
-          pass: `${NMAILER_PASSWORD}`,
+          pass: `${NMAILER_PASSWORD2}`,
         },
         tls: {
           rejectUnauthorized: false,
