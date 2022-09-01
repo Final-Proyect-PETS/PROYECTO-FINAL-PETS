@@ -57,7 +57,6 @@ router.patch("/pets/:id", verifyToken, async (req, res, next) => {
 
 router.patch("/users/:id", verifyToken, async (req, res, next) => {
   const _id = req.params.id;
-  console.log("lalala");
   console.log(_id);
   const {
     first_name,
@@ -68,14 +67,14 @@ router.patch("/users/:id", verifyToken, async (req, res, next) => {
     image,
     telephone,
     about,
-    //deleted,
-    interestedUsers,
     place,
+    deleted,
+    interestedUsers,
     place_longitude,
     place_latitude,
+    blogmessage
   } = req.body;
-  console.log(place);
-  const deleted = false;
+  console.log(req.body);
   try {
     const userPatch = await patchUser(
       _id,
@@ -86,12 +85,13 @@ router.patch("/users/:id", verifyToken, async (req, res, next) => {
       password,
       image,
       telephone,
+      about,
       place,
+      deleted,
+      interestedUsers,
       place_longitude,
       place_latitude,
-      about,
-      deleted,
-      interestedUsers
+      blogmessage
     );
     console.log(userPatch);
     res.status(201).send(userPatch);

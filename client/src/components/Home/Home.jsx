@@ -18,16 +18,16 @@ export default function Home() {
         title: "DATOS",
         icon: "question",
         text: "Por favor completa tus datos",
-      }).then(() => navigate("/missingdata", { replace: true }));
+      }).then(() => navigate("/", { replace: true }));
     }
   };
 
-function handley(e){
-  setTimeout(verifyData(),5000);
-///FUNCION DE CHRIS
-}
+  function handley(e) {
+    setTimeout(verifyData(), 5000);
+    ///FUNCION DE CHRIS
+  }
   return (
-    <section onClick={e=>handley(e)}>
+    <section onClick={e => handley(e)}>
       <section className="fixed w-screen">
         <NavBar />
       </section>
