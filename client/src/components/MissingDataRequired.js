@@ -2,14 +2,14 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { notificationSwal } from "../utils/notificationSwal.jsx";
-import { getUserDetail, patchUsuer, postImage,getUserProfile} from "../redux/Actions/index";
+import { getUserDetail, patchUsuer, postImage, getUserProfile } from "../redux/Actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import MapboxAutocomplete from 'react-mapbox-autocomplete';
 import { useEffect } from "react";
 
 export default function MissingDataRequired() {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const users = useSelector((state) => state.users);
   const [image, setImage] = useState("");
   const [loadingImage, setLoadingImage] = useState(false);
@@ -18,15 +18,16 @@ export default function MissingDataRequired() {
 
 
   const id = localStorage.getItem("id");
+  console.log(id + "el id");
 
   useEffect(() => {
     dispatch(getUserProfile(id));
-  }, [dispatch,id]);
+  }, [dispatch, id]);
 
   const upDateUser = useSelector((state) => state.userProfile);
-console.log(upDateUser,"LOGGG")
+  console.log(upDateUser, "LOGGG")
   const [input, setInput] = useState({
-    id: upDateUser._id,
+    id: id,
     username: upDateUser.username,
     image: upDateUser.image,
     about: upDateUser.about,
@@ -49,20 +50,20 @@ console.log(upDateUser,"LOGGG")
 
   function validateFrom(input) {
     let errors = {};
-  
+
     if (input.username) {
       if (!/^[A-Za-z0-9\s]+$/g.test(input.username)) {
         errors.username = "El nombre de usuario debe tener letras y números!";
       } else if (input.username.length > 20) {
         errors.username =
           "El nombre de usuario no puede tener más de 20 caracteres!";
-        } else if(
-          users.find((u) => u.username === input.username.toLowerCase())
-        ) {
-          errors.username = "El usuario ya existe!";
+      } else if (
+        users.find((u) => u.username === input.username.toLowerCase())
+      ) {
+        errors.username = "El usuario ya existe!";
       } else errors.username = "";
     } else errors.username = "El nombre de usuario es requerido!";
-  
+
     return errors;
   }
 
@@ -199,18 +200,18 @@ console.log(upDateUser,"LOGGG")
             />
             {
               errors.username ||
-              errors.image ||
-              errors.about ||
-              errors.telephone ? (
-              <h3>missing required fields</h3>
-            ) : (
-              <button
-                type="submit"
-                className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
-              >
-                Enviar
-              </button>
-            )}
+                errors.image ||
+                errors.about ||
+                errors.telephone ? (
+                <h3>missing required fields</h3>
+              ) : (
+                <button
+                  type="submit"
+                  className="py-2 px-4 my-4 w-full bg-yellow-900 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+                >
+                  Enviar
+                </button>
+              )}
           </div>
         </form>
       </div>

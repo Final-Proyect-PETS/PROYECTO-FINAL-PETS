@@ -61,8 +61,11 @@ async function patchUser(
   image,
   telephone,
   about,
+  place,
   deleted,
   interestedUsers,
+  place_longitude,
+  place_latitude,
   blogmessage
 ) {
   try {
@@ -81,9 +84,12 @@ async function patchUser(
       image,
       telephone,
       about,
+      place,
       deleted,
       interestedUsers,
-      blogmessage,
+      place_longitude,
+      place_latitude,
+      blogmessage
     });
     const userActualizado = User.findOne({ _id: id }).populate({
       path: "pets",

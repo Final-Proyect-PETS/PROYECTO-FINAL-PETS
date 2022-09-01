@@ -100,7 +100,6 @@ export default function RegisterPet() {
   }
 
   function validate(input) {
-    console.log(input);
     let errors = {};
 
     if (!input.id) errors.id = "El id es requerido!";
@@ -191,7 +190,6 @@ export default function RegisterPet() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(input);
     if (have() === false) {
       Swal.fire({
         title: "¿Está seguro de que desea crear esta mascota?",
@@ -283,8 +281,7 @@ export default function RegisterPet() {
     return key++;
   }
 
-  function _suggestionSelect(result, lat, long, text) {
-    console.log(result, lat, long, text);
+  function _suggestionSelect(result, lat, long) {
     setInput({
       ...input,
       place: result,
@@ -307,7 +304,6 @@ export default function RegisterPet() {
 
   function createNewMap(long, lat) {
     if (placeSelect) {
-      console.log(mapDiv);
       new mapboxgl.Map({
         container: mapDiv.current, // container ID
         style: "mapbox://styles/mapbox/streets-v11", // style URL
@@ -337,7 +333,7 @@ export default function RegisterPet() {
               value={input.name}
               onChange={(e) => handleChange(e)}
               placeholder="Nombre de la mascota"
-              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-white placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-black placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
             {errors.name && (
               <p className="font-bold text-red-700 text-center p-2">
@@ -350,11 +346,11 @@ export default function RegisterPet() {
             <label className="font-light text-white text-xl">
               Imagen de perfil
             </label>
-            <input 
+            <input
               type="file"
               name="image"
               accept=".jpg, .png, .jpeg"
-              onChange={(e) => handleImage(e)} 
+              onChange={(e) => handleImage(e)}
               className="w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" />
             {loadingImage ? (
               <h3 className="font-light text-white text-xl self-center">
@@ -380,7 +376,7 @@ export default function RegisterPet() {
               onChange={(e) => handleImagePool(e)}
               className="w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             />
-          
+
             <div className="font-light text-white text-xl">
               {loadingImagePool ? (
                 <h3>Cargando imagen...</h3>
