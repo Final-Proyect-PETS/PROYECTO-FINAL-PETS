@@ -29,13 +29,9 @@ import { useState } from "react";
 export default function Blog() {
   const dispatch = useDispatch();
   const loggedUser = useSelector((state) => state.userProfile);
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch]);
+
   const allUsers = useSelector((state) => state.users);
-  useEffect(() => {
-    dispatch(getAllPets());
-  }, [dispatch]);
+
   const allPets = useSelector((state) => state.pets);
   var donator = allUsers.filter((user) => user?.donations?.length >= 1);
   var adopted = allPets.filter((pet) => pet?.isAdopted === true);
@@ -187,12 +183,11 @@ export default function Blog() {
                   Comentarios de la comunidad 💌
                 </h5>
 
-               
                 <Link
                   to={`/home`}
                   className="text-sm font-medium text-yellow-600 hover:underline dark:text-yellow-500"
                 >
-                Ver Todos
+                  Ver Todos
                 </Link>
               </div>
               <div className="flow-root">
@@ -208,7 +203,7 @@ export default function Blog() {
                             <img
                               className="h-8 w-8 rounded-full"
                               src={user.image}
-                              alt="Neil image"
+                              alt="image"
                             />
                           </Link>
                         </div>
@@ -292,7 +287,7 @@ export default function Blog() {
                             <img
                               className="h-8 w-8 rounded-full"
                               src={don.image}
-                              alt="Neil image"
+                              alt=""
                             />
                           </div>
                         </Link>
@@ -349,7 +344,7 @@ export default function Blog() {
                         <img
                           className="h-8 w-8 rounded-full"
                           src={don.image}
-                          alt="PERFIL"
+                          alt=""
                         />
                         <span className="ml-3 flex-1 whitespace-nowrap">
                           {don.username}
@@ -379,7 +374,7 @@ export default function Blog() {
                         <img
                           className="h-8 w-8 rounded-full"
                           src={don.image}
-                          alt="PERFIL"
+                          alt=""
                         />
                         <span className="ml-3 flex-1 whitespace-nowrap">
                           {don.username}
@@ -408,7 +403,7 @@ export default function Blog() {
                         <img
                           className="h-8 w-8 rounded-full"
                           src={don.image}
-                          alt="PERFIL"
+                          alt=""
                         />
                         <span className="ml-3 flex-1 whitespace-nowrap">
                           {don.username}
@@ -419,7 +414,7 @@ export default function Blog() {
                         <img
                           className="h-8 w-8 rounded-full"
                           src={goldenpaw}
-                          alt="goldenpaw"
+                          alt=""
                         />
                       </Link>
                     </li>
