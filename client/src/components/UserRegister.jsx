@@ -279,7 +279,7 @@ export default function Register() {
               name="image"
               accept=".jpg, .png, .jpeg"
               onChange={(e) => handleImage(e)}
-              className="rounded-lg flex-1 appearance-none w-full py-2 bg-transparent text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
+              className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
             />
             {loadingImage ? (
               <h3 className="font-light text-white text-xl">

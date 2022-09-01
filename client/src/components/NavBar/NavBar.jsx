@@ -144,7 +144,7 @@ export default function NavBar() {
       </div>
       <Navbar.Collapse>
         <Navbar.Link>
-          <Link to="/home" class="text-white hover:none">
+          <Link to="/home" className="text-white hover:none">
             Inicio
           </Link>
         </Navbar.Link>
