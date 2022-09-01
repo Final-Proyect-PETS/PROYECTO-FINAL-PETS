@@ -14,10 +14,12 @@ const patchPet = async (
   vaccination,
   castrated,
   place,
+  place_longitude,
+  place_latitude,
   gender,
   isAdopted,
   deleted,
-  interestedUsers,
+  interestedUsers
 ) => {
   try {
     connection();
@@ -36,6 +38,8 @@ const patchPet = async (
       vaccination,
       castrated,
       place,
+      place_longitude,
+      place_latitude,
       gender,
       isAdopted,
       deleted,
@@ -79,7 +83,7 @@ async function patchUser(
       about,
       deleted,
       interestedUsers,
-      blogmessage
+      blogmessage,
     });
     const userActualizado = User.findOne({ _id: id }).populate({
       path: "pets",

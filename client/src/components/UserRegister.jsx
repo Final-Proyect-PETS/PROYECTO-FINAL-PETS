@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postUser, getAllUsers, postImage } from "../redux/Actions/index.js";
@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { notificationSwal } from "../utils/notificationSwal.jsx";
 import MapboxAutocomplete from "react-mapbox-autocomplete";
+import mapboxgl from "mapbox-gl";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -16,6 +17,9 @@ export default function Register() {
   const [image, setImage] = useState("");
   const [loadingImage, setLoadingImage] = useState(false);
   const [errors, setErrors] = useState({});
+  const [placeSelect, setPlaceSelect] = useState(false);
+
+  const mapDiv = useRef(null);
 
   const [input, setInput] = useState({
     first_name: "",
@@ -28,6 +32,8 @@ export default function Register() {
     about: "",
     telephone: "",
     place: "",
+    place_longitude: "",
+    place_latitude: "",
   });
 
   useEffect(() => {
@@ -181,6 +187,8 @@ export default function Register() {
         about: "",
         telephone: "",
         place: "",
+        place_longitude: "",
+        place_latitude: "",
       });
       notificationSwal(
         "¡Enhorabuena!",
@@ -209,13 +217,38 @@ export default function Register() {
     setInput({
       ...input,
       place: result,
+      place_longitude: long,
+      place_latitude: lat,
     });
-    console.log(input);
+    setPlaceSelect(true);
+    //if (placeSelect)
+    createNewMap(long, lat);
   }
   const mapAccess = {
     mapboxApiAccessToken:
       "pk.eyJ1Ijoiam9uc2VuIiwiYSI6IkR6UU9oMDQifQ.dymRIgqv-UV6oz0-HCFx1w",
   };
+
+  useLayoutEffect(() => {
+    //if (placeSelect)
+    createNewMap(input.place_longitude, input.place_latitude);
+  }, [placeSelect]);
+
+  function createNewMap(long, lat) {
+    if (placeSelect) {
+      console.log(mapDiv);
+      new mapboxgl.Map({
+        container: mapDiv.current, // container ID
+        style: "mapbox://styles/mapbox/streets-v11", // style URL
+        center: [long, lat], // starting position [lng, lat]
+        zoom: 12, // starting zoom
+        projection: "globe", // display the map as a 3D globe
+      });
+    }
+  }
+
+  mapboxgl.accessToken =
+    "pk.eyJ1IjoicG9saW5vIiwiYSI6ImNsN2FtdWNybTB0bmk0MHNqZXZxMzM0OTYifQ.O2Y9sZnF-K1k_KhC8MzJbA";
 
   return (
     <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
@@ -279,7 +312,7 @@ export default function Register() {
               name="image"
               accept=".jpg, .png, .jpeg"
               onChange={(e) => handleImage(e)}
-              className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
+              className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             />
             {loadingImage ? (
               <h3 className="font-light text-white text-xl">
@@ -358,9 +391,24 @@ export default function Register() {
               inputClass="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
               onSuggestionSelect={_suggestionSelect}
               resetSearch={false}
-              placeholder="Escriba su ciudad"
+              placeholder={
+                !input.place ? "Escriba su ciudad" : "Modifique ciudad"
+              }
             />
+            {input.place && (
+              <p className="font-light text-white text-xl">{input.place}</p>
+            )}
           </div>
+          {input.place ? (
+            <div
+              ref={mapDiv}
+              style={{
+                block: "w-full",
+                height: "15vw",
+                borderRadius: "10px",
+              }}
+            />
+          ) : null}
           <div>
             <label className="font-light text-white text-xl">Telefono</label>
             <input

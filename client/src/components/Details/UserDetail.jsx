@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getUserDetail, clearState, getPetDetail } from "../../redux/Actions";
@@ -6,9 +6,9 @@ import NavBar from "../NavBar/NavBar";
 import OwnedPet from "./OwnedPet";
 import Loader from "./../Loaders/Loader";
 import "./userDetailStyle.css";
+import mapboxgl from "mapbox-gl";
 
 export default function UserDetail() {
-
   let { id } = useParams();
   const dispatch = useDispatch();
 
@@ -20,6 +20,26 @@ export default function UserDetail() {
 
   const loggedUser = useSelector((state) => state.userProfile);
   const userDetail = useSelector((state) => state.userDetail);
+  const mapDiv = useRef(null);
+
+  useLayoutEffect(() => {
+    createNewMap(userDetail.place_longitude, userDetail.place_latitude);
+  }, [userDetail.place_latitude, userDetail.place_longitude]);
+
+  function createNewMap(long, lat) {
+    if (userDetail.place_latitude && userDetail.place_longitude) {
+      new mapboxgl.Map({
+        container: mapDiv.current, // container ID
+        style: "mapbox://styles/mapbox/streets-v11", // style URL
+        center: [long, lat], // starting position [lng, lat]
+        zoom: 12, // starting zoom
+        projection: "globe", // display the map as a 3D globe
+      });
+    }
+  }
+
+  mapboxgl.accessToken =
+    "pk.eyJ1IjoicG9saW5vIiwiYSI6ImNsN2FtdWNybTB0bmk0MHNqZXZxMzM0OTYifQ.O2Y9sZnF-K1k_KhC8MzJbA";
 
   return Object.keys(userDetail).length ? (
     <>
@@ -88,9 +108,21 @@ export default function UserDetail() {
                     <></>
                   )}
                 </div>
+                {userDetail.place_latitude && userDetail.place_longitude ? (
+                  <div
+                    ref={mapDiv}
+                    style={{
+                      //block: "w-full",
+                      height: "20vw",
+                      width: "30vw",
+                      borderRadius: "10px",
+                    }}
+                  />
+                ) : null}
               </div>
             </div>
           </div>
+
           <div className="w-full mt-1 border-b  absolute  justify-center items-center bg-gray-100">
             <div className="w-full mt-1 border-b  absolute flex justify-center items-center bg-gray-500">
               <Link to="/tradepet">

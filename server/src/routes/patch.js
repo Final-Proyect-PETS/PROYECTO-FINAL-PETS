@@ -21,6 +21,8 @@ router.patch("/pets/:id", verifyToken, async (req, res, next) => {
     vaccination,
     castrated,
     place,
+    place_longitude,
+    place_latitude,
     gender,
     isAdopted,
     deleted,
@@ -39,6 +41,8 @@ router.patch("/pets/:id", verifyToken, async (req, res, next) => {
       vaccination,
       castrated,
       place,
+      place_longitude,
+      place_latitude,
       gender,
       isAdopted,
       deleted,
@@ -52,6 +56,9 @@ router.patch("/pets/:id", verifyToken, async (req, res, next) => {
 });
 
 router.patch("/users/:id", verifyToken, async (req, res, next) => {
+  const _id = req.params.id;
+  console.log("lalala");
+  console.log(_id);
   const {
     first_name,
     last_name,
@@ -61,12 +68,17 @@ router.patch("/users/:id", verifyToken, async (req, res, next) => {
     image,
     telephone,
     about,
-    deleted,
+    //deleted,
     interestedUsers,
+    place,
+    place_longitude,
+    place_latitude,
   } = req.body;
+  console.log(place);
+  const deleted = false;
   try {
     const userPatch = await patchUser(
-      req.params.id,
+      _id,
       first_name,
       last_name,
       username,
@@ -74,10 +86,14 @@ router.patch("/users/:id", verifyToken, async (req, res, next) => {
       password,
       image,
       telephone,
+      place,
+      place_longitude,
+      place_latitude,
       about,
       deleted,
       interestedUsers
     );
+    console.log(userPatch);
     res.status(201).send(userPatch);
   } catch (error) {
     next(error);
@@ -100,32 +116,32 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
     await User.updateOne({ _id: ownerId }, { $pull: { pets: petId } });
 
     const newpet = await Pets.findOne({ _id: petId });
-    const oldOwner = await User.findOne({ _id: ownerId })
+    const oldOwner = await User.findOne({ _id: ownerId });
     const newOwner = await User.findOne({ _id: userId });
-    console.log(oldOwner.email)
-    console.log(newOwner.email)
+    console.log(oldOwner.email);
+    console.log(newOwner.email);
     try {
       const transporter = nodemailer.createTransport({
         service: "hotmail",
         auth: {
           user: "HAppYTAil5@hotmail.com",
-          pass: `${NMAILER_PASSWORD}`
+          pass: `${NMAILER_PASSWORD}`,
         },
-      })
+      });
       const mailOptions = {
         from: "'HappyTails'<HAppYTAil5@hotmail.com>",
         to: `${newOwner.email}`,
         subject: "Felicitaciones!",
-        text: `Has adoptado correctamente a ${newpet.name}`
-      }
+        text: `Has adoptado correctamente a ${newpet.name}`,
+      };
       transporter.sendMail(mailOptions, (err, response) => {
         if (err) {
           console.error("Ha ocurrido un error", err);
         } else {
           console.error("Response", response);
-          res.status(200).json("El email para la adopcion ha sido enviado")
+          res.status(200).json("El email para la adopcion ha sido enviado");
         }
-      })
+      });
     } catch (err) {
       console.error(err);
     }
@@ -134,23 +150,23 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
         service: "hotmail",
         auth: {
           user: "HAppYTAil5@hotmail.com",
-          pass: `${NMAILER_PASSWORD}`
+          pass: `${NMAILER_PASSWORD}`,
         },
-      })
+      });
       const mailOptions2 = {
         from: "'HappyTails'<HAppYTAil5@hotmail.com>",
         to: `${oldOwner.email}`,
         subject: "Felicitaciones!",
-        text: `Han adoptado correctamente a ${newpet.name}`
-      }
+        text: `Han adoptado correctamente a ${newpet.name}`,
+      };
       transporter2.sendMail(mailOptions2, (err, response) => {
         if (err) {
           console.error("Ha ocurrido un error", err);
         } else {
           console.error("Response", response);
-          res.status(200).json("El email para la adopcion ha sido enviado")
+          res.status(200).json("El email para la adopcion ha sido enviado");
         }
-      })
+      });
     } catch (err) {
       console.error(err);
     }
@@ -184,9 +200,7 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
       ).length
     ) {
       res.send("Ya mandaste la solicitud de adopcion");
-
     } else {
-
       const petAndUserIds = {
         interestedUser: userId,
         petId,
@@ -241,26 +255,29 @@ router.patch("/viewing", async (req, res, next) => {
 
   const user = await User.findOne({ _id: id });
 
-  let loquecambia = user.interestedUsers.filter(e => e.interestedUser === interestedId && e.petId === petId)
-  loquecambia[0].viewState = true
-  let el_resto = user.interestedUsers.filter(e => e.interestedUser !== interestedId || e.petId !== petId).concat(loquecambia)
+  let loquecambia = user.interestedUsers.filter(
+    (e) => e.interestedUser === interestedId && e.petId === petId
+  );
+  loquecambia[0].viewState = true;
+  let el_resto = user.interestedUsers
+    .filter((e) => e.interestedUser !== interestedId || e.petId !== petId)
+    .concat(loquecambia);
 
-  await User.updateOne(
-    { _id: id },
-    { $set: { interestedUsers: el_resto } }
-  )
+  await User.updateOne({ _id: id }, { $set: { interestedUsers: el_resto } });
 
   res.status(200).send("notification viewed");
 });
-
 
 router.patch("/likes", verifyToken, async (req, res, next) => {
   try {
     const { petId, userId, ownerId } = req.body;
     console.log(req.body);
-    let user = await User.findOne({ _id: ownerId })
+    let user = await User.findOne({ _id: ownerId });
     console.log(user);
-    if (user.likesPets.filter((e) => e[0]._id === userId && e[1]._id === petId).length) {
+    if (
+      user.likesPets.filter((e) => e[0]._id === userId && e[1]._id === petId)
+        .length
+    ) {
       res.send("Ya mandaste un like perro");
     } else {
       let support = false;
@@ -270,7 +287,7 @@ router.patch("/likes", verifyToken, async (req, res, next) => {
         { _id: ownerId },
         { $push: { likesPets: petAndUserIds } }
       );
-      let user2 = await User.findOne({ _id: ownerId })
+      let user2 = await User.findOne({ _id: ownerId });
       console.log(user2);
       await Pets.updateOne({ _id: petId }, { $push: { likes: petAndUserIds } });
     }
@@ -279,7 +296,4 @@ router.patch("/likes", verifyToken, async (req, res, next) => {
   }
 });
 
-
-
 module.exports = router;
-
