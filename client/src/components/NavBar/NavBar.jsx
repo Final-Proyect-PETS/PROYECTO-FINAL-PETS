@@ -74,9 +74,9 @@ export default function NavBar() {
     return Math.random() - 0.5;
   });
   let notiSlice = notis.flat().reverse().slice(0, 5);
-console.log(notiSlice,"SLICE")
+  console.log(notiSlice, "SLICE");
   let bell = notis?.flat().filter((noti) => noti?.viewState === false);
- 
+
   return (
     <Navbar fluid={false} rounded={false} class="text-white bg-yellow-500 p-3">
       <Link to="/home">
@@ -209,12 +209,14 @@ console.log(notiSlice,"SLICE")
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
-        <Navbar.Link class="text-white hover:none">
-          <Link to="/blog">Blog</Link>
-        </Navbar.Link>
         <Navbar.Link>
           <Link to="/home" class="text-white hover:none">
             Comunidad/Adopcion
+          </Link>
+        </Navbar.Link>
+        <Navbar.Link>
+          <Link class="text-white hover:none" to="/blog">
+            Home
           </Link>
         </Navbar.Link>
         <Navbar.Link class="text-white hover:none">

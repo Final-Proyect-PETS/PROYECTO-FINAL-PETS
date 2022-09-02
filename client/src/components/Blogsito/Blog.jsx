@@ -47,7 +47,6 @@ export default function Blog() {
   console.log(donator, "donator");
 
   // let donations =
-    
 
   useEffect(() => {
     dispatch(getAllUsers());
@@ -94,12 +93,10 @@ export default function Blog() {
             </a>
           </Carousel>
         </div>
-        <hr className="border" />{" "}
-        {/* ----------------------------------------------------------------------------hr */}
+        <hr className="border" />
+        {/* -HR---------------CONOCENOS--------------------------------------------------hr */}
         <div>
-          {" "}
-          {/*card descripcion*/}
-          <Card class="opacity-80 bg-yellow-900">
+          <Card class="opacity-80 bg-yellow-900 justify-center">
             <h5 className="text-2xl font-bold tracking-tight text-white dark:text-white">
               Conocé a tu próximo amigo
             </h5>
@@ -151,10 +148,12 @@ export default function Blog() {
           </Card>
         </div>
         <hr className="border" />
-        {/* --------------------------------------------------------------------------------------------------------hr */}
-        <div className="flex flex-col-3 w-screen ">
-          <div className="flex max-w-sm m-2">
-            {/* CARD DE INPUT MENSAJE */}
+        {/* --HR------------CHATITO------------------------------------------------------------------------------------------hr */}
+        <div className="flex flex-col w-screen ">
+          {/* CARD DE INPUT MENSAJE */}
+
+          <div className="flex">
+          <div className=" max-w-sm m-2">
             <Card>
               <form
                 onSubmit={(e) => onSubmitHandler(e)}
@@ -241,6 +240,7 @@ export default function Blog() {
               </div>
             </Card>
           </div>
+          </div>
           {/* CARRUSEL YA ADOPTADOS */}
           <div className=" flex m-2 h-72 w-1/3 bg-yellow-900 rounded opacity-90">
             <div className=" m-1 flex flex-col justify-center">
@@ -273,7 +273,11 @@ export default function Blog() {
         </div>
         <hr className="border" />
         {/* hr--------------------------------------------------------------------------------- */}
-        <div className="flex flex-col-3 p-2 ">
+        {/* -----------------------------TOPS-----------------------------------------------hr */}
+        <div className=" h-screen w-screen opacity-80 bg-yellow-900 flex flex-col justify-center">
+          <h5 className="text-5xl font-bold tracking-tight text-white dark:text-white">
+            TOP TAILS
+          </h5>
           <div className="max-w-sm  p-3 mb-2 mt-2">
             <Card class="bg-gray-100 rounded">
               <div className="mb-1 flex flex-end items-center  justify-between">
@@ -332,7 +336,6 @@ export default function Blog() {
               </div>
             </Card>
           </div>
-          <div></div>
           <div className="max-w-sm p-3 mb-2 mt-2">
             <Card>
               <div className="mb-1 flex items-center justify-between">
@@ -440,6 +443,7 @@ export default function Blog() {
             </Card>
           </div>
         </div>
+        {/* hr--------------------------------------------------------------------------------------------------------------- */}
       </div>
     </>
   );
