@@ -2,26 +2,24 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetail } from "../../redux/Actions";
 
-export default function Messages({ message, own, mio, el }) {
+export default function Messages({ message, own, el }) {
 
     const dispatch = useDispatch()
 
     const yo = useSelector((state) => state.userProfile)
 
-    const ell = useSelector((state) => state.userDetail)
-
     useEffect(() => {
         dispatch(getUserDetail(el))
     }, [el])
 
-    // console.log(yo, "MIO")
 
-    console.log(ell, "EL")
+    const ell = useSelector((state) => state.userDetail)
+
 
     return (
         <>
             {/* CAJA MADRE CHAT*/}
-            <div id="messages" className="flex flex-col space-y-4 p-3 overflow-y-auto">
+            <div id="messages" className="flex flex-col space-y-4 p-3">
                 {/* CHAT */}
                 {own ?
                     <div className="flex items-end justify-end">

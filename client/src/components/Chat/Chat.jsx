@@ -16,7 +16,7 @@ import { io } from "socket.io-client";
 import axios from "axios";
 
 export default function Chat() {
-  
+
   const dispatch = useDispatch();
 
   const conversations = useSelector((state) => state.conversations);
@@ -98,10 +98,10 @@ export default function Chat() {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+
   return (
     <>
       <NavBar />
-
       <div className="flex w-full bg-gray-200">
         <div className="w-1/4">
           <div className="h-32 flex justify-center flex-col">
@@ -114,7 +114,6 @@ export default function Chat() {
                 <li
                   onClick={() => setCurrentChat(u)}
                   className="flex items-center gap-3 h-32 border border-black">
-
                   <Conversations conversation={u} currentUser={id} />
                 </li>
               ))}
@@ -122,29 +121,30 @@ export default function Chat() {
           </div>
         </div>
 
-        <div className="flex-1 p:2 sm:p-6 justify-between flex flex-col">
+        <div className="flex-1 p:2 sm:p-6 justify-between flex flex-col bg-red-900">
           <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
             <div className="w-full">
               {currentChat ? (
-                <><div className="relative flex items-center space-x-4">
-                  <div className="relative">
-                    <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="" className="w-10 sm:w-16 h-10 sm:h-16 rounded-full" />
-                  </div>
-                  <div className="flex flex-col leading-tight">
-                    <div className="text-2xl mt-1 flex items-center">
-                      <span className="text-gray-700 mr-3">Anderson Vanhron</span>
+                <>
+                  <div className="relative flex items-center space-x-4">
+                    <div className="relative">
+                      <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="" className="w-10 sm:w-16 h-10 sm:h-16 rounded-full" />
+                    </div>
+                    <div className="flex flex-col leading-tight">
+                      <div className="text-2xl mt-1 flex items-center">
+                        <span className="text-gray-700 mr-3">Anderson Vanhron</span>
+                      </div>
                     </div>
                   </div>
-                </div>
                   <div className="h-screen overflow-y-scroll pr-1">
                     {messages.map((m) => (
                       <div ref={scrollRef}>
-                        <Messages message={m} own={m.sender === id} />
+                        <Messages message={m} own={m.sender === id} mio={id} el={m.sender !== id ? m.sender : false} />
                       </div>
                     ))}
                   </div>
                   <div className="mt-5 flex items-center justify-between">
-                    <input type="text" placeholder="Write your message!" onKeyPress={e => e.key === 'Enter' && handleSubmit(e)} onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3" />
+                    <input type="text" placeholder="Write your message!" onKeyPress={e => e.key === 'Enter' && handleSubmit(e)} onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-8 bg-gray-200 rounded-md py-3" />
 
                     <button type="button" className="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none" onClick={handleSubmit}>
                       <span className="font-bold">Enviar</span>
@@ -152,7 +152,10 @@ export default function Chat() {
                         <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
                       </svg>
                     </button>
-                  </div></>) : (<span className="flex justify-center items-center text-3xl">Abrí un chat</span>)}
+                  </div>
+                </>)
+                :
+                (<span className="flex justify-center items-center text-3xl">Abrí un chat</span>)}
             </div>
           </div>
         </div>
