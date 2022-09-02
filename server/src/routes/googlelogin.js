@@ -4,6 +4,8 @@ const router = Router();
 const User = require("../models/users");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
+const nodemailer = require("nodemailer");
+const { NMAILER_PASSWORD2 } = process.env;
 const client = new OAuth2Client(
   process.env.O_AUTH_CLIENT
 );
@@ -42,6 +44,32 @@ router.post("/logingoogle", async (req, res, next) => {
                     last_name: family_name,
                     email: email,
                     username: name,
+                  });let transporter = nodemailer.createTransport({
+                    host: "smtp.gmail.com",
+                    port: 587,
+                    secure: false,
+                    auth: {
+                      user: "happytailshp@gmail.com",
+                      pass: `${NMAILER_PASSWORD2}`,
+                    },
+                    tls: {
+                      rejectUnauthorized: false,
+                    },
+                  });
+              
+                  let contentHTML = `
+                  <img src = "https://cdn-icons-png.flaticon.com/512/194/194279.png" style="width:100px;"/>
+                
+                  <h1>Hola!, ${given_name} ${family_name}.🐰
+                  🐻 Gracias por haber elegido Happy Tails para tus compañeros animales.🐵
+                        🐈‍⬛Deseamos que todas tus mascotas encuentren su cola feliz.🐶 
+                  Atentamente HT`;
+              
+                  let info = await transporter.sendMail({
+                    from: "'HappyTails'<happytailshp@gmail.com>",
+                    to: email,
+                    subject: "Bienvenido",
+                    html: contentHTML,
                   });
                   await newUser.save();
                   let id = newUser._id;
@@ -49,6 +77,7 @@ router.post("/logingoogle", async (req, res, next) => {
                     { id: newUser._id },
                     process.env.SECRET_KEY
                   );
+                  
                   res
                     .header("token", token)
                     .json({ error: null, data: { token }, id: { id } });
