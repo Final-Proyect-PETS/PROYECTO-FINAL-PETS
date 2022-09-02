@@ -4,11 +4,12 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import Messages from "./Messages";
-import Online from "./Online";
+
 import {
   getUserProfile,
   getConversations,
   sendMessage,
+
 } from "../../redux/Actions";
 import Conversations from "./Conversations";
 import { useState } from "react";
@@ -20,6 +21,7 @@ export default function Chat() {
   const dispatch = useDispatch();
 
   const conversations = useSelector((state) => state.conversations);
+  
 
   const [messages, setMessages] = useState([]);
 
@@ -98,19 +100,17 @@ export default function Chat() {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-
   return (
     <>
       <NavBar />
-      <div className="flex w-full bg-gray-200">
+      <div className="flex w-full bg-gray-500">
         <div className="w-1/4">
           <div className="h-32 flex justify-center flex-col">
-            <input placeholder="Busca algo"></input>
+            <input placeholder="Busca algo" />
           </div>
-          <div className="h-screen overflow-y-scroll">
+          <div className="overflow-y-scroll">
             <ol className="gap-3">
               {conversations.map((u) => (
-
                 <li
                   onClick={() => setCurrentChat(u)}
                   className="flex items-center gap-3 h-32 border border-black">
@@ -121,7 +121,7 @@ export default function Chat() {
           </div>
         </div>
 
-        <div className="flex-1 p:2 sm:p-6 justify-between flex flex-col bg-red-900">
+        <div className="flex-1 p:2 sm:p-6 justify-between flex flex-col bg-red-900 h-96">
           <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
             <div className="w-full">
               {currentChat ? (
@@ -136,7 +136,7 @@ export default function Chat() {
                       </div>
                     </div>
                   </div>
-                  <div className="h-screen overflow-y-scroll pr-1">
+                  <div className="overflow-y-scroll pr-1 h-96">
                     {messages.map((m) => (
                       <div ref={scrollRef}>
                         <Messages message={m} own={m.sender === id} mio={id} el={m.sender !== id ? m.sender : false} />
@@ -144,7 +144,7 @@ export default function Chat() {
                     ))}
                   </div>
                   <div className="mt-5 flex items-center justify-between">
-                    <input type="text" placeholder="Write your message!" onKeyPress={e => e.key === 'Enter' && handleSubmit(e)} onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-8 bg-gray-200 rounded-md py-3" />
+                    <input type="text" placeholder="Escribe un mensaje..." onKeyPress={e => e.key === 'Enter' && handleSubmit(e)} onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-8 bg-gray-200 rounded-md py-3" />
 
                     <button type="button" className="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none" onClick={handleSubmit}>
                       <span className="font-bold">Enviar</span>
