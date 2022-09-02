@@ -30,6 +30,7 @@ import UserDonations from "./components/Donations/UsersDonations";
 import Blog from "./components/Blogsito/Blog.jsx";
 import MissingDataRequired from "./components/MissingDataRequired";
 import ReportPet from "./components/Reports/ReportPet";
+import ReportUser from "./components/Reports/ReportUser";
 import { getUserProfile, getAllUsers, getAllPets } from "./redux/Actions/index";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -85,6 +86,7 @@ function App() {
           <Route path={"/mydonations/:id"} element={<UserDonations />} />
           <Route path={"/blog"} element={<Blog />} />
           <Route path={"/reportpet"} element={<ReportPet />} />
+          <Route path={"/reportuser"} element={<ReportUser />} />
         </Route>
         <Route element={<PrivateAdmin />}>
           <Route path={"/admin"} element={<AdminView />} />

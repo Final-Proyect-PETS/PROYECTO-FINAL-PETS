@@ -5,6 +5,9 @@ const {
   patchPet,
   patchUser,
   likePet,
+  findPet,
+  findUser,
+  getAdmins,
 } = require("../utils/controllers/patch.js");
 const { send_mail } = require("../routes/send-email");
 const verifyToken = require("../utils/middlewares/validateToken");
@@ -312,12 +315,60 @@ router.patch("/likes", verifyToken, async (req, res, next) => {
 });
 
 router.patch("/reportedPets", async (req, res, next) => {
-  const { informer, reportedPet } = req.body;
-  console.log(req.body.informer);
-  res.send("ok");
+  const { informer, reportedPet, reason } = req.body;
+  try {
+    const onePet = await findPet(reportedPet);
+    const oneUser = await findUser(informer);
+    const admins = await getAdmins();
+
+    if (admins.length) {
+      admins.map(async (p) => {
+        if (onePet && oneUser) {
+          await p.updateOne({
+            $push: {
+              reported_pets: {
+                informerId: informer,
+                reportedPetId: reportedPet,
+                reason: reason,
+              },
+            },
+          });
+        } else res.status(401).send("Hubo un error, intente mas tarde");
+      });
+      res.status(201).send("OK");
+    } else res.status(401).send("El sitio no tiene administradores");
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.patch("/reportedUsers", verifyToken, async (req, res, next) => {});
+router.patch("/reportedUsers", async (req, res, next) => {
+  const { informer, reportedUser, reason } = req.body;
+  try {
+    const oneInformer = await findUser(informer);
+    const oneReportedUser = await findUser(informer);
+    const admins = await getAdmins();
+
+    if (admins.length) {
+      admins.map(async (p) => {
+        if (oneInformer && oneReportedUser) {
+          await p.updateOne({
+            $push: {
+              reported_users: {
+                informerId: informer,
+                reportedUserId: reportedUser,
+                reason: reason,
+              },
+            },
+          });
+        } else res.status(401).send("Hubo un error, intente mas tarde");
+      });
+      res.status(201).send("OK");
+    } else res.status(401).send("El sitio no tiene administradores");
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.patch("/likepets", verifyToken, async (req, res, next) => {
   try {
