@@ -258,7 +258,6 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
 
 router.patch("/viewing", async (req, res, next) => {
   const { id, interestedId, petId } = req.body;
-  const { petId2, userId, ownerId } = req.body;
 
   if (interestedId) {
     const user = await User.findOne({ _id: id });
@@ -272,20 +271,36 @@ router.patch("/viewing", async (req, res, next) => {
 
     await User.updateOne({ _id: id }, { $set: { interestedUsers: el_resto } });
   }
-  if (ownerId) {
-    const owner = await User.findOne({ _id: ownerId });
-    let cambia = owner.likesPets.filter(
-      (e) => e.likesPets === userId && e.petId2 === petId2
-    );
-    cambia[0].support = true;
-    let resto = owner.likesPets
-      .filter((e) => e.likesPets !== userId || e.petId2 !== petId2)
-      .concat(cambia);
-    await User.updateOne({ _id: ownerId }, { $set: { likesPets: resto } });
-  }
+  // if (ownerId) {
+  //   const owner = await User.findOne({ _id: ownerId });
+  //   let cambia = owner.likesPets.filter(
+  //     (e) => e.likesPets === userId && e.petId2 === petId2
+  //   );
+  //   cambia[0].support = true;
+  //   let resto = owner.likesPets
+  //     .filter((e) => e.likesPets !== userId || e.petId2 !== petId2)
+  //     .concat(cambia);
+  //   await User.updateOne({ _id: ownerId }, { $set: { likesPets: resto } });
+  // }
   res.status(200).send("notification viewed");
 });
 //
+router.patch("/viewinglike", async (req, res, next) => {
+  const { petId2, userId, ownerId } = req.body;
+  if (ownerId) {
+    const owner = await User.findOne({ _id: ownerId });
+    let cambia = owner.likesPets.filter(
+      (e) => e.userId === userId && e.petId === petId2
+    );
+    cambia[0].support = true;
+    let resto = owner.likesPets
+      .filter((e) => e.userId !== userId || e.petId !== petId2)
+      .concat(cambia);
+    await User.updateOne({ _id: ownerId }, { $set: { likesPets: resto } });
+  }
+  res.status(200).send("like notification viewed");
+});
+
 router.patch("/likes", verifyToken, async (req, res, next) => {
   try {
     const { petId, userId, ownerId } = req.body;

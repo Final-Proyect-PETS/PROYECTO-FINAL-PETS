@@ -60,7 +60,7 @@ export default function Card({
     dispatch(likePet(nameLike));
   }
   //hover quien te gusta ------ POSIBLE FALLO DE RENDIMIENTO-
-  console.log(likes);
+
   //likes--hasta aca , casi te vas
   return (
     <>

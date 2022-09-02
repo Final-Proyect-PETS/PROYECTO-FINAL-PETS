@@ -460,6 +460,23 @@ export function viewing(payload) {
   };
 }
 
+export function viewingLike(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(
+        `http://localhost:3001/home/viewinglike`,
+        payload
+      );
+      return dispatch({
+        type: actions.VIEWING_LIKE_NOTIFICATION,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 export function likePet(payload) {
   return async function (dispatch) {
     try {

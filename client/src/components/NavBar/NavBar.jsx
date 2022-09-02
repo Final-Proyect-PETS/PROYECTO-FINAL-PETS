@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getUserProfile, viewing } from "../../redux/Actions";
+import { getUserProfile, viewing, viewingLike } from "../../redux/Actions";
 import { useSelector, useDispatch } from "react-redux";
 import { Navbar, Dropdown, Avatar, Toast } from "flowbite-react";
 
@@ -13,10 +13,6 @@ export default function NavBar() {
 
   const loggedUser = useSelector((state) => state.userProfile); //el loggeduser5 estaba arriba del useEFF, lo puse abajio
 
-  let bell = loggedUser?.interestedUsers?.filter(
-    (e) => e.viewState === false
-  ).length;
-
   function removeToken(ev) {
     localStorage.removeItem("token");
     localStorage.removeItem("id");
@@ -28,8 +24,22 @@ export default function NavBar() {
       id: loggedUser._id, //dueño
       interestedId: e.target.value,
       petId: e.target.name, // interestedUsers: [{usuariointeresado}{mascotaquequiero},],
+      petId2: e.target.name,
+      userId: e.target.value,
+      ownerId: loggedUser._id,
     };
     dispatch(viewing(payload));
+    dispatch(getUserProfile(loggedUser._id));
+  }
+
+  function closeLikeHandler(e) {
+    e.preventDefault();
+    let payload = {
+      petId2: e.target.name,
+      userId: e.target.value,
+      ownerId: loggedUser._id,
+    };
+    dispatch(viewingLike(payload));
     dispatch(getUserProfile(loggedUser._id));
   }
 
@@ -41,7 +51,32 @@ export default function NavBar() {
     };
   });
 
+  let interest = loggedUser?.interestedUsers?.map((e) => {
+    return {
+      user: allUsers?.filter((a) => a._id === e.interestedUser)[0],
+      pet: allPets?.filter((a) => a._id === e.petId)[0],
+      viewState: e.viewState,
+      esIntrest: true,
+    };
+  });
 
+  let like = loggedUser?.likesPets?.map((e) => {
+    return {
+      user: allUsers?.filter((a) => a._id === e.userId)[0],
+      pet: allPets?.filter((a) => a._id === e.petId)[0],
+      viewState: e.support,
+      esLike: true,
+    };
+  });
+
+  let notis = [interest, like];
+  let notisFlat = notis.flat().sort(() => {
+    return Math.random() - 0.5;
+  });
+  let notiSlice = notis.flat().reverse().slice(0, 5);
+
+  let bell = notis?.flat().filter((noti) => noti?.viewState === false);
+  console.log(notis, "noti");
   return (
     <Navbar fluid={false} rounded={false} class="text-white bg-yellow-500 p-3">
       <Link to="/home">
@@ -59,59 +94,87 @@ export default function NavBar() {
       <div className="flex md:order-2">
         <Dropdown
           class="bg-yellow-600 rounded-full mr-5 mt-1"
-          label={`🔔${bell}`}
+          label={`🔔${bell.length >= 1 ? bell.length : 0}`}
         >
           <Dropdown.Header>
             <span className="block text-sm font-medium truncate">
               Notificaciones
             </span>
           </Dropdown.Header>
-
-          {loggedUser?.interestedUsers?.length ? (
-
-            algo?.map((iUser) => (
-              iUser?.viewState === false ?
+          {notiSlice?.length ? (
+            notiSlice?.map((iUser) =>
+              iUser?.viewState === false && iUser?.esIntrest === true ? (
                 <Toast key={iUser?.user?._id}>
                   <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-500 dark:bg-blue-800 dark:text-blue-200">
-                    <img src={iUser?.user?.image} className="h-10 w-10 rounded-full" alt="imagen de usuario" />
+                    <img
+                      src={iUser?.user?.image}
+                      className="h-10 w-10 rounded-full"
+                      alt="imagen de usuario"
+                    />
                   </div>
                   <div className="ml-3 text-sm font-normal">
-                    <h2>{`${iUser?.user?.first_name} ${iUser?.user?.last_name} esta interesado en ${iUser?.pet?.name}`}</h2>
+                    <h2>{`❕❔ ${iUser?.user?.first_name} ${iUser?.user?.last_name} esta interesado en ${iUser?.pet?.name}`}</h2>
+
                     <button
                       value={iUser?.user?._id}
                       name={iUser?.pet?._id}
                       className="text-yellow-500 py-1"
-
                       onClick={(e) => closeHandler(e)}
+                    >
+                      Marcar como leida
+                    </button>
+                    <Link to={`/users/${iUser?.user?._id}`}>
+                      <h2 className="text-yellow-500">Ver Perfil</h2>
+                    </Link>
+                  </div>
+                  <Toast.Toggle />
+                </Toast>
+              ) : iUser?.viewState === false && iUser?.esLike === true ? (
+                <Toast key={iUser?.user?._id}>
+                  <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-500 dark:bg-blue-800 dark:text-blue-200">
+                    <img
+                      src={iUser?.user?.image}
+                      className="h-10 w-10 rounded-full"
+                      alt="imagen de usuario"
+                    />
+                  </div>
+                  <div className="ml-3 text-sm font-normal">
+                    <h2>{`🤎 A ${iUser?.user?.first_name} ${iUser?.user?.last_name} le gusta ${iUser?.pet?.name}`}</h2>
+                    <button
+                      value={iUser?.user?._id}
+                      name={iUser?.pet?._id}
+                      className="text-yellow-500 py-1"
+                      onClick={(e) => closeLikeHandler(e)}
                     >
                       Marcar como leida
                     </button>
 
                     <Link to={`/users/${iUser?.user?._id}`}>
                       <h2 className="text-yellow-500">Ver Perfil</h2>
-
                     </Link>
                   </div>
                   <Toast.Toggle />
                 </Toast>
-
-                : <></>
-            ))
+              ) : (
+                <></>
+              )
+            )
           ) : (
             <Dropdown.Item>Sin notificaciones nuevas</Dropdown.Item>
-
           )}
 
           <Dropdown.Divider />
           <Link to={"/notifications"}>
-            <Dropdown.Item>Ver todas las notificaciones</Dropdown.Item>
+            <Dropdown.Item>Ver todas las notificaciones...</Dropdown.Item>
           </Link>
         </Dropdown>
 
         <Dropdown
           arrowIcon={false}
           inline={true}
-          label={<Avatar alt="User settings" img={loggedUser.image} rounded={true} />}
+          label={
+            <Avatar alt="User settings" img={loggedUser.image} rounded={true} />
+          }
         >
           <Dropdown.Header>
             <span className="block text-sm">
@@ -150,10 +213,8 @@ export default function NavBar() {
           <Link to="/blog">Blog</Link>
         </Navbar.Link>
         <Navbar.Link>
-
           <Link to="/home" class="text-white hover:none">
             Comunidad/Adopcion
-
           </Link>
         </Navbar.Link>
         <Navbar.Link class="text-white hover:none">
