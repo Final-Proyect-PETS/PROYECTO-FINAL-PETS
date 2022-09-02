@@ -34,7 +34,7 @@ export default function Card({
 
   function likeHandler(e) {
     e.preventDefault();
-
+//
     let payload = {
       petId: idPet,//el likeado
       userId: loggedUser._id,//el que da like
