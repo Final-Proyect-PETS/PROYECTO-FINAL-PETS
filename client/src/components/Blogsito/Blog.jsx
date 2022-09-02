@@ -95,10 +95,10 @@ export default function Blog() {
         </div>
         <hr className="border" />
         {/* -HR---------------CONOCENOS--------------------------------------------------hr */}
-        <div>
-          <Card class="opacity-80 bg-yellow-900 justify-center">
+        <div class="opacity-80 bg-yellow-900 ">
+          <Card class="opacity-80 bg-yellow-900 flex justify-center">
             <h5 className="text-2xl font-bold tracking-tight text-white dark:text-white">
-              Conocé a tu próximo amigo
+              Conoce a tus próximos amigos
             </h5>
             <p className="font-normal text-gray-100 dark:text-gray-100">
               Con Happy Tails vas a encontrar una nueva manera de descubrir
@@ -148,199 +148,135 @@ export default function Blog() {
           </Card>
         </div>
         <hr className="border" />
-        {/* --HR------------CHATITO------------------------------------------------------------------------------------------hr */}
-        <div className="flex flex-col w-screen ">
-          {/* CARD DE INPUT MENSAJE */}
+        {/* hr-----------------------------CARROUSEL-------------------------------------------------- */}
+        <div className="bg-yellow-900 flex justify-center  opacity-90">
+          <h5 className="flex justify-center m-2 text-4xl font-bold leading-none text-white dark:text-white">
+            🤎 Mas de {adopted?.length - 1} mascotas adoptadas a la fecha
+          </h5>
+        </div>
+        <div className="w-screen h-1/4 bg-yellow-900  opacity-90 flex justify-center ">
+          <Carousel>
+            {adopted?.map((adopt) => (
+              <img alt="adoptedPet" src={adopt.image} className="w-96 h-72" />
+            ))}
+          </Carousel>
+        </div>
 
-          <div className="flex">
-            <div className=" max-w-sm m-2">
-              <Card>
-                <form
-                  onSubmit={(e) => onSubmitHandler(e)}
-                  className="flex flex-col gap-4"
+        <div className=" w-screen bg-yellow-900 rounded opacity-90">
+          <Link to="/home" className="group flex justify-center rounded-full">
+            <Button class="m-3 w-48 bg-green-600 hover:bg-green-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+              <h5 className=" justify-center text-2xl font-bold leading-none text-white dark:text-white">
+                Buscar una Mascota
+              </h5>
+            </Button>
+          </Link>
+        </div>
+        <hr className="border" />
+        {/* --HR------------CHATITO------------------------------------------------------------------------------------------hr */}
+        <div className="w-screen opacity-80 bg-yellow-900 flex justify-center">
+          {/* CARD DE INPUT MENSAJE */}
+          <Card class="opacity-80 bg-yellow-900 flex justify-center">
+            <form
+              onSubmit={(e) => onSubmitHandler(e)}
+              className="flex flex-col gap-2"
+            >
+              <h5 className="text-2xl font-bold tracking-tight text-white dark:text-white">
+                Juntos podemos
+              </h5>
+              <p className="font-normal text-gray-100 dark:text-gray-100">
+                Compartenos tu experiencia aquí para que otros usuarios se
+                animen a dejar su huella.
+              </p>
+
+              <div>
+                <div>
+                  <div className="m-1 block">
+                    <Label htmlFor="area" value="Mensaje:" class="text-white" />
+                  </div>
+                  <input
+                    className="rounded-lg flex-1 appearance-none border border-gray-300 w-3/4 p-1 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+                    id="area"
+                    type="text"
+                    onChange={(e) => handleChange(e)}
+                    required={true}
+                    sizing="lg"
+                  />
+                </div>
+
+                <Button
+                  class="flex justify-center m-2 w-1/2 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+                  type="submit"
                 >
-                  <div>
-                    <div className="mb-2 block">
-                      <p className="font-normal text-black dark:text-gray-100">
-                        Compartenos tu experiencia aquí para que otros usuarios
-                        se animen a dejar su huella.
+                  Postear
+                </Button>
+              </div>
+            </form>
+          </Card>
+        </div>
+
+
+        <div className=" w-screen bg-yellow-900 opacity-80 flex justify-center">
+          <Card class="bg-gray-100  m-2 rounded">
+            <div className="mb-1 flex ">
+              <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                Últimos mensajes 💌
+              </h5>
+
+              <Link
+                to={`/home`}
+                className="text-sm font-medium text-yellow-600 hover:underline dark:text-yellow-500"
+              >
+                Ver Todos
+              </Link>
+            </div>
+
+            <ul className=" divide-y divide-gray-200 dark:divide-gray-700">
+              {blogger?.slice(0, 5).map((user) => (
+                <li className="py-3 px-4 sm:py-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="shrink-0">
+                      <Link
+                        to={`/users/${user._id}`}
+                        className="group flex items-center rounded-full"
+                      >
+                        <img
+                          className="h-8 w-8 rounded-full"
+                          src={user.image}
+                          alt="image"
+                        />
+                      </Link>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <Link
+                        to={`/users/${user._id}`}
+                        className="group flex items-center rounded-full"
+                      >
+                        <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                          {user.username}
+                        </p>
+                      </Link>
+                      <p className="truncate text-sm text-gray-500 dark:text-gray-400">
+                        {user.blogmessage}
                       </p>
                     </div>
                   </div>
-                  <div>
-                    <div className="mb-2 block">
-                      <Label htmlFor="area" value="Mensaje:" />
-                    </div>
-                    <input
-                      id="area"
-                      type="text"
-                      onChange={(e) => handleChange(e)}
-                      required={true}
-                      sizing="lg"
-                    />
-                  </div>
-
-                  <Button
-                    class="flex justify-center bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
-                    type="submit"
-                  >
-                    Postear
-                  </Button>
-                </form>
-              </Card>
-            </div>
-            <div className="max-w-sm  p-3 mb-2 mt-2">
-              <Card class="bg-gray-100 rounded">
-                <div className="mb-1 flex flex-end items-center  justify-between">
-                  <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
-                    Comentarios de la comunidad 💌
-                  </h5>
-
-                  <Link
-                    to={`/home`}
-                    className="text-sm font-medium text-yellow-600 hover:underline dark:text-yellow-500"
-                  >
-                    Ver Todos
-                  </Link>
-                </div>
-                <div className="flow-root">
-                  <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-                    {blogger?.map((user) => (
-                      <li className="py-3 sm:py-4">
-                        <div className="flex items-center space-x-4">
-                          <div className="shrink-0">
-                            <Link
-                              to={`/users/${user._id}`}
-                              className="group flex items-center rounded-full"
-                            >
-                              <img
-                                className="h-8 w-8 rounded-full"
-                                src={user.image}
-                                alt="image"
-                              />
-                            </Link>
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <Link
-                              to={`/users/${user._id}`}
-                              className="group flex items-center rounded-full"
-                            >
-                              <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                                {user.username}
-                              </p>
-                            </Link>
-                            <p className="truncate text-sm text-gray-500 dark:text-gray-400">
-                              {user.blogmessage}
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Card>
-            </div>
-          </div>
-          {/* CARRUSEL YA ADOPTADOS */}
-          <div className=" flex m-2 h-72 w-1/3 bg-yellow-900 rounded opacity-90">
-            <div className=" m-1 flex flex-col justify-center">
-              <h5 className=" justify-center m-3 text-3xl font-bold leading-none text-white dark:text-white">
-                Mas de {adopted?.length - 1} mascotas adoptadas a la fecha
-              </h5>
-              <Link to="/home">
-                <Button class="m-3 w-48 bg-green-600 hover:bg-green-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
-                  <h5 className=" justify-center text-2xl font-bold leading-none text-white dark:text-white">
-                    Buscar Mascota
-                  </h5>
-                </Button>
-              </Link>
-            </div>
-            <Carousel className="rounded">
-              {adopted?.map((adopt) => (
-                <Link
-                  to={`/pet/${adopt._id}`}
-                  className="group flex items-center rounded-full"
-                >
-                  <img
-                    alt="adoptedPet"
-                    src={adopt.image}
-                    className="w-96 rounded"
-                  />
-                </Link>
+                </li>
               ))}
-            </Carousel>
-          </div>
+            </ul>
+          </Card>
         </div>
         <hr className="border" />
         {/* hr--------------------------------------------------------------------------------- */}
         {/* -----------------------------TOPS-----------------------------------------------hr */}
-        <div className=" h-screen w-screen opacity-80 bg-yellow-900 flex flex-col justify-center">
-          <h5 className="text-5xl font-bold tracking-tight text-white dark:text-white">
-            TOP TAILS
+        <div className=" opacity-90 bg-yellow-900 w-screen h-full flex flex-col items-center">
+          <h5 className="text-5xl m-2 font-bold tracking-tight text-white dark:text-white">
+            🏆 Top Tails 🏆
           </h5>
-          <div className="max-w-sm  p-3 mb-2 mt-2">
-            <Card class="bg-gray-100 rounded">
-              <div className="mb-1 flex flex-end items-center  justify-between">
-                <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
-                  Ultimas donaciones🎉
-                </h5>
-
-                <Link
-                  to={`/mydonations/${loggedUser._id}`}
-                  className="text-sm font-medium text-yellow-600 hover:underline dark:text-yellow-500"
-                >
-                  Ver mis donaciones
-                </Link>
-              </div>
-              <div className="flow-root">
-                <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-                  {donator?.map((don) => (
-                    <li className="py-3 sm:py-4">
-                      <div className="flex items-center space-x-4">
-                        <Link
-                          to={`/users/${don._id}`}
-                          className="group flex items-center rounded-full"
-                        >
-                          <div className="shrink-0">
-                            <img
-                              className="h-8 w-8 rounded-full"
-                              src={don.image}
-                              alt=""
-                            />
-                          </div>
-                        </Link>
-                        <div className="min-w-0 flex-1">
-                          <Link
-                            to={`/users/${don._id}`}
-                            className="group flex items-center rounded-full"
-                          >
-                            <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                              {don.username}
-                            </p>
-                          </Link>
-                          <p className="truncate text-sm text-gray-500 dark:text-gray-400">
-                            {don.place}
-                          </p>
-                        </div>
-
-                        <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                          {`$ ${
-                            don?.donations[don?.donations?.length - 1]
-                              ?.donationAmount
-                          }`}
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Card>
-          </div>
-          <div className="max-w-sm p-3 mb-2 mt-2">
+          <div className="max-w-sm p-1 m-1">
             <Card>
               <div className="mb-1 flex items-center justify-between">
                 <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
-                  🔥Usuarios destacados
+                  🔥 Usuarios destacados
                 </h5>
                 <Link
                   to="/home"
@@ -440,6 +376,172 @@ export default function Blog() {
                   )
                 )}
               </ul>
+            </Card>
+          </div>
+
+          <div className="max-w-sm p-1 m-1">
+            <Card>
+              <div className="mb-1 flex items-center justify-between">
+                <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                  🥇 Ranking de Likes
+                </h5>
+                <Link
+                  to="/home"
+                  className="text-sm font-medium text-yellow-600 hover:underline dark:text-yellow-500"
+                >
+                  Ver Todos
+                </Link>
+              </div>
+
+              <ul className="my-4 space-y-2   ">
+                {donator?.map((don) =>
+                  don?.donations?.length > 3 ? (
+                    <li>
+                      <Link
+                        to={`/users/${don._id}`}
+                        className="group flex items-center rounded-lg bg-gray-50 p-3 text-base font-bold text-gray-900 hover:bg-gray-100 hover:shadow dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500"
+                      >
+                        <img
+                          className="h-8 w-8 rounded-full"
+                          src={don.image}
+                          alt=""
+                        />
+                        <span className="ml-3 flex-1 whitespace-nowrap">
+                          {don.username}
+                        </span>
+                        <span className="ml-3 inline-flex items-center justify-center rounded bg-gray-200 px-2 py-0.5 text-xs font-medium text-gray-500 dark:bg-gray-700 dark:text-gray-400">
+                          Platino
+                        </span>
+                        <img
+                          className="h-8 w-8 rounded-full"
+                          src={goldenblackgif}
+                          alt="paw"
+                        />
+                      </Link>
+                    </li>
+                  ) : (
+                    false
+                  )
+                )}
+
+                {donator?.map((don) =>
+                  don?.donations?.length > 1 && don?.donations?.length < 3 ? (
+                    <li>
+                      <Link
+                        to={`/users/${don._id}`}
+                        className="group flex items-center rounded-lg bg-gray-50 p-3 text-base font-bold text-gray-900 hover:bg-gray-100 hover:shadow dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500"
+                      >
+                        <img
+                          className="h-8 w-8 rounded-full"
+                          src={don.image}
+                          alt=""
+                        />
+                        <span className="ml-3 flex-1 whitespace-nowrap">
+                          {don.username}
+                        </span>
+                        <span className="ml-3 inline-flex items-center justify-center rounded bg-gray-200 px-2 py-0.5 text-xs font-medium text-gray-500 dark:bg-gray-700 dark:text-gray-400">
+                          Diamante
+                        </span>
+                        <img
+                          className="h-8 w-8 rounded-full"
+                          src={diamantepaw}
+                          alt="paw"
+                        />
+                      </Link>
+                    </li>
+                  ) : (
+                    false
+                  )
+                )}
+                {donator?.map((don) =>
+                  don?.donations?.length === 1 ? (
+                    <li>
+                      <Link
+                        to={`/users/${don._id}`}
+                        className="group flex items-center rounded-lg bg-gray-50 p-3 text-base font-bold text-gray-900 hover:bg-gray-100 hover:shadow dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500"
+                      >
+                        <img
+                          className="h-8 w-8 rounded-full"
+                          src={don.image}
+                          alt=""
+                        />
+                        <span className="ml-3 flex-1 whitespace-nowrap">
+                          {don.username}
+                        </span>
+                        <span className="ml-3 inline-flex items-center justify-center rounded bg-gray-200 px-2 py-0.5 text-xs font-medium text-gray-500 dark:bg-gray-700 dark:text-gray-400">
+                          Oro
+                        </span>
+                        <img
+                          className="h-8 w-8 rounded-full"
+                          src={goldenpaw}
+                          alt=""
+                        />
+                      </Link>
+                    </li>
+                  ) : (
+                    false
+                  )
+                )}
+              </ul>
+            </Card>
+          </div>
+
+          <div className="max-w-sm  p-1 m-1">
+            <Card>
+              <div className="mb-1 flex flex-end items-center  justify-between">
+                <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                  🎉 Últimas Donaciones
+                </h5>
+
+                <Link
+                  to={`/mydonations/${loggedUser._id}`}
+                  className="text-sm font-medium text-yellow-600 hover:underline dark:text-yellow-500"
+                >
+                  Ver mis donaciones
+                </Link>
+              </div>
+              <div className="flow-root">
+                <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+                  {donator?.map((don) => (
+                    <li className="p-2 sm:p-2">
+                      <div className="flex items-center space-x-4">
+                        <Link
+                          to={`/users/${don._id}`}
+                          className="group flex items-center rounded-full"
+                        >
+                          <div className="shrink-0">
+                            <img
+                              className="h-8 w-8 rounded-full"
+                              src={don.image}
+                              alt=""
+                            />
+                          </div>
+                        </Link>
+                        <div className="min-w-0 flex-1">
+                          <Link
+                            to={`/users/${don._id}`}
+                            className="group flex items-center rounded-full"
+                          >
+                            <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                              {don.username}
+                            </p>
+                          </Link>
+                          <p className="truncate text-sm text-gray-500 dark:text-gray-400">
+                            {don.place}
+                          </p>
+                        </div>
+
+                        <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                          {`$ ${
+                            don?.donations[don?.donations?.length - 1]
+                              ?.donationAmount
+                          }`}
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </Card>
           </div>
         </div>
