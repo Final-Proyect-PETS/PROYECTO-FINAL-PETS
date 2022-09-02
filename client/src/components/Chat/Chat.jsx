@@ -25,7 +25,6 @@ export default function Chat() {
 
   const conversations = useSelector((state) => state.conversations);
 
-
   const [messages, setMessages] = useState([]);
 
   const [newMessage, setNewMessage] = useState("");
@@ -107,7 +106,7 @@ export default function Chat() {
     <>
       <NavBar />
       <div className="flex">
-        <div className="w-14 h-screen flex flex-col items-center border-l-2 border-black">
+        <div className="w-14 h-screen flex flex-col items-center">
         </div>
 
         {/* div para iconos aqui  */}
@@ -134,21 +133,24 @@ export default function Chat() {
           </div>
 
         </div>
+        
         <div className="flex flex-col flex-grow h-screen bg-white mb-3">
 
           {/* cabecera */}
-          <div className="w-full h-20 bg-white shadow-sm shadow-slate-500">
-            <div className="flex items-center">
-              <div className="p-3">
-                <img src={profile} alt="imagen perfil" className="h-5 w-5 rounded-full" />
-                <div className="flex justify-center items-center w-3 h-3 relative left-6 bottom-3 pl-10">Nombre usuario</div>
-              </div>
-
-            </div>
-          </div>
-
           {currentChat ? (
             <>
+              <div className="w-full h-16 bg-gray-200 shadow-sm shadow-slate-500">
+                <div className="flex items-center">
+                  <div className="p-3">
+                    <img src={profile} alt="imagen perfil" className="h-8 w-8 rounded-full" />
+                    </div>
+                    <div className="p-3">
+                    <div className="flex justify-center items-center font-semibold text-gray-900">Nombre usuario</div>
+                  </div>
+
+                </div>
+              </div>
+
               <div className="w-full flex-grow bg-white shadow-sm shadow-slate-500 overflow-y-scroll ">
                 <div className="pr-1 h-96">
                   {messages.map((m) => (
