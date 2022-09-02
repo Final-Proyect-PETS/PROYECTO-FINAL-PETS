@@ -25,7 +25,7 @@ export default function Card({
   place,
   size,
   gender,
-  likes,
+  likesPets,
 }) {
 
   //likes***----de aca
@@ -34,12 +34,14 @@ export default function Card({
 
   function likeHandler(e) {
     e.preventDefault();
-
+//
     let payload = {
       petId: idPet,//el likeado
       userId: loggedUser._id,//el que da like
       ownerId: idUser,//al que le llega el like
-      likes: likes,//array
+
+      likesPets: likesPets,//array
+ 
     };
     dispatch(patchLikes(payload));
   }
@@ -98,7 +100,7 @@ export default function Card({
               </div>
               <div className="flex">
                 <h1 className="text-white font-bold text-2x1">
-                  {/* aACA VA EL NUMERITO DEEEE LIKES */}{likes?.length}{/* aACA VA EL NUMERITO DE LIKES */}
+                  {/* aACA VA EL NUMERITO DEEEE LIKES */}{likesPets?.length}{/* aACA VA EL NUMERITO DE LIKES */}
                 </h1>
                 <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
                   <button onClick={(e) => likeHandler(e)}>

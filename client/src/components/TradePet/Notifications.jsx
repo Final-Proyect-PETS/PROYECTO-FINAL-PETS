@@ -19,6 +19,15 @@ export default function Notifications() {
     }
   })
 
+  let like = loggedUser.likesPets.map(e => {
+    return {
+      userId: allUsers.filter(a => a._id === e.userId)[0],
+      petId: allPets.filter(a => a._id === e.petId)[0],
+      support: e.support
+    }
+  })
+  console.log(like);
+
   return (
     <div className="w-full">
       <NavBar />
@@ -40,6 +49,33 @@ export default function Notifications() {
                   {`${iUser?.user?.first_name} ${iUser?.user?.last_name} esta interesado en ${iUser?.pet?.name}`}
                 </div>
                 <Link to={`/users/${iUser?.user?._id}`} className="px-5">
+                  <h3 className="font-semibold text-yellow-500 hover:text-yellow-800">Ver Perfil</h3>
+                </Link>
+              </div>
+              : <></>
+          ))
+        ) : (
+          <span className="text-2xl text-white mt-3">Sin notificaciones</span>
+        )}
+      </div>
+      <div id="notification-component" className="flex flex-col items-center">
+        <span className="font-semibold text-2xl text-white py-5">Mis Notificaciones</span>
+
+        {loggedUser?.likesPets?.length ? (
+          like?.map((lUser) => (
+            lUser.support === false ?
+              <div className="flex w-full p-8 my-2 items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 ">
+                <div className="flex justify-between p-3 items-center">
+                  <div className="flex items-center">
+                    <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
+                      <img src={lUser?.userId?.image} alt="profilepic" />
+                    </div>
+                  </div>
+                </div>
+                <div className="font-normal text-gray-700 dark:text-gray-400">
+                  {`A ${lUser?.userId?.first_name} ${lUser?.userId?.last_name} le ha gustado la publicacion de ${lUser?.petId?.name}`}
+                </div>
+                <Link to={`/users/${lUser?.userId?._id}`} className="px-5">
                   <h3 className="font-semibold text-yellow-500 hover:text-yellow-800">Ver Perfil</h3>
                 </Link>
               </div>
