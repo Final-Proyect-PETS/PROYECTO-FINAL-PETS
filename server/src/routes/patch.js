@@ -311,7 +311,6 @@ router.patch("/likes", verifyToken, async (req, res, next) => {
   }
 });
 
-<<<<<<< HEAD
 router.patch("/reportedPets", async (req, res, next) => {
   const { informer, reportedPet } = req.body;
   console.log(req.body.informer);
@@ -320,7 +319,6 @@ router.patch("/reportedPets", async (req, res, next) => {
 
 router.patch("/reportedUsers", verifyToken, async (req, res, next) => {});
 
-=======
 router.patch("/likepets", verifyToken, async (req, res, next) => {
   try {
     const { id, likeName } = req.body;
@@ -337,5 +335,4 @@ router.patch("/likepets", verifyToken, async (req, res, next) => {
   }
 });
 
->>>>>>> 45c0bd01a026cdfbdbd7dc782dcc99a639f88d31
 module.exports = router;

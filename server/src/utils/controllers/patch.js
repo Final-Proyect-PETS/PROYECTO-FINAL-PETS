@@ -92,11 +92,8 @@ async function patchUser(
       place_longitude,
       place_latitude,
       blogmessage,
-<<<<<<< HEAD
       reported_pets,
       reported_users,
-=======
->>>>>>> 45c0bd01a026cdfbdbd7dc782dcc99a639f88d31
     });
     const userActualizado = User.findOne({ _id: id }).populate({
       path: "pets",
