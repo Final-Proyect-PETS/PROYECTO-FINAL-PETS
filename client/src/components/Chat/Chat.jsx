@@ -102,12 +102,12 @@ export default function Chat() {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  console.log(currentChat, "current")
+
   return (
     <>
       <NavBar />
       <div className="flex">
-        <div className="w-14 h-screen flex flex-col items-center">
-        </div>
 
         {/* div para iconos aqui  */}
         <div className="w-72 h-screen bg-yellow-500 mb-3 shadow-sm shadow-slate-500">
@@ -116,7 +116,7 @@ export default function Chat() {
           </div>
           <div className="p-3 flex">
             <input className="p-2 w-10/12 rounded-tl-md border-transparent rounded-bl-md bg-gray-100 ring-2 ring-yellow-800 focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent shadow-md" type="text" placeholder="Buscar usuario..." />
-            <div className="w-2/12 justify-center items-center bg-gray-100 ring-2 ring-yellow-800 rounded-tr-md rounded-br-md">
+            <div className="w-2/12 flex justify-center items-center bg-gray-100 ring-2 ring-yellow-800 rounded-tr-md rounded-br-md">
               <img src={search} alt="icon" className="w-5 self-center" />
             </div>
           </div>
@@ -139,17 +139,7 @@ export default function Chat() {
           {/* cabecera */}
           {currentChat ? (
             <>
-              <div className="w-full h-16 bg-gray-200 shadow-sm shadow-slate-500">
-                <div className="flex items-center">
-                  <div className="p-3">
-                    <img src={profile} alt="imagen perfil" className="h-8 w-8 rounded-full" />
-                    </div>
-                    <div className="p-3">
-                    <div className="flex justify-center items-center font-semibold text-gray-900">Nombre usuario</div>
-                  </div>
-
-                </div>
-              </div>
+              <Cabecera el={currentChat.members.filter((d) => d !== id)}/>
 
               <div className="w-full flex-grow bg-white shadow-sm shadow-slate-500 overflow-y-scroll ">
                 <div className="pr-1 h-96">
@@ -177,8 +167,6 @@ export default function Chat() {
             (<span className="flex p-6 justify-center items-center text-3xl text-gray-800 font-semibold">Seleccione un chat</span>)}
         </div>
 
-        <div className="w-14 h-screen flex flex-col items-center">
-        </div>
       </div>
     </>
   );

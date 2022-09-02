@@ -1,14 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDetail } from "../../redux/Actions";
 
-export default function Cabecera(){
-   return <div className="relative flex items-center space-x-4">
-    <div className="relative">
-      <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="" className="w-10 sm:w-16 h-10 sm:h-16 rounded-full" />
-    </div>
-    <div className="flex flex-col leading-tight">
-      <div className="text-2xl mt-1 flex items-center">
-        <span className="text-gray-700 mr-3">Anderson Vanhron</span>
+export default function Cabecera({el}) {
+
+  const dispatch = useDispatch()
+
+  const ell = el.toString()
+
+    useEffect(() => {
+        dispatch(getUserDetail(ell))
+    }, [ell])
+
+
+    const elll = useSelector((state) => state.userDetail)
+  return (
+    <div className="w-full h-16 bg-gray-200 shadow-sm shadow-slate-500">
+      <div className="flex items-center">
+        <div className="p-3">
+          <img src={elll.image} alt="asd" className="h-8 w-8 rounded-full" />
+        </div>
+        <div className="p-3">
+          <div className="flex justify-center items-center font-semibold text-gray-900">
+            {elll.first_name} {elll.last_name}
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  );
 }
