@@ -15,6 +15,7 @@ import Conversations from "./Conversations";
 import { useState } from "react";
 import { io } from "socket.io-client";
 import axios from "axios";
+import Cabecera from "./Cabecera";
 
 export default function Chat() {
 
@@ -103,13 +104,12 @@ export default function Chat() {
   return (
     <>
       <NavBar />
-      <div className="flex w-full bg-gray-500">
-        <div className="w-1/4">
-          <div className="h-32 flex justify-center flex-col">
-            <input placeholder="Busca algo" />
+
+      <div className="flex bg-gray-500">
+        <div className="w-14 h-screen flex flex-col items-center bg-red-400">
           </div>
-          <div className="overflow-y-scroll">
-            <ol className="gap-3">
+          {/* <div className="overflow-y-scroll p-4">
+            {/* <ol className="gap-3">
               {conversations.map((u) => (
                 <li
                   onClick={() => setCurrentChat(u)}
@@ -117,25 +117,21 @@ export default function Chat() {
                   <Conversations conversation={u} currentUser={id} />
                 </li>
               ))}
-            </ol>
-          </div>
-        </div>
-
-        <div className="flex-1 p:2 sm:p-6 justify-between flex flex-col bg-red-900 h-96">
-          <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
+            </ol> */}
+          
+          {/* <div>
+            <input placeholder="Busca algo" /> */}
+          {/* </div> */}
+          <div className="w-72 h-screen bg-yellow-300">
+            
+            
+            </div>
+          <div className="flex-grow h-screen bg-green-500">
             <div className="w-full">
               {currentChat ? (
                 <>
-                  <div className="relative flex items-center space-x-4">
-                    <div className="relative">
-                      <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="" className="w-10 sm:w-16 h-10 sm:h-16 rounded-full" />
-                    </div>
-                    <div className="flex flex-col leading-tight">
-                      <div className="text-2xl mt-1 flex items-center">
-                        <span className="text-gray-700 mr-3">Anderson Vanhron</span>
-                      </div>
-                    </div>
-                  </div>
+                
+                 {/* <Cabecera own={m.sender === id} el={m.sender !== id ? m.sender : false} /> */}
                   <div className="overflow-y-scroll pr-1 h-96">
                     {messages.map((m) => (
                       <div ref={scrollRef}>
@@ -159,8 +155,7 @@ export default function Chat() {
             </div>
           </div>
         </div>
-      </div>
-
+      
     </>
   );
 }
