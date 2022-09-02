@@ -2,7 +2,7 @@ const { Router } = require("express");
 const nodemailer = require("nodemailer");
 const User = require("../models/users");
 const router = Router();
-const { NMAILER_PASSWORD } = process.env;
+const { NMAILER_PASSWORD2 } = process.env;
 
 router.post("/sendemail", async (req, res) => {
   try {
@@ -14,37 +14,36 @@ router.post("/sendemail", async (req, res) => {
       user.interestedUsers.map(
         (e) => e[0]._id === userId && e[1]._id === petId
       ).length
-     
-    ) { console.log(user.interestedUsers.map(
-      (e) => e[0]._id === userId && e[1]._id === petId
-    ).length)
+
+    ) {
+      console.log(user.interestedUsers.map(e => e[0]._id === userId && e[1]._id === petId).length)
       res.send("Ya mandaste la solicitud de adopcion");
     } else {
-  const {
-    owner_email,
-    adopter_email,
-    adopter_telephone,
-    message,
-    adopter_username,
-    adopter_name,
-    pet_name,
-    link,
-  } = req.body;
+      const {
+        owner_email,
+        adopter_email,
+        adopter_telephone,
+        message,
+        adopter_username,
+        adopter_name,
+        pet_name,
+        link,
+      } = req.body;
 
-  let transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    auth: {
-      user: "happytailshp@gmail.com",
-      pass: `${NMAILER_PASSWORD}`,
-    },
-    tls: {
-      rejectUnauthorized: false,
-    },
-  });
+      let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        auth: {
+          user: "happytailshp@gmail.com",
+          pass: `${NMAILER_PASSWORD2}`,
+        },
+        tls: {
+          rejectUnauthorized: false,
+        },
+      });
 
-  let contentHTML = `
+      let contentHTML = `
   <img src = "https://cdn-icons-png.flaticon.com/512/194/194279.png" style="width:100px;"/>
 
   <h1>El usuario <a href="${link}">${adopter_username}</a> esta interesado en adoptar a ${pet_name}.
@@ -56,21 +55,21 @@ router.post("/sendemail", async (req, res) => {
               </ul>
                               <p>${message}</p>
                               Atentamente HT`;
-                  
 
 
-  let info = await transporter.sendMail({
-    from: "'HappyTails'<happytailshp@gmail.com>",
-    to: owner_email,
-    subject: "Contacto de adopción",
-    html: contentHTML,
-  });
 
-  console.log("message sent", info.messageId);
-  res.send("OK");
-}
-} catch (error) {
-  next(error);
-}
+      let info = await transporter.sendMail({
+        from: "'HappyTails'<happytailshp@gmail.com>",
+        to: owner_email,
+        subject: "Contacto de adopción",
+        html: contentHTML,
+      });
+
+      console.log("message sent", info.messageId);
+      res.send("OK");
+    }
+  } catch (error) {
+    next(error);
+  }
 });
 module.exports = router;

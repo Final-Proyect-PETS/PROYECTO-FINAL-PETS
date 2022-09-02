@@ -39,7 +39,9 @@ export default function Card({
       petId: idPet,//el likeado
       userId: loggedUser._id,//el que da like
       ownerId: idUser,//al que le llega el like
-      likes: likesPets,//array
+
+      likesPets: likesPets,//array
+ 
     };
     dispatch(patchLikes(payload));
   }
