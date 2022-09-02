@@ -134,7 +134,7 @@ export default function Chat() {
           </div>
 
         </div>
-        <div className="flex flex-col flex-grow h-screen bg-green-500 mb-3">
+        <div className="flex flex-col flex-grow h-screen bg-white mb-3">
 
           {/* cabecera */}
           <div className="w-full h-20 bg-white shadow-sm shadow-slate-500">
