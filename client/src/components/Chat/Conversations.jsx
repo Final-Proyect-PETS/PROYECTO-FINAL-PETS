@@ -10,7 +10,7 @@ export default function Conversations({ conversation, currentUser }) {
     const friendId = conversation.members.find((m) => m !== currentUser);
     const getUser = async () => {
       try {
-        const res = await axios("http://localhost:3001/home/users/" + friendId);
+        const res = await axios("https://happytails2.herokuapp.com/home/users/" + friendId);
         setUserr(res.data);
       } catch (error) {
         console.log(error);

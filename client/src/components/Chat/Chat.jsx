@@ -27,7 +27,7 @@ export default function Chat() {
 
   const [arrivalMessage, setArrivalMessage] = useState(null);
 
-  const socket = useRef(io("http://localhost:3001"));
+  const socket = useRef(io("https://happytails2.herokuapp.com/"));
 
   const [currentChat, setCurrentChat] = useState(null);
 
@@ -36,7 +36,7 @@ export default function Chat() {
   const id = localStorage.getItem("id");
 
   useEffect(() => {
-    socket.current = io("http://localhost:3001");
+    socket.current = io("https://happytails2.herokuapp.com/");
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -65,7 +65,7 @@ export default function Chat() {
     const getMessages = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:3001/home/message/" + currentChat?._id
+          "https://happytails2.herokuapp.com/home/message/" + currentChat?._id
         );
         setMessages(res.data);
       } catch (error) {
@@ -146,7 +146,7 @@ export default function Chat() {
             </>
           ) : (
             <span className="flex justify-center items-center text-3xl">
-              Abrí un chat
+              AbrÃ­ un chat
             </span>
           )}
         </div>

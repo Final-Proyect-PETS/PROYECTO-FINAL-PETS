@@ -12,7 +12,7 @@ export function switchRenderAction(input) {
 export function getAllUsers() {
   return async (dispatch) => {
     return await axios
-      .get("http://localhost:3001/home/users")
+      .get("https://happytails2.herokuapp.com/home/users")
       .then((json) =>
         dispatch({ type: actions.GET_ALL_USERS, payload: json.data })
       )
@@ -22,7 +22,7 @@ export function getAllUsers() {
 export function getAllPets() {
   return async (dispatch) => {
     return await axios
-      .get("http://localhost:3001/home/pets")
+      .get("https://happytails2.herokuapp.com/home/pets")
       .then((json) =>
         dispatch({ type: actions.GET_ALL_PETS, payload: json.data })
       )
@@ -33,7 +33,7 @@ export function getAllPets() {
 export function getUserDetail(id) {
   return async (dispatch) => {
     return await axios
-      .get(`http://localhost:3001/home/users/${id}`)
+      .get(`https://happytails2.herokuapp.com/users/${id}`)
       .then((json) =>
         dispatch({ type: actions.GET_USER_DETAIL, payload: json.data })
       )
@@ -43,7 +43,7 @@ export function getUserDetail(id) {
 export function getPetDetail(id) {
   return async (dispatch) => {
     return await axios
-      .get(`http://localhost:3001/home/pets/${id}`)
+      .get(`https://happytails2.herokuapp.com/home/pets/${id}`)
       .then((json) =>
         dispatch({ type: actions.GET_PET_DETAIL, payload: json.data })
       )
@@ -55,7 +55,7 @@ export function getUserByName(name) {
   return async function (dispatch) {
     try {
       var json = await axios.get(
-        "http://localhost:3001/home/users?name=" + name
+        "https://happytails2.herokuapp.com/home/users?name=" + name
       );
       return dispatch({
         type: actions.GET_USER_BY_NAME,
@@ -70,7 +70,7 @@ export function getPetByName(name) {
   return async function (dispatch) {
     try {
       var json = await axios.get(
-        "http://localhost:3001/home/pets?name=" + name
+        "https://happytails2.herokuapp.com/home/pets?name=" + name
       );
       return dispatch({
         type: actions.GET_PET_BY_NAME,
@@ -86,7 +86,7 @@ export function postPet(id, payload) {
   return async function (dispatch) {
     try {
       let json = await axios.post(
-        `http://localhost:3001/home/pets/${id}`,
+        `https://happytails2.herokuapp.com/home/pets/${id}`,
         payload
       );
       dispatch({
@@ -96,14 +96,14 @@ export function postPet(id, payload) {
       return "Mascota creada correctamente";
     } catch (error) {
       console.log(error);
-      return "Error de server, no se pudo crear la mascota, intente más tarde";
+      return "Error de server, no se pudo crear la mascota, intente mÃ¡s tarde";
     }
   };
 }
 export function postUser(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.post(`http://localhost:3001/register`, payload);
+      let json = await axios.post(`https://happytails2.herokuapp.com/register`, payload);
       return dispatch({
         type: actions.POST_USER,
         payload: json.data,
@@ -117,7 +117,7 @@ export function postUser(payload) {
 export function postImage(archivo) {
   return async function (dispatch) {
     try {
-      let json = await axios.post(`http://localhost:3001/home/images`, archivo);
+      let json = await axios.post(`https://happytails2.herokuapp.com/home/images`, archivo);
       return dispatch({
         type: actions.POST_IMAGE,
         payload: json.data,
@@ -147,7 +147,7 @@ export function patchUsuer(payload) {
     console.log(payload.id);
     try {
       let json = await axios.patch(
-        `http://localhost:3001/home/users/${payload.id}`,
+        `https://happytails2.herokuapp.com/home/users/${payload.id}`,
         payload
       );
       return dispatch({
@@ -164,7 +164,7 @@ export function patchPet(payload) {
   return async function (dispatch) {
     try {
       let json = await axios.patch(
-        `http://localhost:3001/home/pets/${payload.id}`,
+        `https://happytails2.herokuapp.com/home/pets/${payload.id}`,
         payload
       );
       dispatch({
@@ -181,7 +181,7 @@ export function patchPet(payload) {
 export function filterByQuery(filterParams) {
   return async function (dispatch) {
     let json = await axios.get(
-      `http://localhost:3001/home/filters?age=${filterParams.age}&creation_date=${filterParams.creation_date}&vaccinated=${filterParams.vaccinated}&castrated=${filterParams.castrated}&location=${filterParams.location}&pet_type=${filterParams.pet_type}&pet_size=${filterParams.pet_size}&gender=${filterParams.gender}&is_adopted=${filterParams.is_adopted}`
+      `https://happytails2.herokuapp.com/home/filters?age=${filterParams.age}&creation_date=${filterParams.creation_date}&vaccinated=${filterParams.vaccinated}&castrated=${filterParams.castrated}&location=${filterParams.location}&pet_type=${filterParams.pet_type}&pet_size=${filterParams.pet_size}&gender=${filterParams.gender}&is_adopted=${filterParams.is_adopted}`
     );
     return dispatch({
       type: actions.FILTER_BY_QUERY,
@@ -195,7 +195,7 @@ export function userLogin(payload) {
   return async function (dispatch) {
     try {
       await axios
-        .post("http://localhost:3001/login", payload)
+        .post("https://happytails2.herokuapp.com/login", payload)
         .then((response) => {
           const token = response.data.data.token;
           const id = response.data.id.id;
@@ -217,7 +217,7 @@ export function userLoginGoogle(payload) {
   return async function (dispatch) {
     try {
       let json = await axios
-        .post("http://localhost:3001/logingoogle", payload)
+        .post("https://happytails2.herokuapp.com/logingoogle", payload)
         .then((response) => {
           const token = response.data.data.token;
           const id = response.data.id.id;
@@ -236,7 +236,7 @@ export function userLoginGoogle(payload) {
 export function getUserProfile(id) {
   return async function (dispatch) {
     try {
-      let json = await axios.get(`http://localhost:3001/home/users/${id}`);
+      let json = await axios.get(`https://happytails2.herokuapp.com/home/users/${id}`);
       return dispatch({
         type: actions.GET_USER_PROFILE,
         payload: json.data,
@@ -252,7 +252,7 @@ export function forgotPassword(payload) {
   return async function (dispatch) {
     try {
       let json = await axios.post(
-        "http://localhost:3001/forgotpassword",
+        "https://happytails2.herokuapp.com/forgotpassword",
         payload
       );
       return dispatch({
@@ -271,7 +271,7 @@ export function resetPassword(payload) {
     console.log(payload.password);
     try {
       let json = await axios.patch(
-        `http://localhost:3001/resetpassword/${payload.id}/${payload.auth}`,
+        `https://happytails2.herokuapp.com/resetpassword/${payload.id}/${payload.auth}`,
         payload
       );
       return dispatch({
@@ -287,7 +287,7 @@ export function resetPassword(payload) {
 export function tradePet(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.patch(`http://localhost:3001/home/adopt`, payload);
+      let json = await axios.patch(`https://happytails2.herokuapp.com/home/adopt`, payload);
       return dispatch({
         type: actions.ADOPT,
         payload: json.data,
@@ -302,7 +302,7 @@ export function patchInterestedUsers(payload) {
   return async function (dispatch) {
     try {
       let json = await axios.patch(
-        `http://localhost:3001/home/interestedUsers`,
+        `https://happytails2.herokuapp.com/interestedUsers`,
         payload
       );
       dispatch({
@@ -325,7 +325,7 @@ export function patchInterestedUsers(payload) {
 export function patchLikes(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.patch(`http://localhost:3001/home/likes`, payload);
+      let json = await axios.patch(`https://happytails2.herokuapp.com/home/likes`, payload);
       dispatch({ type: actions.PATCH_LIKES, payload: json.data });
       return "OKA";
     } catch (error) {
@@ -338,7 +338,7 @@ export function paymentMp(idDonor, amountDonation) {
   return async function (dispatch) {
     try {
       let json = await axios.get(
-        `http://localhost:3001/linkpayment/${idDonor}/${amountDonation}`
+        `https://happytails2.herokuapp.com/linkpayment/${idDonor}/${amountDonation}`
       );
       return dispatch({
         type: actions.PAYMENT_MP,
@@ -368,7 +368,7 @@ export function notViewed(payload) {
 export function chatWithUser(losdosid) {
   return async function (dispatch) {
     try {
-      let json = await axios.post("http://localhost:3001/home/conversations/", losdosid);
+      let json = await axios.post("https://happytails2.herokuapp.com/home/conversations/", losdosid);
       return dispatch({
         type: actions.CHAT_WITH_USER,
         payload: json.data,
@@ -383,7 +383,7 @@ export function getConversations(id) {
   return async function (dispatch) {
     try {
       let json = await axios.get(
-        "http://localhost:3001/home/conversations/" + id
+        "https://happytails2.herokuapp.com/home/conversations/" + id
       );
       return dispatch({
         type: actions.GET_CONVERSATIONS,
@@ -398,7 +398,7 @@ export function getConversations(id) {
 export function getMessages(iddd) {
   return async function (dispatch) {
     try {
-      let json = await axios.get("http://localhost:3001/home/message/" + iddd);
+      let json = await axios.get("https://happytails2.herokuapp.com/home/message/" + iddd);
       return dispatch({
         type: actions.GET_MESSAGES,
         payload: json.data,
@@ -413,7 +413,7 @@ export function sendMessage(message) {
   return async function (dispatch) {
     try {
       let json = await axios.post(
-        "http://localhost:3001/home/message/",
+        "https://happytails2.herokuapp.com/home/message/",
         message
       );
       return dispatch({
@@ -444,7 +444,7 @@ export function viewing(payload) {
   return async function (dispatch) {
     try {
       let json = await axios.patch(
-        `http://localhost:3001/home/viewing`,
+        `https://happytails2.herokuapp.com/home/viewing`,
         payload
       );
       return dispatch({
@@ -461,7 +461,7 @@ export function likePet(payload) {
   return async function (dispatch) {
     try {
       let json = await axios.patch(
-        `http://localhost:3001/home/likepets`,
+        `https://happytails2.herokuapp.com/home/likepets`,
         payload
       );
       dispatch({
