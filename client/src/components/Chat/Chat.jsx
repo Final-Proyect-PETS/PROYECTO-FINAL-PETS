@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import Messages from "./Messages";
-
 import {
   getUserProfile,
   getConversations,
@@ -16,13 +15,16 @@ import { useState } from "react";
 import { io } from "socket.io-client";
 import axios from "axios";
 import Cabecera from "./Cabecera";
+import search from "./../../assets/search.svg";
+import profile from "./../../assets/images/2039031.png"
+
 
 export default function Chat() {
 
   const dispatch = useDispatch();
 
   const conversations = useSelector((state) => state.conversations);
-  
+
 
   const [messages, setMessages] = useState([]);
 
@@ -104,58 +106,78 @@ export default function Chat() {
   return (
     <>
       <NavBar />
-
-      <div className="flex bg-gray-500">
-        <div className="w-14 h-screen flex flex-col items-center bg-red-400">
-          </div>
-          {/* <div className="overflow-y-scroll p-4">
-            {/* <ol className="gap-3">
-              {conversations.map((u) => (
-                <li
-                  onClick={() => setCurrentChat(u)}
-                  className="flex items-center gap-3 h-32 border border-black">
-                  <Conversations conversation={u} currentUser={id} />
-                </li>
-              ))}
-            </ol> */}
-          
-          {/* <div>
-            <input placeholder="Busca algo" /> */}
-          {/* </div> */}
-          <div className="w-72 h-screen bg-yellow-300">
-            
-            
-            </div>
-          <div className="flex-grow h-screen bg-green-500">
-            <div className="w-full">
-              {currentChat ? (
-                <>
-                
-                 {/* <Cabecera own={m.sender === id} el={m.sender !== id ? m.sender : false} /> */}
-                  <div className="overflow-y-scroll pr-1 h-96">
-                    {messages.map((m) => (
-                      <div ref={scrollRef}>
-                        <Messages message={m} own={m.sender === id} mio={id} el={m.sender !== id ? m.sender : false} />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-5 flex items-center justify-between">
-                    <input type="text" placeholder="Escribe un mensaje..." onKeyPress={e => e.key === 'Enter' && handleSubmit(e)} onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-8 bg-gray-200 rounded-md py-3" />
-
-                    <button type="button" className="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none" onClick={handleSubmit}>
-                      <span className="font-bold">Enviar</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-6 w-6 ml-2 transform rotate-90">
-                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
-                      </svg>
-                    </button>
-                  </div>
-                </>)
-                :
-                (<span className="flex justify-center items-center text-3xl">Abrí un chat</span>)}
-            </div>
-          </div>
+      <div className="flex">
+        <div className="w-14 h-screen flex flex-col items-center border-l-2 border-black">
         </div>
-      
+
+        {/* div para iconos aqui  */}
+        <div className="w-72 h-screen bg-yellow-500 mb-3 shadow-sm shadow-slate-500">
+          <div className="text-xl text-white font-normal p-4">
+            Chat
+          </div>
+          <div className="p-3 flex">
+            <input className="p-2 w-10/12 rounded-tl-md border-transparent rounded-bl-md bg-gray-100 ring-2 ring-yellow-800 focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent shadow-md" type="text" placeholder="Buscar usuario..." />
+            <div className="w-2/12 justify-center items-center bg-gray-100 ring-2 ring-yellow-800 rounded-tr-md rounded-br-md">
+              <img src={search} alt="icon" className="w-5 self-center" />
+            </div>
+          </div>
+
+          <div>
+            {conversations.map((u) => (
+              <div
+                className="flex-col m-3 items-center gap-3 bg-white shadow-sm rounded-md shadow-slate-600">
+                <span onClick={() => setCurrentChat(u)}>
+                  <Conversations conversation={u} currentUser={id} />
+                </span>
+              </div>
+            ))}
+          </div>
+
+        </div>
+        <div className="flex flex-col flex-grow h-screen bg-green-500 mb-3">
+
+          {/* cabecera */}
+          <div className="w-full h-20 bg-white shadow-sm shadow-slate-500">
+            <div className="flex items-center">
+              <div className="p-3">
+                <img src={profile} alt="imagen perfil" className="h-5 w-5 rounded-full" />
+                <div className="flex justify-center items-center w-3 h-3 relative left-6 bottom-3 pl-10">Nombre usuario</div>
+              </div>
+
+            </div>
+          </div>
+
+          {currentChat ? (
+            <>
+              <div className="w-full flex-grow bg-white shadow-sm shadow-slate-500 overflow-y-scroll ">
+                <div className="pr-1 h-96">
+                  {messages.map((m) => (
+                    <div ref={scrollRef}>
+                      <Messages message={m} own={m.sender === id} mio={id} el={m.sender !== id ? m.sender : false} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* text area */}
+              <div className="flex w-full h-14 px-4 bg-white shadow-sm shadow-slate-500">
+                <input type="text" placeholder="Escribe un mensaje..." onKeyPress={e => e.key === 'Enter' && handleSubmit(e)} onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-4 bg-gray-100 rounded-tl-md rounded-bl-md py-3 ring-1 ring-yellow-800 focus:ring-1 focus:ring-yellow-800 focus:border-transparent shadow-md" />
+
+                <button type="button" className="inline-flex rounded-tr-md rounded-br-md items-center justify-center ring-1 ring-yellow-800 focus:outline-none focus:ring-1 focus:ring-yellow-800 focus:border-transparent shadow-md px-4 py-3 transition duration-500 ease-in-out text-white bg-green-500 hover:bg-green-400" onClick={handleSubmit}>
+                  <span className="font-bold">Enviar</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-6 w-6 ml-2 transform rotate-90">
+                    <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
+                  </svg>
+                </button>
+              </div>
+            </>)
+            :
+            (<span className="flex p-6 justify-center items-center text-3xl text-gray-800 font-semibold">Seleccione un chat</span>)}
+        </div>
+
+        <div className="w-14 h-screen flex flex-col items-center">
+        </div>
+      </div>
     </>
   );
 }
