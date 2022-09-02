@@ -280,24 +280,21 @@ router.patch("/viewing", async (req, res, next) => {
 router.patch("/likes", verifyToken, async (req, res, next) => {
   try {
     const { petId, userId, ownerId } = req.body;
-    console.log(req.body);
     let user = await User.findOne({ _id: ownerId });
-    console.log(user);
+    console.log(req.body);
     if (
-      user.likesPets.filter((e) => e[0]._id === userId && e[1]._id === petId)
+      user.likesPets.filter((e) => e.userId === userId && e.petId === petId)
         .length
     ) {
-      res.send("Ya mandaste un like perro");
+      res.status(403).send("Ya mandaste un like perro");
     } else {
       let support = false;
       const petAndUserIds = { userId, petId, support };
-      console.log(petAndUserIds);
       await User.updateOne(
         { _id: ownerId },
         { $push: { likesPets: petAndUserIds } }
       );
       let user2 = await User.findOne({ _id: ownerId });
-      console.log(user2);
       await Pets.updateOne({ _id: petId }, { $push: { likes: petAndUserIds } });
     }
   } catch (error) {

@@ -16,9 +16,7 @@ router.post("/sendemail", async (req, res) => {
       ).length
 
     ) {
-      console.log(user.interestedUsers.map(
-        (e) => e[0]._id === userId && e[1]._id === petId
-      ).length)
+      console.log(user.interestedUsers.map(e => e[0]._id === userId && e[1]._id === petId).length)
       res.send("Ya mandaste la solicitud de adopcion");
     } else {
       const {
