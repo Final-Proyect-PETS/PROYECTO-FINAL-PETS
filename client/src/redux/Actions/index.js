@@ -164,7 +164,7 @@ export function patchPet(payload) {
   return async function (dispatch) {
     try {
       let json = await axios.patch(
-        `http://localhost:3001/home/likepets`,
+        `http://localhost:3001/home/pets/${payload.id}`,
         payload
       );
       dispatch({
