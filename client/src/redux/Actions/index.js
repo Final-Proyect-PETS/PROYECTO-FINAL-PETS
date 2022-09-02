@@ -368,7 +368,10 @@ export function notViewed(payload) {
 export function chatWithUser(losdosid) {
   return async function (dispatch) {
     try {
-      let json = await axios.post("http://localhost:3001/home/conversations/", losdosid);
+      let json = await axios.post(
+        "http://localhost:3001/home/conversations/",
+        losdosid
+      );
       return dispatch({
         type: actions.CHAT_WITH_USER,
         payload: json.data,
