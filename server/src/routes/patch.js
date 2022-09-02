@@ -72,7 +72,7 @@ router.patch("/users/:id", verifyToken, async (req, res, next) => {
     interestedUsers,
     place_longitude,
     place_latitude,
-    blogmessage
+    blogmessage,
   } = req.body;
   console.log(req.body);
   try {
@@ -295,5 +295,13 @@ router.patch("/likes", verifyToken, async (req, res, next) => {
     next(error);
   }
 });
+
+router.patch("/reportedPets", async (req, res, next) => {
+  const { informer, reportedPet } = req.body;
+  console.log(req.body.informer);
+  res.send("ok");
+});
+
+router.patch("/reportedUsers", verifyToken, async (req, res, next) => {});
 
 module.exports = router;

@@ -44,6 +44,8 @@ const usersSchema = new Schema(
     likesPets: Array,
     donations: Array,
     blogmessage: String,
+    reported_pets: Array,
+    reported_users: Array,
   },
   {
     timestamps: true,

@@ -13,7 +13,9 @@ async function register(
   place_longitude,
   place_latitude,
   donations,
-  interestedUsers
+  interestedUsers,
+  reported_pets,
+  reported_users
 ) {
   try {
     const post = new User({
@@ -30,6 +32,8 @@ async function register(
       place_latitude,
       donations,
       interestedUsers,
+      reported_pets,
+      reported_users,
     });
 
     await post.save();

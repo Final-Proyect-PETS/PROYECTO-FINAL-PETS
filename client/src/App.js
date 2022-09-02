@@ -29,6 +29,7 @@ import Chat from "./components/Chat/Chat";
 import UserDonations from "./components/Donations/UsersDonations";
 import Blog from "./components/Blogsito/Blog.jsx";
 import MissingDataRequired from "./components/MissingDataRequired";
+import ReportPet from "./components/Reports/ReportPet";
 import { getUserProfile, getAllUsers, getAllPets } from "./redux/Actions/index";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -42,12 +43,12 @@ function App() {
   const id = localStorage.getItem("id");
 
   useEffect(() => {
-    if(token){
+    if (token) {
       dispatch(getUserProfile(id));
-      dispatch(getAllUsers())
-      dispatch(getAllPets())
+      dispatch(getAllUsers());
+      dispatch(getAllPets());
     }
-  },[dispatch]);
+  }, [dispatch]);
 
   return (
     <BrowserRouter>
@@ -55,7 +56,10 @@ function App() {
         <Route path={"/"} element={<LandingPage />} />
         <Route path={"/register"} element={<UserRegister />} />
         <Route path={"/forgotpassword"} element={<ForgotPassword />} />
-        <Route path={"/587/resetpassword/:id/:token"} element={<ResetPassword />} />
+        <Route
+          path={"/587/resetpassword/:id/:token"}
+          element={<ResetPassword />}
+        />
         <Route element={<PrivateRoutes />}>
           <Route path={"/missingdata"} element={<MissingDataRequired />} />
           <Route path={"/home"} element={<Home />} />
@@ -71,15 +75,19 @@ function App() {
           <Route path={"/adopt/:id"} element={<AdoptForm />} />
           <Route path={"/chat"} element={<Chat />} />
           <Route path={"/donations"} element={<Donation />} />
-          <Route path={"/donationsuccessful"} element={<DonationSuccessful />} />
+          <Route
+            path={"/donationsuccessful"}
+            element={<DonationSuccessful />}
+          />
           <Route path={"/donationcancelled"} element={<DonationCancelled />} />
           <Route path={"/donationpending"} element={<DonationPending />} />
           <Route path={"*"} element={<Error404 />} />
           <Route path={"/mydonations/:id"} element={<UserDonations />} />
           <Route path={"/blog"} element={<Blog />} />
+          <Route path={"/reportpet"} element={<ReportPet />} />
         </Route>
         <Route element={<PrivateAdmin />}>
-        <Route path={"/admin"} element={<AdminView />} />
+          <Route path={"/admin"} element={<AdminView />} />
         </Route>
       </Routes>
     </BrowserRouter>
