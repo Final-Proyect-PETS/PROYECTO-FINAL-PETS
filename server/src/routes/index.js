@@ -7,15 +7,21 @@ const filters = require("./filters");
 const register = require("./register");
 const login = require("./login");
 const loginGoogle = require("./googlelogin");
+const likes = require("./patch")
 const router = Router();
 const postPet = require("./posts");
 const patchPet = require("./patch");
 const patchUser = require("./patch");
+const adopt = require("./patch");
 const adoptionMail = require("./send-email");
+const conversations = require("./conversations")
+const messages = require("./messages")
 const postImage = require("./posts");
 const payment = require("./payment");
+const responsePayment = require("./payment");
+const forgotPassword = require("./forgotPassword")
+const resetPassword = require("./resetPassword")
 const errorHandler = require("../utils/middlewares/errorHandler");
-const User = require("../models/users");
 
 router.use(
   "/home",
@@ -28,38 +34,21 @@ router.use(
   patchPet,
   patchUser,
   postImage,
+  conversations,
+  messages,
+  adopt,
+  likes
 );
 
-router.use("/linkpayment", payment);
+router.use("/linkpayment", payment, responsePayment);
 router.use("/register", register);
 router.use("/login", login);
 router.use("/", loginGoogle);
 router.use("/mail", adoptionMail);
+router.use("/", forgotPassword, resetPassword)
 router.use(errorHandler);
 
-router.get("/feedback/:idDonor/:donationAmount", async (req, res, next) => {
-  const { payment_id, status } = req.query;
-  const { idDonor, donationAmount } = req.params;
-  if (status === "approved") {
-    try {
-      const oneUser = await User.findOne({ _id: idDonor });
-      oneUser.donations.push({
-        paymentId: payment_id,
-        status: status,
-        donationAmount: Number(donationAmount),
-      });
-      await oneUser.save();
-    } catch (error) {
-      next(error);
-    }
 
-    return res.redirect("http://localhost:3000/donationsuccessful");
-  }
-  if (status === "in_process" || status === "pending")
-    return res.redirect("http://localhost:3000/donationpending");
-  if (status === "rejected")
-    return res.redirect("http://localhost:3000/donationcancelled");
-});
 
 module.exports = router;
 

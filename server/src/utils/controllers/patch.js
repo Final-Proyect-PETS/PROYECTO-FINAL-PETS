@@ -14,10 +14,12 @@ const patchPet = async (
   vaccination,
   castrated,
   place,
+  place_longitude,
+  place_latitude,
   gender,
   isAdopted,
   deleted,
-  interestedUsers,
+  interestedUsers
 ) => {
   try {
     connection();
@@ -36,6 +38,8 @@ const patchPet = async (
       vaccination,
       castrated,
       place,
+      place_longitude,
+      place_latitude,
       gender,
       isAdopted,
       deleted,
@@ -57,8 +61,12 @@ async function patchUser(
   image,
   telephone,
   about,
+  place,
   deleted,
   interestedUsers,
+  place_longitude,
+  place_latitude,
+  blogmessage
 ) {
   try {
     connection();
@@ -76,8 +84,12 @@ async function patchUser(
       image,
       telephone,
       about,
+      place,
       deleted,
       interestedUsers,
+      place_longitude,
+      place_latitude,
+      blogmessage,
     });
     const userActualizado = User.findOne({ _id: id }).populate({
       path: "pets",
@@ -89,4 +101,19 @@ async function patchUser(
   }
 }
 
-module.exports = { patchPet, patchUser };
+const likePet = async (id) => {
+  try {
+    connection();
+    const onePet = await Pets.findOne({ _id: id }).populate({
+      path: "user",
+      match: { deleted: false },
+    });
+
+    // await onePet.update({ $push: { likes: likes } });
+    return onePet;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+module.exports = { patchPet, patchUser, likePet };

@@ -14,8 +14,10 @@ const postPet = async (
   vaccination,
   castrated,
   place,
+  place_longitude,
+  place_latitude,
   gender,
-  interestedUsers,
+  interestedUsers
 ) => {
   try {
     connection();
@@ -36,6 +38,8 @@ const postPet = async (
       vaccination,
       castrated,
       place,
+      place_longitude,
+      place_latitude,
       gender,
       interestedUsers,
       user: foundUser._id,

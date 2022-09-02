@@ -144,6 +144,7 @@ export function clearStatePet(payload) {
 //UpDate//----------------------------------------------------------------
 export function patchUsuer(payload) {
   return async function (dispatch) {
+    console.log(payload.id);
     try {
       let json = await axios.patch(
         `http://localhost:3001/home/users/${payload.id}`,
@@ -163,7 +164,7 @@ export function patchPet(payload) {
   return async function (dispatch) {
     try {
       let json = await axios.patch(
-        `http://localhost:3001/home/pets/${payload.id}`,
+        `http://localhost:3001/home/likepets`,
         payload
       );
       dispatch({
@@ -193,7 +194,7 @@ export function filterByQuery(filterParams) {
 export function userLogin(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios
+      await axios
         .post("http://localhost:3001/login", payload)
         .then((response) => {
           const token = response.data.data.token;
@@ -245,6 +246,43 @@ export function getUserProfile(id) {
     }
   };
 }
+
+export function forgotPassword(payload) {
+  console.log(payload);
+  return async function (dispatch) {
+    try {
+      let json = await axios.post(
+        "http://localhost:3001/forgotpassword",
+        payload
+      );
+      return dispatch({
+        type: actions.FORGOT_PASSWORD,
+        payload: json.data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function resetPassword(payload) {
+  return async function (dispatch) {
+    console.log(payload);
+    console.log(payload.password);
+    try {
+      let json = await axios.patch(
+        `http://localhost:3001/resetpassword/${payload.id}/${payload.auth}`,
+        payload
+      );
+      return dispatch({
+        type: actions.RESET_PASSWORD,
+        payload: json.data,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+}
 //ADOPT---------------
 export function tradePet(payload) {
   return async function (dispatch) {
@@ -271,30 +309,25 @@ export function patchInterestedUsers(payload) {
         type: actions.INTERESTED_USERS,
         payload: json.data,
       });
-
-      if (json.data.includes("Ya mandaste la solicitud de adopcion")) {
-        return "Ya mandaste la solicitud de adopcion";
-      } else {
-        return "OK";
-      }
+      return "OK";
     } catch (error) {
       console.log(error);
     }
   };
 }
 
-export function emailAdopt(payload) {
+/* export function emailAdopt(payload) {
+  return async function (dispatch) {
+      console.log(error);
+    }
+  };
+} */
+export function patchLikes(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.post(
-        `http://localhost:3001/mail/sendemail`,
-        payload
-      );
-      dispatch({
-        type: actions.ADOPT_EMAIL,
-        payload: json.data,
-      });
-      return "OK";
+      let json = await axios.patch(`http://localhost:3001/home/likes`, payload);
+      dispatch({ type: actions.PATCH_LIKES, payload: json.data });
+      return "OKA";
     } catch (error) {
       console.log(error);
     }
@@ -317,14 +350,125 @@ export function paymentMp(idDonor, amountDonation) {
   };
 }
 
-///////////////////////////laut
-export function sendNotification(payload) {
+///////////////////////////NOTIFICATIONS-------------------
+export function notViewed(payload) {
   return async function (dispatch) {
     try {
       return dispatch({
-        type: actions.NOTIFICATION,
+        type: actions.NOT_VIEWED_NOTIFICATION,
         payload: payload,
       });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+////////////////////////////////chat
+export function chatWithUser(losdosid) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.post("http://localhost:3001/home/conversations/", losdosid);
+      return dispatch({
+        type: actions.CHAT_WITH_USER,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function getConversations(id) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.get(
+        "http://localhost:3001/home/conversations/" + id
+      );
+      return dispatch({
+        type: actions.GET_CONVERSATIONS,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function getMessages(iddd) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.get("http://localhost:3001/home/message/" + iddd);
+      return dispatch({
+        type: actions.GET_MESSAGES,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function sendMessage(message) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.post(
+        "http://localhost:3001/home/message/",
+        message
+      );
+      return dispatch({
+        type: actions.SEND_MESSAGE,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function viewed(view) {
+  return async function (dispatch) {
+    try {
+      return dispatch({
+        type: actions.VIEWED_NOTIFICATION,
+        payload: view,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+//VIEWED --------------------------JUANMA SOS VOS------------
+export function viewing(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(
+        `http://localhost:3001/home/viewing`,
+        payload
+      );
+      return dispatch({
+        type: actions.VIEWING_NOTIFICATION,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function likePet(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(
+        `http://localhost:3001/home/likepets`,
+        payload
+      );
+      dispatch({
+        type: actions.LIKE_PET,
+        payload: json.data,
+      });
+      return "OK";
     } catch (error) {
       console.log(error);
     }

@@ -11,6 +11,10 @@ const initialState = {
   payment: {},
   tradePet: [], //mascota que se vá
   notification: [], //campanita
+  conversations: [],
+  messages: [],
+  notViewedNotification: [], //no vistas
+  viewedNotification: [], //vistas
 };
 
 export default function rootReducer(state = initialState, { type, payload }) {
@@ -44,6 +48,25 @@ export default function rootReducer(state = initialState, { type, payload }) {
       return {
         ...state,
         pets: payload,
+      };
+    //CHAT
+    case actions.GET_CONVERSATIONS:
+      return {
+        ...state,
+        conversations: payload,
+      };
+    case actions.GET_MESSAGES:
+      return {
+        ...state,
+        messages: payload,
+      };
+    case actions.SEND_MESSAGE:
+      return {
+        ...state,
+      };
+    case actions.CHAT_WITH_USER:
+      return {
+        ...state,
       };
 
     //GET DETAIL
@@ -134,12 +157,35 @@ export default function rootReducer(state = initialState, { type, payload }) {
         ...state,
         userDetail: payload,
       };
-    case actions.NOTIFICATION:
+    case actions.NOT_VIEWED_NOTIFICATION:
       return {
         ...state,
-        notification: payload,
+        notViewedNotification: payload,
+      };
+    case actions.VIEWED_NOTIFICATION:
+      return {
+        ...state,
+        viewedNotification: payload,
       };
 
+    case actions.VIEWING_NOTIFICATION:
+      return {
+        ...state,
+      };
+
+    case actions.FORGOT_PASSWORD:
+      return {
+        ...state,
+      };
+    case actions.RESET_PASSWORD:
+      return {
+        ...state,
+      };
+
+    case actions.LIKE_PET:
+      return {
+        ...state,
+      };
     default:
       return state;
   }

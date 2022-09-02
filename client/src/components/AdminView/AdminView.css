@@ -1,0 +1,8 @@
+#view-admin {
+    background-image: url("./../../../public/images/background.png");
+    background-repeat: repeat;
+    background-size: cover;
+    height: 130vh;
+    width: 100vw;
+    
+}

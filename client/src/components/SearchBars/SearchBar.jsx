@@ -44,7 +44,6 @@ export default function SearchBar() {
           htmlFor="small-toggle"
           className="inline-flex relative items-center mt-2 mx-4 cursor-pointer"
         >
-          
           <input
             type="checkbox"
             value={input}

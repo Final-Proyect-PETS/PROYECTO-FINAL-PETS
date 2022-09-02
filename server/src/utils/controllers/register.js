@@ -10,6 +10,8 @@ async function register(
   telephone,
   about,
   place,
+  place_longitude,
+  place_latitude,
   donations,
   interestedUsers
 ) {
@@ -24,6 +26,8 @@ async function register(
       telephone,
       about,
       place,
+      place_longitude,
+      place_latitude,
       donations,
       interestedUsers,
     });

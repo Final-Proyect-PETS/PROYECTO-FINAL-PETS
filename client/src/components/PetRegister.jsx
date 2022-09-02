@@ -1,23 +1,32 @@
-import React from "react";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { postPet, postImage } from "../redux/Actions/index.js";
+import React, { useLayoutEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getAllPets, postPet, postImage } from "../redux/Actions/index.js";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { notificationSwal } from "../utils/notificationSwal.jsx";
-import MapboxAutocomplete from 'react-mapbox-autocomplete';
+import MapboxAutocomplete from "react-mapbox-autocomplete";
+import mapboxgl from "mapbox-gl";
 
 export default function RegisterPet() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const id = localStorage.getItem("id");
+  useEffect(() => {
+    return () => {
+      dispatch(getAllPets());
+    };
+  });
 
+  const id = localStorage.getItem("id");
   const [errors, setErrors] = useState({});
   const [image, setImage] = useState("");
   const [imagePool, setImagePool] = useState([]);
   const [loadingImage, setLoadingImage] = useState(false);
   const [loadingImagePool, setLoadingImagePool] = useState(false);
+  const [placeSelect, setPlaceSelect] = useState(false);
+
+  const mapDiv = useRef(null);
 
   const [input, setInput] = useState({
     id: id,
@@ -32,6 +41,8 @@ export default function RegisterPet() {
     castrated: false,
     gender: "",
     place: "",
+    place_longitude: "",
+    place_latitude: "",
   });
 
   function handleChange(e) {
@@ -204,7 +215,7 @@ export default function RegisterPet() {
                 "success",
                 "Ok"
               );
-              navigate("/home")
+              navigate("/home");
             } else {
               notificationSwal(
                 "¡Ooops!",
@@ -237,6 +248,8 @@ export default function RegisterPet() {
         castrated: false,
         gender: "",
         place: "",
+        place_longitude: "",
+        place_latitude: "",
       });
       setImage("");
     } else if (have() === "e") {
@@ -273,20 +286,45 @@ export default function RegisterPet() {
     return key++;
   }
 
-  function _suggestionSelect(result, lat, long, text) {
-    console.log(result, lat, long, text);
+  function _suggestionSelect(result, lat, long) {
     setInput({
-      ...input, place: result
-    })
-    console.log(input)
+      ...input,
+      place: result,
+      place_longitude: long,
+      place_latitude: lat,
+    });
+    setPlaceSelect(true);
+    //if (placeSelect)
+    createNewMap(long, lat);
   }
   const mapAccess = {
     mapboxApiAccessToken:
-      "pk.eyJ1Ijoiam9uc2VuIiwiYSI6IkR6UU9oMDQifQ.dymRIgqv-UV6oz0-HCFx1w"
+      "pk.eyJ1Ijoiam9uc2VuIiwiYSI6IkR6UU9oMDQifQ.dymRIgqv-UV6oz0-HCFx1w",
+  };
+
+  useLayoutEffect(() => {
+    //if (placeSelect)
+    createNewMap(input.place_longitude, input.place_latitude);
+  }, [placeSelect]);
+
+  function createNewMap(long, lat) {
+    if (placeSelect) {
+      new mapboxgl.Map({
+        container: mapDiv.current, // container ID
+        style: "mapbox://styles/mapbox/streets-v11", // style URL
+        center: [long, lat], // starting position [lng, lat]
+        zoom: 12, // starting zoom
+        projection: "globe", // display the map as a 3D globe
+      });
+    }
   }
+
+  mapboxgl.accessToken =
+    "pk.eyJ1IjoicG9saW5vIiwiYSI6ImNsN2FtdWNybTB0bmk0MHNqZXZxMzM0OTYifQ.O2Y9sZnF-K1k_KhC8MzJbA";
+
   return (
     <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
-      <div className="self-center mb-6 text-xl font-normal text-gray-600 sm:text-2xl dark:text-white">
+      <div className="self-center mb-6 text-xl font-normal text-white sm:text-2xl">
         Registra tu mascota para adoptar
       </div>
 
@@ -300,13 +338,14 @@ export default function RegisterPet() {
               value={input.name}
               onChange={(e) => handleChange(e)}
               placeholder="Nombre de la mascota"
-              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-black placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
             />
             {errors.name && (
               <p className="font-bold text-red-700 text-center p-2">
                 {errors.name}
               </p>
             )}
+
           </div>
           <div>
             <label className="font-light text-white text-xl">
@@ -317,8 +356,7 @@ export default function RegisterPet() {
               name="image"
               accept=".jpg, .png, .jpeg"
               onChange={(e) => handleImage(e)}
-              className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
-            />
+              className="w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" />
             {loadingImage ? (
               <h3 className="font-light text-white text-xl self-center">
                 Cargando imagen...
@@ -341,8 +379,9 @@ export default function RegisterPet() {
               name="imagePool"
               accept=".jpg, .png, .jpeg"
               onChange={(e) => handleImagePool(e)}
-              className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
+              className="w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             />
+
             <div className="font-light text-white text-xl">
               {loadingImagePool ? (
                 <h3>Cargando imagen...</h3>
@@ -491,7 +530,7 @@ export default function RegisterPet() {
                   type="radio"
                   name="castrated"
                   value={true}
-                  className="w-4 h-4 mx-4 accent-yellow-900"
+                  className="w-4 h-4 mx-4 text-yellow-600 bg-white ring-1 ring-yellow-900  focus:ring-yellow-900"
                 />
                 <label className="font-light text-white text-xl">Sí</label>
               </span>
@@ -500,7 +539,7 @@ export default function RegisterPet() {
                   type="radio"
                   name="castrated"
                   value={false}
-                  className="w-4 h-4 mx-4 accent-yellow-900"
+                  className="w-4 h-4 mx-4 text-yellow-600 bg-white ring-1 ring-yellow-900  focus:ring-yellow-900"
                 />
                 <label className="font-light text-white text-xl">No</label>
               </span>
@@ -519,7 +558,7 @@ export default function RegisterPet() {
                   type="radio"
                   name="gender"
                   value="female"
-                  className="w-4 h-4 mx-4 accent-yellow-900"
+                  className="w-4 h-4 mx-4 text-yellow-600 bg-white ring-1 ring-yellow-900  focus:ring-yellow-900"
                 />
                 <label className="font-light text-white text-xl">Hembra</label>
               </span>
@@ -528,10 +567,11 @@ export default function RegisterPet() {
                   type="radio"
                   name="gender"
                   value="male"
-                  className="w-4 h-4 mx-4 accent-yellow-900"
+                  className="w-4 h-4 mx-4 text-yellow-600 bg-white ring-1 ring-yellow-900  focus:ring-yellow-900"
                 />
                 <label className="font-light text-white text-xl">Macho</label>
               </span>
+
             </fieldset>
             {errors.gender && (
               <p className="font-bold text-red-700 text-center p-2">
@@ -554,14 +594,29 @@ export default function RegisterPet() {
               inputClass="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
               onSuggestionSelect={_suggestionSelect}
               resetSearch={false}
-              placeholder="Escriba su ciudad"
+              placeholder={
+                !input.place ? "Escriba su ciudad" : "Modifique ciudad"
+              }
             />
+            {input.place && (
+              <p className="font-light text-white text-xl">{input.place}</p>
+            )}
             {errors.place && (
               <p className="font-bold text-red-700 text-center p-2">
                 {errors.place}
               </p>
             )}
           </div>
+          {input.place ? (
+            <div
+              ref={mapDiv}
+              style={{
+                block: "w-full",
+                height: "15vw",
+                borderRadius: "10px",
+              }}
+            />
+          ) : null}
           <div>
             <button
               type="submit"

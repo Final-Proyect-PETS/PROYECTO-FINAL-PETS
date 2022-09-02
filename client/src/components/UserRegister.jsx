@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postUser, getAllUsers, postImage } from "../redux/Actions/index.js";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { notificationSwal } from "../utils/notificationSwal.jsx";
-import MapboxAutocomplete from 'react-mapbox-autocomplete';
-
+import MapboxAutocomplete from "react-mapbox-autocomplete";
+import mapboxgl from "mapbox-gl";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -17,6 +17,9 @@ export default function Register() {
   const [image, setImage] = useState("");
   const [loadingImage, setLoadingImage] = useState(false);
   const [errors, setErrors] = useState({});
+  const [placeSelect, setPlaceSelect] = useState(false);
+
+  const mapDiv = useRef(null);
 
   const [input, setInput] = useState({
     first_name: "",
@@ -25,9 +28,12 @@ export default function Register() {
     image: "",
     email: "",
     password: "",
+    passwordRepeat: "",
     about: "",
     telephone: "",
     place: "",
+    place_longitude: "",
+    place_latitude: "",
   });
 
   useEffect(() => {
@@ -75,7 +81,11 @@ export default function Register() {
     let errors = {};
 
     if (input.first_name) {
-      if (!/^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1\s]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/g.test(input.first_name)) {
+      if (
+        !/^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1\s]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/g.test(
+          input.first_name
+        )
+      ) {
         errors.first_name = "El nombre solo puede tener letras";
       } else if (input.first_name.length > 20) {
         errors.first_name = "El nombre no puede tener más de 20 caracteres";
@@ -83,7 +93,11 @@ export default function Register() {
     } else errors.first_name = "El nombre es necesario";
 
     if (input.last_name) {
-      if (!/^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1\s]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/g.test(input.last_name)) {
+      if (
+        !/^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1\s]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/g.test(
+          input.last_name
+        )
+      ) {
         errors.last_name = "El nombre solo puede tener letras";
       } else if (input.last_name.length > 20) {
         errors.last_name = "El nombre no puede tener más de 20 caracteres";
@@ -118,6 +132,19 @@ export default function Register() {
       } else errors.password = "";
     } else errors.password = "La contraseña es necesaria!";
 
+    if (input.passwordRepeat) {
+      if (
+        !/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(
+          input.passwordRepeat
+        )
+      ) {
+        errors.passwordRepeat =
+          "La contraseña debe tener entre 8 y 16 caracteres, al menos un dígito, una minúscula y una mayúscula (No puede tener otros simbolos)";
+      } else if (input.password && input.password !== input.passwordRepeat) {
+        errors.passwordRepeat = "Las contraseñas no coinciden";
+      } else errors.passwordRepeat = "";
+    } else errors.passwordRepeat = "La contraseña es necesaria!";
+
     return errors;
   }
 
@@ -127,7 +154,8 @@ export default function Register() {
       errors.last_name !== "" ||
       errors.username !== "" ||
       errors.email !== "" ||
-      errors.password !== ""
+      errors.password !== "" ||
+      errors.passwordRepeat !== ""
     ) {
       return true;
     } else if (
@@ -135,7 +163,8 @@ export default function Register() {
       input.last_name &&
       input.username &&
       input.email &&
-      input.password
+      input.password &&
+      input.passwordRepeat
     ) {
       return false;
     } else {
@@ -154,9 +183,12 @@ export default function Register() {
         image: "",
         email: "",
         password: "",
+        passwordRepeat: "",
         about: "",
         telephone: "",
         place: "",
+        place_longitude: "",
+        place_latitude: "",
       });
       notificationSwal(
         "¡Enhorabuena!",
@@ -164,7 +196,7 @@ export default function Register() {
         "success",
         "Ok"
       );
-      navigate('/', { replace: true })
+      navigate("/", { replace: true });
     } else if (have() === "e") {
       notificationSwal(
         "¡Faltan datos!",
@@ -172,24 +204,51 @@ export default function Register() {
         "error",
         "Cancel"
       );
-    } else notificationSwal(
-      "Faltan datos, por favor verifique y vuelva a intentarlo",
-      "Complete todos los campos obligatorios",
-      "error",
-      "Cancel"
-    );
+    } else
+      notificationSwal(
+        "Faltan datos, por favor verifique y vuelva a intentarlo",
+        "Complete todos los campos obligatorios",
+        "error",
+        "Cancel"
+      );
   }
   function _suggestionSelect(result, lat, long, text) {
     console.log(result, lat, long, text);
     setInput({
-      ...input, place: result
-    })
-    console.log(input)
+      ...input,
+      place: result,
+      place_longitude: long,
+      place_latitude: lat,
+    });
+    setPlaceSelect(true);
+    //if (placeSelect)
+    createNewMap(long, lat);
   }
   const mapAccess = {
     mapboxApiAccessToken:
-      "pk.eyJ1Ijoiam9uc2VuIiwiYSI6IkR6UU9oMDQifQ.dymRIgqv-UV6oz0-HCFx1w"
+      "pk.eyJ1Ijoiam9uc2VuIiwiYSI6IkR6UU9oMDQifQ.dymRIgqv-UV6oz0-HCFx1w",
+  };
+
+  useLayoutEffect(() => {
+    //if (placeSelect)
+    createNewMap(input.place_longitude, input.place_latitude);
+  }, [placeSelect]);
+
+  function createNewMap(long, lat) {
+    if (placeSelect) {
+      console.log(mapDiv);
+      new mapboxgl.Map({
+        container: mapDiv.current, // container ID
+        style: "mapbox://styles/mapbox/streets-v11", // style URL
+        center: [long, lat], // starting position [lng, lat]
+        zoom: 12, // starting zoom
+        projection: "globe", // display the map as a 3D globe
+      });
+    }
   }
+
+  mapboxgl.accessToken =
+    "pk.eyJ1IjoicG9saW5vIiwiYSI6ImNsN2FtdWNybTB0bmk0MHNqZXZxMzM0OTYifQ.O2Y9sZnF-K1k_KhC8MzJbA";
 
   return (
     <div className="flex flex-col w-full mt-15 m-auto py-8 bg-amber-600 rounded-lg shadow sm:px-6 md:px-8 lg:px-10">
@@ -253,9 +312,8 @@ export default function Register() {
               name="image"
               accept=".jpg, .png, .jpeg"
               onChange={(e) => handleImage(e)}
-              placeholder="Imagen de perfil"
-              className="rounded-lg flex-1 appearance-none w-full py-2 px-4 bg-amber-600  text-white placeholder-white text-sm focus:outline-none focus:border-transparent"
-            ></input>
+              className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            />
             {loadingImage ? (
               <h3 className="font-light text-white text-xl">
                 Cargando imagen...
@@ -299,6 +357,24 @@ export default function Register() {
             )}
           </div>
           <div>
+            <label className="font-light text-white text-xl">
+              Confirmar contraseña
+            </label>
+            <input
+              type="password"
+              name="passwordRepeat"
+              value={input.passwordRepeat}
+              onChange={(e) => handleChange(e)}
+              placeholder="Repetir contraseña"
+              className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
+            ></input>
+            {errors.passwordRepeat && (
+              <p className="font-bold text-red-700 text-center p-2">
+                {errors.passwordRepeat}
+              </p>
+            )}
+          </div>
+          <div>
             <label className="font-light text-white text-xl">Sobre mí</label>
             <textarea
               name="about"
@@ -315,9 +391,24 @@ export default function Register() {
               inputClass="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent"
               onSuggestionSelect={_suggestionSelect}
               resetSearch={false}
-              placeholder="Escriba su ciudad"
+              placeholder={
+                !input.place ? "Escriba su ciudad" : "Modifique ciudad"
+              }
             />
+            {input.place && (
+              <p className="font-light text-white text-xl">{input.place}</p>
+            )}
           </div>
+          {input.place ? (
+            <div
+              ref={mapDiv}
+              style={{
+                block: "w-full",
+                height: "15vw",
+                borderRadius: "10px",
+              }}
+            />
+          ) : null}
           <div>
             <label className="font-light text-white text-xl">Telefono</label>
             <input

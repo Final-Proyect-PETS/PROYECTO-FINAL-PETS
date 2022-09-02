@@ -1,90 +1,88 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import NavBar from "../NavBar/NavBar";
-import SearchTrade from "../SearchBars/SearchTrade";
-import { getAllUsers, sendNotification } from "../../redux/Actions/index";
-
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../LandingPage.css";
-import { Toast, Dropdown } from "flowbite-react";
-import { patchUsuer } from "../../redux/Actions/index";
-import { useState } from "react";
+import "./Notification.css";
 
 export default function Notifications() {
-  const dispatch = useDispatch();
+
   const loggedUser = useSelector((state) => state.userProfile);
-
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch]);
-  // const navigate = useNavigate();
-  var notView = [];
-  var view = [];
   const allUsers = useSelector((state) => state.users);
-  var matched = allUsers?.filter((user) => user._id === loggedUser._id);
-  matched[0]?.interestedUsers?.map((iUser) => {
-    if (iUser[2] === false) notView.push(iUser);
-  });
+  const allPets = useSelector((state) => state.pets);
 
-  // const notinoti = useSelector((state) => state.notification);
+  let algo = loggedUser.interestedUsers.map(e => {
+    return {
+      user: allUsers.filter(a => a._id === e.interestedUser)[0],
+      pet: allPets.filter(a => a._id === e.petId)[0],
+      viewState: e.viewState
+    }
+  })
 
-  // useEffect(() => {
-  //   dispatch(sendNotification(notView));
-  // }, [dispatch]);
-
-  // const [bell, setBell] = useState({ view: notView.length });
-
-  function closeHandler(e) {
-    e.preventDefault();
-    //   let payload = {
-    // id:loggedUser._id,
-    // interestedUsers:
-    //   };
-    // console.log(e.target.value, "click");
-    //  dispatch(patchUsuer(payload))
-  }
+  let like = loggedUser.likesPets.map(e => {
+    return {
+      userId: allUsers.filter(a => a._id === e.userId)[0],
+      petId: allPets.filter(a => a._id === e.petId)[0],
+      support: e.support
+    }
+  })
+  console.log(like);
 
   return (
-    <div id="landing" className="w-full">
+    <div className="w-full">
       <NavBar />
-      <div className="flex flex-col items-center">
-        {" "}
-        <h2>Componente en construccion</h2>
-        <h1>
-          {`Tienes ${
-            notView.length <= 1
-              ? `${notView.length} notificacion sin leer`
-              : `${notView.length} notificaciones sin leer`
-          } `}
-        </h1>
+      <div id="notification-component" className="flex flex-col items-center">
+        <span className="font-semibold text-2xl text-white py-5">Mis Notificaciones</span>
+
         {loggedUser?.interestedUsers?.length ? (
-          notView?.map((iUser) => (
-            <Toast key={iUser[0]._id}>
-              <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-500 dark:bg-blue-800 dark:text-blue-200">
-                <img src={iUser[0].image} className="h-10 w-10 rounded-full" />
-              </div>
-              <div className="ml-3 text-sm font-normal">
-                {/* <h1>{iUser[2] === false ? "No leida" : "truew"}</h1> */}
-                <h1>
-                  {iUser[0].first_name} {iUser[0].last_name} esta interesado en{" "}
-                  {iUser[1].name}
-                </h1>
-                <button
-                  value={iUser[0]._id}
-                  className="text-yellow-500"
-                  onClick={(e) => closeHandler(e)}
-                >
-                  Marcar como leida
-                </button>
-                <Link to={`/users/${iUser[0]._id}`}>
-                  <h1 className="text-yellow-500">Ver Perfil</h1>
+          algo?.map((iUser) => (
+            iUser.viewState === false ?
+              <div className="flex w-full p-8 my-2 items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 ">
+                <div className="flex justify-between p-3 items-center">
+                  <div className="flex items-center">
+                    <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
+                      <img src={iUser?.user?.image} alt="profilepic" />
+                    </div>
+                  </div>
+                </div>
+                <div className="font-normal text-gray-700 dark:text-gray-400">
+                  {`${iUser?.user?.first_name} ${iUser?.user?.last_name} esta interesado en ${iUser?.pet?.name}`}
+                </div>
+                <Link to={`/users/${iUser?.user?._id}`} className="px-5">
+                  <h3 className="font-semibold text-yellow-500 hover:text-yellow-800">Ver Perfil</h3>
                 </Link>
               </div>
-              <Toast.Toggle />
-            </Toast>
+              : <></>
           ))
         ) : (
-          <>SIN NOTI</>
+          <span className="text-2xl text-white mt-3">Sin notificaciones</span>
+        )}
+      </div>
+      <div id="notification-component" className="flex flex-col items-center">
+        <span className="font-semibold text-2xl text-white py-5">Mis Notificaciones</span>
+
+        {loggedUser?.likesPets?.length ? (
+          like?.map((lUser) => (
+            lUser.support === false ?
+              <div className="flex w-full p-8 my-2 items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 ">
+                <div className="flex justify-between p-3 items-center">
+                  <div className="flex items-center">
+                    <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
+                      <img src={lUser?.userId?.image} alt="profilepic" />
+                    </div>
+                  </div>
+                </div>
+                <div className="font-normal text-gray-700 dark:text-gray-400">
+                  {`A ${lUser?.userId?.first_name} ${lUser?.userId?.last_name} le ha gustado la publicacion de ${lUser?.petId?.name}`}
+                </div>
+                <Link to={`/users/${lUser?.userId?._id}`} className="px-5">
+                  <h3 className="font-semibold text-yellow-500 hover:text-yellow-800">Ver Perfil</h3>
+                </Link>
+              </div>
+              : <></>
+          ))
+        ) : (
+          <span className="text-2xl text-white mt-3">Sin notificaciones</span>
         )}
       </div>
     </div>

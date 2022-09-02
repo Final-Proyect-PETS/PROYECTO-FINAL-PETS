@@ -13,16 +13,18 @@ const petsSchema = new Schema(
     vaccination: {
       type: String,
       enum: ["yes", "no", "unknown"],
-      lowercase: true
+      lowercase: true,
     },
     castrated: Boolean,
     place: String,
+    place_longitude: String,
+    place_latitude: String,
     imagePool: [String],
     deleted: { type: Boolean, default: false },
     user: { type: mongoose.Schema.ObjectId, ref: "User" },
     isAdopted: { type: Boolean, default: true },
-    interestedUsers: Array
-  },
+    interestedUsers: Array,
+    likes: Array  },
   {
     timestamps: true,
   }

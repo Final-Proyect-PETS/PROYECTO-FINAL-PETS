@@ -137,22 +137,13 @@ export default function OwnedPet({
               adopt.isAdopted === false && deleted.deleted === false ? (
                 <div className="flex flex-col justify-content items-center">
                   <div className="flex  justify-content items-center">
-                    <Link to="/interestedtraders">
-                      <button className=" flex bg-green-600 mt-4 hover:bg-green-900 mr-1 mt-4  text-white font-bold py-2 px-2 border border-yellow-700 rounded">
-                        <h2 className="font-semibold">{`🔔 ${loggedUser?.interestedUsers?.length}`}</h2>
-                      </button>
-                    </Link>
+               
 
-                    <Link to="/tradepet">
-                      <button className="bg-yellow-900 mr-1 mt-4 hover:bg-yellow-500 text-white font-bold py-2 px-2 border border-yellow-700 rounded">
-                        <h2 className="font-semibold"> CAMBIAR DUEÑO</h2>
-                      </button>
-                    </Link>
                   </div>
                   <div className="flex">
                     <button
                       onClick={(e) => patchAdoptionHandler(e)}
-                      className="bg-red-900 mt-4 hover:bg-red-600 text-white font-bold py-1 px-1 border border-yellow-700 rounded"
+                      className="bg-red-900 mt-4 hover:bg-red-600 text-white font-bold py-2 px-3 border border-yellow-700 rounded"
                     >
                       ⛔ PARAR ADOPCION
                     </button>
@@ -162,9 +153,9 @@ export default function OwnedPet({
                 <div className="flex flex-col justify-content items-center">
                   <button
                     onClick={(e) => patchAdoptionHandler(e)}
-                    className="bg-green-900 mt-4 hover:bg-green-600 text-white font-bold py-4 px-1 border border-yellow-700 rounded"
+                    className="bg-green-900 mt-4 hover:bg-green-600 opacity-80 text-white font-bold py-2 px-3 border border-yellow-700 rounded"
                   >
-                    ✔️ PONER EN ADOPCIÓN
+                    ✔️ INICIAR ADOPCIÓN
                   </button>
                 </div>
               )

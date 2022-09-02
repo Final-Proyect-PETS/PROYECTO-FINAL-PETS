@@ -1,37 +1,29 @@
 import React from "react";
 import NavBar from "../NavBar/NavBar";
-import "../LandingPage.css";
+import "./Donations.css";
 import { useSelector } from "react-redux";
 import { getUserProfile, paymentMp } from "../../redux/Actions";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import { notificationSwal } from "../../utils/notificationSwal";
-import { useLocation } from "react-router-dom";
+//import { useLocation } from "react-router-dom";
 
 export default function Donation() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const id = localStorage.getItem("id");
   const user = useSelector((state) => state.userProfile);
-  const payment = useSelector((state) => state.payment.id);
+
   const [input, setInput] = useState("");
   const [generating0, setGenerating0] = useState(false);
   const [generating1, setGenerating1] = useState(false);
   const [generating2, setGenerating2] = useState(false);
   const [generating3, setGenerating3] = useState(false);
-  const [disable0, setDisable0] = useState(false);
+  // const [disable0, setDisable0] = useState(false);
   const [disable1, setDisable1] = useState(false);
   const [disable2, setDisable2] = useState(false);
   const [disable3, setDisable3] = useState(false);
-
-  useEffect(() => {
-    dispatch(getUserProfile(id));
-  }, [dispatch, id]);
-
-  const [activeButton, setActive] = useState(true);
 
   function handleChange(e) {
     setInput({
@@ -53,7 +45,7 @@ export default function Donation() {
         setGenerating3(true);
         break;
       default:
-        return null
+        return null;
     }
     dispatch(paymentMp(user._id, e.target.value)).then((payment) => {
       const script = document.createElement("script");
@@ -127,16 +119,11 @@ export default function Donation() {
       );
     }
   }
-
-  const params = useLocation().search;
-  console.log(params);
-  //   const purchaseId = params.slice(params.indexOf('=') + 1, params.indexOf('&'));
-  // const { token } = JSON.parse(window.localStorage.getItem('user'));
-
+  
   return (
     <>
       <NavBar />
-      <div id="landing" className="w-full">
+      <div id="donations" className="w-full">
         <div className="h-screen flex justify-center items-center flex-col backdrop-blur-sm">
           <div className="flex flex-col justify-center items-center">
             <h3 className="text-6xl italic text-gray-800 flex justify-center font-semibold mb-3">
@@ -154,8 +141,7 @@ export default function Donation() {
           <div className="flex flex-col w-full max-w-md m-14">
             <div className="text-center mb-3">
               <h2 className="text-2xl text-gray-800">
-                Podrás donar la cantidad que desees
-                colocando el monto aquí:
+                Podrás donar la cantidad que desees colocando el monto aquí:
               </h2>
             </div>
             <input
@@ -167,7 +153,6 @@ export default function Donation() {
               className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellow-800 focus:border-transparent mb-8"
             />
             <div>
-
               <div className="flex items-center mb-6 -mt-4 w-full">
                 <button
                   type="submit"
@@ -181,7 +166,6 @@ export default function Donation() {
                 </p>
                 <form id="form0" className="place-self-center"></form>
               </div>
-
 
               <div className="flex items-center mb-6 -mt-4 w-full">
                 <button
@@ -227,7 +211,6 @@ export default function Donation() {
               </p>
 
               <form id="form3"></form>
-
             </div>
             {/* {payment ? <Comprar data={payment} /> : null} */}
           </div>

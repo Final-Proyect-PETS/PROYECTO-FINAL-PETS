@@ -18,6 +18,8 @@ router.post("/pets/:id", verifyToken, async (req, res, next) => {
     vaccination,
     castrated,
     place,
+    place_longitude,
+    place_latitude,
     gender,
   } = req.body;
   try {
@@ -33,6 +35,8 @@ router.post("/pets/:id", verifyToken, async (req, res, next) => {
       vaccination,
       castrated,
       place,
+      place_longitude,
+      place_latitude,
       gender
     );
     res.status(201).send(newPet);
