@@ -65,7 +65,7 @@ router.post("/logingoogle", async (req, res, next) => {
                         🐈‍⬛Deseamos que todas tus mascotas encuentren su cola feliz.🐶 
                   Atentamente HT`;
               
-                  let info = await transporter.sendMail({
+                   await transporter.sendMail({
                     from: "'HappyTails'<happytailshp@gmail.com>",
                     to: email,
                     subject: "Bienvenido",
