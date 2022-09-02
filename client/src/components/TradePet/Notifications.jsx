@@ -105,16 +105,16 @@ export default function Notifications() {
             <span className="text-2xl text-white mt-3"></span>
           )}
         </div>
-        <div className="bg-yellow-900 rounded opacity-80 w-1/2 flex flex-col justify-center">
+        <div className="bg-yellow-500 rounded opacity-80 w-1/2 flex flex-col justify-center">
           <span className="font-semibold p-3 text-2xl text-white py-5">
-            ¿Te gustaria publicar una foto nueva de tu mascota para que vean
-            otros usuarios?
+            ¿Te gustaria publicar una foto nueva de tu mascota para que
+            otros usuarios puedan verla?
           </span>
           <div className="flex flex-col justify-content items-center ">
             <Link to={`/users/${loggedUser._id}`}>
               <button
                 onClick={(e) => e}
-                className="bg-green-900 mt-4 p-3 m-2 hover:bg-green-600 opacity-80 text-white font-bold py-2 px-3 border border-yellow-700 rounded"
+                className="bg-green-600 mt-4 p-3 m-2 hover:bg-green-800  text-white font-bold py-2 px-3 border border-yellow-700 rounded"
               >
                 EDITAR MASCOTAS 📝
               </button>
