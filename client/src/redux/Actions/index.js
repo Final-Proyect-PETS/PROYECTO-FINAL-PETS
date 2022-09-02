@@ -164,7 +164,7 @@ export function patchPet(payload) {
   return async function (dispatch) {
     try {
       let json = await axios.patch(
-        `http://localhost:3001/home/pets/${payload.id}`,
+        `http://localhost:3001/home/likepets`,
         payload
       );
       dispatch({
@@ -365,6 +365,20 @@ export function notViewed(payload) {
 }
 
 ////////////////////////////////chat
+export function chatWithUser(losdosid) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.post("http://localhost:3001/home/conversations/", losdosid);
+      return dispatch({
+        type: actions.CHAT_WITH_USER,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 export function getConversations(id) {
   return async function (dispatch) {
     try {
@@ -437,6 +451,24 @@ export function viewing(payload) {
         type: actions.VIEWING_NOTIFICATION,
         payload: json.data,
       });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function likePet(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(
+        `http://localhost:3001/home/likepets`,
+        payload
+      );
+      dispatch({
+        type: actions.LIKE_PET,
+        payload: json.data,
+      });
+      return "OK";
     } catch (error) {
       console.log(error);
     }

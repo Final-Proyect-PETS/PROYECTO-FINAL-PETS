@@ -1,11 +1,15 @@
 const { Router } = require("express");
 const User = require("../models/users");
 const Pets = require("../models/pets");
-const { patchPet, patchUser } = require("../utils/controllers/patch.js");
+const {
+  patchPet,
+  patchUser,
+  likePet,
+} = require("../utils/controllers/patch.js");
 const { send_mail } = require("../routes/send-email");
 const verifyToken = require("../utils/middlewares/validateToken");
 const nodemailer = require("nodemailer");
-const { NMAILER_PASSWORD } = process.env;
+const { NMAILER_PASSWORD2 } = process.env;
 const router = Router();
 
 router.patch("/pets/:id", verifyToken, async (req, res, next) => {
@@ -27,6 +31,7 @@ router.patch("/pets/:id", verifyToken, async (req, res, next) => {
     isAdopted,
     deleted,
     interestedUsers,
+    likes,
   } = req.body;
   try {
     const petPatch = await patchPet(
@@ -46,7 +51,8 @@ router.patch("/pets/:id", verifyToken, async (req, res, next) => {
       gender,
       isAdopted,
       deleted,
-      interestedUsers
+      interestedUsers,
+      likes
     );
 
     res.status(201).send(petPatch);
@@ -122,14 +128,14 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
     console.log(newOwner.email);
     try {
       const transporter = nodemailer.createTransport({
-        service: "hotmail",
+        service: "gmail",
         auth: {
-          user: "HAppYTAil5@hotmail.com",
-          pass: `${NMAILER_PASSWORD}`,
+          user: "happytailshp@gmail.com",
+          pass: `${NMAILER_PASSWORD2}`,
         },
       });
       const mailOptions = {
-        from: "'HappyTails'<HAppYTAil5@hotmail.com>",
+        from: "'HappyTails'<happytailshp@gmail.com>",
         to: `${newOwner.email}`,
         subject: "Felicitaciones!",
         text: `Has adoptado correctamente a ${newpet.name}`,
@@ -147,14 +153,14 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
     }
     try {
       const transporter2 = nodemailer.createTransport({
-        service: "hotmail",
+        service: "gmail",
         auth: {
-          user: "HAppYTAil5@hotmail.com",
-          pass: `${NMAILER_PASSWORD}`,
+          user: "happytailshp@gmail.com",
+          pass: `bmkymaiygycduxmw`,
         },
       });
       const mailOptions2 = {
-        from: "'HappyTails'<HAppYTAil5@hotmail.com>",
+        from: "'HappyTails'<happytailshp@gmail.com>",
         to: `${oldOwner.email}`,
         subject: "Felicitaciones!",
         text: `Han adoptado correctamente a ${newpet.name}`,
@@ -217,7 +223,7 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
         secure: false,
         auth: {
           user: "happytailshp@gmail.com",
-          pass: `${NMAILER_PASSWORD}`,
+          pass: `${NMAILER_PASSWORD2}`,
         },
         tls: {
           rejectUnauthorized: false,
@@ -252,50 +258,60 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
 
 router.patch("/viewing", async (req, res, next) => {
   const { id, interestedId, petId } = req.body;
+  const { petId2, userId, ownerId } = req.body;
 
-  const user = await User.findOne({ _id: id });
+  if (interestedId) {
+    const user = await User.findOne({ _id: id });
+    let loquecambia = user.interestedUsers.filter(
+      (e) => e.interestedUser === interestedId && e.petId === petId
+    );
+    loquecambia[0].viewState = true;
+    let el_resto = user.interestedUsers
+      .filter((e) => e.interestedUser !== interestedId || e.petId !== petId)
+      .concat(loquecambia);
 
-  let loquecambia = user.interestedUsers.filter(
-    (e) => e.interestedUser === interestedId && e.petId === petId
-  );
-  loquecambia[0].viewState = true;
-  let el_resto = user.interestedUsers
-    .filter((e) => e.interestedUser !== interestedId || e.petId !== petId)
-    .concat(loquecambia);
-
-  await User.updateOne({ _id: id }, { $set: { interestedUsers: el_resto } });
-
+    await User.updateOne({ _id: id }, { $set: { interestedUsers: el_resto } });
+  }
+  if (ownerId) {
+    const owner = await User.findOne({ _id: ownerId });
+    let cambia = owner.likesPets.filter(
+      (e) => e.likesPets === userId && e.petId2 === petId2
+    );
+    cambia[0].support = true;
+    let resto = owner.likesPets
+      .filter((e) => e.likesPets !== userId || e.petId2 !== petId2)
+      .concat(cambia);
+    await User.updateOne({ _id: ownerId }, { $set: { likesPets: resto } });
+  }
   res.status(200).send("notification viewed");
 });
-
+//
 router.patch("/likes", verifyToken, async (req, res, next) => {
   try {
     const { petId, userId, ownerId } = req.body;
-    console.log(req.body);
     let user = await User.findOne({ _id: ownerId });
-    console.log(user);
+    console.log(req.body);
     if (
-      user.likesPets.filter((e) => e[0]._id === userId && e[1]._id === petId)
+      user.likesPets.filter((e) => e.userId === userId && e.petId === petId)
         .length
     ) {
-      res.send("Ya mandaste un like perro");
+      res.status(403).send("Ya mandaste un like perro");
     } else {
       let support = false;
       const petAndUserIds = { userId, petId, support };
-      console.log(petAndUserIds);
       await User.updateOne(
         { _id: ownerId },
         { $push: { likesPets: petAndUserIds } }
       );
-      let user2 = await User.findOne({ _id: ownerId });
-      console.log(user2);
-      await Pets.updateOne({ _id: petId }, { $push: { likes: petAndUserIds } });
+      // let user2 = await User.findOne({ _id: ownerId });
+      // await Pets.updateOne({ _id: petId }, { $push: { likes: petAndUserIds } });
     }
   } catch (error) {
     next(error);
   }
 });
 
+<<<<<<< HEAD
 router.patch("/reportedPets", async (req, res, next) => {
   const { informer, reportedPet } = req.body;
   console.log(req.body.informer);
@@ -304,4 +320,22 @@ router.patch("/reportedPets", async (req, res, next) => {
 
 router.patch("/reportedUsers", verifyToken, async (req, res, next) => {});
 
+=======
+router.patch("/likepets", verifyToken, async (req, res, next) => {
+  try {
+    const { id, likeName } = req.body;
+    const petPatch = await likePet(id); //likename=FLORE   pets.likes=[likename1,florre]
+
+    if (!petPatch.likes.includes(likeName)) {
+      await petPatch.update({ $push: { likes: likeName } });
+    } else await petPatch.update({ $pull: { likes: likeName } });
+
+    console.log(petPatch.likes);
+    res.status(201).send(petPatch);
+  } catch (error) {
+    next(error);
+  }
+});
+
+>>>>>>> 45c0bd01a026cdfbdbd7dc782dcc99a639f88d31
 module.exports = router;

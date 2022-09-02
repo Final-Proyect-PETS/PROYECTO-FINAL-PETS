@@ -24,7 +24,7 @@ const petsSchema = new Schema(
     user: { type: mongoose.Schema.ObjectId, ref: "User" },
     isAdopted: { type: Boolean, default: true },
     interestedUsers: Array,
-  },
+    likes: Array  },
   {
     timestamps: true,
   }
