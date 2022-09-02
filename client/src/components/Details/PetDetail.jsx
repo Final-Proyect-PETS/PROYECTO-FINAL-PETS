@@ -48,10 +48,9 @@ export default function PetDetail() {
   return Object.keys(petDetail).length ? (
     <div>
       <NavBar />
-
-      <h1 className="flex justify-center font-semibold text-3xl mt-3">
+      <h2 className="flex justify-center font-semibold text-3xl mt-3">
         Detalles 🐶
-      </h1>
+      </h2>
 
       <div className="flex w-2/3 my-10 ml-60 flex-row border-2 border-black">
         <div>

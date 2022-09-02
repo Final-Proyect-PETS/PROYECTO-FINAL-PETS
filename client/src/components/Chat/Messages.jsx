@@ -1,19 +1,49 @@
-import React from "react";
-// import { format } from "timeago.js";
+import React, {useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDetail } from "../../redux/Actions";
 
 
-export default function Messages ({message,own}) {
+
+export default function Messages({ message, own }) {
+
+    const dispatch = useDispatch()
+
+  const yo = useSelector((state) => state.userProfile)
+
+  const ell = useSelector((state) => state.userDetail)
+
+  console.log(ell)
 
     return (
-        <div className={own ? "flex flex-col justify-end items-end" : "flex flex-col justify-start"}>
-            <div className="flex gap-3">
-                <img src="https://ca.slack-edge.com/TPRS7H4PN-U037RE822MS-461ba53b0acd-72" alt="" className="w-16 h-16 rounded-full"/>
-                <p className="p-10 bg-sky-600 text-white rounded-r-lg max-w-sm">{message.text}</p>
+        <>
+            {/* CAJA MADRE CHAT*/}
+            <div id="messages" className="flex flex-col space-y-4 p-3 overflow-y-auto">
+                {/* CHAT */}
+                {own ?
+                    <div className="flex items-end justify-end">
+                        <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
+                            <div>
+                                <span className="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white ">
+                                    {message.text}
+                                </span>
+                            </div>
+                        </div>
+                        <img src={yo.image} alt="My profile" className="w-6 h-6 rounded-full order-2" />
+                    </div>
+                    : <div className="chat-message">
+                        <div className="flex items-end">
+                            <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
+                                <div>
+                                    <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
+                                        {message.text}
+                                    </span>
+                                </div>
+                            </div>
+                            <img src={ell.image} alt="My profile" class="w-6 h-6 rounded-full order-1" />
+                        </div>
+                    </div>}
             </div>
-            <div>
-                <p className="text-gray-500">{/* {message.createdAt} */}</p>
-            </div>
-        </div>
-    )
+        </>
 
+    )
 }

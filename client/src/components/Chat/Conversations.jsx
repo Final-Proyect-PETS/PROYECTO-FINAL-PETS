@@ -15,7 +15,7 @@ export default function Conversations ({conversation, currentUser}) {
     // console.log(conversation, "CONVERSATION")
 
     useEffect(() => {
-        const friendId = conversation.members.find((m) => m !== currentUser)
+        const friendId = conversation.members.find((m) => m !== currentUser)    //._id
         const getUser = async () => {
             try {
                 const res = await axios("http://localhost:3001/home/users/" + friendId)
