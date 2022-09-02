@@ -131,7 +131,7 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
     console.log(newOwner.email);
     try {
       const transporter = nodemailer.createTransport({
-        service: "gmail",
+        service: "smtp.gmail.com",
         auth: {
           user: "happytailshp@gmail.com",
           pass: `${NMAILER_PASSWORD2}`,
@@ -156,10 +156,10 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
     }
     try {
       const transporter2 = nodemailer.createTransport({
-        service: "gmail",
+        service: "smtp.gmail.com",
         auth: {
           user: "happytailshp@gmail.com",
-          pass: `bmkymaiygycduxmw`,
+          pass: `${NMAILER_PASSWORD2}`,
         },
       });
       const mailOptions2 = {
@@ -246,7 +246,7 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
                               <p>${message}</p>
                               Atentamente HT`;
 
-      let info = await transporter.sendMail({
+      await transporter.sendMail({
         from: "'HappyTails'<happytailshp@gmail.com>",
         to: owner_email,
         subject: "Contacto de adopción",

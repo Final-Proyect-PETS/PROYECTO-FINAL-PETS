@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const { register } = require("../utils/controllers/register.js");
 const nodemailer = require("nodemailer");
-const { NMAILER_PASSWORD } = process.env;
+const { NMAILER_PASSWORD2 } = process.env;
 
 const router = Router();
 
@@ -48,7 +48,7 @@ router.post("/", async (req, res, next) => {
       secure: false,
       auth: {
         user: "happytailshp@gmail.com",
-        pass: `${NMAILER_PASSWORD}`,
+        pass: `${NMAILER_PASSWORD2}`,
       },
       tls: {
         rejectUnauthorized: false,
@@ -66,7 +66,7 @@ router.post("/", async (req, res, next) => {
     let info = await transporter.sendMail({
       from: "'HappyTails'<happytailshp@gmail.com>",
       to: email,
-      subject: "Contacto de adopción",
+      subject: "Bienvenido",
       html: contentHTML,
     });
 

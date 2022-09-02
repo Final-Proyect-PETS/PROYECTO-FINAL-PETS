@@ -24,6 +24,7 @@ const resetPassword = require("./resetPassword");
 const patchReportedPets = require("./patch");
 const patchReportedUsers = require("./patch");
 const errorHandler = require("../utils/middlewares/errorHandler");
+const interestedUsers = require("./patch");
 
 router.use(
   "/home",
@@ -41,7 +42,8 @@ router.use(
   adopt,
   likes,
   patchReportedPets,
-  patchReportedUsers
+  patchReportedUsers,
+  interestedUsers
 );
 
 router.use("/linkpayment", payment, responsePayment);
