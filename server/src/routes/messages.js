@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { Router } = require("express");
 const Message = require("../models/message");
 const verifyToken = require("../utils/middlewares/validateToken.js");

@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { register } = require("../utils/controllers/register.js");
 const nodemailer = require("nodemailer");
+require("dotenv").config();
 const { NMAILER_PASSWORD } = process.env;
 
 const router = Router();

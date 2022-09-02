@@ -1,3 +1,4 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -24,7 +25,8 @@ const petsSchema = new Schema(
     user: { type: mongoose.Schema.ObjectId, ref: "User" },
     isAdopted: { type: Boolean, default: true },
     interestedUsers: Array,
-    likes: Array  },
+    likes: Array
+  },
   {
     timestamps: true,
   }

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const Pets = require("../../models/pets");
 const User = require("../../models/users");
 const connection = require("../../db");
@@ -10,8 +11,9 @@ const getPets = async (name) => {
   }
   try {
     const arrayPets = await Pets.find({ deleted: false }).populate({
-      path: "user", match: {deleted: false}})
-     
+      path: "user", match: { deleted: false }
+    })
+
     if (name) {
       let petFound = arrayPets.filter(
         (p) =>
@@ -40,7 +42,8 @@ const getUsers = async (name) => {
   }
   try {
     const arrayUsers = await User.find({ deleted: false }).populate({
-      path: "pets", match: {deleted: false}})
+      path: "pets", match: { deleted: false }
+    })
     if (name) {
       let userFound = arrayUsers.filter(
         (u) =>
@@ -71,8 +74,9 @@ const userId = async (id) => {
   try {
 
     const arrayUsers = await User.findOne({ _id: id, deleted: false }).populate({
-      path: "pets", match: {deleted: false}}).populate({path: "interestedUsers"})
-  
+      path: "pets", match: { deleted: false }
+    }).populate({ path: "interestedUsers" })
+
     return arrayUsers;
   } catch (error) {
     console.error(error);
@@ -87,7 +91,8 @@ const petId = async (id) => {
   }
   try {
     const pet = await Pets.findOne({ _id: id, deleted: false }).populate({
-      path: "user", match: {deleted: false}})
+      path: "user", match: { deleted: false }
+    })
     return pet;
   } catch (error) {
     console.error(error);

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { Router } = require("express");
 const nodemailer = require("nodemailer");
 const User = require("../models/users");

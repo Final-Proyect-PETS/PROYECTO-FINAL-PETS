@@ -1,3 +1,4 @@
+require("dotenv").config();
 const Pets = require("../../models/pets");
 const User = require("../../models/users");
 const connection = require("../../db");

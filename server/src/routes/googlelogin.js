@@ -1,3 +1,4 @@
+require("dotenv").config();
 const googlelogin = require("../utils/controllers/googlelogin");
 const { Router } = require("express");
 const router = Router();

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { Router } = require("express");
 const User = require("../models/users");
 const Pets = require("../models/pets");

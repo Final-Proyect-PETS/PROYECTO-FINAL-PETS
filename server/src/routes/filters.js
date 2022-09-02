@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { Router } = require("express");
 const { filtro } = require("../utils/controllers/filters.js");
 const verifyToken = require("../utils/middlewares/validateToken.js");

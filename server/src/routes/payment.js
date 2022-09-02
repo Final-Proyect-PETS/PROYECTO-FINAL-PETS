@@ -1,3 +1,4 @@
+require("dotenv").config();
 const mercadopago = require("mercadopago");
 const { Router } = require("express");
 const verifyToken = require("../utils/middlewares/validateToken");

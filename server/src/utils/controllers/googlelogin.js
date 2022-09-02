@@ -1,8 +1,9 @@
+require("dotenv").config();
 const User = require("../../models/users");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(
-  "841685042609-24rmh0gcg16vvfl3j8cgrll1nr23pi04.apps.googleusercontent.com"
+  process.env.O_AUTH_CLIENT
 );
 
 const googlelogin = (req, res) => {
@@ -12,7 +13,7 @@ const googlelogin = (req, res) => {
     .verifyIdToken({
       idToken: tokenId,
       audience:
-        "841685042609-24rmh0gcg16vvfl3j8cgrll1nr23pi04.apps.googleusercontent.com",
+        process.env.O_AUTH_CLIENT,
     })
     .then((response) => {
       const { email_verfied, givenName, familyName, name, email } =

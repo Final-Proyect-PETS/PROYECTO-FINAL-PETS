@@ -10,6 +10,7 @@
 // /  ,-' \  \            |        MUERAN  ︻┳═ 一   |
 // \  \    `-'            |                          |
 //  `-'                   '--------------------------'
+require("dotenv").config();
 const http = require("http");
 const server = require("./src/app.js");
 const connection = require("./src/db.js");
@@ -66,4 +67,4 @@ io.on("connection", (socket) => {
 //ver forma de hacer un force true para mongoose
 
 connection();
-serverr.listen(3001, () => console.log("listening at port 3001 "));
+serverr.listen(process.env.PORT || 3001, () => console.log(`listening at port ${process.env.PORT}`));
