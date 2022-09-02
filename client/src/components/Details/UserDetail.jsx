@@ -151,7 +151,7 @@ export default function UserDetail() {
                 </button>
               </Link>
             </div>
-            <div className="grid grid-cols-3 mt-10 place-content-center ">
+            <div id="editPet" className="grid grid-cols-3 mt-10 place-content-center ">
               {userDetail.pets?.length ? (
                 userDetail.pets.map((pets) => (
                   <OwnedPet
@@ -167,7 +167,7 @@ export default function UserDetail() {
                   ></OwnedPet>
                 ))
               ) : (
-                <h3 className="text-2xl font-bold">
+                <h3  className="text-2xl font-bold">
                   No hay mascotas que mostrar...
                 </h3>
               )}
