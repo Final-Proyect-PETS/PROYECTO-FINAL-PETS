@@ -494,3 +494,39 @@ export function likePet(payload) {
     }
   };
 }
+
+export function reportPet(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(
+        `http://localhost:3001/home/reportedPets`,
+        payload
+      );
+      dispatch({
+        type: actions.REPORT_PET,
+        payload: json.data,
+      });
+      return "OK";
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function reportUser(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(
+        `http://localhost:3001/home/reportedUsers`,
+        payload
+      );
+      dispatch({
+        type: actions.REPORT_USER,
+        payload: json.data,
+      });
+      return "OK";
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}

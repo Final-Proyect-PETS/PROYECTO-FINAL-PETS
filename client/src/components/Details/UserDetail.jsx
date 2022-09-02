@@ -1,7 +1,12 @@
 import React, { useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getUserDetail, clearState, getPetDetail, chatWithUser } from "../../redux/Actions";
+import {
+  getUserDetail,
+  clearState,
+  getPetDetail,
+  chatWithUser,
+} from "../../redux/Actions";
 import NavBar from "../NavBar/NavBar";
 import OwnedPet from "./OwnedPet";
 import Loader from "./../Loaders/Loader";
@@ -39,10 +44,12 @@ export default function UserDetail() {
     }
   }
 
-  function chat () {
-    dispatch(chatWithUser({senderId: loggedUser._id, receiverId: userDetail._id})).then(e => {
-      navigate("/chat")
-    })
+  function chat() {
+    dispatch(
+      chatWithUser({ senderId: loggedUser._id, receiverId: userDetail._id })
+    ).then((e) => {
+      navigate("/chat");
+    });
   }
 
   mapboxgl.accessToken =
@@ -83,15 +90,25 @@ export default function UserDetail() {
 
                 <h3 className="text-2xl ">{userDetail.about}</h3>
                 {loggedUser._id !== userDetail._id ? (
-                <div>
-                <button onClick={() => chat()} className="py-2 mt-5 ml-5 px-4 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
-                CHATEAR CON ESTE USUARIO
-                </button>
-                </div>
+                  <div>
+                    <button
+                      onClick={() => chat()}
+                      className="py-2 mt-5 ml-5 px-4 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+                    >
+                      CHATEAR CON ESTE USUARIO
+                    </button>
+                  </div>
                 ) : (
                   <></>
                 )}
-                <br/>
+                <div>
+                  <Link to={`/reportuser`}>
+                    <button className="py-2 px-4 my-2 mb-5 mr-2 w-full bg-yellow-900 hover:bg-yellow-700 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                      DENUNCIAR USUARIO
+                    </button>
+                  </Link>
+                </div>
+                <br />
                 <div>
                   {loggedUser._id === userDetail._id ? (
                     <div className="flex">
