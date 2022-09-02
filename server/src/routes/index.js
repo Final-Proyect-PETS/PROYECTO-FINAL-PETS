@@ -22,6 +22,7 @@ const responsePayment = require("./payment");
 const forgotPassword = require("./forgotPassword")
 const resetPassword = require("./resetPassword")
 const errorHandler = require("../utils/middlewares/errorHandler");
+const interestedUsers = require("./patch");
 
 router.use(
   "/home",
@@ -37,7 +38,8 @@ router.use(
   conversations,
   messages,
   adopt,
-  likes
+  likes,
+  interestedUsers,
 );
 
 router.use("/linkpayment", payment, responsePayment);

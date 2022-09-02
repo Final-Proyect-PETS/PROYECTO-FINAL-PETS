@@ -309,7 +309,7 @@ export function patchInterestedUsers(payload) {
         type: actions.INTERESTED_USERS,
         payload: json.data,
       });
-      return "OK";
+      return json.data;
     } catch (error) {
       console.log(error);
     }
