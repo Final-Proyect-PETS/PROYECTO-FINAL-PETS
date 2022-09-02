@@ -1,46 +1,50 @@
-import React from "react";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserDetail } from "../../redux/Actions";
 
-export default function Messages({ message, own, mio, el }) {
+export default function Messages({ message, own, el }) {
 
-  const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
-  const yo = useSelector((state) => state.userProfile)
+    const yo = useSelector((state) => state.userProfile)
 
-  const ell = useSelector((state) => state.userDetail)
+    useEffect(() => {
+        dispatch(getUserDetail(el))
+    }, [el])
 
-  useEffect(() => {
-    dispatch(getUserDetail(el))
-  }, [el])
 
-  // console.log(yo, "MIO")
+    const ell = useSelector((state) => state.userDetail)
 
-  console.log(ell, "EL")
+    return (
+        <>
+            {/* CAJA MADRE CHAT*/}
+            <div id="messages" className="flex flex-col space-y-4 p-3">
+                {/* CHAT */}
+                {own ?
+                    <div className="flex items-end justify-end">
+                        <div className="flex flex-col space-y-2 text-xl max-w-xs mx-2 order-1 items-end">
+                            <div>
+                                <span className="px-4 py-2 rounded-lg inline-block rounded-br-none bg-yellow-900 text-white ">
+                                    {message.text}
+                                </span>
+                            </div>
+                        </div>
+                        <img src={yo.image} alt="My profile" className="w-6 h-6 rounded-full order-2" />
+                    </div>
+                    : <div className="chat-message">
+                        <div className="flex items-end">
+                            <div className="flex flex-col space-y-2 text-xl max-w-xs mx-2 order-2 items-start">
+                                <div>
+                                    <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
+                                        {message.text}
+                                    </span>
+                                </div>
+                            </div>
+                            <img src={ell.image} alt="My profile" class="w-6 h-6 rounded-full order-1" />
+                        </div>
+                    </div>}
+            </div>
+        </>
 
-  return (
-    <div
-      className={
-        own
-          ? "flex flex-col justify-end items-end"
-          : "flex flex-col justify-start"
-      }
-    >
-      <div className="flex gap-3">
-        <img
-          src={own ? yo.image : ell?.image}
-          alt=""
-          className="w-16 h-16 rounded-full"
-        />
-        <p className="p-10 bg-sky-600 text-white rounded-r-lg max-w-sm">
-          {message.text}
-        </p>
-      </div>
-      <div>
-        <p className="text-gray-500"></p>
-      </div>
-    </div>
-  );
+    )
 }
