@@ -72,7 +72,7 @@ export default function Cards() {
               vaccination={pets.vaccination}
               castrated={pets.castrated}
               gender={pets.gender}
-              likesPets={pets.likesPets}
+              likes={pets.likes}
             />
           ))
         ) : (

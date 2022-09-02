@@ -164,7 +164,7 @@ export function patchPet(payload) {
   return async function (dispatch) {
     try {
       let json = await axios.patch(
-        `http://localhost:3001/home/pets/${payload.id}`,
+        `http://localhost:3001/home/likepets`,
         payload
       );
       dispatch({
@@ -451,6 +451,24 @@ export function viewing(payload) {
         type: actions.VIEWING_NOTIFICATION,
         payload: json.data,
       });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function likePet(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(
+        `http://localhost:3001/home/pets/${payload.id}`,
+        payload
+      );
+      dispatch({
+        type: actions.LIKE_PET,
+        payload: json.data,
+      });
+      return "OK";
     } catch (error) {
       console.log(error);
     }
