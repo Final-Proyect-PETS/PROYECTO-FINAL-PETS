@@ -64,6 +64,10 @@ export default function rootReducer(state = initialState, { type, payload }) {
       return {
         ...state
       }
+    case actions.CHAT_WITH_USER:
+      return {
+        ...state
+      }
 
     //GET DETAIL
     case actions.GET_USER_DETAIL:

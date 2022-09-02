@@ -98,7 +98,6 @@ export default function Chat() {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-
   return (
     <>
       <NavBar />
@@ -111,13 +110,18 @@ export default function Chat() {
           <div className="h-screen overflow-y-scroll">
             <ol className="gap-3">
               {conversations.map((u) => (
-                <li onClick={() => setCurrentChat(u)} className="flex items-center gap-3 h-32 border border-black">
+
+                <li
+                  onClick={() => setCurrentChat(u)}
+                  className="flex items-center gap-3 h-32 border border-black">
+
                   <Conversations conversation={u} currentUser={id} />
                 </li>
               ))}
             </ol>
           </div>
         </div>
+
         <div className="flex-1 p:2 sm:p-6 justify-between flex flex-col">
           <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
             <div className="w-full">

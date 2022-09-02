@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { getPetDetail, clearStatePet } from "../../redux/Actions";
 import NavBar from "../NavBar/NavBar";
-import Loader from "./../Loaders/Loader"
+import Loader from "./../Loaders/Loader";
 import { Carousel } from "flowbite-react";
 import {
   FacebookShareButton,
@@ -211,8 +211,6 @@ export default function PetDetail() {
     <>
       <NavBar />
       <Loader />
-
     </>
-    
   );
 }

@@ -365,6 +365,20 @@ export function notViewed(payload) {
 }
 
 ////////////////////////////////chat
+export function chatWithUser(losdosid) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.post("http://localhost:3001/home/conversations/", losdosid);
+      return dispatch({
+        type: actions.CHAT_WITH_USER,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 export function getConversations(id) {
   return async function (dispatch) {
     try {
