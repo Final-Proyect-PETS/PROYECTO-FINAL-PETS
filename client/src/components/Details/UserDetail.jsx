@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import { getUserDetail, clearState, getPetDetail } from "../../redux/Actions";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { getUserDetail, clearState, getPetDetail, chatWithUser } from "../../redux/Actions";
 import NavBar from "../NavBar/NavBar";
 import OwnedPet from "./OwnedPet";
 import Loader from "./../Loaders/Loader";
@@ -11,6 +11,7 @@ import mapboxgl from "mapbox-gl";
 export default function UserDetail() {
   let { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(clearState());
@@ -36,6 +37,12 @@ export default function UserDetail() {
         projection: "globe", // display the map as a 3D globe
       });
     }
+  }
+
+  function chat () {
+    dispatch(chatWithUser({senderId: loggedUser._id, receiverId: userDetail._id})).then(e => {
+      navigate("/chat")
+    })
   }
 
   mapboxgl.accessToken =
@@ -75,6 +82,12 @@ export default function UserDetail() {
                 </h3>
 
                 <h3 className="text-2xl ">{userDetail.about}</h3>
+                <div>
+                <button onClick={() => chat()} className="py-2 mt-5 ml-5 px-4 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                CHATEAR CON ESTE USUARIO
+                </button>
+                </div>
+                <br/>
                 <div>
                   {loggedUser._id === userDetail._id ? (
                     <div className="flex">

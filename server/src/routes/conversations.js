@@ -5,15 +5,27 @@ const verifyToken = require("../utils/middlewares/validateToken.js");
 const router = Router();
 
 router.post("/conversations", verifyToken, async (req, res, next) => {
-    const newConversation = new Conversation({
-        members: [req.body.senderId, req.body.receiverId]
-    })
 
-    try {
-        const savedConversation = await newConversation.save();
-        res.status(200).json(savedConversation)
-    } catch (error) {
-        next(error)
+    let existentConversation = await Conversation.findOne({members: [req.body.senderId, req.body.receiverId]})
+
+    if(!existentConversation){
+        try {
+            const newConversation = new Conversation({
+                members: [req.body.senderId, req.body.receiverId]
+            })
+            const savedConversation = await newConversation.save();
+            res.status(200).json(savedConversation)    
+        } catch (error) {
+           console.log(error) 
+        }
+    }
+    else {
+        try {
+            res.status(400).send("conversation already exists")
+        }
+        catch (error) {
+            next(error)
+        }
     }
 })
 
