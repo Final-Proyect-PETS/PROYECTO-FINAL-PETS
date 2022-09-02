@@ -76,7 +76,7 @@ export default function NavBar() {
   let notiSlice = notis.flat().reverse().slice(0, 5);
 
   let bell = notis?.flat().filter((noti) => noti?.viewState === false);
-  console.log(notis, "noti");
+ 
   return (
     <Navbar fluid={false} rounded={false} class="text-white bg-yellow-500 p-3">
       <Link to="/home">

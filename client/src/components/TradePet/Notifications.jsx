@@ -15,7 +15,7 @@ export default function Notifications() {
       user: allUsers?.filter((a) => a._id === e.interestedUser)[0],
       pet: allPets?.filter((a) => a._id === e.petId)[0],
       viewState: e.viewState,
-      esIntrest:true
+      esIntrest: true,
     };
   });
 
@@ -24,27 +24,33 @@ export default function Notifications() {
       user: allUsers?.filter((a) => a._id === e.userId)[0],
       pet: allPets?.filter((a) => a._id === e.petId)[0],
       viewState: e.support,
-      esLike: true
+      esLike: true,
     };
   });
 
-  const notis = [interest, like];
-  const notisFlat = notis.flat().sort(()=> { return Math.random() - 0.5 });
-  
+  let notis = [interest, like];
+  let notisFlat = notis.flat().sort(() => {
+    return Math.random() - 0.5;
+  });
+
+  let vistas = notisFlat?.filter((noti) => noti?.viewState === true);
+  let noVistas = notisFlat?.filter((noti) => noti?.viewState === false);
 
   return (
     <div id="notification-component" className="w-full h-full ">
       <NavBar />
       <div className="flex flex-col items-center">
-        {notisFlat.length > 1 ? (
+        {noVistas?.length === 1 ? (
           <span className="font-semibold text-2xl text-black py-5">
-            Mis Notificaciones
+         {`Tienes ${noVistas?.length} notificacion sin leer`}
           </span>
-        ) : (
+        ) :noVistas?.length > 1 ?  (
           <span className="font-semibold text-2xl text-black py-5">
-            Sin Notificaciones
+            {`Tienes ${noVistas?.length} notificaciones sin leer`}
           </span>
-        )}
+        ):<span className="font-semibold text-2xl text-black py-5">
+        {`No tienes notificaciones sin leer! te gustaria publicar una foto nueva para que vean otros usuarios?`}
+      </span>}
       </div>
 
       <div className="flex flex-col items-center">
@@ -69,25 +75,27 @@ export default function Notifications() {
                     </h3>
                   </Link>
                 </div>
-              ) :   iUser?.viewState === false && iUser?.esLike === true ? (
+              ) : iUser?.viewState === false && iUser?.esLike === true ? (
                 <div className="flex w-full p-8 my-2 items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 ">
-                <div className="flex justify-between p-3 items-center">
-                  <div className="flex items-center">
-                    <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
-                      <img src={iUser?.user?.image} alt="profilepic" />
+                  <div className="flex justify-between p-3 items-center">
+                    <div className="flex items-center">
+                      <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
+                        <img src={iUser?.user?.image} alt="profilepic" />
+                      </div>
                     </div>
                   </div>
+                  <div className="font-normal text-gray-700 dark:text-gray-400">
+                    {`🤎 ${iUser?.user?.first_name} ${iUser?.user?.last_name} le ha gustado ${iUser?.pet?.name}`}
+                  </div>
+                  <Link to={`/users/${iUser?.user?._id}`} className="px-5">
+                    <h3 className="font-semibold text-yellow-500 hover:text-yellow-800">
+                      Ver Perfil
+                    </h3>
+                  </Link>
                 </div>
-                <div className="font-normal text-gray-700 dark:text-gray-400">
-                  {`🤎 ${iUser?.user?.first_name} ${iUser?.user?.last_name} le ha gustado ${iUser?.pet?.name}`}
-                </div>
-                <Link to={`/users/${iUser?.user?._id}`} className="px-5">
-                  <h3 className="font-semibold text-yellow-500 hover:text-yellow-800">
-                    Ver Perfil
-                  </h3>
-                </Link>
-              </div>
-              ):<></>
+              ) : (
+                <></>
+              )
             )
           ) : (
             <span className="text-2xl text-white mt-3"></span>
