@@ -456,3 +456,21 @@ export function viewing(payload) {
     }
   };
 }
+
+export function likePet(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(
+        `http://localhost:3001/home/likepets`,
+        payload
+      );
+      dispatch({
+        type: actions.LIKE_PET,
+        payload: json.data,
+      });
+      return "OK";
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}

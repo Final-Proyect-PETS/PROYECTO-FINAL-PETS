@@ -1,7 +1,11 @@
 const { Router } = require("express");
 const User = require("../models/users");
 const Pets = require("../models/pets");
-const { patchPet, patchUser } = require("../utils/controllers/patch.js");
+const {
+  patchPet,
+  patchUser,
+  likePet,
+} = require("../utils/controllers/patch.js");
 const { send_mail } = require("../routes/send-email");
 const verifyToken = require("../utils/middlewares/validateToken");
 const nodemailer = require("nodemailer");
@@ -27,6 +31,7 @@ router.patch("/pets/:id", verifyToken, async (req, res, next) => {
     isAdopted,
     deleted,
     interestedUsers,
+    likes,
   } = req.body;
   try {
     const petPatch = await patchPet(
@@ -46,7 +51,8 @@ router.patch("/pets/:id", verifyToken, async (req, res, next) => {
       gender,
       isAdopted,
       deleted,
-      interestedUsers
+      interestedUsers,
+      likes
     );
 
     res.status(201).send(petPatch);
@@ -72,7 +78,7 @@ router.patch("/users/:id", verifyToken, async (req, res, next) => {
     interestedUsers,
     place_longitude,
     place_latitude,
-    blogmessage
+    blogmessage,
   } = req.body;
   console.log(req.body);
   try {
@@ -251,7 +257,6 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
 });
 
 router.patch("/viewing", async (req, res, next) => {
-
   const { id, interestedId, petId } = req.body;
   const { petId2, userId, ownerId } = req.body;
 
@@ -268,15 +273,19 @@ router.patch("/viewing", async (req, res, next) => {
     await User.updateOne({ _id: id }, { $set: { interestedUsers: el_resto } });
   }
   if (ownerId) {
-    const owner = await User.findOne({ _id: ownerId })
-    let cambia = owner.likesPets.filter(e => e.likesPets === userId && e.petId2 === petId2)
-    cambia[0].support = true
-    let resto = owner.likesPets.filter(e => e.likesPets !== userId || e.petId2 !== petId2).concat(cambia)
-    await User.updateOne({ _id: ownerId }, { $set: { likesPets: resto } })
+    const owner = await User.findOne({ _id: ownerId });
+    let cambia = owner.likesPets.filter(
+      (e) => e.likesPets === userId && e.petId2 === petId2
+    );
+    cambia[0].support = true;
+    let resto = owner.likesPets
+      .filter((e) => e.likesPets !== userId || e.petId2 !== petId2)
+      .concat(cambia);
+    await User.updateOne({ _id: ownerId }, { $set: { likesPets: resto } });
   }
   res.status(200).send("notification viewed");
 });
-
+//
 router.patch("/likes", verifyToken, async (req, res, next) => {
   try {
     const { petId, userId, ownerId } = req.body;
@@ -294,9 +303,25 @@ router.patch("/likes", verifyToken, async (req, res, next) => {
         { _id: ownerId },
         { $push: { likesPets: petAndUserIds } }
       );
-      let user2 = await User.findOne({ _id: ownerId });
-      await Pets.updateOne({ _id: petId }, { $push: { likes: petAndUserIds } });
+      // let user2 = await User.findOne({ _id: ownerId });
+      // await Pets.updateOne({ _id: petId }, { $push: { likes: petAndUserIds } });
     }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.patch("/likepets", verifyToken, async (req, res, next) => {
+  try {
+    const { id, likeName } = req.body;
+    const petPatch = await likePet(id); //likename=FLORE   pets.likes=[likename1,florre]
+
+    if (!petPatch.likes.includes(likeName)) {
+      await petPatch.update({ $push: { likes: likeName } });
+    } else await petPatch.update({ $pull: { likes: likeName } });
+
+    console.log(petPatch.likes);
+    res.status(201).send(petPatch);
   } catch (error) {
     next(error);
   }
