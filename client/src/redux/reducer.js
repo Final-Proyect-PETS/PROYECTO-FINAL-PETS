@@ -186,6 +186,14 @@ export default function rootReducer(state = initialState, { type, payload }) {
       return {
         ...state,
       };
+    case actions.REPORT_PET:
+      return {
+        ...state,
+      };
+    case actions.REPORT_USER:
+      return {
+        ...state,
+      };
     default:
       return state;
   }

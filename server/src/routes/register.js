@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const { register } = require("../utils/controllers/register.js");
 const nodemailer = require("nodemailer");
-const { NMAILER_PASSWORD } = process.env;
+const { NMAILER_PASSWORD2 } = process.env;
 
 const router = Router();
 
@@ -20,6 +20,8 @@ router.post("/", async (req, res, next) => {
     place_latitude,
     donations,
     interestedUsers,
+    reported_pets,
+    reported_users,
   } = req.body;
   try {
     const postUser = await register(
@@ -35,7 +37,9 @@ router.post("/", async (req, res, next) => {
       place_longitude,
       place_latitude,
       donations,
-      interestedUsers
+      interestedUsers,
+      reported_pets,
+      reported_users
     );
 
     let transporter = nodemailer.createTransport({
@@ -44,7 +48,7 @@ router.post("/", async (req, res, next) => {
       secure: false,
       auth: {
         user: "happytailshp@gmail.com",
-        pass: `${NMAILER_PASSWORD}`,
+        pass: `${NMAILER_PASSWORD2}`,
       },
       tls: {
         rejectUnauthorized: false,
@@ -62,7 +66,7 @@ router.post("/", async (req, res, next) => {
     let info = await transporter.sendMail({
       from: "'HappyTails'<happytailshp@gmail.com>",
       to: email,
-      subject: "Contacto de adopción",
+      subject: "Bienvenido",
       html: contentHTML,
     });
 

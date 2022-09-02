@@ -5,6 +5,9 @@ const {
   patchPet,
   patchUser,
   likePet,
+  findPet,
+  findUser,
+  getAdmins,
 } = require("../utils/controllers/patch.js");
 const { send_mail } = require("../routes/send-email");
 const verifyToken = require("../utils/middlewares/validateToken");
@@ -128,7 +131,7 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
     console.log(newOwner.email);
     try {
       const transporter = nodemailer.createTransport({
-        service: "gmail",
+        service: "smtp.gmail.com",
         auth: {
           user: "happytailshp@gmail.com",
           pass: `${NMAILER_PASSWORD2}`,
@@ -153,10 +156,10 @@ router.patch("/adopt", verifyToken, async (req, res, next) => {
     }
     try {
       const transporter2 = nodemailer.createTransport({
-        service: "gmail",
+        service: "smtp.gmail.com",
         auth: {
           user: "happytailshp@gmail.com",
-          pass: `bmkymaiygycduxmw`,
+          pass: `${NMAILER_PASSWORD2}`,
         },
       });
       const mailOptions2 = {
@@ -243,7 +246,7 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
                               <p>${message}</p>
                               Atentamente HT`;
 
-      let info = await transporter.sendMail({
+      await transporter.sendMail({
         from: "'HappyTails'<happytailshp@gmail.com>",
         to: owner_email,
         subject: "Contacto de adopción",
@@ -258,7 +261,6 @@ router.patch("/interestedUsers", verifyToken, async (req, res, next) => {
 
 router.patch("/viewing", async (req, res, next) => {
   const { id, interestedId, petId } = req.body;
-  const { petId2, userId, ownerId } = req.body;
 
   if (interestedId) {
     const user = await User.findOne({ _id: id });
@@ -272,20 +274,36 @@ router.patch("/viewing", async (req, res, next) => {
 
     await User.updateOne({ _id: id }, { $set: { interestedUsers: el_resto } });
   }
-  if (ownerId) {
-    const owner = await User.findOne({ _id: ownerId });
-    let cambia = owner.likesPets.filter(
-      (e) => e.likesPets === userId && e.petId2 === petId2
-    );
-    cambia[0].support = true;
-    let resto = owner.likesPets
-      .filter((e) => e.likesPets !== userId || e.petId2 !== petId2)
-      .concat(cambia);
-    await User.updateOne({ _id: ownerId }, { $set: { likesPets: resto } });
-  }
+  // if (ownerId) {
+  //   const owner = await User.findOne({ _id: ownerId });
+  //   let cambia = owner.likesPets.filter(
+  //     (e) => e.likesPets === userId && e.petId2 === petId2
+  //   );
+  //   cambia[0].support = true;
+  //   let resto = owner.likesPets
+  //     .filter((e) => e.likesPets !== userId || e.petId2 !== petId2)
+  //     .concat(cambia);
+  //   await User.updateOne({ _id: ownerId }, { $set: { likesPets: resto } });
+  // }
   res.status(200).send("notification viewed");
 });
 //
+router.patch("/viewinglike", async (req, res, next) => {
+  const { petId2, userId, ownerId } = req.body;
+  if (ownerId) {
+    const owner = await User.findOne({ _id: ownerId });
+    let cambia = owner.likesPets.filter(
+      (e) => e.userId === userId && e.petId === petId2
+    );
+    cambia[0].support = true;
+    let resto = owner.likesPets
+      .filter((e) => e.userId !== userId || e.petId !== petId2)
+      .concat(cambia);
+    await User.updateOne({ _id: ownerId }, { $set: { likesPets: resto } });
+  }
+  res.status(200).send("like notification viewed");
+});
+
 router.patch("/likes", verifyToken, async (req, res, next) => {
   try {
     const { petId, userId, ownerId } = req.body;
@@ -306,6 +324,62 @@ router.patch("/likes", verifyToken, async (req, res, next) => {
       // let user2 = await User.findOne({ _id: ownerId });
       // await Pets.updateOne({ _id: petId }, { $push: { likes: petAndUserIds } });
     }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.patch("/reportedPets", async (req, res, next) => {
+  const { informer, reportedPet, reason } = req.body;
+  try {
+    const onePet = await findPet(reportedPet);
+    const oneUser = await findUser(informer);
+    const admins = await getAdmins();
+
+    if (admins.length) {
+      admins.map(async (p) => {
+        if (onePet && oneUser) {
+          await p.updateOne({
+            $push: {
+              reported_pets: {
+                informerId: informer,
+                reportedPetId: reportedPet,
+                reason: reason,
+              },
+            },
+          });
+        } else res.status(401).send("Hubo un error, intente mas tarde");
+      });
+      res.status(201).send("OK");
+    } else res.status(401).send("El sitio no tiene administradores");
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.patch("/reportedUsers", async (req, res, next) => {
+  const { informer, reportedUser, reason } = req.body;
+  try {
+    const oneInformer = await findUser(informer);
+    const oneReportedUser = await findUser(informer);
+    const admins = await getAdmins();
+
+    if (admins.length) {
+      admins.map(async (p) => {
+        if (oneInformer && oneReportedUser) {
+          await p.updateOne({
+            $push: {
+              reported_users: {
+                informerId: informer,
+                reportedUserId: reportedUser,
+                reason: reason,
+              },
+            },
+          });
+        } else res.status(401).send("Hubo un error, intente mas tarde");
+      });
+      res.status(201).send("OK");
+    } else res.status(401).send("El sitio no tiene administradores");
   } catch (error) {
     next(error);
   }

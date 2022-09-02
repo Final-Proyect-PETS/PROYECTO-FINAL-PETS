@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { patchPet } from "../../redux/Actions";
+import { getPetDetail, patchPet } from "../../redux/Actions";
 import { useNavigate } from "react-router-dom";
 import { notificationSwal } from "../../utils/notificationSwal.jsx";
 import Swal from "sweetalert2";
@@ -24,7 +24,7 @@ export default function OwnedPet({
   const loggedUser = useSelector((state) => state.userProfile);
   const userDetail = useSelector((state) => state.userDetail);
 
-  //---------------------------------------------------handler Cambiar Botones-----------------------------------------
+  //---------------------------------------------------handler Cambiar Botones----------------------------------------------
   const [adopt, setAdopt] = useState({
     id: idPet,
     name: namePet,
@@ -112,6 +112,11 @@ export default function OwnedPet({
         .then(() => navigate(`/home`, { replace: true }));
     } //oponer sweet
   }
+  //editar handler-------------------------------------------------------------
+  function fillUpdateHandler(e) {
+    e.preventDefault();
+    dispatch(getPetDetail(idPet)) .then(() => navigate(`/updatepet`, { replace: true }));
+  }
 
   return (
     <div className="flex items-center py-4 px-5 ">
@@ -119,15 +124,24 @@ export default function OwnedPet({
         <div className=" border-yellow-900 border-r-2  flex justify-between  border items-center rounded bg-gray-300">
           <div className=" column items-center mb-4 mr-4 ml-4 ">
             {loggedUser._id === userDetail._id ? (
-              <Tooltip content="Borrar mascota" placement="bottom">
-                {" "}
-                <button
-                  onClick={(e) => deleteHandler(e)}
-                  className="bg-red-600 mt-4 hover:bg-red-700 text-white font-bold py- px-1 border border-yellow-700 rounded"
-                >
-                  ✖️
-                </button>
-              </Tooltip>
+              <div className="flex justify-center p-1">
+                <Tooltip content="Borrar mascota" placement="bottom">
+                  <button
+                    onClick={(e) => deleteHandler(e)}
+                    className="bg-red-600 m-1 hover:bg-red-700 text-white font-bold py- px-1 border border-yellow-700 rounded"
+                  >
+                    ✖️
+                  </button>
+                </Tooltip>
+                <Tooltip content="Editar mascota" placement="top">
+                  <button
+                    onClick={(e) => fillUpdateHandler(e)}
+                    className="bg-yellow-600 m-1 hover:bg-yellow-700 text-white font-bold py- px-1 border border-yellow-700 rounded"
+                  >
+                    📝
+                  </button>
+                </Tooltip>
+              </div>
             ) : (
               <></>
             )}

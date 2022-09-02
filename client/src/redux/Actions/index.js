@@ -309,7 +309,7 @@ export function patchInterestedUsers(payload) {
         type: actions.INTERESTED_USERS,
         payload: json.data,
       });
-      return "OK";
+      return json.data;
     } catch (error) {
       console.log(error);
     }
@@ -368,7 +368,10 @@ export function notViewed(payload) {
 export function chatWithUser(losdosid) {
   return async function (dispatch) {
     try {
-      let json = await axios.post("http://localhost:3001/home/conversations/", losdosid);
+      let json = await axios.post(
+        "http://localhost:3001/home/conversations/",
+        losdosid
+      );
       return dispatch({
         type: actions.CHAT_WITH_USER,
         payload: json.data,
@@ -457,6 +460,23 @@ export function viewing(payload) {
   };
 }
 
+export function viewingLike(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(
+        `http://localhost:3001/home/viewinglike`,
+        payload
+      );
+      return dispatch({
+        type: actions.VIEWING_LIKE_NOTIFICATION,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 export function likePet(payload) {
   return async function (dispatch) {
     try {
@@ -466,6 +486,42 @@ export function likePet(payload) {
       );
       dispatch({
         type: actions.LIKE_PET,
+        payload: json.data,
+      });
+      return "OK";
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function reportPet(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(
+        `http://localhost:3001/home/reportedPets`,
+        payload
+      );
+      dispatch({
+        type: actions.REPORT_PET,
+        payload: json.data,
+      });
+      return "OK";
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function reportUser(payload) {
+  return async function (dispatch) {
+    try {
+      let json = await axios.patch(
+        `http://localhost:3001/home/reportedUsers`,
+        payload
+      );
+      dispatch({
+        type: actions.REPORT_USER,
         payload: json.data,
       });
       return "OK";
