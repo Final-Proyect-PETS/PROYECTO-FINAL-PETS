@@ -1,0 +1,17 @@
+#reportPet {
+  background-image: url("../../../public/images/Background2.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+}
+
+#reportUser {
+  background-image: url("../../../public/images/Background2.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+}
