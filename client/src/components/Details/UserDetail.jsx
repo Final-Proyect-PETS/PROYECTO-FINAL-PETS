@@ -82,11 +82,15 @@ export default function UserDetail() {
                 </h3>
 
                 <h3 className="text-2xl ">{userDetail.about}</h3>
+                {loggedUser._id !== userDetail._id ? (
                 <div>
                 <button onClick={() => chat()} className="py-2 mt-5 ml-5 px-4 bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white w-30 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
                 CHATEAR CON ESTE USUARIO
                 </button>
                 </div>
+                ) : (
+                  <></>
+                )}
                 <br/>
                 <div>
                   {loggedUser._id === userDetail._id ? (

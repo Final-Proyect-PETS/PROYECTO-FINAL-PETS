@@ -7,8 +7,9 @@ const router = Router();
 router.post("/conversations", verifyToken, async (req, res, next) => {
 
     let existentConversation = await Conversation.findOne({members: [req.body.senderId, req.body.receiverId]})
+    let existentConversation2 = await Conversation.findOne({members: [req.body.receiverId, req.body.senderId]})
 
-    if(!existentConversation){
+    if(!existentConversation && !existentConversation2){
         try {
             const newConversation = new Conversation({
                 members: [req.body.senderId, req.body.receiverId]
