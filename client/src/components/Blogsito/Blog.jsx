@@ -2,7 +2,12 @@ import React from "react";
 import NavBar from "../NavBar/NavBar";
 import "./Blog.css";
 import { useSelector } from "react-redux";
-import { getAllUsers, getAllPets, getUserProfile, patchUsuer } from "../../redux/Actions";
+import {
+  getAllUsers,
+  getAllPets,
+  getUserProfile,
+  patchUsuer,
+} from "../../redux/Actions";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -25,9 +30,10 @@ import goldenblackgif from "../../assets/images/goldenblackgif.gif";
 import diamantepaw from "../../assets/images/diamantepaw.gif";
 import amarillobaño from "../../assets/images/amarillobaño.png";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Blog() {
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const loggedUser = useSelector((state) => state.userProfile);
   const allUsers = useSelector((state) => state.users);
@@ -38,9 +44,14 @@ export default function Blog() {
   const [input, setInput] = useState();
   const id = localStorage.getItem("id");
 
+  console.log(donator, "donator");
+
+let donations =
+    
+
   useEffect(() => {
-    dispatch(getAllUsers())
-    dispatch(getAllPets())
+    dispatch(getAllUsers());
+    dispatch(getAllPets());
     dispatch(getUserProfile(id));
   }, [dispatch, id]);
 
@@ -48,12 +59,13 @@ export default function Blog() {
     setInput(e.target.value);
   }
   function onSubmitHandler(e) {
-    e.preventDefault();
+    // e.preventDefault();
     let payload = {
       id: loggedUser._id,
       blogmessage: input,
     };
-    dispatch(patchUsuer(payload));
+    console.log("input", input);
+    dispatch(patchUsuer(payload)).then(navigate("/blog", { replace: true }));
   }
 
   return (
