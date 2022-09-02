@@ -27,7 +27,7 @@ export default function Home() {
     ///FUNCION DE CHRIS
   }
   return (
-    <section onClick={e => handley(e)}>
+    <section onClick={(e) => handley(e)}>
       <section className="fixed w-screen">
         <NavBar />
       </section>
