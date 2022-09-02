@@ -153,93 +153,93 @@ export default function Blog() {
           {/* CARD DE INPUT MENSAJE */}
 
           <div className="flex">
-          <div className=" max-w-sm m-2">
-            <Card>
-              <form
-                onSubmit={(e) => onSubmitHandler(e)}
-                className="flex flex-col gap-4"
-              >
-                <div>
-                  <div className="mb-2 block">
-                    <p className="font-normal text-black dark:text-gray-100">
-                      Compartenos tu experiencia aquí para que otros usuarios se
-                      animen a dejar su huella.
-                    </p>
-                  </div>
-                </div>
-                <div>
-                  <div className="mb-2 block">
-                    <Label htmlFor="area" value="Mensaje:" />
-                  </div>
-                  <input
-                    id="area"
-                    type="text"
-                    onChange={(e) => handleChange(e)}
-                    required={true}
-                    sizing="lg"
-                  />
-                </div>
-
-                <Button
-                  class="flex justify-center bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
-                  type="submit"
+            <div className=" max-w-sm m-2">
+              <Card>
+                <form
+                  onSubmit={(e) => onSubmitHandler(e)}
+                  className="flex flex-col gap-4"
                 >
-                  Postear
-                </Button>
-              </form>
-            </Card>
-          </div>
-          <div className="max-w-sm  p-3 mb-2 mt-2">
-            <Card class="bg-gray-100 rounded">
-              <div className="mb-1 flex flex-end items-center  justify-between">
-                <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
-                  Comentarios de la comunidad 💌
-                </h5>
+                  <div>
+                    <div className="mb-2 block">
+                      <p className="font-normal text-black dark:text-gray-100">
+                        Compartenos tu experiencia aquí para que otros usuarios
+                        se animen a dejar su huella.
+                      </p>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="mb-2 block">
+                      <Label htmlFor="area" value="Mensaje:" />
+                    </div>
+                    <input
+                      id="area"
+                      type="text"
+                      onChange={(e) => handleChange(e)}
+                      required={true}
+                      sizing="lg"
+                    />
+                  </div>
 
-                <Link
-                  to={`/home`}
-                  className="text-sm font-medium text-yellow-600 hover:underline dark:text-yellow-500"
-                >
-                  Ver Todos
-                </Link>
-              </div>
-              <div className="flow-root">
-                <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-                  {blogger?.map((user) => (
-                    <li className="py-3 sm:py-4">
-                      <div className="flex items-center space-x-4">
-                        <div className="shrink-0">
-                          <Link
-                            to={`/users/${user._id}`}
-                            className="group flex items-center rounded-full"
-                          >
-                            <img
-                              className="h-8 w-8 rounded-full"
-                              src={user.image}
-                              alt="image"
-                            />
-                          </Link>
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <Link
-                            to={`/users/${user._id}`}
-                            className="group flex items-center rounded-full"
-                          >
-                            <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                              {user.username}
+                  <Button
+                    class="flex justify-center bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-900 focus:ring-offset-yellow-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+                    type="submit"
+                  >
+                    Postear
+                  </Button>
+                </form>
+              </Card>
+            </div>
+            <div className="max-w-sm  p-3 mb-2 mt-2">
+              <Card class="bg-gray-100 rounded">
+                <div className="mb-1 flex flex-end items-center  justify-between">
+                  <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                    Comentarios de la comunidad 💌
+                  </h5>
+
+                  <Link
+                    to={`/home`}
+                    className="text-sm font-medium text-yellow-600 hover:underline dark:text-yellow-500"
+                  >
+                    Ver Todos
+                  </Link>
+                </div>
+                <div className="flow-root">
+                  <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+                    {blogger?.map((user) => (
+                      <li className="py-3 sm:py-4">
+                        <div className="flex items-center space-x-4">
+                          <div className="shrink-0">
+                            <Link
+                              to={`/users/${user._id}`}
+                              className="group flex items-center rounded-full"
+                            >
+                              <img
+                                className="h-8 w-8 rounded-full"
+                                src={user.image}
+                                alt="image"
+                              />
+                            </Link>
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <Link
+                              to={`/users/${user._id}`}
+                              className="group flex items-center rounded-full"
+                            >
+                              <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                                {user.username}
+                              </p>
+                            </Link>
+                            <p className="truncate text-sm text-gray-500 dark:text-gray-400">
+                              {user.blogmessage}
                             </p>
-                          </Link>
-                          <p className="truncate text-sm text-gray-500 dark:text-gray-400">
-                            {user.blogmessage}
-                          </p>
+                          </div>
                         </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Card>
-          </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Card>
+            </div>
           </div>
           {/* CARRUSEL YA ADOPTADOS */}
           <div className=" flex m-2 h-72 w-1/3 bg-yellow-900 rounded opacity-90">
