@@ -13,7 +13,7 @@ const initialState = {
   notification: [], //campanita
   conversations: [],
   messages: [],
-  notViewedNotification: [],//no vistas
+  notViewedNotification: [], //no vistas
   viewedNotification: [], //vistas
 };
 
@@ -53,21 +53,21 @@ export default function rootReducer(state = initialState, { type, payload }) {
     case actions.GET_CONVERSATIONS:
       return {
         ...state,
-        conversations: payload
-      }
+        conversations: payload,
+      };
     case actions.GET_MESSAGES:
       return {
         ...state,
-        messages: payload
-      }
+        messages: payload,
+      };
     case actions.SEND_MESSAGE:
       return {
-        ...state
-      }
+        ...state,
+      };
     case actions.CHAT_WITH_USER:
       return {
-        ...state
-      }
+        ...state,
+      };
 
     //GET DETAIL
     case actions.GET_USER_DETAIL:
@@ -157,32 +157,35 @@ export default function rootReducer(state = initialState, { type, payload }) {
         ...state,
         userDetail: payload,
       };
-      case actions.NOT_VIEWED_NOTIFICATION:
-        return {
-          ...state,
-          notViewedNotification: payload
-        };
+    case actions.NOT_VIEWED_NOTIFICATION:
+      return {
+        ...state,
+        notViewedNotification: payload,
+      };
     case actions.VIEWED_NOTIFICATION:
       return {
         ...state,
-        viewedNotification:payload
+        viewedNotification: payload,
       };
 
     case actions.VIEWING_NOTIFICATION:
-      return{
-        ...state
-      }
+      return {
+        ...state,
+      };
 
     case actions.FORGOT_PASSWORD:
       return {
-        ...state
+        ...state,
       };
     case actions.RESET_PASSWORD:
       return {
-        ...state
+        ...state,
       };
 
-
+    case actions.LIKE_PET:
+      return {
+        ...state,
+      };
     default:
       return state;
   }

@@ -46,7 +46,7 @@ export default function Blog() {
 
   console.log(donator, "donator");
 
-let donations =
+  // let donations =
     
 
   useEffect(() => {
