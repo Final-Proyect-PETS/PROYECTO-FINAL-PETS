@@ -124,7 +124,11 @@ export default function Card({
                   <Tooltip
                     trigger="hover"
                     animation="duration-1000"
-                    content={`A   ${likes.slice(0, 3)} les gusta esto`}
+                    content={
+                      likes?.length > 1
+                        ? `A   ${likes.slice(0,2).reverse()} y ${likes.length} mas les gusta esto...`
+                        :likes?.length ===1? `A ${likes[0]} le gusta esto`:"Dame me gusta"
+                    }
                     placement="bottom"
                   >
                     {" "}
