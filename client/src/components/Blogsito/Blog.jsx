@@ -44,7 +44,7 @@ export default function Blog() {
   const [input, setInput] = useState();
   const id = localStorage.getItem("id");
 
-  console.log(donator, "donator");
+  console.log(donator);
 
   // let donations =
     
