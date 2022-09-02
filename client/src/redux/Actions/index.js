@@ -33,7 +33,7 @@ export function getAllPets() {
 export function getUserDetail(id) {
   return async (dispatch) => {
     return await axios
-      .get(`https://happytails2.herokuapp.com/users/${id}`)
+      .get(`https://happytails2.herokuapp.com/home/users/${id}`)
       .then((json) =>
         dispatch({ type: actions.GET_USER_DETAIL, payload: json.data })
       )
