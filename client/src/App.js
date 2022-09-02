@@ -29,6 +29,7 @@ import Chat from "./components/Chat/Chat";
 import UserDonations from "./components/Donations/UsersDonations";
 import Blog from "./components/Blogsito/Blog.jsx";
 import MissingDataRequired from "./components/MissingDataRequired";
+import AllUsersDon from "./components/AllUserDon/AllUserDon";
 import { getUserProfile, getAllUsers, getAllPets } from "./redux/Actions/index";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -77,6 +78,7 @@ function App() {
           <Route path={"*"} element={<Error404 />} />
           <Route path={"/mydonations/:id"} element={<UserDonations />} />
           <Route path={"/blog"} element={<Blog />} />
+          <Route path={"/AllUsersDon"} element={<AllUsersDon />} />
         </Route>
         <Route element={<PrivateAdmin />}>
         <Route path={"/admin"} element={<AdminView />} />

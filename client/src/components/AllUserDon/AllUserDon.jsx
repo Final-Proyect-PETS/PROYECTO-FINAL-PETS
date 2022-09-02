@@ -4,59 +4,50 @@ import { Link } from "react-router-dom";
 // import diamantepaw from "../../assets/images/diamantepaw.png";
 // import goldenpaw from "../../assets/images/goldenpaw.png";
 import goldenblack from "../../assets/images/goldenblackgif.gif";
+import { useSelector } from "react-redux";
 import { React } from "react";
 
-export default function UserCard({
-  _id,
-  first_name,
-  last_name,
-  username,
-  image,
-  email,
-  about,
-  telephone,
-  pets,
-  place,
-  donations,
-  interestedUsers,
-  
-}) {
-  const pettit = pets;
+
+
+export default function AllUsersDon() {
+  const getUsers = useSelector((state) => state.users);
+  const donados = getUsers.filter( (e) => e.donations.length > 0)
 
   return (
-    <div
-      id={_id}
+    donados?.map(e => (
+      <div
+      id={e._id}
       className="rounded overflow-hidden border border-[#B99782] w-full bg-white my-12 md:mx-0 lg:mx-0"
     >
-      <Link to={"/users/" + _id}>
+      <Link to={"/users/" + e._id}>
         <div className="w-full flex justify-between p-3 border-b items-center bg-yellow-500">
           <div className="flex items-center">
             <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
-              <img src={image} alt="profilepic" />
+              <img src={e.image} alt="profilepic" />
             </div>
             <span className="ml-2 font-bold text-xs text-white">
-              {`${first_name} ${last_name} - `}
+              {`${e.first_name} ${e.last_name} - `}
             </span>
             <span className="ml-2 font-bold text-xs text-white">
-              ({username})
+              ({e.username})
             </span>
           </div>
           <div className="flex items-center">
             <div className="text-sm flex">
               <img src={ubicacion} alt="ubicacion" width="16px" />
               <span className="font-medium text-xs mx-3">
-                {place?.length <= 25 ? place : `${place?.slice(0, 25)}...`}
+                {e.place?.length <= 25 ? e.place : `${e.place?.slice(0, 25)}...`}
               </span>
             </div>
           </div>
-          {donations?.length === 1 ? (
+          {e.donations?.length === 1 ? (
             <div className="rounded-full h-14 w-14 flex items-center justify-center overflow-hidden mr-2">
               <img className="rounded-full" src={goldenblack} alt="" />
             </div>
           ) : (
             false
           )}
-          {donations?.length === 2 ? (
+          {e.donations?.length === 2 ? (
             <div className="rounded-full h-14 w-14 flex items-center justify-center overflow-hidden mr-2">
               <img
                 className="rounded-full h-12 w-1/2"
@@ -67,7 +58,7 @@ export default function UserCard({
           ) : (
             false
           )}
-          {donations?.length >= 3 ? (
+          {e.donations?.length >= 3 ? (
             <div className="rounded-full h-14 w-14 flex items-center justify-center overflow-hidden mr-2">
               <img className="rounded-full" src={goldenblack} alt="" />
             </div>
@@ -79,7 +70,7 @@ export default function UserCard({
 
       <div className=" py-3 flex">
         <img
-          src={image}
+          src={e.image}
           className="border-solid border-2 border-[#B99782]  w-96 bg-cover rounded"
           alt="ProfilePicture"
         />
@@ -117,7 +108,7 @@ export default function UserCard({
           ) : (
             false
           )} */}
-          {pettit?.length ? (
+          {e.pettit?.length ? (
             <div className="flex">
               <h3 className="text-2xl font-normal text-white">Mis mascotas</h3>
             </div>
@@ -128,8 +119,8 @@ export default function UserCard({
           )}
           <div className="text-sm flex">
             <div className="grid grid-cols-2 place-content-center">
-              {pettit?.length
-                ? pettit?.map((pet) => (
+              {e.pettit?.length
+                ? e.pettit?.map((pet) => (
                     <div key={pet._id} className="m-1">
                       <Link key={pet._id} to={`/pet/${pet._id}`}>
                         <img
@@ -141,11 +132,13 @@ export default function UserCard({
                       </Link>
                     </div>
                   ))
-                : ""}
+                : ""}<div>Donado en total: ${e.donations.length > 0 ? e.donations.map((d) => d.donationAmount).reduce((prev, curr) => prev + curr) : 0}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    ))
+   
   );
 }

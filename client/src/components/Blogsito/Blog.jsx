@@ -340,7 +340,7 @@ export default function Blog() {
                   🔥Usuarios destacados
                 </h5>
                 <Link
-                  to="/home"
+                  to="/AllUsersDon"
                   className="text-sm font-medium text-yellow-600 hover:underline dark:text-yellow-500"
                 >
                   Ver Todos
