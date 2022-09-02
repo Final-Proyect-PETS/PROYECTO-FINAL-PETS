@@ -101,7 +101,7 @@ async function patchUser(
   }
 }
 
-const likePet = async (id, likes) => {
+const likePet = async (id) => {
   try {
     connection();
     const onePet = await Pets.findOne({ _id: id }).populate({
@@ -109,7 +109,7 @@ const likePet = async (id, likes) => {
       match: { deleted: false },
     });
 
-    await onePet.update({ $push: { likes: likes } });
+    // await onePet.update({ $push: { likes: likes } });
     return onePet;
   } catch (err) {
     console.error(err);

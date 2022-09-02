@@ -31,26 +31,36 @@ export default function Card({
   const dispatch = useDispatch();
   const loggedUser = useSelector((state) => state.userProfile);
   const allUsers = useSelector((state) => state.allUsers);
-
+  const [buttonLike, setButtonLike] = useState({
+    a: false,
+    number: likes?.length,
+  });
   function likeHandler(e) {
     e.preventDefault();
-    //
+
     let payload = {
       petId: idPet, //el likeado
       userId: loggedUser._id, //el que da like
       ownerId: idUser, //al que le llega el like
       // likesPets: likesPets, //array DESCOMMENTE SI SE ROMPE NORIFICACION
     };
+    if (buttonLike.a === false) {
+      setButtonLike({ a: true, number: buttonLike.number + 1 });
+    }
+    if (buttonLike.a === true) {
+      setButtonLike({ a: false, number: buttonLike.number - 1 });
+    }
     let nameLike = {
       id: idPet,
-      likes: loggedUser.username,
+      likeName: loggedUser.username,
     };
 
     dispatch(patchLikes(payload));
+
     dispatch(likePet(nameLike));
   }
   //hover quien te gusta ------ POSIBLE FALLO DE RENDIMIENTO-
-console.log(likes)
+  console.log(likes);
   //likes--hasta aca , casi te vas
   return (
     <>
@@ -107,16 +117,14 @@ console.log(likes)
               <div className="flex">
                 <h1 className="text-white font-bold text-2x1">
                   {/* aACA VA EL NUMERITO DEEEE LIKES */}
-                  {likes.length}
+                  {buttonLike.number}
                   {/* aACA VA EL NUMERITO DE LIKES */}
                 </h1>
                 <div className="rounded-full h-8 w-8 flex items-center justify-center overflow-hidden mr-2">
                   <Tooltip
                     trigger="hover"
                     animation="duration-1000"
-                    content={
-                      likes.length > 1 ? likes.map((like)=> <p>{like.like}</p>)  : <>sinlike</>
-                    }
+                    content={`A   ${likes.slice(0, 3)} les gusta esto`}
                     placement="bottom"
                   >
                     {" "}

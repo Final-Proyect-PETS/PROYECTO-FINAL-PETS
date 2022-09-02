@@ -303,8 +303,8 @@ router.patch("/likes", verifyToken, async (req, res, next) => {
         { _id: ownerId },
         { $push: { likesPets: petAndUserIds } }
       );
-      let user2 = await User.findOne({ _id: ownerId });
-      await Pets.updateOne({ _id: petId }, { $push: { likes: petAndUserIds } });
+      // let user2 = await User.findOne({ _id: ownerId });
+      // await Pets.updateOne({ _id: petId }, { $push: { likes: petAndUserIds } });
     }
   } catch (error) {
     next(error);
@@ -313,9 +313,14 @@ router.patch("/likes", verifyToken, async (req, res, next) => {
 
 router.patch("/likepets", verifyToken, async (req, res, next) => {
   try {
-    const { id, likes } = req.body;
-    const petPatch = await likePet(id, likes);
+    const { id, likeName } = req.body;
+    const petPatch = await likePet(id); //likename=FLORE   pets.likes=[likename1,florre]
 
+    if (!petPatch.likes.includes(likeName)) {
+      await petPatch.update({ $push: { likes: likeName } });
+    } else await petPatch.update({ $pull: { likes: likeName } });
+
+    console.log(petPatch.likes);
     res.status(201).send(petPatch);
   } catch (error) {
     next(error);
