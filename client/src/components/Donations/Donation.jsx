@@ -119,7 +119,7 @@ export default function Donation() {
       );
     }
   }
-  
+
   return (
     <>
       <NavBar />

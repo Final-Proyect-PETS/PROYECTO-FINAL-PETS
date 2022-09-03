@@ -14,7 +14,7 @@ export default function ReportUser() {
   const navigate = useNavigate();
 
   const id = localStorage.getItem("id");
-  const reported_user = useSelector((state) => state.userDetail._id);
+  const reported_user_id = useSelector((state) => state.userDetail._id);
 
   function handleChange(e) {
     setInput(e.target.value);
@@ -33,8 +33,8 @@ export default function ReportUser() {
       if (result.isConfirmed) {
         dispatch(
           reportUser({
-            informer: id,
-            reportedUser: reported_user,
+            informerId: id,
+            reportedUserId: reported_user_id,
             reason: input,
           })
         ).then((e) => {

@@ -3,13 +3,20 @@ import NavBar from "../NavBar/NavBar";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Modal, Button } from "flowbite-react/lib/esm/components";
-import "./AdminView.css"
+import { useDispatch } from "react-redux";
+import { getUserDetail } from "../../redux/Actions";
+import { getReportedPets, getReportedUsers } from "../../redux/Actions";
+import "./AdminView.css";
+import { useEffect } from "react";
 
 export default function AdminView() {
-
   const getUsers = useSelector((state) => state.users);
 
   const getPets = useSelector((state) => state.pets);
+
+  const reportedPets = useSelector((state) => state.reportedPets);
+
+  const reportedUsers = useSelector((state) => state.reportedUsers);
 
   const [show, setShow] = useState(false);
 
@@ -21,9 +28,11 @@ export default function AdminView() {
 
   const userr = getUsers.filter((m) => m._id === user);
 
-  const donatedUsers = getUsers.filter((m) => m.donations)
+  const donatedUsers = getUsers.filter((m) => m.donations);
 
-  const don = userr.map((d) => d.donations.map((d) => d.donationAmount))
+  const don = userr.map((d) => d.donations.map((d) => d.donationAmount));
+
+  const dispatch = useDispatch();
 
   console.log(don);
 
@@ -39,10 +48,20 @@ export default function AdminView() {
     setShow(false);
   };
 
+  useEffect(() => {
+    dispatch(getReportedPets());
+    dispatch(getReportedUsers());
+  }, []);
+
   return (
     <div>
       <NavBar />
-      <Modal show={show} popup={true} onClose={onClose} class="bg-gray-800 bg-opacity-100">
+      <Modal
+        show={show}
+        popup={true}
+        onClose={onClose}
+        class="bg-gray-800 bg-opacity-100"
+      >
         <div className="pl-2 p-3 bg-yellow-600 rounded-md">
           <Modal.Header>
             <p className="text-white">Datos del usuario</p>
@@ -91,25 +110,53 @@ export default function AdminView() {
                     <div className=" h-2/4 flex">
                       <div className="w-1/2 h-full">
                         <div className="h-1/2 flex justify-center items-center">
-                          <h3>Mascotas adoptadas: {m.pets.filter((m) => m.isAdopted === true).length}</h3>
+                          <h3>
+                            Mascotas adoptadas:{" "}
+                            {m.pets.filter((m) => m.isAdopted === true).length}
+                          </h3>
                         </div>
                         <div className="h-1/2 flex justify-center items-center">
-                          <h3>Mascotas en adopción: {m.pets.filter((m) => m.isAdopted === false).length}</h3>
+                          <h3>
+                            Mascotas en adopción:{" "}
+                            {m.pets.filter((m) => m.isAdopted === false).length}
+                          </h3>
                         </div>
                       </div>
                       <div className="w-1/2 h-full">
                         <div className="h-1/2 flex justify-center items-center">
-                          <h3 className="text-center">Este usuario donó: {m.donations.length > 0 ? <p>{m.donations.length} veces</p> : m.donations.length === 1 ? <p>1 vez</p> : <p>Todavía no realizó donaciones</p>}</h3>
+                          <h3 className="text-center">
+                            Este usuario donó:{" "}
+                            {m.donations.length > 0 ? (
+                              <p>{m.donations.length} veces</p>
+                            ) : m.donations.length === 1 ? (
+                              <p>1 vez</p>
+                            ) : (
+                              <p>Todavía no realizó donaciones</p>
+                            )}
+                          </h3>
                         </div>
                         <div className="h-1/2 flex justify-center items-center">
-                          <h3>Donado en total: ${m.donations.length > 0 ? m.donations.map((d) => d.donationAmount).reduce((prev, curr) => prev + curr) : 0}</h3>
+                          <h3>
+                            Donado en total: $
+                            {m.donations.length > 0
+                              ? m.donations
+                                  .map((d) => d.donationAmount)
+                                  .reduce((prev, curr) => prev + curr)
+                              : 0}
+                          </h3>
                         </div>
                       </div>
                     </div>
                     <div className="bg-white h-1/4 flex items-center justify-around">
-                      <button class="py-2 px-4  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "><Link to={"/users/" + m._id}>Perfil del usuario</Link></button>
-                      <button class="py-2 px-4  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">Editar usuario</button>
-                      <button class="py-2 px-4  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">Eliminar usuario</button>
+                      <button class="py-2 px-4  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                        <Link to={"/users/" + m._id}>Perfil del usuario</Link>
+                      </button>
+                      <button class="py-2 px-4  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                        Editar usuario
+                      </button>
+                      <button class="py-2 px-4  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                        Eliminar usuario
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -124,16 +171,16 @@ export default function AdminView() {
           <h3 className="text-6xl font-semibold italic text-gray-800">
             Happy Tails
           </h3>
-          <h3 className="text-2xl p-3 text-gray-800">
-            Vista de administrador
-          </h3>
+          <h3 className="text-2xl p-3 text-gray-800">Vista de administrador</h3>
         </div>
 
         <div className="flex h-screen">
           <div className="w-1/2">
             <div className="h-4/5">
               <div className="flex justify-center">
-                <h3 className="text-2xl py-2 italic font-semibold text-gray-800">Usuarios Registrados</h3>
+                <h3 className="text-2xl py-2 italic font-semibold text-gray-800">
+                  Usuarios Registrados
+                </h3>
               </div>
               <div className="h-full pb-30 overflow-auto bg-[#685737] bg-opacity-80">
                 <ol className="ml-4 mt-4 text-white font-medium">
@@ -174,7 +221,9 @@ export default function AdminView() {
             </div>
           </div>
           <div className="w-1/2 overflow-hidden text-white font-semibold">
-            <h3 className="text-2xl p-2 text-center italic font-semibold text-gray-800">Estadísticas</h3>
+            <h3 className="text-2xl p-2 text-center italic font-semibold text-gray-800">
+              Estadísticas
+            </h3>
             <div className="h-1/5 flex bg-[#685737] bg-opacity-90 text-white font-semibold">
               <div className="w-1/2 flex justify-center items-center">
                 <div className="flex h-3/4 w-3/4 bg-yellow-600">
@@ -263,6 +312,97 @@ export default function AdminView() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div className="w-1/1">
+        <div className="h-4/5">
+          <div className="flex justify-center">
+            <h3 className="text-2xl py-2 italic font-semibold text-gray-800">
+              Denuncias de publicaciones
+            </h3>
+          </div>
+          <div className="h-full pb-30 overflow-auto bg-[#685737] bg-opacity-80">
+            <ol className="ml-4 mt-4 text-white font-medium">
+              {reportedPets.map((p) => (
+                <li className="flex gap-3 ring-yellow-900 h-16 overflow-hidden items-center">
+                  <div className="flex items-center h-12 w-4/5 flex-row overflow-hidden gap-3 p-4">
+                    ID Reporte: {`${p._id}`}| Denunciante:
+                    {` ${p.informerFirstName} ${p.informerLastName}`}
+                    {
+                      <Link
+                        to={`/users/${p.informerId}`}
+                        class="py-2 px-1  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                      >
+                        VER PERFIL
+                      </Link>
+                    }
+                    | Publicación denunciada:{" "}
+                    {
+                      <Link
+                        to={`/pet/${p.reportedPetId}`}
+                        class="py-2 px-1  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                      >
+                        VER PUBLICACION
+                      </Link>
+                    }{" "}
+                    | Motivo de la denuncia: {p.reason}
+                    <button class="py-2 px-4  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                      ELIMINAR PUBLICACION
+                    </button>
+                    <button class="py-2 px-4  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                      MARCAR RESUELTO
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </div>
+      <div className="w-1/1">
+        <div className="h-4/5">
+          <div className="flex justify-center">
+            <h3 className="text-2xl py-2 italic font-semibold text-gray-800">
+              Denuncias de usuarios
+            </h3>
+          </div>
+          <div className="h-full pb-30 overflow-auto bg-[#685737] bg-opacity-80">
+            <ol className="ml-4 mt-4 text-white font-medium">
+              {reportedUsers.map((p) => (
+                <li className="flex gap-3 ring-yellow-900 h-16 overflow-hidden items-center">
+                  <div className="flex items-center h-12 w-4/5 flex-row overflow-hidden gap-3 p-4">
+                    ID Reporte: {`${p._id}`}| Denunciante:
+                    {` ${p.informerFirstName} ${p.informerLastName}`}
+                    {
+                      <Link
+                        to={`/users/${p.informerId}`}
+                        class="py-2 px-1  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                      >
+                        VER PERFIL
+                      </Link>
+                    }
+                    | Usuario denunciado:{" "}
+                    {` ${p.reportedFirstName} ${p.reportedLastName}`}
+                    {
+                      <Link
+                        to={`/pet/${p.reportedUserId}`}
+                        class="py-2 px-1  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                      >
+                        VER USUARIO
+                      </Link>
+                    }{" "}
+                    | Motivo de la denuncia: {p.reason}
+                    <button class="py-2 px-4  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                      ELIMINAR USUARIO
+                    </button>
+                    <button class="py-2 px-4  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                      MARCAR RESUELTO
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </div>
