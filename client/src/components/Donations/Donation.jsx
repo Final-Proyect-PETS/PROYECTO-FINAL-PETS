@@ -145,6 +145,7 @@ export default function Donation() {
               </h2>
             </div>
             <input
+              maxLength="4"
               type="text"
               name="name"
               value={input.name}

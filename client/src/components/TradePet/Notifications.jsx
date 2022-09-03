@@ -1,7 +1,8 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../NavBar/NavBar";
 import { Link } from "react-router-dom";
+import { getUserProfile,viewingLike,viewing } from "../../redux/Actions";
 import "../LandingPage.css";
 import "./Notification.css";
 
@@ -9,7 +10,7 @@ export default function Notifications() {
   const loggedUser = useSelector((state) => state.userProfile);
   const allUsers = useSelector((state) => state.users);
   const allPets = useSelector((state) => state.pets);
-
+const dispatch= useDispatch()
   let interest = loggedUser?.interestedUsers?.map((e) => {
     return {
       user: allUsers?.filter((a) => a._id === e.interestedUser)[0],
@@ -35,6 +36,31 @@ export default function Notifications() {
 
   let vistas = notisFlat?.filter((noti) => noti?.viewState === true);
   let noVistas = notisFlat?.filter((noti) => noti?.viewState === false);
+//-----------------MARCAR COMO VISTO
+
+function closeLikeHandler(e) {
+  e.preventDefault();
+  let payload = {
+    petId2: e.target.name,
+    userId: e.target.value,
+    ownerId: loggedUser._id,
+  };
+  dispatch(viewingLike(payload));
+  dispatch(getUserProfile(loggedUser._id));
+}
+function closeHandler(e) {
+  e.preventDefault();
+  let payload = {
+    id: loggedUser._id, //dueño
+    interestedId: e.target.value,
+    petId: e.target.name, // interestedUsers: [{usuariointeresado}{mascotaquequiero},],
+    petId2: e.target.name,
+    userId: e.target.value,
+    ownerId: loggedUser._id,
+  };
+  dispatch(viewing(payload));
+  dispatch(getUserProfile(loggedUser._id));
+}
 
   return (
     <div id="notification-component" className="w-full h-full ">
@@ -78,6 +104,14 @@ export default function Notifications() {
                       Ver Perfil
                     </h3>
                   </Link>
+                  <button
+                      value={iUser?.user?._id}
+                      name={iUser?.pet?._id}
+                      className="text-yellow-500 py-1"
+                      onClick={(e) => closeHandler(e)}
+                    >
+                      Marcar como leida
+                    </button>
                 </div>
               ) : iUser?.viewState === false && iUser?.esLike === true ? (
                 <div className="flex w-full p-8 my-2 items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 ">
@@ -89,13 +123,21 @@ export default function Notifications() {
                     </div>
                   </div>
                   <div className="font-normal text-gray-700 dark:text-gray-400">
-                    {`🤎 ${iUser?.user?.first_name} ${iUser?.user?.last_name} le ha gustado ${iUser?.pet?.name}`}
+                    {`🤎 A ${iUser?.user?.first_name} ${iUser?.user?.last_name} le ha gustado ${iUser?.pet?.name}`}
                   </div>
                   <Link to={`/users/${iUser?.user?._id}`} className="px-5">
                     <h3 className="font-semibold text-yellow-500 hover:text-yellow-800">
                       Ver Perfil
                     </h3>
                   </Link>
+                  <button
+                      value={iUser?.user?._id}
+                      name={iUser?.pet?._id}
+                      className="text-yellow-500 py-1"
+                      onClick={(e) => closeLikeHandler(e)}
+                    >
+                      Marcar como leida
+                    </button>
                 </div>
               ) : (
                 <></>

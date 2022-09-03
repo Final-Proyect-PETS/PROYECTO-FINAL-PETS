@@ -74,7 +74,7 @@ export default function NavBar() {
     return Math.random() - 0.5;
   });
   let notiSlice = notis.flat().reverse().slice(0, 5);
-  console.log(notiSlice, "SLICE");
+
   let bell = notis?.flat().filter((noti) => noti?.viewState === false);
 
   return (
