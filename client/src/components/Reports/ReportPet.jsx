@@ -14,7 +14,7 @@ export default function ReportPet() {
   const navigate = useNavigate();
 
   const id = localStorage.getItem("id");
-  const reported_pet = useSelector((state) => state.petDetail._id);
+  const reported_pet_id = useSelector((state) => state.petDetail._id);
 
   function handleChange(e) {
     setInput(e.target.value);
@@ -33,8 +33,8 @@ export default function ReportPet() {
       if (result.isConfirmed) {
         dispatch(
           reportPet({
-            informer: id,
-            reportedPet: reported_pet,
+            informerId: id,
+            reportedPetId: reported_pet_id,
             reason: input,
           })
         ).then((e) => {

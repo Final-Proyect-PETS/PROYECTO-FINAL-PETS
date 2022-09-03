@@ -5,20 +5,18 @@ import { Link } from "react-router-dom";
 import { Modal, Button } from "flowbite-react/lib/esm/components";
 import { useDispatch } from "react-redux";
 import { getUserDetail } from "../../redux/Actions";
+import { getReportedPets, getReportedUsers } from "../../redux/Actions";
 import "./AdminView.css";
+import { useEffect } from "react";
 
 export default function AdminView() {
   const getUsers = useSelector((state) => state.users);
 
   const getPets = useSelector((state) => state.pets);
 
-  const getPetsReports = useSelector(
-    (state) => state.userProfile.reported_pets
-  );
+  const reportedPets = useSelector((state) => state.reportedPets);
 
-  const getUsersReports = useSelector(
-    (state) => state.userProfile.reported_users
-  );
+  const reportedUsers = useSelector((state) => state.reportedUsers);
 
   const [show, setShow] = useState(false);
 
@@ -50,12 +48,10 @@ export default function AdminView() {
     setShow(false);
   };
 
-  const getUserDetl = (id) => {
-    dispatch(getUserDetail(id)).then((e) => {
-      console.log(e.payload.first_name);
-      return e.payload.first_name;
-    });
-  };
+  useEffect(() => {
+    dispatch(getReportedPets());
+    dispatch(getReportedUsers());
+  }, []);
 
   return (
     <div>
@@ -176,47 +172,6 @@ export default function AdminView() {
             Happy Tails
           </h3>
           <h3 className="text-2xl p-3 text-gray-800">Vista de administrador</h3>
-          <div className="w-1/1">
-            <div className="h-4/5">
-              <div className="flex justify-center">
-                <h3 className="text-2xl py-2 italic font-semibold text-gray-800">
-                  Denuncias
-                </h3>
-              </div>
-              <div className="h-full pb-30 overflow-auto bg-[#685737] bg-opacity-80">
-                <ol className="ml-4 mt-4 text-white font-medium">
-                  {getPetsReports.map((p) => (
-                    <li className="flex gap-3 ring-yellow-900 h-16 overflow-hidden items-center">
-                      <div className="flex items-center h-12 w-4/5 flex-row overflow-hidden gap-3 p-4">
-                        Denunciante:{" "}
-                        {
-                          <Link
-                            to={`/users/${p.informerId}`}
-                            class="py-2 px-1  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                          >
-                            VER PERFIL
-                          </Link>
-                        }
-                        | Publicación denunciada:{" "}
-                        {
-                          <Link
-                            to={`/pet/${p.reportedPetId}`}
-                            class="py-2 px-1  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                          >
-                            VER PUBLICACION
-                          </Link>
-                        }{" "}
-                        | Motivo de la denuncia: {p.reason}
-                        <button class="py-2 px-4  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                          Eliminar publicación
-                        </button>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div className="flex h-screen">
@@ -357,6 +312,97 @@ export default function AdminView() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div className="w-1/1">
+        <div className="h-4/5">
+          <div className="flex justify-center">
+            <h3 className="text-2xl py-2 italic font-semibold text-gray-800">
+              Denuncias de publicaciones
+            </h3>
+          </div>
+          <div className="h-full pb-30 overflow-auto bg-[#685737] bg-opacity-80">
+            <ol className="ml-4 mt-4 text-white font-medium">
+              {reportedPets.map((p) => (
+                <li className="flex gap-3 ring-yellow-900 h-16 overflow-hidden items-center">
+                  <div className="flex items-center h-12 w-4/5 flex-row overflow-hidden gap-3 p-4">
+                    ID Reporte: {`${p._id}`}| Denunciante:
+                    {` ${p.informerFirstName} ${p.informerLastName}`}
+                    {
+                      <Link
+                        to={`/users/${p.informerId}`}
+                        class="py-2 px-1  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                      >
+                        VER PERFIL
+                      </Link>
+                    }
+                    | Publicación denunciada:{" "}
+                    {
+                      <Link
+                        to={`/pet/${p.reportedPetId}`}
+                        class="py-2 px-1  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                      >
+                        VER PUBLICACION
+                      </Link>
+                    }{" "}
+                    | Motivo de la denuncia: {p.reason}
+                    <button class="py-2 px-4  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                      ELIMINAR PUBLICACION
+                    </button>
+                    <button class="py-2 px-4  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                      MARCAR RESUELTO
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </div>
+      <div className="w-1/1">
+        <div className="h-4/5">
+          <div className="flex justify-center">
+            <h3 className="text-2xl py-2 italic font-semibold text-gray-800">
+              Denuncias de usuarios
+            </h3>
+          </div>
+          <div className="h-full pb-30 overflow-auto bg-[#685737] bg-opacity-80">
+            <ol className="ml-4 mt-4 text-white font-medium">
+              {reportedUsers.map((p) => (
+                <li className="flex gap-3 ring-yellow-900 h-16 overflow-hidden items-center">
+                  <div className="flex items-center h-12 w-4/5 flex-row overflow-hidden gap-3 p-4">
+                    ID Reporte: {`${p._id}`}| Denunciante:
+                    {` ${p.informerFirstName} ${p.informerLastName}`}
+                    {
+                      <Link
+                        to={`/users/${p.informerId}`}
+                        class="py-2 px-1  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                      >
+                        VER PERFIL
+                      </Link>
+                    }
+                    | Usuario denunciado:{" "}
+                    {` ${p.reportedFirstName} ${p.reportedLastName}`}
+                    {
+                      <Link
+                        to={`/pet/${p.reportedUserId}`}
+                        class="py-2 px-1  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                      >
+                        VER USUARIO
+                      </Link>
+                    }{" "}
+                    | Motivo de la denuncia: {p.reason}
+                    <button class="py-2 px-4  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                      ELIMINAR USUARIO
+                    </button>
+                    <button class="py-2 px-4  bg-yellow-600 hover:bg-yellow-900 focus:ring-yellow-500 focus:ring-offset-indigo-200 text-white w-28 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                      MARCAR RESUELTO
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </div>

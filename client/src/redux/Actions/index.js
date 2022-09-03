@@ -498,8 +498,8 @@ export function likePet(payload) {
 export function reportPet(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.patch(
-        `http://localhost:3001/home/reportedPets`,
+      let json = await axios.post(
+        `http://localhost:3001/home/reportpet`,
         payload
       );
       dispatch({
@@ -516,8 +516,8 @@ export function reportPet(payload) {
 export function reportUser(payload) {
   return async function (dispatch) {
     try {
-      let json = await axios.patch(
-        `http://localhost:3001/home/reportedUsers`,
+      let json = await axios.post(
+        `http://localhost:3001/home/reportuser`,
         payload
       );
       dispatch({
@@ -525,6 +525,34 @@ export function reportUser(payload) {
         payload: json.data,
       });
       return "OK";
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function getReportedPets() {
+  return async function (dispatch) {
+    try {
+      let json = await axios.get(`http://localhost:3001/home/reportpet`);
+      return dispatch({
+        type: actions.GET_REPORTED_PETS,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function getReportedUsers() {
+  return async function (dispatch) {
+    try {
+      let json = await axios.get(`http://localhost:3001/home/reportuser`);
+      return dispatch({
+        type: actions.GET_REPORTED_USERS,
+        payload: json.data,
+      });
     } catch (error) {
       console.log(error);
     }
