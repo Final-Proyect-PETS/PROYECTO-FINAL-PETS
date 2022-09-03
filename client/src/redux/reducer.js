@@ -15,6 +15,8 @@ const initialState = {
   messages: [],
   notViewedNotification: [], //no vistas
   viewedNotification: [], //vistas
+  reportedPets: [],
+  reportedUsers: [],
 };
 
 export default function rootReducer(state = initialState, { type, payload }) {
@@ -193,6 +195,16 @@ export default function rootReducer(state = initialState, { type, payload }) {
     case actions.REPORT_USER:
       return {
         ...state,
+      };
+    case actions.GET_REPORTED_PETS:
+      return {
+        ...state,
+        reportedPets: payload,
+      };
+    case actions.GET_REPORTED_USERS:
+      return {
+        ...state,
+        reportedUsers: payload,
       };
     default:
       return state;

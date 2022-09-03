@@ -21,8 +21,8 @@ const payment = require("./payment");
 const responsePayment = require("./payment");
 const forgotPassword = require("./forgotPassword");
 const resetPassword = require("./resetPassword");
-const patchReportedPets = require("./patch");
-const patchReportedUsers = require("./patch");
+const reportPet = require("./reports");
+const reportUser = require("./reports");
 const errorHandler = require("../utils/middlewares/errorHandler");
 const interestedUsers = require("./patch");
 
@@ -41,8 +41,8 @@ router.use(
   messages,
   adopt,
   likes,
-  patchReportedPets,
-  patchReportedUsers,
+  reportPet,
+  reportUser,
   interestedUsers
 );
 
