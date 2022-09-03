@@ -119,7 +119,7 @@ export default function OwnedPet({
   }
 
   return (
-    <div className="flex items-center py-4 px-5 ">
+    <div className="flex items-center py-4 px-5">
       <div className=" flex border-2 border-yellow-700 rounded">
         <div className=" border-yellow-900 border-r-2  flex justify-between  border items-center rounded bg-gray-300">
           <div className=" column items-center mb-4 mr-4 ml-4 ">
